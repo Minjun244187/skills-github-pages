@@ -1,30 +1,77 @@
-<!-- Navbar and Styling -->
-<style>
-  .navbar {
-    background: #1e1e1e;
-    padding: 1rem;
-    text-align: center;
-    font-family: 'Fira Code', monospace;
-  }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projects – Minjun</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #121212;
+      color: #eee;
+      font-family: 'Fira Code', monospace;
+      padding: 2rem;
+    }
+    .project {
+      background: #1e1e1e;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border-left: 4px solid #4ecdc4;
+    }
+    .project h3 {
+      margin-top: 0;
+      color: #ffa726;
+    }
+    .project a {
+      color: #4ecdc4;
+    }
+    .navbar {
+      background: #1e1e1e;
+      padding: 1rem;
+      text-align: center;
+      font-family: 'Fira Code', monospace;
+    }
+    .navbar a {
+      color: #4ecdc4;
+      margin: 0 1.5rem;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.2s ease-in-out;
+    }
+    .navbar a:hover {
+      color: red;
+    }
+  </style>
+</head>
+<body>
 
-  .navbar a {
-    color: #4ecdc4;
-    margin: 0 1.5rem;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.2s ease-in-out;
-  }
+  <!-- Navbar -->
+  <div class="navbar">
+    <a href="index.html">Home</a>
+    <a href="projects.html">Projects</a>
+    <a href="antiques.html">Antiques</a>
+    <a href="spRecords.html">SP Records</a>
+    <a href="lpRecords.html">LP Records</a>
+    <a href="contact.html">Contact</a>
+  </div>
 
-  .navbar a:hover {
-    color: red;
-  }
-</style>
+  <h1>🧪 My Projects</h1>
 
-<div class="navbar">
-  <a href="index.html">Home</a>
-  <a href="projects.html">Projects</a>
-  <a href="antiques.html">Antiques</a>
-  <a href="spRecords.html">SP Records</a>
-  <a href="lpRecords.html">LP Records</a>
-  <a href="contact.html">Contact</a>
-</div>
+  <!-- Project 1 -->
+  <div class="project">
+    <h3>RPG Shop System</h3>
+    <p>A Java-based RPG game shop system with drag & drop, hover tooltips, gold tracker, and inventory logic.</p>
+    <p><a href="projects/rpg-shop.zip" download>Download .zip</a> | <a href="https://github.com/minjunkim/rpg-shop" target="_blank">View on GitHub</a></p>
+  </div>
+
+  <!-- Project 2 -->
+  <div class="project">
+    <h3>Ultrasonic Record Cleaner Logger</h3>
+    <p>Logs temperature, timing, and condition of vinyls after ultrasonic cleaning.</p>
+    <p><a href="projects/record-logger.html" target="_blank">Try it</a> | <a href="projects/logger-source.zip" download>Download Source</a></p>
+  </div>
+
+  <!-- Add more by copying the .project block -->
+
+</body>
+</html>
