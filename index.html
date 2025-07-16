@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Minjun Kim – About Me</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    body {
+      background: #121212;
+      color: #e0e0e0;
+      font-family: 'Fira Code', monospace;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      color: #4ecdc4;
+    }
+    p {
+      max-width: 600px;
+      margin: 1rem auto;
+    }
+    .section {
+      margin: 3rem 0;
+    }
+    h2 {
+      color: #ff6b6b;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #333;
+      padding-bottom: 0.5rem;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    li::before {
+      content: "★ ";
+      color: #4ecdc4;
+    }
+    a {
+      color: #ffa726;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin: 1rem auto;
+      display: block;
+      border: 2px solid #4ecdc4;
+    }
+    .project, .record {
+      margin-bottom: 1.5rem;
+    }
+    .contact a {
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      font-size: 0.9rem;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="your-avatar.jpg" alt="Your Photo" class="avatar">
+    <h1>Minjun Kim</h1>
+    <p>👋 Retro tech fan • SP record collector • Java RPG dev • Morse code curious</p>
+  </header>
+
+  <main>
+
+    <section class="section about">
+      <h2>About Me</h2>
+      <p>I’m a student who loves discovering the beauty of the past through tech and music. I collect Korean shellac records, code RPG systems in Java, and explore old-school gadgets and antiques in my free time.</p>
+    </section>
+
+    <section class="section hobbies">
+      <h2>Interests</h2>
+      <ul>
+        <li>🎵 Korean SP / 78rpm record collecting</li>
+        <li>💾 Programming RPG-style Java games</li>
+        <li>📻 Morse code and telegraph tech</li>
+        <li>📀 Ultrasonic vinyl cleaning experiments</li>
+        <li>🧳 Korean/Japanese vintage bags & items</li>
+      </ul>
+    </section>
+
+    <section class="section projects">
+      <h2>Projects</h2>
+      <div class="project">
+        <strong>🧙 RPG Shop System (Java)</strong><br>
+        Features item hovering, gold system, drop logic, and hover tooltips.  
+        <a href="https://github.com/minjunkim/rpg-shop" target="_blank">View on GitHub</a>
+      </div>
+    </section>
+
+    <section class="section records">
+      <h2>Featured Records</h2>
+      <div class="record">
+        <strong>🎤 백년설 – 유랑극단 (1930s)</strong><br>
+        <em>My favorite SP record. Emotional, wandering vocals with historic resonance.</em>
+      </div>
+      <div class="record">
+        <strong>📼 국경천리 (1940s)</strong><br>
+        Rare SP with North Korean themes, cracked but restored.
+      </div>
+    </section>
+
+    <section class="section contact">
+      <h2>Contact & Links</h2>
+      <a href="https://github.com/minjunkim" target="_blank">GitHub</a>
+      <a href="mailto:minjun@example.com">Email</a>
+    </section>
+
+  </main>
+
+  <footer>
+    &copy; 2025 Minjun Kim. All rights reserved.
+  </footer>
+
+</body>
+</html>
