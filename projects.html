@@ -1,51 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Projects – Minjun</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Projects - About Me</title>
   <style>
     body {
-      background: #121212;
-      color: #eee;
-      font-family: 'Fira Code', monospace;
-      padding: 2rem;
+      background-color: #121212;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
     }
-    .project {
-      background: #1e1e1e;
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-      border-left: 4px solid #4ecdc4;
-    }
-    .project h3 {
-      margin-top: 0;
-      color: #ffa726;
-    }
-    .project a {
-      color: #4ecdc4;
-    }
+
     .navbar {
-      background: #1e1e1e;
-      padding: 1rem;
-      text-align: center;
-      font-family: 'Fira Code', monospace;
+      background-color: #1f1f1f;
+      overflow: hidden;
+      padding: 10px 20px;
+      display: flex;
+      gap: 20px;
     }
+
     .navbar a {
-      color: #4ecdc4;
-      margin: 0 1.5rem;
+      color: white;
       text-decoration: none;
       font-weight: bold;
-      transition: color 0.2s ease-in-out;
+      transition: color 0.3s;
     }
+
     .navbar a:hover {
+      color: red;
+    }
+
+    .container {
+      padding: 40px;
+    }
+
+    .project {
+      background-color: #222;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+    }
+
+    .project h2 {
+      color: #ffcc00;
+    }
+
+    .project a {
+      color: #00ffff;
+      font-weight: bold;
+    }
+
+    .project a:hover {
       color: red;
     }
   </style>
 </head>
 <body>
 
-  <!-- Navbar -->
   <div class="navbar">
     <a href="index.html">Home</a>
     <a href="projects.html">Projects</a>
@@ -55,23 +68,19 @@
     <a href="contact.html">Contact</a>
   </div>
 
-  <h1>🧪 My Projects</h1>
+  <div class="container">
+    <h1>My Projects</h1>
 
-  <!-- Project 1 -->
-  <div class="project">
-    <h3>RPG Shop System</h3>
-    <p>A Java-based RPG game shop system with drag & drop, hover tooltips, gold tracker, and inventory logic.</p>
-    <p><a href="projects/rpg-shop.zip" download>Download .zip</a> | <a href="https://github.com/minjunkim/rpg-shop" target="_blank">View on GitHub</a></p>
+    <div class="project">
+      <h2>🎮 My RPG Game</h2>
+      <p>This is a downloadable RPG I built. Click below to download the ZIP file.</p>
+      <a href="https://drive.google.com/uc?export=download&id=1MEsmphi2ivE1HOl5od0jGpNFDRLRMra7" target="_blank">
+        👉 Download RPG Game (ZIP)
+      </a>
+    </div>
+
+    <!-- You can copy this block and paste more projects below -->
   </div>
-
-  <!-- Project 2 -->
-  <div class="project">
-    <h3>Ultrasonic Record Cleaner Logger</h3>
-    <p>Logs temperature, timing, and condition of vinyls after ultrasonic cleaning.</p>
-    <p><a href="projects/record-logger.html" target="_blank">Try it</a> | <a href="projects/logger-source.zip" download>Download Source</a></p>
-  </div>
-
-  <!-- Add more by copying the .project block -->
 
 </body>
 </html>
