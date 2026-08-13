@@ -1,52 +1,594 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- Navbar and Styling -->
-<style>
-  <head>
-  .navbar {
-    background: #1e1e1e;
-    padding: 1rem;
-    text-align: center;
-    font-family: 'Fira Code', monospace;
-  }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  .navbar a {
-    color: #4ecdc4;
-    margin: 0 1.5rem;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.2s ease-in-out;
-  }
+  <title>Minjun Kim — Portfolio</title>
 
-  .navbar a:hover {
-    color: red;
-  }
-</style>
-  </head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<body style="background:#121212; color:#eee; font-family:'Fira Code', monospace; padding:2rem;">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --background: #f7f7f5;
+      --surface: #ffffff;
+      --text: #171717;
+      --muted: #6b6b6b;
+      --border: #deded9;
+      --accent: #1769ff;
+      --accent-soft: #eaf1ff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      line-height: 1.6;
+    }
+
+    /* =========================
+       NAVIGATION
+    ========================= */
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+
+      width: 100%;
+
+      background: rgba(247, 247, 245, 0.88);
+      backdrop-filter: blur(14px);
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: auto;
+
+      padding: 1.1rem 2rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      font-size: 1rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+
+      transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+      max-width: 1200px;
+      min-height: calc(100vh - 72px);
+
+      margin: auto;
+      padding: 7rem 2rem;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .eyebrow {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--accent);
+
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 {
+      max-width: 900px;
+
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+
+      font-weight: 700;
+
+      margin-bottom: 2rem;
+    }
+
+    .hero h1 span {
+      color: var(--muted);
+    }
+
+    .hero-description {
+      max-width: 650px;
+
+      color: var(--muted);
+
+      font-size: 1.2rem;
+      line-height: 1.8;
+
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-block;
+
+      padding: 0.85rem 1.4rem;
+
+      border: 1px solid var(--text);
+
+      text-decoration: none;
+
+      font-size: 0.9rem;
+      font-weight: 600;
+
+      transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .button.primary {
+      background: var(--text);
+      color: white;
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--text);
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button.primary:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .button.secondary:hover {
+      background: var(--text);
+      color: white;
+    }
+
+    /* =========================
+       INTRO SECTION
+    ========================= */
+
+    .section {
+      max-width: 1200px;
+      margin: auto;
+
+      padding: 7rem 2rem;
+    }
+
+    .section-header {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+
+      gap: 4rem;
+
+      padding-bottom: 2rem;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--muted);
+
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .section-content h2 {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+
+      margin-bottom: 1.5rem;
+    }
+
+    .section-content p {
+      max-width: 700px;
+
+      color: var(--muted);
+
+      font-size: 1.05rem;
+      line-height: 1.9;
+
+      margin-bottom: 1rem;
+    }
+
+    /* =========================
+       INTERESTS
+    ========================= */
+
+    .interests {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 1px;
+
+      background: var(--border);
+
+      border: 1px solid var(--border);
+
+      margin-top: 4rem;
+    }
+
+    .interest-card {
+      background: var(--surface);
+
+      padding: 2rem;
+
+      min-height: 200px;
+
+      transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .interest-card:hover {
+      background: var(--accent-soft);
+      transform: translateY(-3px);
+    }
+
+    .interest-number {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--muted);
+
+      font-size: 0.8rem;
+
+      margin-bottom: 3rem;
+    }
+
+    .interest-card h3 {
+      font-size: 1.25rem;
+
+      margin-bottom: 0.7rem;
+    }
+
+    .interest-card p {
+      color: var(--muted);
+
+      font-size: 0.9rem;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 2rem;
+
+      border-top: 1px solid var(--border);
+
+      display: flex;
+      justify-content: space-between;
+
+      color: var(--muted);
+
+      font-size: 0.8rem;
+
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 800px) {
+
+      .nav-container {
+        padding: 1rem 1.25rem;
+      }
+
+      .nav-links {
+        gap: 1rem;
+      }
+
+      .nav-links li:nth-child(n+4) {
+        display: none;
+      }
+
+      .hero {
+        padding: 5rem 1.25rem;
+      }
+
+      .hero h1 {
+        font-size: clamp(3rem, 15vw, 5rem);
+      }
+
+      .hero-description {
+        font-size: 1rem;
+      }
+
+      .section {
+        padding: 5rem 1.25rem;
+      }
+
+      .section-header {
+        grid-template-columns: 1fr;
+
+        gap: 2rem;
+      }
+
+      .interests {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        padding: 1.5rem 1.25rem;
+
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       NAVIGATION
+  ========================= -->
+
+  <nav class="navbar">
+
+    <div class="nav-container">
+
+      <a href="index.html" class="logo">
+        MINJUN KIM
+      </a>
+
+      <ul class="nav-links">
+
+        <li>
+          <a href="index.html">Home</a>
+        </li>
+
+        <li>
+          <a href="projects.html">Projects</a>
+        </li>
+
+        <li>
+          <a href="research.html">Research</a>
+        </li>
+
+        <li>
+          <a href="activities.html">Activities</a>
+        </li>
+
+        <li>
+          <a href="contact.html">Contact</a>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </nav>
 
 
+  <!-- =========================
+       HERO
+  ========================= -->
 
-<div class="navbar">
-  <a href="index.html">Home</a>
-  <a href="projects.html">Projects</a>
-  <a href="antiques.html">Antiques</a>
-  <a href="spRecords.html">SP Records</a>
-  <a href="lpRecords.html">LP Records</a>
-  <a href="contact.html">Contact</a>
-</div>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Minjun Kim – Home</title>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+  <main>
+
+    <section class="hero">
+
+      <div class="eyebrow">
+        Student • Engineer • Builder
+      </div>
+
+      <h1>
+        Hello, I'm<br>
+        Minjun <span>Kim.</span>
+      </h1>
+
+      <p class="hero-description">
+        I am a student interested in engineering, computer science,
+        electronics, and the systems that connect technology with the
+        real world. I learn by building, experimenting, and taking things
+        apart to understand how they work.
+      </p>
+
+      <div class="hero-buttons">
+
+        <a href="projects.html" class="button primary">
+          Explore my projects →
+        </a>
+
+        <a href="#about" class="button secondary">
+          About me
+        </a>
+
+      </div>
+
+    </section>
 
 
+    <!-- =========================
+         ABOUT
+    ========================= -->
+
+    <section class="section" id="about">
+
+      <div class="section-header">
+
+        <div class="section-label">
+          01 / About
+        </div>
+
+        <div class="section-content">
+
+          <h2>
+            Curiosity is where
+            engineering begins.
+          </h2>
+
+          <p>
+            I have always been interested in understanding how things
+            work beneath the surface. That curiosity has led me from
+            programming and game development to electronics,
+            signal processing, radio, and vintage technology.
+          </p>
+
+          <p>
+            Rather than learning technology only through theory,
+            I prefer to build things, experiment with them, and
+            document what I discover along the way.
+          </p>
+
+        </div>
+
+      </div>
 
 
+      <!-- =========================
+           INTERESTS
+      ========================= -->
 
-  <h1>👋 Hello, I’m Minjun</h1>
-  <p>Welcome to my dark-mode retro site. I collect Korean SP records, build RPG games in Java, and love vintage tech.</p>
+      <div class="interests">
+
+        <div class="interest-card">
+
+          <div class="interest-number">
+            01
+          </div>
+
+          <h3>
+            Computer Science
+          </h3>
+
+          <p>
+            Programming, software development,
+            algorithms, and interactive systems.
+          </p>
+
+        </div>
+
+
+        <div class="interest-card">
+
+          <div class="interest-number">
+            02
+          </div>
+
+          <h3>
+            Engineering
+          </h3>
+
+          <p>
+            Electronics, signal processing,
+            communications, and hands-on experimentation.
+          </p>
+
+        </div>
+
+
+        <div class="interest-card">
+
+          <div class="interest-number">
+            03
+          </div>
+
+          <h3>
+            Technology & History
+          </h3>
+
+          <p>
+            Vintage technology, records, radio,
+            and the evolution of the machines we use.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+
+    <span>
+      © 2026 Minjun Kim
+    </span>
+
+    <span>
+      Built with HTML & CSS
+    </span>
+
+  </footer>
 
 </body>
 </html>
