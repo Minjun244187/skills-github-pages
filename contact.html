@@ -1,30 +1,600 @@
-<!-- Navbar and Styling -->
-<style>
-  .navbar {
-    background: #1e1e1e;
-    padding: 1rem;
-    text-align: center;
-    font-family: 'Fira Code', monospace;
-  } 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  .navbar a {
-    color: #4ecdc4;
-    margin: 0 1.5rem;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.2s ease-in-out;
-  }
+  <title>Contact — Minjun Kim</title>
 
-  .navbar a:hover {
-    color: red;
-  }
-</style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<div class="navbar">
-  <a href="index.html">Home</a>
-  <a href="projects.html">Projects</a>
-  <a href="antiques.html">Antiques</a>
-  <a href="spRecords.html">SP Records</a>
-  <a href="lpRecords.html">LP Records</a>
-  <a href="contact.html">Contact</a>
-</div>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    :root {
+      --background: #f7f7f5;
+      --surface: #ffffff;
+      --text: #171717;
+      --muted: #6b6b6b;
+      --border: #deded9;
+      --accent: #1769ff;
+      --accent-soft: #eaf1ff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      line-height: 1.6;
+    }
+
+    /* =========================
+       NAVIGATION
+    ========================= */
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+
+      width: 100%;
+
+      background: rgba(247, 247, 245, 0.88);
+      backdrop-filter: blur(14px);
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: auto;
+
+      padding: 1.1rem 2rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: "JetBrains Mono", monospace;
+
+      font-weight: 500;
+      font-size: 1rem;
+
+      color: var(--text);
+
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+
+      gap: 2rem;
+
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+
+      text-decoration: none;
+
+      font-size: 0.9rem;
+
+      font-weight: 500;
+
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-links .active {
+      color: var(--text);
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .page-header {
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 7rem 2rem 5rem;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--accent);
+
+      font-size: 0.8rem;
+
+      letter-spacing: 0.08em;
+
+      text-transform: uppercase;
+
+      margin-bottom: 1.5rem;
+    }
+
+    .page-header h1 {
+      font-size: clamp(3.5rem, 8vw, 7rem);
+
+      line-height: 0.95;
+
+      letter-spacing: -0.06em;
+
+      margin-bottom: 2rem;
+    }
+
+    .page-header p {
+      max-width: 650px;
+
+      color: var(--muted);
+
+      font-size: 1.1rem;
+
+      line-height: 1.8;
+    }
+
+    /* =========================
+       CONTACT
+    ========================= */
+
+    .contact-container {
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 5rem 2rem 8rem;
+    }
+
+    .contact-grid {
+      display: grid;
+
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 1px;
+
+      background: var(--border);
+
+      border: 1px solid var(--border);
+    }
+
+    .contact-card {
+      background: var(--surface);
+
+      padding: 3rem;
+
+      min-height: 250px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: space-between;
+
+      transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .contact-card:hover {
+      background: var(--accent-soft);
+
+      transform: translateY(-3px);
+    }
+
+    .contact-number {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--muted);
+
+      font-size: 0.75rem;
+    }
+
+    .contact-info {
+      margin-top: 4rem;
+    }
+
+    .contact-type {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--accent);
+
+      font-size: 0.75rem;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.06em;
+
+      margin-bottom: 0.7rem;
+    }
+
+    .contact-title {
+      font-size: 1.7rem;
+
+      letter-spacing: -0.03em;
+
+      margin-bottom: 0.6rem;
+    }
+
+    .contact-description {
+      color: var(--muted);
+
+      font-size: 0.9rem;
+
+      margin-bottom: 1.2rem;
+    }
+
+    .contact-link {
+      display: inline-block;
+
+      color: var(--text);
+
+      font-family: "JetBrains Mono", monospace;
+
+      font-size: 0.85rem;
+
+      font-weight: 500;
+
+      text-decoration: none;
+
+      border-bottom: 1px solid var(--text);
+
+      padding-bottom: 2px;
+
+      transition:
+        color 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .contact-link:hover {
+      color: var(--accent);
+
+      border-color: var(--accent);
+    }
+
+    /* =========================
+       MESSAGE
+    ========================= */
+
+    .contact-message {
+      margin-top: 5rem;
+
+      padding: 3rem;
+
+      border-top: 1px solid var(--border);
+    }
+
+    .contact-message-label {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--muted);
+
+      font-size: 0.75rem;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.06em;
+
+      margin-bottom: 1rem;
+    }
+
+    .contact-message h2 {
+      max-width: 750px;
+
+      font-size: clamp(2rem, 4vw, 3.5rem);
+
+      line-height: 1.15;
+
+      letter-spacing: -0.04em;
+
+      margin-bottom: 1rem;
+    }
+
+    .contact-message p {
+      max-width: 650px;
+
+      color: var(--muted);
+
+      font-size: 1rem;
+
+      line-height: 1.8;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 2rem;
+
+      border-top: 1px solid var(--border);
+
+      display: flex;
+
+      justify-content: space-between;
+
+      color: var(--muted);
+
+      font-size: 0.8rem;
+
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 800px) {
+
+      .nav-container {
+        padding: 1rem 1.25rem;
+      }
+
+      .nav-links {
+        gap: 1rem;
+      }
+
+      .nav-links li:nth-child(n+4) {
+        display: none;
+      }
+
+      .page-header {
+        padding: 5rem 1.25rem 4rem;
+      }
+
+      .contact-container {
+        padding: 3rem 1.25rem 5rem;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-card {
+        padding: 2rem;
+
+        min-height: 220px;
+      }
+
+      .contact-message {
+        padding: 3rem 0;
+      }
+
+      footer {
+        padding: 1.5rem 1.25rem;
+
+        flex-direction: column;
+
+        gap: 0.5rem;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       NAVIGATION
+  ========================= -->
+
+  <nav class="navbar">
+
+    <div class="nav-container">
+
+      <a href="index.html" class="logo">
+        MINJUN KIM
+      </a>
+
+      <ul class="nav-links">
+
+        <li>
+          <a href="index.html">Home</a>
+        </li>
+
+        <li>
+          <a href="projects.html">Projects</a>
+        </li>
+
+        <li>
+          <a href="research.html">Research</a>
+        </li>
+
+        <li>
+          <a href="activities.html">Activities</a>
+        </li>
+
+        <li>
+          <a href="contact.html" class="active">Contact</a>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </nav>
+
+
+  <!-- =========================
+       PAGE HEADER
+  ========================= -->
+
+  <header class="page-header">
+
+    <div class="eyebrow">
+      05 / Contact
+    </div>
+
+    <h1>
+      Let's<br>
+      connect.
+    </h1>
+
+    <p>
+      If you would like to learn more about my projects,
+      research, or interests, feel free to reach out.
+    </p>
+
+  </header>
+
+
+  <!-- =========================
+       CONTACT INFORMATION
+  ========================= -->
+
+  <main class="contact-container">
+
+    <div class="contact-grid">
+
+
+      <!-- EMAIL -->
+
+      <div class="contact-card">
+
+        <div class="contact-number">
+          01
+        </div>
+
+        <div class="contact-info">
+
+          <div class="contact-type">
+            EMAIL
+          </div>
+
+          <h2 class="contact-title">
+            Get in touch
+          </h2>
+
+          <p class="contact-description">
+            For questions, collaborations, or inquiries
+            about my work.
+          </p>
+
+          <!--
+            Replace YOUR_EMAIL with your actual email.
+          -->
+
+          <a
+            href="mailto:YOUR_EMAIL@example.com"
+            class="contact-link"
+          >
+            YOUR_EMAIL@example.com →
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <!-- GITHUB -->
+
+      <div class="contact-card">
+
+        <div class="contact-number">
+          02
+        </div>
+
+        <div class="contact-info">
+
+          <div class="contact-type">
+            GITHUB
+          </div>
+
+          <h2 class="contact-title">
+            See my code
+          </h2>
+
+          <p class="contact-description">
+            Explore my software projects, experiments,
+            and development work.
+          </p>
+
+          <a
+            href="https://github.com/minjun244187"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="contact-link"
+          >
+            github.com/minjun244187 →
+          </a>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+    <!-- =========================
+         FINAL MESSAGE
+    ========================= -->
+
+    <section class="contact-message">
+
+      <div class="contact-message-label">
+        Open to conversation
+      </div>
+
+      <h2>
+        Interested in what I'm building?
+      </h2>
+
+      <p>
+        I'm always interested in learning from others,
+        discussing technical ideas, and exploring new
+        projects and opportunities.
+      </p>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+    ========================= -->
+
+  <footer>
+
+    <span>
+      © 2026 Minjun Kim
+    </span>
+
+    <span>
+      MINJUN KIM
+    </span>
+
+  </footer>
+
+</body>
+</html>
