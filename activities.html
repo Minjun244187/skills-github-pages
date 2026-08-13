@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Activities — Minjun Kim</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    :root {
+      --background: #f7f7f5;
+      --surface: #ffffff;
+      --text: #171717;
+      --muted: #6b6b6b;
+      --border: #deded9;
+      --accent: #1769ff;
+      --accent-soft: #eaf1ff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      line-height: 1.6;
+    }
+
+    /* =========================
+       NAVIGATION
+    ========================= */
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+
+      width: 100%;
+
+      background: rgba(247, 247, 245, 0.88);
+      backdrop-filter: blur(14px);
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 1.1rem 2rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: "JetBrains Mono", monospace;
+
+      font-weight: 500;
+
+      font-size: 1rem;
+
+      color: var(--text);
+
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+
+      gap: 2rem;
+
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+
+      text-decoration: none;
+
+      font-size: 0.9rem;
+
+      font-weight: 500;
+
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-links .active {
+      color: var(--text);
+    }
+
+    /* =========================
+       PAGE HEADER
+    ========================= */
+
+    .page-header {
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 7rem 2rem 5rem;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--accent);
+
+      font-size: 0.8rem;
+
+      letter-spacing: 0.08em;
+
+      text-transform: uppercase;
+
+      margin-bottom: 1.5rem;
+    }
+
+    .page-header h1 {
+      font-size: clamp(3.5rem, 8vw, 7rem);
+
+      line-height: 0.95;
+
+      letter-spacing: -0.06em;
+
+      margin-bottom: 2rem;
+    }
+
+    .page-header p {
+      max-width: 700px;
+
+      color: var(--muted);
+
+      font-size: 1.1rem;
+
+      line-height: 1.8;
+    }
+
+    /* =========================
+       ACTIVITIES
+    ========================= */
+
+    .activities-container {
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 5rem 2rem 8rem;
+    }
+
+    .activity {
+      display: grid;
+
+      grid-template-columns: 180px 1fr;
+
+      gap: 4rem;
+
+      padding: 3.5rem 0;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .activity:last-child {
+      border-bottom: none;
+    }
+
+    /* =========================
+       DATE
+    ========================= */
+
+    .activity-date {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--muted);
+
+      font-size: 0.8rem;
+
+      padding-top: 0.5rem;
+    }
+
+    /* =========================
+       CONTENT
+    ========================= */
+
+    .activity-content {
+      max-width: 800px;
+    }
+
+    .activity-type {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--accent);
+
+      font-size: 0.75rem;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.06em;
+
+      margin-bottom: 0.8rem;
+    }
+
+    .activity-title {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+
+      line-height: 1.15;
+
+      letter-spacing: -0.04em;
+
+      margin-bottom: 1rem;
+    }
+
+    .activity-organization {
+      color: var(--muted);
+
+      font-size: 0.9rem;
+
+      margin-bottom: 1.5rem;
+    }
+
+    .activity-description {
+      color: var(--muted);
+
+      font-size: 1rem;
+
+      line-height: 1.9;
+
+      max-width: 700px;
+
+      margin-bottom: 2rem;
+    }
+
+    /* =========================
+       TAGS
+    ========================= */
+
+    .activity-tags {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 0.6rem;
+    }
+
+    .tag {
+      padding: 0.45rem 0.7rem;
+
+      border: 1px solid var(--border);
+
+      background: var(--surface);
+
+      color: var(--muted);
+
+      font-family: "JetBrains Mono", monospace;
+
+      font-size: 0.72rem;
+    }
+
+    /* =========================
+       HIGHLIGHT
+    ========================= */
+
+    .highlight {
+      margin-top: 2rem;
+
+      padding: 1.2rem 1.4rem;
+
+      border-left: 3px solid var(--accent);
+
+      background: var(--accent-soft);
+
+      color: var(--text);
+
+      font-size: 0.9rem;
+
+      line-height: 1.7;
+    }
+
+    /* =========================
+       FUTURE ACTIVITIES
+    ========================= */
+
+    .future-activities {
+      margin-top: 4rem;
+
+      padding: 3rem;
+
+      border: 1px dashed var(--border);
+
+      background: rgba(255, 255, 255, 0.45);
+
+      text-align: center;
+    }
+
+    .future-activities h2 {
+      font-size: 1.4rem;
+
+      margin-bottom: 0.8rem;
+    }
+
+    .future-activities p {
+      color: var(--muted);
+
+      font-size: 0.9rem;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 2rem;
+
+      border-top: 1px solid var(--border);
+
+      display: flex;
+
+      justify-content: space-between;
+
+      color: var(--muted);
+
+      font-size: 0.8rem;
+
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 800px) {
+
+      .nav-container {
+        padding: 1rem 1.25rem;
+      }
+
+      .nav-links {
+        gap: 1rem;
+      }
+
+      .nav-links li:nth-child(n+4) {
+        display: none;
+      }
+
+      .page-header {
+        padding: 5rem 1.25rem 4rem;
+      }
+
+      .activities-container {
+        padding: 3rem 1.25rem 5rem;
+      }
+
+      .activity {
+        grid-template-columns: 1fr;
+
+        gap: 1rem;
+
+        padding: 3rem 0;
+      }
+
+      .activity-date {
+        padding-top: 0;
+      }
+
+      .future-activities {
+        padding: 2rem 1.5rem;
+      }
+
+      footer {
+        padding: 1.5rem 1.25rem;
+
+        flex-direction: column;
+
+        gap: 0.5rem;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       NAVIGATION
+  ========================= -->
+
+  <nav class="navbar">
+
+    <div class="nav-container">
+
+      <a href="index.html" class="logo">
+        MINJUN KIM
+      </a>
+
+      <ul class="nav-links">
+
+        <li>
+          <a href="index.html">Home</a>
+        </li>
+
+        <li>
+          <a href="projects.html">Projects</a>
+        </li>
+
+        <li>
+          <a href="research.html">Research</a>
+        </li>
+
+        <li>
+          <a href="activities.html" class="active">Activities</a>
+        </li>
+
+        <li>
+          <a href="contact.html">Contact</a>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </nav>
+
+
+  <!-- =========================
+       PAGE HEADER
+  ========================= -->
+
+  <header class="page-header">
+
+    <div class="eyebrow">
+      04 / Activities
+    </div>
+
+    <h1>
+      Beyond the<br>
+      classroom.
+    </h1>
+
+    <p>
+      Activities, experiences, and communities that have shaped
+      the way I learn, work with others, and explore my interests.
+    </p>
+
+  </header>
+
+
+  <!-- =========================
+       ACTIVITIES
+  ========================= -->
+
+  <main class="activities-container">
+
+
+    <!-- =========================
+         ACTIVITY 01
+    ========================= -->
+
+    <article class="activity">
+
+      <div class="activity-date">
+        2026
+      </div>
+
+      <div class="activity-content">
+
+        <div class="activity-type">
+          ACTIVITY
+        </div>
+
+        <h2 class="activity-title">
+          Activity Title
+        </h2>
+
+        <div class="activity-organization">
+          Organization / School / Community
+        </div>
+
+        <p class="activity-description">
+          Describe what you did, your role, how long you
+          participated, and what you contributed.
+        </p>
+
+        <div class="activity-tags">
+
+          <span class="tag">
+            Leadership
+          </span>
+
+          <span class="tag">
+            Collaboration
+          </span>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- =========================
+         ACTIVITY 02
+    ========================= -->
+
+    <article class="activity">
+
+      <div class="activity-date">
+        2025–2026
+      </div>
+
+      <div class="activity-content">
+
+        <div class="activity-type">
+          ACTIVITY
+        </div>
+
+        <h2 class="activity-title">
+          Another Activity
+        </h2>
+
+        <div class="activity-organization">
+          Organization / School / Community
+        </div>
+
+        <p class="activity-description">
+          Add another meaningful activity here. Focus on
+          your responsibilities and the impact of your work
+          rather than simply listing participation.
+        </p>
+
+        <div class="activity-tags">
+
+          <span class="tag">
+            Service
+          </span>
+
+          <span class="tag">
+            Community
+          </span>
+
+        </div>
+
+      </div>
+
+    </article>
+
+
+    <!-- =========================
+         FUTURE ACTIVITIES
+    ========================= -->
+
+    <div class="future-activities">
+
+      <h2>
+        More experiences coming soon.
+      </h2>
+
+      <p>
+        New activities and experiences will be documented here
+        as I continue learning and getting involved.
+      </p>
+
+    </div>
+
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+
+    <span>
+      © 2026 Minjun Kim
+    </span>
+
+    <span>
+      Activities & Experience
+    </span>
+
+  </footer>
+
+</body>
+</html>
