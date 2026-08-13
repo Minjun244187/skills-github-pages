@@ -62,7 +62,6 @@
 
     .nav-container {
       max-width: 1200px;
-
       margin: auto;
 
       padding: 1.1rem 2rem;
@@ -74,19 +73,15 @@
 
     .logo {
       font-family: "JetBrains Mono", monospace;
-
       font-weight: 500;
-
       font-size: 1rem;
 
       color: var(--text);
-
       text-decoration: none;
     }
 
     .nav-links {
       display: flex;
-
       gap: 2rem;
 
       list-style: none;
@@ -98,7 +93,6 @@
       text-decoration: none;
 
       font-size: 0.9rem;
-
       font-weight: 500;
 
       transition: color 0.2s ease;
@@ -134,7 +128,6 @@
       font-size: 0.8rem;
 
       letter-spacing: 0.08em;
-
       text-transform: uppercase;
 
       margin-bottom: 1.5rem;
@@ -179,12 +172,12 @@
 
       gap: 4rem;
 
-      padding: 3.5rem 0;
+      padding: 4.5rem 0;
 
       border-bottom: 1px solid var(--border);
     }
 
-    .activity:last-child {
+    .activity:last-of-type {
       border-bottom: none;
     }
 
@@ -200,6 +193,16 @@
       font-size: 0.8rem;
 
       padding-top: 0.5rem;
+    }
+
+    .activity-date strong {
+      display: block;
+
+      color: var(--text);
+
+      font-size: 0.9rem;
+
+      margin-bottom: 0.3rem;
     }
 
     /* =========================
@@ -219,19 +222,19 @@
 
       text-transform: uppercase;
 
-      letter-spacing: 0.06em;
+      letter-spacing: 0.07em;
 
       margin-bottom: 0.8rem;
     }
 
     .activity-title {
-      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-size: clamp(2rem, 4vw, 3rem);
 
-      line-height: 1.15;
+      line-height: 1.1;
 
       letter-spacing: -0.04em;
 
-      margin-bottom: 1rem;
+      margin-bottom: 0.7rem;
     }
 
     .activity-organization {
@@ -239,7 +242,7 @@
 
       font-size: 0.9rem;
 
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.8rem;
     }
 
     .activity-description {
@@ -252,6 +255,26 @@
       max-width: 700px;
 
       margin-bottom: 2rem;
+    }
+
+    /* =========================
+       HIGHLIGHT
+    ========================= */
+
+    .highlight {
+      margin-top: 2rem;
+
+      padding: 1.2rem 1.4rem;
+
+      border-left: 3px solid var(--accent);
+
+      background: var(--accent-soft);
+
+      color: var(--text);
+
+      font-size: 0.9rem;
+
+      line-height: 1.7;
     }
 
     /* =========================
@@ -281,51 +304,53 @@
     }
 
     /* =========================
-       HIGHLIGHT
+       CONTINUITY
     ========================= */
 
-    .highlight {
-      margin-top: 2rem;
-
-      padding: 1.2rem 1.4rem;
-
-      border-left: 3px solid var(--accent);
-
-      background: var(--accent-soft);
-
-      color: var(--text);
-
-      font-size: 0.9rem;
-
-      line-height: 1.7;
-    }
-
-    /* =========================
-       FUTURE ACTIVITIES
-    ========================= */
-
-    .future-activities {
-      margin-top: 4rem;
+    .continuity {
+      margin-top: 5rem;
 
       padding: 3rem;
 
-      border: 1px dashed var(--border);
+      background: var(--text);
 
-      background: rgba(255, 255, 255, 0.45);
-
-      text-align: center;
+      color: white;
     }
 
-    .future-activities h2 {
-      font-size: 1.4rem;
+    .continuity-label {
+      font-family: "JetBrains Mono", monospace;
 
-      margin-bottom: 0.8rem;
+      color: #a8a8a8;
+
+      font-size: 0.75rem;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.07em;
+
+      margin-bottom: 1rem;
     }
 
-    .future-activities p {
-      color: var(--muted);
+    .continuity h2 {
+      max-width: 700px;
 
-      font-size: 0.9rem;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+
+      line-height: 1.15;
+
+      letter-spacing: -0.04em;
+
+      margin-bottom: 1rem;
+    }
+
+    .continuity p {
+      max-width: 650px;
+
+      color: #bdbdbd;
+
+      font-size: 0.95rem;
+
+      line-height: 1.8;
     }
 
     /* =========================
@@ -390,7 +415,7 @@
         padding-top: 0;
       }
 
-      .future-activities {
+      .continuity {
         padding: 2rem 1.5rem;
       }
 
@@ -465,8 +490,9 @@
     </h1>
 
     <p>
-      Activities, experiences, and communities that have shaped
-      the way I learn, work with others, and explore my interests.
+      Long-term commitments and experiences that have shaped
+      how I work with others, take responsibility, and contribute
+      to my community.
     </p>
 
   </header>
@@ -486,27 +512,44 @@
     <article class="activity">
 
       <div class="activity-date">
-        2026
+
+        <strong>2022–Present</strong>
+
+        Since Grade 9
+
       </div>
+
 
       <div class="activity-content">
 
         <div class="activity-type">
-          ACTIVITY
+          LEADERSHIP / MENTORING
         </div>
 
         <h2 class="activity-title">
-          Activity Title
+          Assistant Taekwondo Instructor
         </h2>
 
         <div class="activity-organization">
-          Organization / School / Community
+          Taekwondo Academy
         </div>
 
         <p class="activity-description">
-          Describe what you did, your role, how long you
-          participated, and what you contributed.
+          Since ninth grade, I have worked as an assistant
+          instructor, helping support classes and working
+          directly with younger students. My responsibilities
+          include assisting instructors during training,
+          helping students improve their technique, and
+          contributing to a focused and supportive training
+          environment.
         </p>
+
+        <div class="highlight">
+          Working with younger students has taught me that
+          leadership is not simply about giving instructions.
+          It requires patience, communication, consistency,
+          and the ability to adapt to different learners.
+        </div>
 
         <div class="activity-tags">
 
@@ -515,7 +558,15 @@
           </span>
 
           <span class="tag">
-            Collaboration
+            Mentoring
+          </span>
+
+          <span class="tag">
+            Communication
+          </span>
+
+          <span class="tag">
+            Responsibility
           </span>
 
         </div>
@@ -532,37 +583,60 @@
     <article class="activity">
 
       <div class="activity-date">
-        2025–2026
+
+        <strong>2023–Present</strong>
+
+        Since Grade 10
+
       </div>
+
 
       <div class="activity-content">
 
         <div class="activity-type">
-          ACTIVITY
+          STUDENT LEADERSHIP / COMMUNITY
         </div>
 
         <h2 class="activity-title">
-          Another Activity
+          ESOL Honors Society
         </h2>
 
         <div class="activity-organization">
-          Organization / School / Community
+          Student Leadership & Peer Support
         </div>
 
         <p class="activity-description">
-          Add another meaningful activity here. Focus on
-          your responsibilities and the impact of your work
-          rather than simply listing participation.
+          Through the ESOL Honors Society, I have taken on a
+          student leadership role supporting newly arrived
+          students as they adjust to a new school environment.
+          I help students navigate the academic and social
+          aspects of school while providing peer support
+          during their transition.
         </p>
+
+        <div class="highlight">
+          This experience has strengthened my ability to
+          communicate across different backgrounds and to
+          recognize the challenges students face when entering
+          an unfamiliar educational environment.
+        </div>
 
         <div class="activity-tags">
 
           <span class="tag">
-            Service
+            Peer Mentoring
+          </span>
+
+          <span class="tag">
+            Leadership
           </span>
 
           <span class="tag">
             Community
+          </span>
+
+          <span class="tag">
+            Communication
           </span>
 
         </div>
@@ -573,21 +647,28 @@
 
 
     <!-- =========================
-         FUTURE ACTIVITIES
+         CONTINUITY
     ========================= -->
 
-    <div class="future-activities">
+    <section class="continuity">
+
+      <div class="continuity-label">
+        Long-term involvement
+      </div>
 
       <h2>
-        More experiences coming soon.
+        Learning does not stop when
+        the classroom ends.
       </h2>
 
       <p>
-        New activities and experiences will be documented here
-        as I continue learning and getting involved.
+        Whether working with younger students, supporting
+        classmates, or exploring technical interests on my own,
+        I value experiences that allow me to learn through
+        responsibility, experimentation, and collaboration.
       </p>
 
-    </div>
+    </section>
 
 
   </main>
