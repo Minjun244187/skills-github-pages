@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Awards — Minjun Kim</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    :root {
+      --background: #f7f7f5;
+      --surface: #ffffff;
+      --text: #171717;
+      --muted: #6b6b6b;
+      --border: #deded9;
+      --accent: #1769ff;
+      --accent-soft: #eaf1ff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+
+      font-family: "Inter", sans-serif;
+
+      line-height: 1.6;
+    }
+
+    /* =========================
+       NAVIGATION
+    ========================= */
+
+    .navbar {
+      position: sticky;
+
+      top: 0;
+
+      z-index: 100;
+
+      width: 100%;
+
+      background: rgba(247, 247, 245, 0.88);
+
+      backdrop-filter: blur(14px);
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 1.1rem 2rem;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: "JetBrains Mono", monospace;
+
+      font-weight: 500;
+
+      font-size: 1rem;
+
+      color: var(--text);
+
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+
+      gap: 2rem;
+
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+
+      text-decoration: none;
+
+      font-size: 0.9rem;
+
+      font-weight: 500;
+
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-links .active {
+      color: var(--text);
+    }
+
+    /* =========================
+       PAGE HEADER
+    ========================= */
+
+    .page-header {
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 7rem 2rem 5rem;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--accent);
+
+      font-size: 0.8rem;
+
+      letter-spacing: 0.08em;
+
+      text-transform: uppercase;
+
+      margin-bottom: 1.5rem;
+    }
+
+    .page-header h1 {
+      font-size: clamp(3.5rem, 8vw, 7rem);
+
+      line-height: 0.95;
+
+      letter-spacing: -0.06em;
+
+      margin-bottom: 2rem;
+    }
+
+    .page-header p {
+      max-width: 700px;
+
+      color: var(--muted);
+
+      font-size: 1.1rem;
+
+      line-height: 1.8;
+    }
+
+    /* =========================
+       AWARDS CONTAINER
+    ========================= */
+
+    .awards-container {
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 5rem 2rem 8rem;
+    }
+
+    /* =========================
+       AWARD
+    ========================= */
+
+    .award {
+      display: grid;
+
+      grid-template-columns: 160px 1fr 120px;
+
+      gap: 3rem;
+
+      padding: 3.5rem 0;
+
+      border-bottom: 1px solid var(--border);
+
+      align-items: start;
+    }
+
+    .award:first-child {
+      padding-top: 0;
+    }
+
+    .award:last-of-type {
+      border-bottom: none;
+    }
+
+    /* =========================
+       YEAR
+    ========================= */
+
+    .award-year {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--muted);
+
+      font-size: 0.8rem;
+
+      padding-top: 0.4rem;
+    }
+
+    /* =========================
+       AWARD CONTENT
+    ========================= */
+
+    .award-content {
+      max-width: 750px;
+    }
+
+    .award-level {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--accent);
+
+      font-size: 0.72rem;
+
+      letter-spacing: 0.07em;
+
+      text-transform: uppercase;
+
+      margin-bottom: 0.8rem;
+    }
+
+    .award-title {
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+
+      line-height: 1.15;
+
+      letter-spacing: -0.04em;
+
+      margin-bottom: 0.7rem;
+    }
+
+    .award-organization {
+      color: var(--muted);
+
+      font-size: 0.9rem;
+
+      margin-bottom: 1.3rem;
+    }
+
+    .award-description {
+      color: var(--muted);
+
+      font-size: 0.95rem;
+
+      line-height: 1.8;
+
+      max-width: 680px;
+    }
+
+    /* =========================
+       CATEGORY
+    ========================= */
+
+    .award-category {
+      justify-self: end;
+
+      padding: 0.45rem 0.7rem;
+
+      background: var(--surface);
+
+      border: 1px solid var(--border);
+
+      color: var(--muted);
+
+      font-family: "JetBrains Mono", monospace;
+
+      font-size: 0.68rem;
+
+      text-align: center;
+    }
+
+    /* =========================
+       EMPTY STATE
+    ========================= */
+
+    .empty-state {
+      margin-top: 4rem;
+
+      padding: 3rem;
+
+      border: 1px dashed var(--border);
+
+      background: rgba(255, 255, 255, 0.45);
+
+      text-align: center;
+    }
+
+    .empty-state h2 {
+      font-size: 1.4rem;
+
+      margin-bottom: 0.8rem;
+    }
+
+    .empty-state p {
+      color: var(--muted);
+
+      font-size: 0.9rem;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 2rem;
+
+      border-top: 1px solid var(--border);
+
+      display: flex;
+
+      justify-content: space-between;
+
+      color: var(--muted);
+
+      font-size: 0.8rem;
+
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 800px) {
+
+      .nav-container {
+        padding: 1rem 1.25rem;
+      }
+
+      .nav-links {
+        gap: 1rem;
+      }
+
+      .nav-links li:nth-child(n+4) {
+        display: none;
+      }
+
+      .page-header {
+        padding: 5rem 1.25rem 4rem;
+      }
+
+      .awards-container {
+        padding: 3rem 1.25rem 5rem;
+      }
+
+      .award {
+        grid-template-columns: 1fr;
+
+        gap: 0.8rem;
+
+        padding: 3rem 0;
+      }
+
+      .award-category {
+        justify-self: start;
+      }
+
+      .empty-state {
+        padding: 2rem 1.5rem;
+      }
+
+      footer {
+        padding: 1.5rem 1.25rem;
+
+        flex-direction: column;
+
+        gap: 0.5rem;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       NAVIGATION
+  ========================= -->
+
+  <nav class="navbar">
+
+    <div class="nav-container">
+
+      <a href="index.html" class="logo">
+        MINJUN KIM
+      </a>
+
+      <ul class="nav-links">
+
+        <li>
+          <a href="index.html">
+            Home
+          </a>
+        </li>
+
+        <li>
+          <a href="projects.html">
+            Projects
+          </a>
+        </li>
+
+        <li>
+          <a href="activities.html">
+            Activities
+          </a>
+        </li>
+
+        <li>
+          <a href="academics.html">
+            Academics
+          </a>
+        </li>
+
+        <li>
+          <a href="awards.html" class="active">
+            Awards
+          </a>
+        </li>
+
+        <li>
+          <a href="contact.html">
+            Contact
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </nav>
+
+
+  <!-- =========================
+       HEADER
+  ========================= -->
+
+  <header class="page-header">
+
+    <div class="eyebrow">
+      06 / Awards
+    </div>
+
+    <h1>
+      Recognition<br>
+      & achievement.
+    </h1>
+
+    <p>
+      Awards and honors recognizing academic achievement,
+      technical interests, leadership, and participation.
+    </p>
+
+  </header>
+
+
+  <!-- =========================
+       AWARDS
+  ========================= -->
+
+  <main class="awards-container">
+
+
+    <!-- =========================
+         AWARD 01
+    ========================= -->
+
+    <article class="award">
+
+      <div class="award-year">
+        2026
+      </div>
+
+      <div class="award-content">
+
+        <div class="award-level">
+          AWARD / HONOR
+        </div>
+
+        <h2 class="award-title">
+          Award Name
+        </h2>
+
+        <div class="award-organization">
+          Organization or Institution
+        </div>
+
+        <p class="award-description">
+          Briefly describe what the award recognizes and,
+          if relevant, the work or achievement that led to
+          receiving it.
+        </p>
+
+      </div>
+
+      <div class="award-category">
+        Academic
+      </div>
+
+    </article>
+
+
+    <!-- =========================
+         AWARD 02
+    ========================= -->
+
+    <article class="award">
+
+      <div class="award-year">
+        2025
+      </div>
+
+      <div class="award-content">
+
+        <div class="award-level">
+          AWARD / HONOR
+        </div>
+
+        <h2 class="award-title">
+          Another Award
+        </h2>
+
+        <div class="award-organization">
+          Organization or Institution
+        </div>
+
+        <p class="award-description">
+          Add a concise explanation of the achievement,
+          competition, recognition, or selection.
+        </p>
+
+      </div>
+
+      <div class="award-category">
+        Leadership
+      </div>
+
+    </article>
+
+
+    <!-- =========================
+         EMPTY STATE
+    ========================= -->
+
+    <div class="empty-state">
+
+      <h2>
+        More achievements to come.
+      </h2>
+
+      <p>
+        Additional awards and recognitions will be added
+        as new milestones are reached.
+      </p>
+
+    </div>
+
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+
+    <span>
+      © 2026 Minjun Kim
+    </span>
+
+    <span>
+      Awards & Honors
+    </span>
+
+  </footer>
+
+</body>
+</html>
