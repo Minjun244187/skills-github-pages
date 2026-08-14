@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Academics — Minjun Kim</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    :root {
+      --background: #f7f7f5;
+      --surface: #ffffff;
+      --text: #171717;
+      --muted: #6b6b6b;
+      --border: #deded9;
+      --accent: #1769ff;
+      --accent-soft: #eaf1ff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      line-height: 1.6;
+    }
+
+    /* =========================
+       NAVIGATION
+    ========================= */
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+
+      background: rgba(247, 247, 245, 0.88);
+      backdrop-filter: blur(14px);
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: auto;
+
+      padding: 1.1rem 2rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      font-size: 1rem;
+
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+
+      text-decoration: none;
+
+      font-size: 0.9rem;
+      font-weight: 500;
+
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-links .active {
+      color: var(--text);
+    }
+
+    /* =========================
+       PAGE HEADER
+    ========================= */
+
+    .page-header {
+      max-width: 1200px;
+      margin: auto;
+
+      padding: 7rem 2rem 5rem;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--accent);
+
+      font-size: 0.8rem;
+
+      letter-spacing: 0.08em;
+
+      text-transform: uppercase;
+
+      margin-bottom: 1.5rem;
+    }
+
+    .page-header h1 {
+      font-size: clamp(3.5rem, 8vw, 7rem);
+
+      line-height: 0.95;
+
+      letter-spacing: -0.06em;
+
+      margin-bottom: 2rem;
+    }
+
+    .page-header p {
+      max-width: 720px;
+
+      color: var(--muted);
+
+      font-size: 1.1rem;
+
+      line-height: 1.8;
+    }
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .academics-container {
+      max-width: 1200px;
+      margin: auto;
+
+      padding: 5rem 2rem 8rem;
+    }
+
+    /* =========================
+       INTRO
+    ========================= */
+
+    .intro {
+      max-width: 800px;
+
+      padding-bottom: 5rem;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .intro-label {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--accent);
+
+      font-size: 0.75rem;
+
+      letter-spacing: 0.07em;
+
+      text-transform: uppercase;
+
+      margin-bottom: 1rem;
+    }
+
+    .intro h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+
+      line-height: 1.15;
+
+      letter-spacing: -0.04em;
+
+      margin-bottom: 1.2rem;
+    }
+
+    .intro p {
+      color: var(--muted);
+
+      font-size: 1rem;
+
+      line-height: 1.8;
+    }
+
+    /* =========================
+       COURSE SECTION
+    ========================= */
+
+    .course-section {
+      padding: 5rem 0;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .course-section-header {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: baseline;
+
+      margin-bottom: 2rem;
+    }
+
+    .course-section-label {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--accent);
+
+      font-size: 0.75rem;
+
+      letter-spacing: 0.07em;
+
+      text-transform: uppercase;
+    }
+
+    .course-section-title {
+      font-size: 2rem;
+
+      letter-spacing: -0.04em;
+    }
+
+    /* =========================
+       COURSE GRID
+    ========================= */
+
+    .course-grid {
+      display: grid;
+
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 1px;
+
+      background: var(--border);
+
+      border: 1px solid var(--border);
+    }
+
+    .course {
+      background: var(--surface);
+
+      padding: 1.5rem 1.7rem;
+
+      min-height: 90px;
+
+      display: flex;
+
+      align-items: center;
+
+      transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .course:hover {
+      background: var(--accent-soft);
+
+      transform: translateY(-2px);
+    }
+
+    .course-number {
+      width: 42px;
+
+      flex-shrink: 0;
+
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--muted);
+
+      font-size: 0.7rem;
+    }
+
+    .course-name {
+      font-size: 0.95rem;
+
+      font-weight: 600;
+
+      letter-spacing: -0.01em;
+    }
+
+    /* =========================
+       ACADEMIC FOCUS
+    ========================= */
+
+    .focus {
+      margin-top: 5rem;
+
+      padding: 4rem;
+
+      background: var(--text);
+
+      color: white;
+    }
+
+    .focus-label {
+      font-family: "JetBrains Mono", monospace;
+
+      color: #a8a8a8;
+
+      font-size: 0.75rem;
+
+      letter-spacing: 0.07em;
+
+      text-transform: uppercase;
+
+      margin-bottom: 1rem;
+    }
+
+    .focus h2 {
+      max-width: 800px;
+
+      font-size: clamp(2rem, 4vw, 3.5rem);
+
+      line-height: 1.12;
+
+      letter-spacing: -0.05em;
+
+      margin-bottom: 1.5rem;
+    }
+
+    .focus p {
+      max-width: 700px;
+
+      color: #bdbdbd;
+
+      font-size: 0.95rem;
+
+      line-height: 1.8;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      max-width: 1200px;
+      margin: auto;
+
+      padding: 2rem;
+
+      border-top: 1px solid var(--border);
+
+      display: flex;
+      justify-content: space-between;
+
+      color: var(--muted);
+
+      font-size: 0.8rem;
+
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 800px) {
+
+      .nav-container {
+        padding: 1rem 1.25rem;
+      }
+
+      .nav-links {
+        gap: 1rem;
+      }
+
+      .nav-links li:nth-child(n+4) {
+        display: none;
+      }
+
+      .page-header {
+        padding: 5rem 1.25rem 4rem;
+      }
+
+      .academics-container {
+        padding: 3rem 1.25rem 5rem;
+      }
+
+      .course-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .course-section-header {
+        display: block;
+      }
+
+      .course-section-label {
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .focus {
+        padding: 2.5rem 1.5rem;
+      }
+
+      footer {
+        padding: 1.5rem 1.25rem;
+
+        flex-direction: column;
+
+        gap: 0.5rem;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+
+  <!-- =========================
+       NAVIGATION
+  ========================= -->
+
+  <nav class="navbar">
+
+    <div class="nav-container">
+
+      <a href="index.html" class="logo">
+        MINJUN KIM
+      </a>
+
+      <ul class="nav-links">
+
+        <li>
+          <a href="index.html">
+            Home
+          </a>
+        </li>
+
+        <li>
+          <a href="projects.html">
+            Projects
+          </a>
+        </li>
+
+        <li>
+          <a href="activities.html">
+            Activities
+          </a>
+        </li>
+
+        <li>
+          <a href="academics.html" class="active">
+            Academics
+          </a>
+        </li>
+
+        <li>
+          <a href="awards.html">
+            Awards
+          </a>
+        </li>
+
+        <li>
+          <a href="contact.html">
+            Contact
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </nav>
+
+
+  <!-- =========================
+       PAGE HEADER
+  ========================= -->
+
+  <header class="page-header">
+
+    <div class="eyebrow">
+      05 / Academics
+    </div>
+
+    <h1>
+      Academic<br>
+      background.
+    </h1>
+
+    <p>
+      Coursework across computer science, mathematics,
+      physics, humanities, and the arts.
+    </p>
+
+  </header>
+
+
+  <!-- =========================
+       MAIN
+  ========================= -->
+
+  <main class="academics-container">
+
+
+    <!-- =========================
+         INTRO
+    ========================= -->
+
+    <section class="intro">
+
+      <div class="intro-label">
+        Academic Profile
+      </div>
+
+      <h2>
+        Building a foundation across
+        computing, mathematics, and science.
+      </h2>
+
+      <p>
+        My coursework combines computer science and advanced
+        mathematics with physics, humanities, languages,
+        and technology-focused classes.
+      </p>
+
+    </section>
+
+
+    <!-- =========================
+         COMPUTER SCIENCE
+    ========================= -->
+
+    <section class="course-section">
+
+      <div class="course-section-header">
+
+        <div class="course-section-label">
+          01 / Technology
+        </div>
+
+        <h2 class="course-section-title">
+          Computer Science & Technology
+        </h2>
+
+      </div>
+
+
+      <div class="course-grid">
+
+        <div class="course">
+          <span class="course-number">01</span>
+          <span class="course-name">
+            Foundations of Computer Science I
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">02</span>
+          <span class="course-name">
+            Foundations of Computer Science II
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">03</span>
+          <span class="course-name">
+            AP Computer Science Principles I
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">04</span>
+          <span class="course-name">
+            AP Computer Science Principles II
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">05</span>
+          <span class="course-name">
+            AP Computer Science A — Java I
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">06</span>
+          <span class="course-name">
+            AP Computer Science A — Java II
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">07</span>
+          <span class="course-name">
+            Foundations of Technology I
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">08</span>
+          <span class="course-name">
+            Foundations of Technology II
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">09</span>
+          <span class="course-name">
+            Advanced Design Applications
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">10</span>
+          <span class="course-name">
+            Advanced Technology Applications
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">11</span>
+          <span class="course-name">
+            Montgomery College — Computer Science I
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">12</span>
+          <span class="course-name">
+            Montgomery College — Computer Science II
+          </span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         MATHEMATICS
+    ========================= -->
+
+    <section class="course-section">
+
+      <div class="course-section-header">
+
+        <div class="course-section-label">
+          02 / Mathematics
+        </div>
+
+        <h2 class="course-section-title">
+          Mathematics
+        </h2>
+
+      </div>
+
+
+      <div class="course-grid">
+
+        <div class="course">
+          <span class="course-number">01</span>
+          <span class="course-name">Algebra I</span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">02</span>
+          <span class="course-name">Algebra II</span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">03</span>
+          <span class="course-name">Honors Geometry</span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">04</span>
+          <span class="course-name">Honors Precalculus</span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">05</span>
+          <span class="course-name">AP BC Calculus</span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">06</span>
+          <span class="course-name">
+            Montgomery College — Linear Algebra
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">07</span>
+          <span class="course-name">
+            Multivariable Calculus / Differential Equations
+          </span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         SCIENCE
+    ========================= -->
+
+    <section class="course-section">
+
+      <div class="course-section-header">
+
+        <div class="course-section-label">
+          03 / Science
+        </div>
+
+        <h2 class="course-section-title">
+          Physics & Science
+        </h2>
+
+      </div>
+
+
+      <div class="course-grid">
+
+        <div class="course">
+          <span class="course-number">01</span>
+          <span class="course-name">
+            Honors Biology
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">02</span>
+          <span class="course-name">
+            AP Physics C — Mechanics
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">03</span>
+          <span class="course-name">
+            AP Physics C — Electricity & Magnetism
+          </span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         ENGLISH
+    ========================= -->
+
+    <section class="course-section">
+
+      <div class="course-section-header">
+
+        <div class="course-section-label">
+          04 / English
+        </div>
+
+        <h2 class="course-section-title">
+          English & Literature
+        </h2>
+
+      </div>
+
+
+      <div class="course-grid">
+
+        <div class="course">
+          <span class="course-number">01</span>
+          <span class="course-name">
+            Honors English 9
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">02</span>
+          <span class="course-name">
+            Honors English 10
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">03</span>
+          <span class="course-name">
+            Montgomery College — Introduction to College Writing
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">04</span>
+          <span class="course-name">
+            AP Literature and Composition
+          </span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         SOCIAL STUDIES
+    ========================= -->
+
+    <section class="course-section">
+
+      <div class="course-section-header">
+
+        <div class="course-section-label">
+          05 / Humanities
+        </div>
+
+        <h2 class="course-section-title">
+          History & Social Studies
+        </h2>
+
+      </div>
+
+
+      <div class="course-grid">
+
+        <div class="course">
+          <span class="course-number">01</span>
+          <span class="course-name">
+            AP United States Government & Politics
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">02</span>
+          <span class="course-name">
+            AP United States History
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">03</span>
+          <span class="course-name">
+            AP World History
+          </span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         ECONOMICS
+    ========================= -->
+
+    <section class="course-section">
+
+      <div class="course-section-header">
+
+        <div class="course-section-label">
+          06 / Economics
+        </div>
+
+        <h2 class="course-section-title">
+          Economics & Social Science
+        </h2>
+
+      </div>
+
+
+      <div class="course-grid">
+
+        <div class="course">
+          <span class="course-number">01</span>
+          <span class="course-name">
+            AP Macroeconomics
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">02</span>
+          <span class="course-name">
+            AP Microeconomics
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">03</span>
+          <span class="course-name">
+            AP Psychology
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">04</span>
+          <span class="course-name">
+            Philosophy
+          </span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         FINE ARTS & LANGUAGE
+    ========================= -->
+
+    <section class="course-section">
+
+      <div class="course-section-header">
+
+        <div class="course-section-label">
+          07 / Arts & Languages
+        </div>
+
+        <h2 class="course-section-title">
+          Arts & Languages
+        </h2>
+
+      </div>
+
+
+      <div class="course-grid">
+
+        <div class="course">
+          <span class="course-number">01</span>
+          <span class="course-name">
+            Digital Art
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">02</span>
+          <span class="course-name">
+            Photography
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">03</span>
+          <span class="course-name">
+            Spanish I
+          </span>
+        </div>
+
+        <div class="course">
+          <span class="course-number">04</span>
+          <span class="course-name">
+            Spanish II
+          </span>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         ACADEMIC FOCUS
+    ========================= -->
+
+    <section class="focus">
+
+      <div class="focus-label">
+        Academic Focus
+      </div>
+
+      <h2>
+        Computing, mathematics,
+        physics, and engineering.
+      </h2>
+
+      <p>
+        My coursework has increasingly focused on the
+        intersection of computer science, mathematics,
+        physics, and technology. I am particularly interested
+        in understanding how mathematical and physical
+        principles can be translated into computational systems
+        and practical engineering projects.
+      </p>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+
+    <span>
+      © 2026 Minjun Kim
+    </span>
+
+    <span>
+      Academic Profile
+    </span>
+
+  </footer>
+
+</body>
+</html>
