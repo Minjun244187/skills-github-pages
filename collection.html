@@ -3,19 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Collection — Minjun Kim</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-    rel="stylesheet"
-  >
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
-
     :root {
       --background: #f7f7f5;
       --surface: #ffffff;
@@ -48,29 +42,29 @@
       text-decoration: none;
     }
 
+    main {
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 2rem 5rem;
+    }
+
     /* =========================
        NAVIGATION
     ========================= */
-
     .navbar {
       position: sticky;
       top: 0;
       z-index: 100;
-
       width: 100%;
-
       background: rgba(247, 247, 245, 0.88);
       backdrop-filter: blur(14px);
-
       border-bottom: 1px solid var(--border);
     }
 
     .nav-container {
       max-width: 1200px;
       margin: auto;
-
       padding: 1.1rem 2rem;
-
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -80,48 +74,37 @@
       font-family: "JetBrains Mono", monospace;
       font-weight: 500;
       font-size: 1rem;
-
       color: var(--text);
-      text-decoration: none;
     }
 
     .nav-links {
       display: flex;
       gap: 2rem;
-
       list-style: none;
     }
 
     .nav-links a {
       color: var(--muted);
-
-      text-decoration: none;
-
       font-size: 0.9rem;
       font-weight: 500;
-
       transition: color 0.2s ease;
     }
 
-    .nav-links a:hover {
-      color: var(--text);
-    }
-
+    .nav-links a:hover,
     .nav-links .active {
       color: var(--text);
     }
 
     /* =========================
-
        PAGE HEADER
     ========================= */
-
     .page-header {
       max-width: 1200px;
       margin: auto;
-      padding: 7rem 2rem 5rem; 
+      padding: 7rem 2rem 5rem;
       border-bottom: 1px solid var(--border);
     }
+
     .eyebrow {
       font-family: "JetBrains Mono", monospace;
       color: var(--accent);
@@ -140,10 +123,7 @@
 
     .page-header p {
       max-width: 650px;
-
-
       color: var(--muted);
-
       font-size: 1.1rem;
       line-height: 1.8;
     }
@@ -151,34 +131,24 @@
     /* =========================
        COLLECTION
     ========================= */
-
     .collection {
       padding-top: 4.5rem;
     }
 
     .collection-item {
       display: grid;
-
       grid-template-columns: 180px 1fr;
-
       gap: 4rem;
-
-      padding: 0 0 5rem;
-
+      padding-bottom: 5rem;
       margin-bottom: 5rem;
-
       border-bottom: 1px solid var(--border);
     }
 
     .collection-number {
       color: var(--muted);
-
       font-family: "JetBrains Mono", monospace;
-
       font-size: 0.72rem;
-
       letter-spacing: 0.08em;
-
       text-transform: uppercase;
     }
 
@@ -188,170 +158,117 @@
 
     .collection-label {
       margin-bottom: 0.6rem;
-
       color: var(--accent);
-
       font-family: "JetBrains Mono", monospace;
-
       font-size: 0.72rem;
-
       letter-spacing: 0.08em;
-
       text-transform: uppercase;
     }
 
     .collection-content h2 {
       margin: 0 0 1rem;
-
       font-size: clamp(1.8rem, 3vw, 2.6rem);
-
       line-height: 1.1;
-
       letter-spacing: -0.04em;
     }
 
     .collection-description {
       max-width: 700px;
-
       margin: 0 0 2.5rem;
-
       color: var(--muted);
-
       font-size: 0.98rem;
     }
 
     /* =========================
        GALLERY
     ========================= */
-
     .gallery {
       display: grid;
-
       grid-template-columns: minmax(0, 1fr) minmax(300px, 430px);
-
       gap: 1.5rem;
-
       align-items: start;
     }
 
     /* =========================
        THUMBNAILS
     ========================= */
-
     .thumbnail-grid {
       display: grid;
-
       grid-template-columns: repeat(10, 42px);
-
       gap: 2px;
-
       align-content: start;
-
       max-height: 440px;
-
       overflow-y: auto;
       overflow-x: hidden;
-
       padding: 2px;
     }
 
     .thumbnail {
       width: 42px;
       height: 42px;
-
       padding: 0;
-
       border: 0;
-
       background: #e8e8e4;
-
       overflow: hidden;
-
       cursor: pointer;
-
-      transition:
-        opacity 0.15s ease,
-        transform 0.15s ease;
+      transition: opacity 0.15s ease, transform 0.15s ease;
     }
 
-    .thumbnail:hover {
+    .thumbnail:hover,
+    .thumbnail:focus {
       opacity: 0.75;
-
       transform: scale(1.08);
-
       z-index: 2;
+      outline: none;
     }
 
     .thumbnail img {
       display: block;
-
       width: 100%;
       height: 100%;
-
       object-fit: cover;
     }
 
     /* =========================
        PREVIEW
     ========================= */
-
     .preview-panel {
       width: 100%;
-
       aspect-ratio: 4 / 3;
-
       background: #ecece8;
-
       border: 1px solid var(--border);
-
       overflow: hidden;
-
       position: sticky;
-
       top: 100px;
     }
 
     .preview-panel img {
       display: block;
-
       width: 100%;
       height: 100%;
-
       object-fit: contain;
-
       background: #eeeeeb;
     }
 
     /* =========================
        FOOTER
     ========================= */
-
     footer {
       max-width: 1200px;
-
       margin: auto;
-
       padding: 2rem;
-
       border-top: 1px solid var(--border);
-
       display: flex;
-
       justify-content: space-between;
-
       color: var(--muted);
-
       font-size: 0.8rem;
-
       font-family: "JetBrains Mono", monospace;
     }
 
     /* =========================
        MOBILE
     ========================= */
-
     @media (max-width: 800px) {
-
       .nav-container {
         padding: 1rem 1.25rem;
       }
@@ -378,11 +295,8 @@
 
       .collection-item {
         grid-template-columns: 1fr;
-
         gap: 1rem;
-
         padding-bottom: 4rem;
-
         margin-bottom: 4rem;
       }
 
@@ -396,13 +310,11 @@
 
       .thumbnail-grid {
         grid-template-columns: repeat(10, 42px);
-
         max-height: 220px;
       }
 
       .preview-panel {
         position: static;
-
         order: -1;
       }
 
@@ -412,7 +324,6 @@
     }
 
     @media (max-width: 520px) {
-
       .nav-container {
         align-items: flex-start;
       }
@@ -425,845 +336,154 @@
         grid-template-columns: repeat(8, 42px);
       }
     }
-
   </style>
 </head>
 
 <body>
 
-  <!-- =========================
-       NAVIGATION
-  ========================= -->
-
+  <!-- NAVIGATION -->
   <nav class="navbar">
-
     <div class="nav-container">
-
-      <a href="index.html" class="logo">
-        MINJUN KIM
-      </a>
-
+      <a href="index.html" class="logo">MINJUN KIM</a>
       <ul class="nav-links">
-
-        <li>
-          <a href="index.html">
-            Home
-          </a>
-        </li>
-
-        <li>
-          <a href="projects.html">
-            Projects
-          </a>
-        </li>
-
-        <li>
-          <a href="activities.html">
-            Activities
-          </a>
-        </li>
-
-        <li>
-          <a href="collection.html" class="active">
-            Collection
-          </a>
-        </li>
-
-        <li>
-          <a href="academics.html">
-            Academics
-          </a>
-        </li>
-
-        <li>
-          <a href="awards.html">
-            Awards
-          </a>
-        </li>
-
-        <li>
-          <a href="contact.html">
-            Contact
-          </a>
-        </li>
-
+        <li><a href="index.html">Home</a></li>
+        <li><a href="projects.html">Projects</a></li>
+        <li><a href="activities.html">Activities</a></li>
+        <li><a href="collection.html" class="active">Collection</a></li>
+        <li><a href="academics.html">Academics</a></li>
+        <li><a href="awards.html">Awards</a></li>
+        <li><a href="contact.html">Contact</a></li>
       </ul>
-
     </div>
-
   </nav>
-    <!-- =========================
-       PAGE HEADER
-  ========================= -->
 
+  <!-- PAGE HEADER -->
   <header class="page-header">
-
-    <div class="eyebrow">
-      04 / Collection
-    </div>
-
-    <h1>
-      Things I collect.
-    </h1>
-
+    <div class="eyebrow">04 / Collection</div>
+    <h1>Things I collect.</h1>
     <p>
       A collection of vintage machines, recordings, cameras,
       and other objects that reflect my interest in technology,
       engineering, and the history of everyday life.
     </p>
-
   </header>
 
-  <!-- =========================
-       MAIN
-  ========================= -->
-
+  <!-- MAIN -->
   <main>
-
-    <!-- =========================
-         COLLECTION
-    ========================= -->
-
     <section class="collection">
 
-
-      <!-- ==================================================
-            01. HAND-CRANK PHONOGRAPHS
-      =================================================== -->
-
+      <!-- 01. HAND-CRANK PHONOGRAPHS -->
       <article class="collection-item">
-        
-        <div class="collection-number">
-          Collection 01
-        </div>
-        
+        <div class="collection-number">Collection 01</div>
         <div class="collection-content">
-        
-          <div class="collection-label">
-            Mechanical Sound
-          </div>
-        
-          <h2>
-            Hand-crank Phonographs
-          </h2>
-        
+          <div class="collection-label">Mechanical Sound</div>
+          <h2>Hand-crank Phonographs</h2>
           <p class="collection-description">
             Mechanical phonographs that operate without electricity.
             Each machine is powered by winding a spring by hand,
             which drives the turntable and reproduces sound mechanically.
           </p>
-        
+
           <div class="gallery">
-        
             <div class="thumbnail-grid">
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/11.jpg"
-                  alt="Hand-crank phonograph 01"
-                  data-preview="images/collection/phonographs/01.jpg"
-                >
-              </div>
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/12.jpg"
-                  alt="Hand-crank phonograph 02"
-                  data-preview="images/collection/phonographs/02.jpg"
-                >
-              </div>
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/13.jpg"
-                  alt="Hand-crank phonograph 03"
-                  data-preview="images/collection/phonographs/03.jpg"
-                >
-              </div>
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/14.jpg"
-                  alt="Hand-crank phonograph 04"
-                  data-preview="images/collection/phonographs/04.jpg"
-                >
-              </div>
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/15.jpg"
-                  alt="Hand-crank phonograph 04"
-                  data-preview="images/collection/phonographs/04.jpg"
-                >
-              </div>
-              <div class="thumbnail">
-                <img
-                  src="images/01/16.jpg"
-                  alt="Hand-crank phonograph 04"
-                  data-preview="images/collection/phonographs/04.jpg"
-                >
-              </div>
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/21.jpg"
-                  alt="Hand-crank phonograph 05"
-                  data-preview="images/collection/phonographs/05.jpg"
-                >
-              </div>
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/22.jpg"
-                  alt="Hand-crank phonograph 06"
-                  data-preview="images/collection/phonographs/06.jpg"
-                >
-              </div>
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/23.jpg"
-                  alt="Hand-crank phonograph 07"
-                  data-preview="images/collection/phonographs/07.jpg"
-                >
-              </div>
-              <div class="thumbnail">
-                <img
-                  src="images/01/24.jpg"
-                  alt="Hand-crank phonograph 07"
-                  data-preview="images/collection/phonographs/07.jpg"
-                >
-              </div>
-              <div class="thumbnail">
-                <img
-                  src="images/01/25.jpg"
-                  alt="Hand-crank phonograph 07"
-                  data-preview="images/collection/phonographs/07.jpg"
-                >
-              </div>        
-              <div class="thumbnail">
-                <img
-                  src="images/01/26.jpg"
-                  alt="Hand-crank phonograph 08"
-                  data-preview="images/collection/phonographs/08.jpg"
-                >
-              </div>
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/31.jpg"
-                  alt="Hand-crank phonograph 09"
-                  data-preview="images/collection/phonographs/09.jpg"
-                >
-              </div>
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/32.jpg"
-                  alt="Hand-crank phonograph 10"
-                  data-preview="images/collection/phonographs/10.jpg"
-                >
-              </div>
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/33.jpg"
-                  alt="Hand-crank phonograph 11"
-                  data-preview="images/collection/phonographs/11.jpg"
-                >
-              </div>
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/34.jpg"
-                  alt="Hand-crank phonograph 12"
-                  data-preview="images/collection/phonographs/12.jpg"
-                >
-              </div>
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/331.jpg"
-                  alt="Hand-crank phonograph 13"
-                  data-preview="images/collection/phonographs/13.jpg"
-                >
-              </div>
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/332.jpg"
-                  alt="Hand-crank phonograph 14"
-                  data-preview="images/collection/phonographs/14.jpg"
-                >
-              </div>
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/새파일명6.jpg"
-                  alt="Hand-crank phonograph 15"
-                  data-preview="images/collection/phonographs/15.jpg"
-                >
-              </div>
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/새파일명7.jpg"
-                  alt="Hand-crank phonograph 16"
-                  data-preview="images/collection/phonographs/16.jpg"
-                >
-              </div>
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/새파일명8.jpg"
-                  alt="Hand-crank phonograph 17"
-                  data-preview="images/collection/phonographs/17.jpg"
-                >
-              </div>
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/새파일명9.jpg"
-                  alt="Hand-crank phonograph 18"
-                  data-preview="images/collection/phonographs/18.jpg"
-                >
-              </div>
-        
-              <div class="thumbnail">
-                <img
-                  src="images/01/새파일명10.jpg"
-                  alt="Hand-crank phonograph 19"
-                  data-preview="images/collection/phonographs/19.jpg"
-                >
-              </div>
-        
+              <button class="thumbnail" type="button">
+                <img src="images/01/11.jpg" alt="Hand-crank phonograph 01" data-preview="images/01/11.jpg">
+              </button>
+              <button class="thumbnail" type="button">
+                <img src="images/01/12.jpg" alt="Hand-crank phonograph 02" data-preview="images/01/12.jpg">
+              </button>
+              <button class="thumbnail" type="button">
+                <img src="images/01/13.jpg" alt="Hand-crank phonograph 03" data-preview="images/01/13.jpg">
+              </button>
+              <button class="thumbnail" type="button">
+                <img src="images/01/14.jpg" alt="Hand-crank phonograph 04" data-preview="images/01/14.jpg">
+              </button>
+              <button class="thumbnail" type="button">
+                <img src="images/01/15.jpg" alt="Hand-crank phonograph 05" data-preview="images/01/15.jpg">
+              </button>
+              <button class="thumbnail" type="button">
+                <img src="images/01/16.jpg" alt="Hand-crank phonograph 06" data-preview="images/01/16.jpg">
+              </button>
+              <button class="thumbnail" type="button">
+                <img src="images/01/21.jpg" alt="Hand-crank phonograph 07" data-preview="images/01/21.jpg">
+              </button>
+              <button class="thumbnail" type="button">
+                <img src="images/01/22.jpg" alt="Hand-crank phonograph 08" data-preview="images/01/22.jpg">
+              </button>
+              <button class="thumbnail" type="button">
+                <img src="images/01/23.jpg" alt="Hand-crank phonograph 09" data-preview="images/01/23.jpg">
+              </button>
+              <button class="thumbnail" type="button">
+                <img src="images/01/24.jpg" alt="Hand-crank phonograph 10" data-preview="images/01/24.jpg">
+              </button>
             </div>
-        
+
             <div class="preview-panel">
-              <img
-                src="images/01/12.jpg"
-                alt="Hand-crank phonograph preview"
-              >
+              <img src="images/01/11.jpg" alt="Hand-crank phonograph preview">
             </div>
-        
           </div>
-        
         </div>
-        
       </article>
 
-      <!-- ==================================================
-            02. SP RECORDS
-      =================================================== -->
-
+      <!-- 02. SP RECORDS -->
       <article class="collection-item">
-
-        <div class="collection-number">
-          Collection 02
-        </div>
-
+        <div class="collection-number">Collection 02</div>
         <div class="collection-content">
-
-          <div class="collection-label">
-            Recorded Sound
-          </div>
-
-          <h2>
-            SP Records
-          </h2>
-
+          <div class="collection-label">Recorded Sound</div>
+          <h2>SP Records</h2>
           <p class="collection-description">
             SP records and shellac discs from the early history
             of commercial recorded sound, collected for their
             recordings, labels, artwork, and historical character.
           </p>
 
-
           <div class="gallery">
-
             <div class="thumbnail-grid">
-
-              <div class="thumbnail">
-                <img
-                  src="images/02/01.jpg"
-                  alt="SP record 01"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/02/02.jpg"
-                  alt="SP record 02"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/02/03.jpg"
-                  alt="SP record 03"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/02/04.jpg"
-                  alt="SP record 04"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/02/05.jpg"
-                  alt="SP record 05"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/02/06.jpg"
-                  alt="SP record 06"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/02/07.jpg"
-                  alt="SP record 07"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/02/08.jpg"
-                  alt="SP record 08"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/02/09.jpg"
-                  alt="SP record 09"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/02/10.jpg"
-                  alt="SP record 10"
-                >
-              </div>
-
+              <button class="thumbnail" type="button">
+                <img src="images/02/01.jpg" alt="SP record 01">
+              </button>
+              <button class="thumbnail" type="button">
+                <img src="images/02/02.jpg" alt="SP record 02">
+              </button>
+              <button class="thumbnail" type="button">
+                <img src="images/02/03.jpg" alt="SP record 03">
+              </button>
             </div>
 
             <div class="preview-panel">
-              <img
-                src="images/02/04.jpg"
-                alt="SP record preview"
-              >
+              <img src="images/02/01.jpg" alt="SP record preview">
             </div>
-
           </div>
-
         </div>
-
       </article>
-
-
-      <!-- ==================================================
-            03. VINTAGE FILM CAMERAS
-      =================================================== -->
-
-      <article class="collection-item">
-
-        <div class="collection-number">
-          Collection 03
-        </div>
-
-        <div class="collection-content">
-
-          <div class="collection-label">
-            Photography
-          </div>
-
-          <h2>
-            Vintage Film Cameras
-          </h2>
-
-          <p class="collection-description">
-            Mechanical film cameras from different eras, collected
-            for their lenses, mechanisms, industrial design,
-            and the history of photography.
-          </p>
-
-
-          <div class="gallery">
-
-            <div class="thumbnail-grid">
-
-              <div class="thumbnail">
-                <img
-                  src="images/03/01.jpg"
-                  alt="Vintage film camera 01"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/03/02.jpg"
-                  alt="Vintage film camera 02"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/03/03.jpg"
-                  alt="Vintage film camera 03"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/03/04.jpg"
-                  alt="Vintage film camera 04"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/03/05.jpg"
-                  alt="Vintage film camera 05"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/03/06.jpg"
-                  alt="Vintage film camera 06"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/03/07.jpg"
-                  alt="Vintage film camera 07"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/03/08.jpg"
-                  alt="Vintage film camera 08"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/03/09.jpg"
-                  alt="Vintage film camera 09"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/03/10.jpg"
-                  alt="Vintage film camera 10"
-                >
-              </div>
-
-            </div>
-
-            <div class="preview-panel">
-              <img
-                src="images/03/05.jpg"
-                alt="Vintage film camera preview"
-              >
-            </div>
-
-          </div>
-
-        </div>
-
-      </article>
-
-
-      <!-- ==================================================
-            04. TYPEWRITERS
-      =================================================== -->
-
-      <article class="collection-item">
-
-        <div class="collection-number">
-          Collection 04
-        </div>
-
-        <div class="collection-content">
-
-          <div class="collection-label">
-            Mechanical Writing
-          </div>
-
-          <h2>
-            Typewriters
-          </h2>
-
-          <p class="collection-description">
-            Vintage typewriters and mechanical writing machines,
-            collected for their engineering, craftsmanship,
-            and tactile design.
-          </p>
-
-
-          <div class="gallery">
-
-            <div class="thumbnail-grid">
-
-              <div class="thumbnail">
-                <img
-                  src="images/04/01.jpg"
-                  alt="Typewriter 01"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/04/02.jpg"
-                  alt="Typewriter 02"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/04/03.jpg"
-                  alt="Typewriter 03"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/04/04.jpg"
-                  alt="Typewriter 04"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/04/05.jpg"
-                  alt="Typewriter 05"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/04/06.jpg"
-                  alt="Typewriter 06"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/04/07.jpg"
-                  alt="Typewriter 07"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/04/08.jpg"
-                  alt="Typewriter 08"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/04/09.jpg"
-                  alt="Typewriter 09"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/04/10.jpg"
-                  alt="Typewriter 10"
-                >
-              </div>
-
-            </div>
-
-            <div class="preview-panel">
-              <img
-                src="images/04/01.jpg"
-                alt="Typewriter preview"
-              >
-            </div>
-
-          </div>
-
-        </div>
-
-      </article>
-
-
-      <!-- ==================================================
-            05. OTHER COLLECTIONS
-      =================================================== -->
-
-      <article class="collection-item">
-
-        <div class="collection-number">
-          Collection 05
-        </div>
-
-        <div class="collection-content">
-
-          <div class="collection-label">
-            Other
-          </div>
-
-          <h2>
-            Other Collections
-          </h2>
-
-          <p class="collection-description">
-            Other vintage objects, machines, and pieces of technology
-            that reflect an interest in how people designed, built,
-            and used technology in earlier eras.
-          </p>
-
-
-          <div class="gallery">
-
-            <div class="thumbnail-grid">
-
-              <div class="thumbnail">
-                <img
-                  src="images/05/01.jpg"
-                  alt="Other collection 01"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/05/02.jpg"
-                  alt="Other collection 02"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/05/03.jpg"
-                  alt="Other collection 03"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/05/04.jpg"
-                  alt="Other collection 04"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/05/05.jpg"
-                  alt="Other collection 05"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/05/06.jpg"
-                  alt="Other collection 06"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/05/07.jpg"
-                  alt="Other collection 07"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/05/08.jpg"
-                  alt="Other collection 08"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/05/09.jpg"
-                  alt="Other collection 09"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/05/10.jpg"
-                  alt="Other collection 10"
-                >
-              </div>
-
-            </div>
-
-            <div class="preview-panel">
-              <img
-                src="images/05/01.jpg"
-                alt="Other collection preview"
-              >
-            </div>
-
-          </div>
-
-        </div>
-
-      </article>
-
 
     </section>
-
   </main>
 
-
-  <!-- =========================
-       FOOTER
-  ========================= -->
-
+  <!-- FOOTER -->
   <footer>
-
     © 2026 Minjun Kim
-
   </footer>
 
-
-  <!-- =========================
-       HOVER PREVIEW
-  ========================= -->
-
+  <!-- SCRIPT -->
   <script>
-
     document.querySelectorAll(".gallery").forEach((gallery) => {
+      const previewImg = gallery.querySelector(".preview-panel img");
+      const thumbnails = gallery.querySelectorAll(".thumbnail img");
 
-      const preview = gallery.querySelector(".preview-panel img");
+      const updatePreview = (imgElement) => {
+        const targetSrc = imgElement.getAttribute("data-preview") || imgElement.src;
+        previewImg.src = targetSrc;
+        previewImg.alt = imgElement.alt;
+      };
 
-      const thumbnails =
-        gallery.querySelectorAll(".thumbnail img");
-
-      thumbnails.forEach((thumbnail) => {
-
-        thumbnail.addEventListener("mouseenter", () => {
-
-          preview.src = thumbnail.src;
-
-          preview.alt = thumbnail.alt;
-
+      thumbnails.forEach((img) => {
+        // 마우스 호버 및 클릭/터치 대응
+        ["mouseenter", "click"].forEach((eventType) => {
+          img.addEventListener(eventType, () => updatePreview(img));
         });
-
       });
-
     });
-
   </script>
-
 </body>
 </html>
