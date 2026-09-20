@@ -131,6 +131,7 @@
       padding: 7rem 2rem 5rem; 
       border-bottom: 1px solid var(--border);
     }
+
     .eyebrow {
       font-family: "JetBrains Mono", monospace;
       color: var(--accent);
@@ -150,12 +151,10 @@
     .page-header p {
       max-width: 650px;
 
-
-
       color: var(--muted);
 
       font-size: 1.1rem;
-	  line-height: 1.8;
+      line-height: 1.8;
     }
 
     /* =========================
@@ -241,12 +240,19 @@
 
       gap: 1.5rem;
 
-      align-items: start;
+      align-items: stretch;
     }
 
     /* =========================
        THUMBNAILS
     ========================= */
+
+    .thumbnail-area {
+      height: 100%;
+
+      display: flex;
+      flex-direction: column;
+    }
 
     .thumbnail-grid {
       display: grid;
@@ -299,6 +305,26 @@
       height: 100%;
 
       object-fit: cover;
+    }
+
+    /* =========================
+       IMAGE DESCRIPTION
+    ========================= */
+
+    .image-description {
+      margin-top: auto;
+
+      padding-top: 1rem;
+
+      min-height: 70px;
+
+      border-bottom: 1px solid var(--border);
+
+      color: var(--muted);
+
+      font-size: 0.85rem;
+
+      line-height: 1.6;
     }
 
     /* =========================
@@ -406,6 +432,10 @@
         max-height: 220px;
       }
 
+      .image-description {
+        margin-top: 1rem;
+      }
+
       .preview-panel {
         position: static;
 
@@ -499,42 +529,39 @@
 
   </nav>
 
-	<!-- =========================
-	     PAGE HEADER
-	========================= -->
-	
-	<header class="page-header">
-	
-	  <div class="eyebrow">
-	    04 / Collection
-	  </div>
-	
-	  <h1>
-	    Things I collect.
-	  </h1>
-	
-	  <p>
-	    A collection of vintage machines, recordings, cameras,
-	    and other objects that reflect my interest in technology,
-	    engineering, and the history of everyday life.
-	  </p>
-	
-	</header>
+  <!-- =========================
+       PAGE HEADER
+  ========================= -->
+
+  <header class="page-header">
+
+    <div class="eyebrow">
+      04 / Collection
+    </div>
+
+    <h1>
+      Things I collect.
+    </h1>
+
+    <p>
+      A collection of vintage machines, recordings, cameras,
+      and other objects that reflect my interest in technology,
+      engineering, and the history of everyday life.
+    </p>
+
+  </header>
+
   <!-- =========================
        MAIN
   ========================= -->
 
   <main>
 
-
-
-
     <!-- =========================
          COLLECTION
     ========================= -->
 
     <section class="collection">
-
 
       <!-- ==================================================
             01. HAND-CRANK PHONOGRAPHS
@@ -564,188 +591,223 @@
         
           <div class="gallery">
         
-            <div class="thumbnail-grid">
+            <div class="thumbnail-area">
+
+              <div class="thumbnail-grid">
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/11.jpg"
-                  alt="Hand-crank phonograph 01"
-                  data-preview="images/collection/phonographs/01.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/11.jpg"
+                    alt="Hand-crank phonograph 01"
+                    data-preview="images/collection/phonographs/01.jpg"
+                    data-description="Hand-crank phonograph — Image 01."
+                  >
+                </div>
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/12.jpg"
-                  alt="Hand-crank phonograph 02"
-                  data-preview="images/collection/phonographs/02.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/12.jpg"
+                    alt="Hand-crank phonograph 02"
+                    data-preview="images/collection/phonographs/02.jpg"
+                    data-description="Hand-crank phonograph — Image 02."
+                  >
+                </div>
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/13.jpg"
-                  alt="Hand-crank phonograph 03"
-                  data-preview="images/collection/phonographs/03.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/13.jpg"
+                    alt="Hand-crank phonograph 03"
+                    data-preview="images/collection/phonographs/03.jpg"
+                    data-description="Hand-crank phonograph — Image 03."
+                  >
+                </div>
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/14.jpg"
-                  alt="Hand-crank phonograph 04"
-                  data-preview="images/collection/phonographs/04.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/14.jpg"
+                    alt="Hand-crank phonograph 04"
+                    data-preview="images/collection/phonographs/04.jpg"
+                    data-description="Hand-crank phonograph — Image 04."
+                  >
+                </div>
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/15.jpg"
-                  alt="Hand-crank phonograph 04"
-                  data-preview="images/collection/phonographs/04.jpg"
-                >
-              </div>
-              <div class="thumbnail">
-                <img
-                  src="images/01/16.jpg"
-                  alt="Hand-crank phonograph 04"
-                  data-preview="images/collection/phonographs/04.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/15.jpg"
+                    alt="Hand-crank phonograph 05"
+                    data-preview="images/collection/phonographs/04.jpg"
+                    data-description="Hand-crank phonograph — Image 05."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/01/16.jpg"
+                    alt="Hand-crank phonograph 06"
+                    data-preview="images/collection/phonographs/04.jpg"
+                    data-description="Hand-crank phonograph — Image 06."
+                  >
+                </div>
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/21.jpg"
-                  alt="Hand-crank phonograph 05"
-                  data-preview="images/collection/phonographs/05.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/21.jpg"
+                    alt="Hand-crank phonograph 07"
+                    data-preview="images/collection/phonographs/05.jpg"
+                    data-description="Hand-crank phonograph — Image 07."
+                  >
+                </div>
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/22.jpg"
-                  alt="Hand-crank phonograph 06"
-                  data-preview="images/collection/phonographs/06.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/22.jpg"
+                    alt="Hand-crank phonograph 08"
+                    data-preview="images/collection/phonographs/06.jpg"
+                    data-description="Hand-crank phonograph — Image 08."
+                  >
+                </div>
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/23.jpg"
-                  alt="Hand-crank phonograph 07"
-                  data-preview="images/collection/phonographs/07.jpg"
-                >
-              </div>
-              <div class="thumbnail">
-                <img
-                  src="images/01/24.jpg"
-                  alt="Hand-crank phonograph 07"
-                  data-preview="images/collection/phonographs/07.jpg"
-                >
-              </div>
-              <div class="thumbnail">
-                <img
-                  src="images/01/25.jpg"
-                  alt="Hand-crank phonograph 07"
-                  data-preview="images/collection/phonographs/07.jpg"
-                >
-              </div>        
-              <div class="thumbnail">
-                <img
-                  src="images/01/26.jpg"
-                  alt="Hand-crank phonograph 08"
-                  data-preview="images/collection/phonographs/08.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/23.jpg"
+                    alt="Hand-crank phonograph 09"
+                    data-preview="images/collection/phonographs/07.jpg"
+                    data-description="Hand-crank phonograph — Image 09."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/01/24.jpg"
+                    alt="Hand-crank phonograph 10"
+                    data-preview="images/collection/phonographs/07.jpg"
+                    data-description="Hand-crank phonograph — Image 10."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/01/25.jpg"
+                    alt="Hand-crank phonograph 11"
+                    data-preview="images/collection/phonographs/07.jpg"
+                    data-description="Hand-crank phonograph — Image 11."
+                  >
+                </div>
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/31.jpg"
-                  alt="Hand-crank phonograph 09"
-                  data-preview="images/collection/phonographs/09.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/26.jpg"
+                    alt="Hand-crank phonograph 12"
+                    data-preview="images/collection/phonographs/08.jpg"
+                    data-description="Hand-crank phonograph — Image 12."
+                  >
+                </div>
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/32.jpg"
-                  alt="Hand-crank phonograph 10"
-                  data-preview="images/collection/phonographs/10.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/31.jpg"
+                    alt="Hand-crank phonograph 13"
+                    data-preview="images/collection/phonographs/09.jpg"
+                    data-description="Hand-crank phonograph — Image 13."
+                  >
+                </div>
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/33.jpg"
-                  alt="Hand-crank phonograph 11"
-                  data-preview="images/collection/phonographs/11.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/32.jpg"
+                    alt="Hand-crank phonograph 14"
+                    data-preview="images/collection/phonographs/10.jpg"
+                    data-description="Hand-crank phonograph — Image 14."
+                  >
+                </div>
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/34.jpg"
-                  alt="Hand-crank phonograph 12"
-                  data-preview="images/collection/phonographs/12.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/33.jpg"
+                    alt="Hand-crank phonograph 15"
+                    data-preview="images/collection/phonographs/11.jpg"
+                    data-description="Hand-crank phonograph — Image 15."
+                  >
+                </div>
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/331.jpg"
-                  alt="Hand-crank phonograph 13"
-                  data-preview="images/collection/phonographs/13.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/34.jpg"
+                    alt="Hand-crank phonograph 16"
+                    data-preview="images/collection/phonographs/12.jpg"
+                    data-description="Hand-crank phonograph — Image 16."
+                  >
+                </div>
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/332.jpg"
-                  alt="Hand-crank phonograph 14"
-                  data-preview="images/collection/phonographs/14.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/331.jpg"
+                    alt="Hand-crank phonograph 17"
+                    data-preview="images/collection/phonographs/13.jpg"
+                    data-description="Hand-crank phonograph — Image 17."
+                  >
+                </div>
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/새파일명6.jpg"
-                  alt="Hand-crank phonograph 15"
-                  data-preview="images/collection/phonographs/15.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/332.jpg"
+                    alt="Hand-crank phonograph 18"
+                    data-preview="images/collection/phonographs/14.jpg"
+                    data-description="Hand-crank phonograph — Image 18."
+                  >
+                </div>
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/새파일명7.jpg"
-                  alt="Hand-crank phonograph 16"
-                  data-preview="images/collection/phonographs/16.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/새파일명6.jpg"
+                    alt="Hand-crank phonograph 19"
+                    data-preview="images/collection/phonographs/15.jpg"
+                    data-description="Hand-crank phonograph — Image 19."
+                  >
+                </div>
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/새파일명8.jpg"
-                  alt="Hand-crank phonograph 17"
-                  data-preview="images/collection/phonographs/17.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/새파일명7.jpg"
+                    alt="Hand-crank phonograph 20"
+                    data-preview="images/collection/phonographs/16.jpg"
+                    data-description="Hand-crank phonograph — Image 20."
+                  >
+                </div>
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/새파일명9.jpg"
-                  alt="Hand-crank phonograph 18"
-                  data-preview="images/collection/phonographs/18.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/새파일명8.jpg"
+                    alt="Hand-crank phonograph 21"
+                    data-preview="images/collection/phonographs/17.jpg"
+                    data-description="Hand-crank phonograph — Image 21."
+                  >
+                </div>
         
-              <div class="thumbnail">
-                <img
-                  src="images/01/새파일명10.jpg"
-                  alt="Hand-crank phonograph 19"
-                  data-preview="images/collection/phonographs/19.jpg"
-                >
-              </div>
+                <div class="thumbnail">
+                  <img
+                    src="images/01/새파일명9.jpg"
+                    alt="Hand-crank phonograph 22"
+                    data-preview="images/collection/phonographs/18.jpg"
+                    data-description="Hand-crank phonograph — Image 22."
+                  >
+                </div>
         
+                <div class="thumbnail">
+                  <img
+                    src="images/01/새파일명10.jpg"
+                    alt="Hand-crank phonograph 23"
+                    data-preview="images/collection/phonographs/19.jpg"
+                    data-description="Hand-crank phonograph — Image 23."
+                  >
+                </div>
+        
+              </div>
+
+              <div class="image-description">
+                Hover over an image to see its description.
+              </div>
+
             </div>
         
             <div class="preview-panel">
@@ -760,6 +822,7 @@
         </div>
         
       </article>
+
 
       <!-- ==================================================
             02. SP RECORDS
@@ -787,79 +850,96 @@
             recordings, labels, artwork, and historical character.
           </p>
 
-
           <div class="gallery">
 
-            <div class="thumbnail-grid">
+            <div class="thumbnail-area">
 
-              <div class="thumbnail">
-                <img
-                  src="images/02/01.jpg"
-                  alt="SP record 01"
-                >
+              <div class="thumbnail-grid">
+
+                <div class="thumbnail">
+                  <img
+                    src="images/02/01.jpg"
+                    alt="SP record 01"
+                    data-description="SP record — Image 01."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/02/02.jpg"
+                    alt="SP record 02"
+                    data-description="SP record — Image 02."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/02/03.jpg"
+                    alt="SP record 03"
+                    data-description="SP record — Image 03."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/02/04.jpg"
+                    alt="SP record 04"
+                    data-description="SP record — Image 04."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/02/05.jpg"
+                    alt="SP record 05"
+                    data-description="SP record — Image 05."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/02/06.jpg"
+                    alt="SP record 06"
+                    data-description="SP record — Image 06."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/02/07.jpg"
+                    alt="SP record 07"
+                    data-description="SP record — Image 07."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/02/08.jpg"
+                    alt="SP record 08"
+                    data-description="SP record — Image 08."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/02/09.jpg"
+                    alt="SP record 09"
+                    data-description="SP record — Image 09."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/02/10.jpg"
+                    alt="SP record 10"
+                    data-description="SP record — Image 10."
+                  >
+                </div>
+
               </div>
 
-              <div class="thumbnail">
-                <img
-                  src="images/02/02.jpg"
-                  alt="SP record 02"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/02/03.jpg"
-                  alt="SP record 03"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/02/04.jpg"
-                  alt="SP record 04"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/02/05.jpg"
-                  alt="SP record 05"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/02/06.jpg"
-                  alt="SP record 06"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/02/07.jpg"
-                  alt="SP record 07"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/02/08.jpg"
-                  alt="SP record 08"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/02/09.jpg"
-                  alt="SP record 09"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/02/10.jpg"
-                  alt="SP record 10"
-                >
+              <div class="image-description">
+                Hover over an image to see its description.
               </div>
 
             </div>
@@ -904,79 +984,96 @@
             and the history of photography.
           </p>
 
-
           <div class="gallery">
 
-            <div class="thumbnail-grid">
+            <div class="thumbnail-area">
 
-              <div class="thumbnail">
-                <img
-                  src="images/03/01.jpg"
-                  alt="Vintage film camera 01"
-                >
+              <div class="thumbnail-grid">
+
+                <div class="thumbnail">
+                  <img
+                    src="images/03/01.jpg"
+                    alt="Vintage film camera 01"
+                    data-description="Vintage film camera — Image 01."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/03/02.jpg"
+                    alt="Vintage film camera 02"
+                    data-description="Vintage film camera — Image 02."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/03/03.jpg"
+                    alt="Vintage film camera 03"
+                    data-description="Vintage film camera — Image 03."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/03/04.jpg"
+                    alt="Vintage film camera 04"
+                    data-description="Vintage film camera — Image 04."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/03/05.jpg"
+                    alt="Vintage film camera 05"
+                    data-description="Vintage film camera — Image 05."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/03/06.jpg"
+                    alt="Vintage film camera 06"
+                    data-description="Vintage film camera — Image 06."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/03/07.jpg"
+                    alt="Vintage film camera 07"
+                    data-description="Vintage film camera — Image 07."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/03/08.jpg"
+                    alt="Vintage film camera 08"
+                    data-description="Vintage film camera — Image 08."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/03/09.jpg"
+                    alt="Vintage film camera 09"
+                    data-description="Vintage film camera — Image 09."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/03/10.jpg"
+                    alt="Vintage film camera 10"
+                    data-description="Vintage film camera — Image 10."
+                  >
+                </div>
+
               </div>
 
-              <div class="thumbnail">
-                <img
-                  src="images/03/02.jpg"
-                  alt="Vintage film camera 02"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/03/03.jpg"
-                  alt="Vintage film camera 03"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/03/04.jpg"
-                  alt="Vintage film camera 04"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/03/05.jpg"
-                  alt="Vintage film camera 05"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/03/06.jpg"
-                  alt="Vintage film camera 06"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/03/07.jpg"
-                  alt="Vintage film camera 07"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/03/08.jpg"
-                  alt="Vintage film camera 08"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/03/09.jpg"
-                  alt="Vintage film camera 09"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/03/10.jpg"
-                  alt="Vintage film camera 10"
-                >
+              <div class="image-description">
+                Hover over an image to see its description.
               </div>
 
             </div>
@@ -1021,79 +1118,96 @@
             and tactile design.
           </p>
 
-
           <div class="gallery">
 
-            <div class="thumbnail-grid">
+            <div class="thumbnail-area">
 
-              <div class="thumbnail">
-                <img
-                  src="images/04/01.jpg"
-                  alt="Typewriter 01"
-                >
+              <div class="thumbnail-grid">
+
+                <div class="thumbnail">
+                  <img
+                    src="images/04/01.jpg"
+                    alt="Typewriter 01"
+                    data-description="Typewriter — Image 01."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/04/02.jpg"
+                    alt="Typewriter 02"
+                    data-description="Typewriter — Image 02."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/04/03.jpg"
+                    alt="Typewriter 03"
+                    data-description="Typewriter — Image 03."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/04/04.jpg"
+                    alt="Typewriter 04"
+                    data-description="Typewriter — Image 04."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/04/05.jpg"
+                    alt="Typewriter 05"
+                    data-description="Typewriter — Image 05."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/04/06.jpg"
+                    alt="Typewriter 06"
+                    data-description="Typewriter — Image 06."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/04/07.jpg"
+                    alt="Typewriter 07"
+                    data-description="Typewriter — Image 07."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/04/08.jpg"
+                    alt="Typewriter 08"
+                    data-description="Typewriter — Image 08."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/04/09.jpg"
+                    alt="Typewriter 09"
+                    data-description="Typewriter — Image 09."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/04/10.jpg"
+                    alt="Typewriter 10"
+                    data-description="Typewriter — Image 10."
+                  >
+                </div>
+
               </div>
 
-              <div class="thumbnail">
-                <img
-                  src="images/04/02.jpg"
-                  alt="Typewriter 02"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/04/03.jpg"
-                  alt="Typewriter 03"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/04/04.jpg"
-                  alt="Typewriter 04"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/04/05.jpg"
-                  alt="Typewriter 05"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/04/06.jpg"
-                  alt="Typewriter 06"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/04/07.jpg"
-                  alt="Typewriter 07"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/04/08.jpg"
-                  alt="Typewriter 08"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/04/09.jpg"
-                  alt="Typewriter 09"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/04/10.jpg"
-                  alt="Typewriter 10"
-                >
+              <div class="image-description">
+                Hover over an image to see its description.
               </div>
 
             </div>
@@ -1138,79 +1252,96 @@
             and used technology in earlier eras.
           </p>
 
-
           <div class="gallery">
 
-            <div class="thumbnail-grid">
+            <div class="thumbnail-area">
 
-              <div class="thumbnail">
-                <img
-                  src="images/05/01.jpg"
-                  alt="Other collection 01"
-                >
+              <div class="thumbnail-grid">
+
+                <div class="thumbnail">
+                  <img
+                    src="images/05/01.jpg"
+                    alt="Other collection 01"
+                    data-description="Other collection — Image 01."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/05/02.jpg"
+                    alt="Other collection 02"
+                    data-description="Other collection — Image 02."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/05/03.jpg"
+                    alt="Other collection 03"
+                    data-description="Other collection — Image 03."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/05/04.jpg"
+                    alt="Other collection 04"
+                    data-description="Other collection — Image 04."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/05/05.jpg"
+                    alt="Other collection 05"
+                    data-description="Other collection — Image 05."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/05/06.jpg"
+                    alt="Other collection 06"
+                    data-description="Other collection — Image 06."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/05/07.jpg"
+                    alt="Other collection 07"
+                    data-description="Other collection — Image 07."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/05/08.jpg"
+                    alt="Other collection 08"
+                    data-description="Other collection — Image 08."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/05/09.jpg"
+                    alt="Other collection 09"
+                    data-description="Other collection — Image 09."
+                  >
+                </div>
+
+                <div class="thumbnail">
+                  <img
+                    src="images/05/10.jpg"
+                    alt="Other collection 10"
+                    data-description="Other collection — Image 10."
+                  >
+                </div>
+
               </div>
 
-              <div class="thumbnail">
-                <img
-                  src="images/05/02.jpg"
-                  alt="Other collection 02"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/05/03.jpg"
-                  alt="Other collection 03"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/05/04.jpg"
-                  alt="Other collection 04"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/05/05.jpg"
-                  alt="Other collection 05"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/05/06.jpg"
-                  alt="Other collection 06"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/05/07.jpg"
-                  alt="Other collection 07"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/05/08.jpg"
-                  alt="Other collection 08"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/05/09.jpg"
-                  alt="Other collection 09"
-                >
-              </div>
-
-              <div class="thumbnail">
-                <img
-                  src="images/05/10.jpg"
-                  alt="Other collection 10"
-                >
+              <div class="image-description">
+                Hover over an image to see its description.
               </div>
 
             </div>
@@ -1227,7 +1358,6 @@
         </div>
 
       </article>
-
 
     </section>
 
@@ -1255,6 +1385,9 @@
 
       const preview = gallery.querySelector(".preview-panel img");
 
+      const description =
+        gallery.querySelector(".image-description");
+
       const thumbnails =
         gallery.querySelectorAll(".thumbnail img");
 
@@ -1265,6 +1398,9 @@
           preview.src = thumbnail.src;
 
           preview.alt = thumbnail.alt;
+
+          description.textContent =
+            thumbnail.dataset.description;
 
         });
 
