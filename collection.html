@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Projects — Minjun Kim</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    :root {
+      --background: #f7f7f5;
+      --surface: #ffffff;
+      --text: #171717;
+      --muted: #6b6b6b;
+      --border: #deded9;
+      --accent: #1769ff;
+      --accent-soft: #eaf1ff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      line-height: 1.6;
+    }
+
+    /* =========================
+       NAVIGATION
+    ========================= */
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+
+      width: 100%;
+
+      background: rgba(247, 247, 245, 0.88);
+      backdrop-filter: blur(14px);
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: auto;
+
+      padding: 1.1rem 2rem;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
+      font-size: 1rem;
+
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+
+      font-size: 0.9rem;
+      font-weight: 500;
+
+      transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-links .active {
+      color: var(--text);
+    }
+
+    /* =========================
+       PAGE HEADER
+    ========================= */
+
+    .page-header {
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 7rem 2rem 5rem;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--accent);
+
+      font-size: 0.8rem;
+
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+
+      margin-bottom: 1.5rem;
+    }
+
+    .page-header h1 {
+      font-size: clamp(3.5rem, 8vw, 7rem);
+
+      line-height: 0.95;
+
+      letter-spacing: -0.06em;
+
+      margin-bottom: 2rem;
+    }
+
+    .page-header p {
+      max-width: 650px;
+
+      color: var(--muted);
+
+      font-size: 1.1rem;
+
+      line-height: 1.8;
+    }
+
+    /* =========================
+       PROJECT SECTION
+    ========================= */
+
+    .projects-container {
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 5rem 2rem 8rem;
+    }
+
+    .project {
+      display: grid;
+
+      grid-template-columns: 180px 1fr;
+
+      gap: 4rem;
+
+      padding: 4rem 0;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project:last-child {
+      border-bottom: none;
+    }
+
+    .project-number {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--muted);
+
+      font-size: 0.8rem;
+
+      padding-top: 0.5rem;
+    }
+
+    .project-content {
+      max-width: 800px;
+    }
+
+    .project-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+
+      letter-spacing: -0.04em;
+
+      line-height: 1.1;
+
+      margin-bottom: 0.8rem;
+    }
+
+    .project-type {
+      color: var(--accent);
+
+      font-family: "JetBrains Mono", monospace;
+
+      font-size: 0.8rem;
+
+      margin-bottom: 1.5rem;
+    }
+
+    .project-description {
+      color: var(--muted);
+
+      font-size: 1rem;
+
+      line-height: 1.9;
+
+      max-width: 700px;
+
+      margin-bottom: 2rem;
+    }
+
+    /* =========================
+       PROJECT META
+    ========================= */
+
+    .project-meta {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 0.6rem;
+
+      margin-bottom: 2rem;
+    }
+
+    .tag {
+      padding: 0.45rem 0.7rem;
+
+      border: 1px solid var(--border);
+
+      background: var(--surface);
+
+      font-family: "JetBrains Mono", monospace;
+
+      font-size: 0.72rem;
+
+      color: var(--muted);
+    }
+
+    /* =========================
+       PROJECT ACTIONS
+    ========================= */
+
+    .project-actions {
+      display: flex;
+
+      gap: 1rem;
+
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-block;
+
+      padding: 0.8rem 1.2rem;
+
+      border: 1px solid var(--text);
+
+      text-decoration: none;
+
+      font-size: 0.85rem;
+
+      font-weight: 600;
+
+      transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .button.primary {
+      background: var(--text);
+
+      color: white;
+    }
+
+    .button.secondary {
+      color: var(--text);
+
+      background: transparent;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button.primary:hover {
+      background: var(--accent);
+
+      border-color: var(--accent);
+    }
+
+    .button.secondary:hover {
+      background: var(--text);
+
+      color: white;
+    }
+
+    /* =========================
+       EMPTY PROJECT / FUTURE
+    ========================= */
+
+    .future-projects {
+      margin-top: 4rem;
+
+      padding: 3rem;
+
+      border: 1px dashed var(--border);
+
+      background: rgba(255, 255, 255, 0.45);
+
+      text-align: center;
+    }
+
+    .future-projects h2 {
+      font-size: 1.4rem;
+
+      margin-bottom: 0.8rem;
+    }
+
+    .future-projects p {
+      color: var(--muted);
+
+      font-size: 0.9rem;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      max-width: 1200px;
+
+      margin: auto;
+
+      padding: 2rem;
+
+      border-top: 1px solid var(--border);
+
+      display: flex;
+
+      justify-content: space-between;
+
+      color: var(--muted);
+
+      font-size: 0.8rem;
+
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 800px) {
+
+      .nav-container {
+        padding: 1rem 1.25rem;
+      }
+
+      .nav-links {
+        gap: 1rem;
+      }
+
+      .nav-links li:nth-child(n+4) {
+        display: none;
+      }
+
+      .page-header {
+        padding: 5rem 1.25rem 4rem;
+      }
+
+      .projects-container {
+        padding: 3rem 1.25rem 5rem;
+      }
+
+      .project {
+        grid-template-columns: 1fr;
+
+        gap: 1rem;
+
+        padding: 3rem 0;
+      }
+
+      .project-number {
+        padding-top: 0;
+      }
+
+      .future-projects {
+        padding: 2rem 1.5rem;
+      }
+
+      footer {
+        padding: 1.5rem 1.25rem;
+
+        flex-direction: column;
+
+        gap: 0.5rem;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- =========================
+       NAVIGATION
+  ========================= -->
+
+  <!-- =========================
+       NAVIGATION
+  ========================= -->
+
+  <nav class="navbar">
+
+    <div class="nav-container">
+
+      <a href="index.html" class="logo">
+        MINJUN KIM
+      </a>
+
+      <ul class="nav-links">
+
+        <li>
+          <a href="index.html">
+            Home
+          </a>
+        </li>
+
+        <li>
+          <a href="projects.html" class="active">
+            Projects
+          </a>
+        </li>
+
+        <li>
+          <a href="activities.html">
+            Activities
+          </a>
+        </li>
+        <li>
+          <a href="collection.html">
+            Collection
+          </a>
+        </li>
+        <li>
+          <a href="academics.html">
+            Academics
+          </a>
+        </li>
+
+        <li>
+          <a href="awards.html">
+            Awards
+          </a>
+        </li>
+
+        <li>
+          <a href="contact.html">
+            Contact
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </nav>
+
+
+
+  <!-- =========================
+       HEADER
+  ========================= -->
+
+  <header class="page-header">
+
+    <div class="eyebrow">
+      02 / Projects
+    </div>
+
+    <h1>
+      Things I've<br>
+      built.
+    </h1>
+
+    <p>
+      A collection of software, engineering experiments, and
+      technical projects that reflect how I learn:
+      by building, testing, breaking, and improving.
+    </p>
+
+  </header>
+
+
+  <!-- =========================
+       PROJECTS
+  ========================= -->
+
+  <main class="projects-container">
+
+
+    <!-- PROJECT 01 -->
+
+    <article class="project">
+
+      <div class="project-number">
+        PROJECT 01
+      </div>
+
+      <div class="project-content">
+
+        <div class="project-type">
+          SOFTWARE / GAME DEVELOPMENT
+        </div>
+
+        <h2 class="project-title">
+          Economia
+        </h2>
+
+        <p class="project-description">
+          Economia is an interactive game designed to explore
+          fundamental concepts of economics through gameplay.
+          The project combines programming, game mechanics,
+          and educational concepts into an interactive experience.
+        </p>
+
+        <div class="project-meta">
+
+          <span class="tag">
+            Java
+          </span>
+
+          <span class="tag">
+            Game Development
+          </span>
+
+          <span class="tag">
+            Economics
+          </span>
+
+        </div>
+
+        <div class="project-actions">
+
+          <a
+            href="https://drive.google.com/uc?export=download&id=1MEsmphi2ivE1HOl5od0jGpNFDRLRMra7"
+            target="_blank"
+            class="button primary"
+          >
+            Download Project →
+          </a>
+
+        </div>
+
+      </div>
+
+    </article>
+
+    <!-- PROJECT 02 -->
+
+<article class="project">
+
+  <div class="project-number">
+    PROJECT 02
+  </div>
+
+  <div class="project-content">
+
+    <div class="project-type">
+      SOFTWARE / INTERACTIVE LEARNING
+    </div>
+
+    <h2 class="project-title">
+      Morse Code Learning Game
+    </h2>
+
+    <p class="project-description">
+      An interactive learning application that turns Morse code
+      practice into a game-like experience. The project is designed
+      to help users learn and recognize Morse code through repeated
+      challenges, immediate feedback, and progressively more
+      difficult exercises.
+    </p>
+
+    <div class="project-meta">
+
+      <span class="tag">
+        Morse Code
+      </span>
+
+      <span class="tag">
+        Game Development
+      </span>
+
+      <span class="tag">
+        Interactive Learning
+      </span>
+
+      <span class="tag">
+        Communications
+      </span>
+
+    </div>
+
+    <div class="project-actions">
+
+      <a
+            href="https://drive.google.com/uc?export=download&id=1MEsmphi2ivE1HOl5od0jGpNFDRLRMra7"
+            target="_blank"
+            class="button primary"
+          >
+            Download Project →
+      </a>
+
+      <a
+        href="#"
+        class="button primary"
+      >
+        View Project →
+      </a>
+
+    </div>
+
+  </div>
+
+</article>
+
+
+    <!-- FUTURE PROJECTS -->
+
+    <div class="future-projects">
+
+      <h2>
+        More projects coming soon.
+      </h2>
+
+      <p>
+        This portfolio will continue to grow as I build,
+        experiment, and document new projects.
+      </p>
+
+    </div>
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer>
+
+    <span>
+      © 2026 Minjun Kim
+    </span>
+
+    <span>
+      Engineering • Computer Science
+    </span>
+
+  </footer>
+
+</body>
+</html>
