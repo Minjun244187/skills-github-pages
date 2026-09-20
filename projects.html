@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Collection — Minjun Kim</title>
+  <title>Projects — Minjun Kim</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -152,15 +152,192 @@
     }
 
     /* =========================
-       COLLECTION CONTENT
+       PROJECT SECTION
     ========================= */
 
-    .collection-container {
+    .projects-container {
       max-width: 1200px;
 
       margin: auto;
 
       padding: 5rem 2rem 8rem;
+    }
+
+    .project {
+      display: grid;
+
+      grid-template-columns: 180px 1fr;
+
+      gap: 4rem;
+
+      padding: 4rem 0;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project:last-child {
+      border-bottom: none;
+    }
+
+    .project-number {
+      font-family: "JetBrains Mono", monospace;
+
+      color: var(--muted);
+
+      font-size: 0.8rem;
+
+      padding-top: 0.5rem;
+    }
+
+    .project-content {
+      max-width: 800px;
+    }
+
+    .project-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+
+      letter-spacing: -0.04em;
+
+      line-height: 1.1;
+
+      margin-bottom: 0.8rem;
+    }
+
+    .project-type {
+      color: var(--accent);
+
+      font-family: "JetBrains Mono", monospace;
+
+      font-size: 0.8rem;
+
+      margin-bottom: 1.5rem;
+    }
+
+    .project-description {
+      color: var(--muted);
+
+      font-size: 1rem;
+
+      line-height: 1.9;
+
+      max-width: 700px;
+
+      margin-bottom: 2rem;
+    }
+
+    /* =========================
+       PROJECT META
+    ========================= */
+
+    .project-meta {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 0.6rem;
+
+      margin-bottom: 2rem;
+    }
+
+    .tag {
+      padding: 0.45rem 0.7rem;
+
+      border: 1px solid var(--border);
+
+      background: var(--surface);
+
+      font-family: "JetBrains Mono", monospace;
+
+      font-size: 0.72rem;
+
+      color: var(--muted);
+    }
+
+    /* =========================
+       PROJECT ACTIONS
+    ========================= */
+
+    .project-actions {
+      display: flex;
+
+      gap: 1rem;
+
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-block;
+
+      padding: 0.8rem 1.2rem;
+
+      border: 1px solid var(--text);
+
+      text-decoration: none;
+
+      font-size: 0.85rem;
+
+      font-weight: 600;
+
+      transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .button.primary {
+      background: var(--text);
+
+      color: white;
+    }
+
+    .button.secondary {
+      color: var(--text);
+
+      background: transparent;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button.primary:hover {
+      background: var(--accent);
+
+      border-color: var(--accent);
+    }
+
+    .button.secondary:hover {
+      background: var(--text);
+
+      color: white;
+    }
+
+    /* =========================
+       EMPTY PROJECT / FUTURE
+    ========================= */
+
+    .future-projects {
+      margin-top: 4rem;
+
+      padding: 3rem;
+
+      border: 1px dashed var(--border);
+
+      background: rgba(255, 255, 255, 0.45);
+
+      text-align: center;
+    }
+
+    .future-projects h2 {
+      font-size: 1.4rem;
+
+      margin-bottom: 0.8rem;
+    }
+
+    .future-projects p {
+      color: var(--muted);
+
+      font-size: 0.9rem;
     }
 
     /* =========================
@@ -209,8 +386,24 @@
         padding: 5rem 1.25rem 4rem;
       }
 
-      .collection-container {
+      .projects-container {
         padding: 3rem 1.25rem 5rem;
+      }
+
+      .project {
+        grid-template-columns: 1fr;
+
+        gap: 1rem;
+
+        padding: 3rem 0;
+      }
+
+      .project-number {
+        padding-top: 0;
+      }
+
+      .future-projects {
+        padding: 2rem 1.5rem;
       }
 
       footer {
@@ -226,6 +419,10 @@
 </head>
 
 <body>
+
+  <!-- =========================
+       NAVIGATION
+  ========================= -->
 
   <!-- =========================
        NAVIGATION
@@ -248,7 +445,7 @@
         </li>
 
         <li>
-          <a href="projects.html">
+          <a href="projects.html" class="active">
             Projects
           </a>
         </li>
@@ -258,13 +455,11 @@
             Activities
           </a>
         </li>
-
         <li>
-          <a href="collection.html" class="active">
+          <a href="collection.html">
             Collection
           </a>
         </li>
-
         <li>
           <a href="academics.html">
             Academics
@@ -286,7 +481,10 @@
       </ul>
 
     </div>
+
   </nav>
+
+
 
   <!-- =========================
        HEADER
@@ -295,27 +493,174 @@
   <header class="page-header">
 
     <div class="eyebrow">
-      04 / Collection
+      02 / Projects
     </div>
 
     <h1>
-      Things I<br>
-      collect.
+      Things I've<br>
+      built.
     </h1>
 
     <p>
-      A personal library of ideas, resources, and things that inspire my work and thinking.
+      A collection of software, engineering experiments, and
+      technical projects that reflect how I learn:
+      by building, testing, breaking, and improving.
     </p>
 
   </header>
 
+
   <!-- =========================
-       COLLECTION MAIN CONTENT
+       PROJECTS
   ========================= -->
 
-  <main class="collection-container">
-    <!-- Collection 아이템 영역 -->
+  <main class="projects-container">
+
+
+    <!-- PROJECT 01 -->
+
+    <article class="project">
+
+      <div class="project-number">
+        PROJECT 01
+      </div>
+
+      <div class="project-content">
+
+        <div class="project-type">
+          SOFTWARE / GAME DEVELOPMENT
+        </div>
+
+        <h2 class="project-title">
+          Economia
+        </h2>
+
+        <p class="project-description">
+          Economia is an interactive game designed to explore
+          fundamental concepts of economics through gameplay.
+          The project combines programming, game mechanics,
+          and educational concepts into an interactive experience.
+        </p>
+
+        <div class="project-meta">
+
+          <span class="tag">
+            Java
+          </span>
+
+          <span class="tag">
+            Game Development
+          </span>
+
+          <span class="tag">
+            Economics
+          </span>
+
+        </div>
+
+        <div class="project-actions">
+
+          <a
+            href="https://drive.google.com/uc?export=download&id=1MEsmphi2ivE1HOl5od0jGpNFDRLRMra7"
+            target="_blank"
+            class="button primary"
+          >
+            Download Project →
+          </a>
+
+        </div>
+
+      </div>
+
+    </article>
+
+    <!-- PROJECT 02 -->
+
+<article class="project">
+
+  <div class="project-number">
+    PROJECT 02
+  </div>
+
+  <div class="project-content">
+
+    <div class="project-type">
+      SOFTWARE / INTERACTIVE LEARNING
+    </div>
+
+    <h2 class="project-title">
+      Morse Code Learning Game
+    </h2>
+
+    <p class="project-description">
+      An interactive learning application that turns Morse code
+      practice into a game-like experience. The project is designed
+      to help users learn and recognize Morse code through repeated
+      challenges, immediate feedback, and progressively more
+      difficult exercises.
+    </p>
+
+    <div class="project-meta">
+
+      <span class="tag">
+        Morse Code
+      </span>
+
+      <span class="tag">
+        Game Development
+      </span>
+
+      <span class="tag">
+        Interactive Learning
+      </span>
+
+      <span class="tag">
+        Communications
+      </span>
+
+    </div>
+
+    <div class="project-actions">
+
+      <a
+            href="https://drive.google.com/uc?export=download&id=1MEsmphi2ivE1HOl5od0jGpNFDRLRMra7"
+            target="_blank"
+            class="button primary"
+          >
+            Download Project →
+      </a>
+
+      <a
+        href="#"
+        class="button primary"
+      >
+        View Project →
+      </a>
+
+    </div>
+
+  </div>
+
+</article>
+
+
+    <!-- FUTURE PROJECTS -->
+
+    <div class="future-projects">
+
+      <h2>
+        More projects coming soon.
+      </h2>
+
+      <p>
+        This portfolio will continue to grow as I build,
+        experiment, and document new projects.
+      </p>
+
+    </div>
+
   </main>
+
 
   <!-- =========================
        FOOTER
