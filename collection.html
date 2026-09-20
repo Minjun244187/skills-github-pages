@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +16,7 @@
   >
 
   <style>
+
     :root {
       --background: #f7f7f5;
       --surface: #ffffff;
@@ -26,6 +28,8 @@
     }
 
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
     }
 
@@ -34,7 +38,6 @@
     }
 
     body {
-      margin: 0;
       background: var(--background);
       color: var(--text);
       font-family: "Inter", sans-serif;
@@ -54,15 +57,20 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(247, 247, 245, 0.95);
-      backdrop-filter: blur(10px);
+
+      width: 100%;
+
+      background: rgba(247, 247, 245, 0.88);
+      backdrop-filter: blur(14px);
+
       border-bottom: 1px solid var(--border);
     }
 
     .nav-container {
       max-width: 1200px;
-      margin: 0 auto;
-      padding: 1.2rem 2rem;
+      margin: auto;
+
+      padding: 1.1rem 2rem;
 
       display: flex;
       align-items: center;
@@ -70,28 +78,37 @@
     }
 
     .logo {
+      font-family: "JetBrains Mono", monospace;
+      font-weight: 500;
       font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
+
+      color: var(--text);
+      text-decoration: none;
     }
 
     .nav-links {
       display: flex;
-      align-items: center;
-      gap: 1.7rem;
-      margin: 0;
-      padding: 0;
+      gap: 2rem;
+
       list-style: none;
     }
 
     .nav-links a {
       color: var(--muted);
+
+      text-decoration: none;
+
       font-size: 0.9rem;
+      font-weight: 500;
+
       transition: color 0.2s ease;
     }
 
-    .nav-links a:hover,
-    .nav-links a.active {
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-links .active {
       color: var(--text);
     }
 
@@ -101,12 +118,17 @@
 
     main {
       max-width: 1200px;
-      margin: 0 auto;
+      margin: auto;
       padding: 0 2rem 6rem;
     }
 
+    /* =========================
+       PAGE HEADER
+    ========================= */
+
     .page-header {
       padding: 6rem 0 5rem;
+
       border-bottom: 1px solid var(--border);
     }
 
@@ -114,10 +136,14 @@
       margin-bottom: 1rem;
 
       color: var(--accent);
+
       font-family: "JetBrains Mono", monospace;
+
       font-size: 0.75rem;
       font-weight: 500;
+
       letter-spacing: 0.08em;
+
       text-transform: uppercase;
     }
 
@@ -125,20 +151,24 @@
       margin: 0 0 1.2rem;
 
       font-size: clamp(2.8rem, 6vw, 5rem);
+
       line-height: 0.98;
+
       letter-spacing: -0.055em;
     }
 
     .page-header p {
       max-width: 650px;
+
       margin: 0;
 
       color: var(--muted);
+
       font-size: 1.05rem;
     }
 
     /* =========================
-       COLLECTION ITEM
+       COLLECTION
     ========================= */
 
     .collection {
@@ -147,10 +177,13 @@
 
     .collection-item {
       display: grid;
+
       grid-template-columns: 180px 1fr;
+
       gap: 4rem;
 
       padding: 0 0 5rem;
+
       margin-bottom: 5rem;
 
       border-bottom: 1px solid var(--border);
@@ -160,8 +193,11 @@
       color: var(--muted);
 
       font-family: "JetBrains Mono", monospace;
+
       font-size: 0.72rem;
+
       letter-spacing: 0.08em;
+
       text-transform: uppercase;
     }
 
@@ -175,8 +211,11 @@
       color: var(--accent);
 
       font-family: "JetBrains Mono", monospace;
+
       font-size: 0.72rem;
+
       letter-spacing: 0.08em;
+
       text-transform: uppercase;
     }
 
@@ -184,15 +223,19 @@
       margin: 0 0 1rem;
 
       font-size: clamp(1.8rem, 3vw, 2.6rem);
+
       line-height: 1.1;
+
       letter-spacing: -0.04em;
     }
 
     .collection-description {
       max-width: 700px;
+
       margin: 0 0 2.5rem;
 
       color: var(--muted);
+
       font-size: 0.98rem;
     }
 
@@ -202,17 +245,21 @@
 
     .gallery {
       display: grid;
+
       grid-template-columns: minmax(0, 1fr) minmax(300px, 430px);
+
       gap: 1.5rem;
+
       align-items: start;
     }
 
-    /* Left thumbnail area */
+    /* =========================
+       THUMBNAILS
+    ========================= */
 
     .thumbnail-grid {
       display: grid;
 
-      /* 10 thumbnails across */
       grid-template-columns: repeat(10, 42px);
 
       gap: 2px;
@@ -220,6 +267,7 @@
       align-content: start;
 
       max-height: 440px;
+
       overflow-y: auto;
       overflow-x: hidden;
 
@@ -231,11 +279,13 @@
       height: 42px;
 
       padding: 0;
+
       border: 0;
 
       background: #e8e8e4;
 
       overflow: hidden;
+
       cursor: pointer;
 
       transition:
@@ -245,7 +295,9 @@
 
     .thumbnail:hover {
       opacity: 0.75;
+
       transform: scale(1.08);
+
       z-index: 2;
     }
 
@@ -258,18 +310,23 @@
       object-fit: cover;
     }
 
-    /* Right large preview */
+    /* =========================
+       PREVIEW
+    ========================= */
 
     .preview-panel {
       width: 100%;
+
       aspect-ratio: 4 / 3;
 
       background: #ecece8;
+
       border: 1px solid var(--border);
 
       overflow: hidden;
 
       position: sticky;
+
       top: 100px;
     }
 
@@ -290,7 +347,8 @@
 
     footer {
       max-width: 1200px;
-      margin: 0 auto;
+
+      margin: auto;
 
       padding: 2rem;
 
@@ -299,6 +357,8 @@
       color: var(--muted);
 
       font-size: 0.8rem;
+
+      font-family: "JetBrains Mono", monospace;
     }
 
     /* =========================
@@ -308,32 +368,36 @@
     @media (max-width: 800px) {
 
       .nav-container {
-        padding: 1rem 1.2rem;
+        padding: 1rem 1.25rem;
       }
 
       .nav-links {
-        gap: 0.8rem;
-        flex-wrap: wrap;
-        justify-content: flex-end;
+        gap: 1rem;
       }
 
-      .nav-links a {
-        font-size: 0.75rem;
+      .nav-links li:nth-child(n+4) {
+        display: none;
       }
 
       main {
-        padding: 0 1.2rem 4rem;
+        padding: 0 1.25rem 5rem;
       }
 
       .page-header {
-        padding: 4rem 0 3.5rem;
+        padding: 5rem 0 4rem;
+      }
+
+      .collection {
+        padding-top: 3rem;
       }
 
       .collection-item {
         grid-template-columns: 1fr;
+
         gap: 1rem;
 
         padding-bottom: 4rem;
+
         margin-bottom: 4rem;
       }
 
@@ -353,7 +417,12 @@
 
       .preview-panel {
         position: static;
+
         order: -1;
+      }
+
+      footer {
+        padding: 1.5rem 1.25rem;
       }
     }
 
@@ -364,14 +433,14 @@
       }
 
       .nav-links {
-        max-width: 250px;
-        gap: 0.6rem;
+        gap: 1rem;
       }
 
       .thumbnail-grid {
         grid-template-columns: repeat(8, 42px);
       }
     }
+
   </style>
 </head>
 
@@ -382,10 +451,11 @@
   ========================= -->
 
   <nav class="navbar">
+
     <div class="nav-container">
 
       <a href="index.html" class="logo">
-        Minjun Kim
+        MINJUN KIM
       </a>
 
       <ul class="nav-links">
@@ -435,6 +505,7 @@
       </ul>
 
     </div>
+
   </nav>
 
 
@@ -443,6 +514,10 @@
   ========================= -->
 
   <main>
+
+    <!-- =========================
+         PAGE HEADER
+    ========================= -->
 
     <header class="page-header">
 
@@ -462,6 +537,10 @@
 
     </header>
 
+
+    <!-- =========================
+         COLLECTION
+    ========================= -->
 
     <section class="collection">
 
@@ -496,8 +575,6 @@
           <div class="gallery">
 
             <div class="thumbnail-grid">
-
-              <!-- Add more images by copying this block -->
 
               <div class="thumbnail">
                 <img
@@ -627,53 +704,73 @@
             <div class="thumbnail-grid">
 
               <div class="thumbnail">
-                <img src="images/collection/sp-records/01.jpg"
-                     alt="SP record 01">
+                <img
+                  src="images/collection/sp-records/01.jpg"
+                  alt="SP record 01"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/sp-records/02.jpg"
-                     alt="SP record 02">
+                <img
+                  src="images/collection/sp-records/02.jpg"
+                  alt="SP record 02"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/sp-records/03.jpg"
-                     alt="SP record 03">
+                <img
+                  src="images/collection/sp-records/03.jpg"
+                  alt="SP record 03"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/sp-records/04.jpg"
-                     alt="SP record 04">
+                <img
+                  src="images/collection/sp-records/04.jpg"
+                  alt="SP record 04"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/sp-records/05.jpg"
-                     alt="SP record 05">
+                <img
+                  src="images/collection/sp-records/05.jpg"
+                  alt="SP record 05"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/sp-records/06.jpg"
-                     alt="SP record 06">
+                <img
+                  src="images/collection/sp-records/06.jpg"
+                  alt="SP record 06"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/sp-records/07.jpg"
-                     alt="SP record 07">
+                <img
+                  src="images/collection/sp-records/07.jpg"
+                  alt="SP record 07"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/sp-records/08.jpg"
-                     alt="SP record 08">
+                <img
+                  src="images/collection/sp-records/08.jpg"
+                  alt="SP record 08"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/sp-records/09.jpg"
-                     alt="SP record 09">
+                <img
+                  src="images/collection/sp-records/09.jpg"
+                  alt="SP record 09"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/sp-records/10.jpg"
-                     alt="SP record 10">
+                <img
+                  src="images/collection/sp-records/10.jpg"
+                  alt="SP record 10"
+                >
               </div>
 
             </div>
@@ -724,53 +821,73 @@
             <div class="thumbnail-grid">
 
               <div class="thumbnail">
-                <img src="images/collection/edison/01.jpg"
-                     alt="Edison phonograph 01">
+                <img
+                  src="images/collection/edison/01.jpg"
+                  alt="Edison phonograph 01"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/edison/02.jpg"
-                     alt="Edison phonograph 02">
+                <img
+                  src="images/collection/edison/02.jpg"
+                  alt="Edison phonograph 02"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/edison/03.jpg"
-                     alt="Edison phonograph 03">
+                <img
+                  src="images/collection/edison/03.jpg"
+                  alt="Edison phonograph 03"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/edison/04.jpg"
-                     alt="Edison phonograph 04">
+                <img
+                  src="images/collection/edison/04.jpg"
+                  alt="Edison phonograph 04"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/edison/05.jpg"
-                     alt="Edison phonograph 05">
+                <img
+                  src="images/collection/edison/05.jpg"
+                  alt="Edison phonograph 05"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/edison/06.jpg"
-                     alt="Edison phonograph 06">
+                <img
+                  src="images/collection/edison/06.jpg"
+                  alt="Edison phonograph 06"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/edison/07.jpg"
-                     alt="Edison phonograph 07">
+                <img
+                  src="images/collection/edison/07.jpg"
+                  alt="Edison phonograph 07"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/edison/08.jpg"
-                     alt="Edison phonograph 08">
+                <img
+                  src="images/collection/edison/08.jpg"
+                  alt="Edison phonograph 08"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/edison/09.jpg"
-                     alt="Edison phonograph 09">
+                <img
+                  src="images/collection/edison/09.jpg"
+                  alt="Edison phonograph 09"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/edison/10.jpg"
-                     alt="Edison phonograph 10">
+                <img
+                  src="images/collection/edison/10.jpg"
+                  alt="Edison phonograph 10"
+                >
               </div>
 
             </div>
@@ -821,53 +938,73 @@
             <div class="thumbnail-grid">
 
               <div class="thumbnail">
-                <img src="images/collection/cameras/01.jpg"
-                     alt="Vintage film camera 01">
+                <img
+                  src="images/collection/cameras/01.jpg"
+                  alt="Vintage film camera 01"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/cameras/02.jpg"
-                     alt="Vintage film camera 02">
+                <img
+                  src="images/collection/cameras/02.jpg"
+                  alt="Vintage film camera 02"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/cameras/03.jpg"
-                     alt="Vintage film camera 03">
+                <img
+                  src="images/collection/cameras/03.jpg"
+                  alt="Vintage film camera 03"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/cameras/04.jpg"
-                     alt="Vintage film camera 04">
+                <img
+                  src="images/collection/cameras/04.jpg"
+                  alt="Vintage film camera 04"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/cameras/05.jpg"
-                     alt="Vintage film camera 05">
+                <img
+                  src="images/collection/cameras/05.jpg"
+                  alt="Vintage film camera 05"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/cameras/06.jpg"
-                     alt="Vintage film camera 06">
+                <img
+                  src="images/collection/cameras/06.jpg"
+                  alt="Vintage film camera 06"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/cameras/07.jpg"
-                     alt="Vintage film camera 07">
+                <img
+                  src="images/collection/cameras/07.jpg"
+                  alt="Vintage film camera 07"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/cameras/08.jpg"
-                     alt="Vintage film camera 08">
+                <img
+                  src="images/collection/cameras/08.jpg"
+                  alt="Vintage film camera 08"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/cameras/09.jpg"
-                     alt="Vintage film camera 09">
+                <img
+                  src="images/collection/cameras/09.jpg"
+                  alt="Vintage film camera 09"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/cameras/10.jpg"
-                     alt="Vintage film camera 10">
+                <img
+                  src="images/collection/cameras/10.jpg"
+                  alt="Vintage film camera 10"
+                >
               </div>
 
             </div>
@@ -918,53 +1055,73 @@
             <div class="thumbnail-grid">
 
               <div class="thumbnail">
-                <img src="images/collection/typewriters/01.jpg"
-                     alt="Typewriter 01">
+                <img
+                  src="images/collection/typewriters/01.jpg"
+                  alt="Typewriter 01"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/typewriters/02.jpg"
-                     alt="Typewriter 02">
+                <img
+                  src="images/collection/typewriters/02.jpg"
+                  alt="Typewriter 02"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/typewriters/03.jpg"
-                     alt="Typewriter 03">
+                <img
+                  src="images/collection/typewriters/03.jpg"
+                  alt="Typewriter 03"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/typewriters/04.jpg"
-                     alt="Typewriter 04">
+                <img
+                  src="images/collection/typewriters/04.jpg"
+                  alt="Typewriter 04"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/typewriters/05.jpg"
-                     alt="Typewriter 05">
+                <img
+                  src="images/collection/typewriters/05.jpg"
+                  alt="Typewriter 05"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/typewriters/06.jpg"
-                     alt="Typewriter 06">
+                <img
+                  src="images/collection/typewriters/06.jpg"
+                  alt="Typewriter 06"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/typewriters/07.jpg"
-                     alt="Typewriter 07">
+                <img
+                  src="images/collection/typewriters/07.jpg"
+                  alt="Typewriter 07"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/typewriters/08.jpg"
-                     alt="Typewriter 08">
+                <img
+                  src="images/collection/typewriters/08.jpg"
+                  alt="Typewriter 08"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/typewriters/09.jpg"
-                     alt="Typewriter 09">
+                <img
+                  src="images/collection/typewriters/09.jpg"
+                  alt="Typewriter 09"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/typewriters/10.jpg"
-                     alt="Typewriter 10">
+                <img
+                  src="images/collection/typewriters/10.jpg"
+                  alt="Typewriter 10"
+                >
               </div>
 
             </div>
@@ -1015,53 +1172,73 @@
             <div class="thumbnail-grid">
 
               <div class="thumbnail">
-                <img src="images/collection/other/01.jpg"
-                     alt="Other collection 01">
+                <img
+                  src="images/collection/other/01.jpg"
+                  alt="Other collection 01"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/other/02.jpg"
-                     alt="Other collection 02">
+                <img
+                  src="images/collection/other/02.jpg"
+                  alt="Other collection 02"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/other/03.jpg"
-                     alt="Other collection 03">
+                <img
+                  src="images/collection/other/03.jpg"
+                  alt="Other collection 03"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/other/04.jpg"
-                     alt="Other collection 04">
+                <img
+                  src="images/collection/other/04.jpg"
+                  alt="Other collection 04"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/other/05.jpg"
-                     alt="Other collection 05">
+                <img
+                  src="images/collection/other/05.jpg"
+                  alt="Other collection 05"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/other/06.jpg"
-                     alt="Other collection 06">
+                <img
+                  src="images/collection/other/06.jpg"
+                  alt="Other collection 06"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/other/07.jpg"
-                     alt="Other collection 07">
+                <img
+                  src="images/collection/other/07.jpg"
+                  alt="Other collection 07"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/other/08.jpg"
-                     alt="Other collection 08">
+                <img
+                  src="images/collection/other/08.jpg"
+                  alt="Other collection 08"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/other/09.jpg"
-                     alt="Other collection 09">
+                <img
+                  src="images/collection/other/09.jpg"
+                  alt="Other collection 09"
+                >
               </div>
 
               <div class="thumbnail">
-                <img src="images/collection/other/10.jpg"
-                     alt="Other collection 10">
+                <img
+                  src="images/collection/other/10.jpg"
+                  alt="Other collection 10"
+                >
               </div>
 
             </div>
@@ -1090,7 +1267,9 @@
   ========================= -->
 
   <footer>
+
     © 2026 Minjun Kim
+
   </footer>
 
 
@@ -1103,13 +1282,16 @@
     document.querySelectorAll(".gallery").forEach((gallery) => {
 
       const preview = gallery.querySelector(".preview-panel img");
-      const thumbnails = gallery.querySelectorAll(".thumbnail img");
+
+      const thumbnails =
+        gallery.querySelectorAll(".thumbnail img");
 
       thumbnails.forEach((thumbnail) => {
 
         thumbnail.addEventListener("mouseenter", () => {
 
           preview.src = thumbnail.src;
+
           preview.alt = thumbnail.alt;
 
         });
@@ -1122,3 +1304,4 @@
 
 </body>
 </html>
+```
