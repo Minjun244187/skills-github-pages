@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -245,53 +246,44 @@
     }
 
     /* =========================
-       COURSE GRID
+       COURSE LIST
     ========================= */
 
-    .course-grid {
-      display: grid;
-
-      grid-template-columns: repeat(2, 1fr);
-
-      gap: 1px;
-
-      background: var(--border);
-
-      border: 1px solid var(--border);
-    }
-
-    .course {
-      background: var(--surface);
-
-      padding: 1.5rem 1.7rem;
-
-      min-height: 90px;
-
+    .course-list {
       display: flex;
-
-      align-items: center;
-
-      transition:
-        background 0.2s ease,
-        transform 0.2s ease;
+      flex-direction: column;
+      gap: 1.4rem;
     }
 
-    .course:hover {
-      background: var(--accent-soft);
+    .course-group {
+      display: grid;
+      grid-template-columns: 150px 1fr;
 
-      transform: translateY(-2px);
+      padding-bottom: 1.4rem;
+
+      border-bottom: 1px solid var(--border);
     }
 
-    .course-number {
-      width: 42px;
+    .course-group:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
 
-      flex-shrink: 0;
-
+    .course-grade {
       font-family: "JetBrains Mono", monospace;
 
       color: var(--muted);
 
-      font-size: 0.7rem;
+      font-size: 0.75rem;
+
+      padding-top: 0.15rem;
+    }
+
+    .course-names {
+      display: flex;
+      flex-direction: column;
+
+      gap: 0.35rem;
     }
 
     .course-name {
@@ -400,10 +392,6 @@
         padding: 3rem 1.25rem 5rem;
       }
 
-      .course-grid {
-        grid-template-columns: 1fr;
-      }
-
       .course-section-header {
         display: block;
       }
@@ -411,6 +399,11 @@
       .course-section-label {
         display: block;
         margin-bottom: 0.5rem;
+      }
+
+      .course-group {
+        grid-template-columns: 1fr;
+        gap: 0.4rem;
       }
 
       .focus {
@@ -430,7 +423,6 @@
 </head>
 
 <body>
-
 
   <!-- =========================
        NAVIGATION
@@ -550,151 +542,6 @@
 
 
     <!-- =========================
-         COMPUTER SCIENCE
-    ========================= -->
-
-    <section class="course-section">
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          01 / Technology
-        </div>
-
-        <h2 class="course-section-title">
-          Computer Science & Technology
-        </h2>
-
-      </div>
-
-
-      <!-- Middle School / Earlier -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          Middle School / Earlier
-        </div>
-
-      </div>
-
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            Foundations of Computer Science
-          </span>
-        </div>
-
-      </div>
-
-
-      <!-- 9th Grade -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          9th Grade
-        </div>
-
-      </div>
-
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            AP Computer Science Principles
-          </span>
-        </div>
-
-      </div>
-
-
-      <!-- 10th Grade -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          10th Grade
-        </div>
-
-      </div>
-
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            AP Computer Science A — Java
-          </span>
-        </div>
-
-        <div class="course">
-          <span class="course-number">02</span>
-          <span class="course-name">
-            Montgomery College — Computer Science I
-          </span>
-        </div>
-
-      </div>
-
-
-      <!-- 11th Grade -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          11th Grade
-        </div>
-
-      </div>
-
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            Montgomery College — Computer Science II
-          </span>
-        </div>
-
-        <div class="course">
-          <span class="course-number">02</span>
-          <span class="course-name">
-            Foundations of Technology
-          </span>
-        </div>
-
-      </div>
-
-
-      <!-- 12th Grade -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          12th Grade
-        </div>
-
-      </div>
-
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            Advanced Engineering
-          </span>
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
          MATHEMATICS
     ========================= -->
 
@@ -703,7 +550,7 @@
       <div class="course-section-header">
 
         <div class="course-section-label">
-          02 / Mathematics
+          01 / Mathematics
         </div>
 
         <h2 class="course-section-title">
@@ -712,126 +559,127 @@
 
       </div>
 
+      <div class="course-list">
 
-      <!-- Middle School / Earlier -->
+        <div class="course-group">
+          <div class="course-grade">Earlier</div>
+
+          <div class="course-names">
+            <div class="course-name">Algebra I</div>
+            <div class="course-name">Honors Geometry</div>
+          </div>
+        </div>
+
+        <div class="course-group">
+          <div class="course-grade">9th Grade</div>
+
+          <div class="course-names">
+            <div class="course-name">Algebra II</div>
+            <div class="course-name">Honors Precalculus</div>
+          </div>
+        </div>
+
+        <div class="course-group">
+          <div class="course-grade">10th Grade</div>
+
+          <div class="course-names">
+            <div class="course-name">AP BC Calculus</div>
+          </div>
+        </div>
+
+        <div class="course-group">
+          <div class="course-grade">11th Grade</div>
+
+          <div class="course-names">
+            <div class="course-name">Montgomery College — Linear Algebra</div>
+          </div>
+        </div>
+
+        <div class="course-group">
+          <div class="course-grade">12th Grade</div>
+
+          <div class="course-names">
+            <div class="course-name">Multivariable Calculus / Differential Equations</div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         COMPUTER SCIENCE
+    ========================= -->
+
+    <section class="course-section">
 
       <div class="course-section-header">
 
         <div class="course-section-label">
-          Middle School / Earlier
+          02 / Technology
         </div>
+
+        <h2 class="course-section-title">
+          Computer Science & Technology
+        </h2>
 
       </div>
 
-      <div class="course-grid">
+      <div class="course-list">
 
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            Algebra I
-          </span>
+        <div class="course-group">
+          <div class="course-grade">Earlier</div>
+
+          <div class="course-names">
+            <div class="course-name">Foundations of Computer Science I</div>
+            <div class="course-name">Foundations of Computer Science II</div>
+          </div>
         </div>
 
-        <div class="course">
-          <span class="course-number">02</span>
-          <span class="course-name">
-            Honors Geometry
-          </span>
+        <div class="course-group">
+          <div class="course-grade">9th Grade</div>
+
+          <div class="course-names">
+            <div class="course-name">AP Computer Science Principles I</div>
+            <div class="course-name">AP Computer Science Principles II</div>
+          </div>
         </div>
 
-      </div>
+        <div class="course-group">
+          <div class="course-grade">10th Grade</div>
 
-
-      <!-- 9th Grade -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          9th Grade
+          <div class="course-names">
+            <div class="course-name">AP Computer Science A — Java I</div>
+            <div class="course-name">AP Computer Science A — Java II</div>
+          </div>
         </div>
 
-      </div>
+        <div class="course-group">
+          <div class="course-grade">11th Grade</div>
 
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            Honors Algebra II
-          </span>
+          <div class="course-names">
+            <div class="course-name">Foundations of Technology I</div>
+            <div class="course-name">Foundations of Technology II</div>
+            <div class="course-name">Montgomery College — Computer Science I</div>
+            <div class="course-name">Montgomery College — Computer Science II</div>
+          </div>
         </div>
 
-        <div class="course">
-          <span class="course-number">02</span>
-          <span class="course-name">
-            Honors Precalculus
-          </span>
+        <div class="course-group">
+          <div class="course-grade">12th Grade</div>
+
+          <div class="course-names">
+            <div class="course-name">Advanced Design Applications</div>
+          </div>
         </div>
 
-      </div>
+        <div class="course-group">
+          <div class="course-grade">Grade not specified</div>
 
-
-      <!-- 10th Grade -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          10th Grade
-        </div>
-
-      </div>
-
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            AP BC Calculus
-          </span>
-        </div>
-
-      </div>
-
-
-      <!-- 11th Grade -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          11th Grade
-        </div>
-
-      </div>
-
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            Montgomery College — Linear Algebra
-          </span>
-        </div>
-
-      </div>
-
-
-      <!-- 12th Grade -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          12th Grade
-        </div>
-
-      </div>
-
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            Multivariable Calculus / Differential Equations
-          </span>
+          <div class="course-names">
+            <div class="course-name">Advanced Technology Applications</div>
+          </div>
         </div>
 
       </div>
@@ -857,68 +705,30 @@
 
       </div>
 
+      <div class="course-list">
 
-      <!-- 9th Grade -->
+        <div class="course-group">
+          <div class="course-grade">9th Grade</div>
 
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          9th Grade
+          <div class="course-names">
+            <div class="course-name">Honors Biology</div>
+          </div>
         </div>
 
-      </div>
+        <div class="course-group">
+          <div class="course-grade">10th Grade</div>
 
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            Honors Biology
-          </span>
+          <div class="course-names">
+            <div class="course-name">AP Physics C — Mechanics</div>
+          </div>
         </div>
 
-      </div>
+        <div class="course-group">
+          <div class="course-grade">11th Grade</div>
 
-
-      <!-- 10th Grade -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          10th Grade
-        </div>
-
-      </div>
-
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            AP Physics C — Mechanics
-          </span>
-        </div>
-
-      </div>
-
-
-      <!-- 11th Grade -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          11th Grade
-        </div>
-
-      </div>
-
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            AP Physics C — Electricity & Magnetism
-          </span>
+          <div class="course-names">
+            <div class="course-name">AP Physics C — Electricity & Magnetism</div>
+          </div>
         </div>
 
       </div>
@@ -944,75 +754,31 @@
 
       </div>
 
+      <div class="course-list">
 
-      <!-- 9th Grade -->
+        <div class="course-group">
+          <div class="course-grade">9th Grade</div>
 
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          9th Grade
+          <div class="course-names">
+            <div class="course-name">Honors English 9</div>
+          </div>
         </div>
 
-      </div>
+        <div class="course-group">
+          <div class="course-grade">10th Grade</div>
 
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            Honors English 9
-          </span>
+          <div class="course-names">
+            <div class="course-name">Honors English 10</div>
+            <div class="course-name">Montgomery College — Introduction to College Writing</div>
+          </div>
         </div>
 
-      </div>
+        <div class="course-group">
+          <div class="course-grade">Grade not specified</div>
 
-
-      <!-- 10th Grade -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          10th Grade
-        </div>
-
-      </div>
-
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            Honors English 10
-          </span>
-        </div>
-
-        <div class="course">
-          <span class="course-number">02</span>
-          <span class="course-name">
-            Montgomery College — Introduction to College Writing
-          </span>
-        </div>
-
-      </div>
-
-
-      <!-- 11th Grade -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          11th Grade
-        </div>
-
-      </div>
-
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            AP Literature & Composition
-          </span>
+          <div class="course-names">
+            <div class="course-name">AP Literature and Composition</div>
+          </div>
         </div>
 
       </div>
@@ -1021,7 +787,7 @@
 
 
     <!-- =========================
-         HISTORY
+         SOCIAL STUDIES
     ========================= -->
 
     <section class="course-section">
@@ -1038,68 +804,30 @@
 
       </div>
 
+      <div class="course-list">
 
-      <!-- 9th Grade -->
+        <div class="course-group">
+          <div class="course-grade">9th Grade</div>
 
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          9th Grade
+          <div class="course-names">
+            <div class="course-name">AP United States Government & Politics</div>
+          </div>
         </div>
 
-      </div>
+        <div class="course-group">
+          <div class="course-grade">11th Grade</div>
 
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            AP United States Government & Politics
-          </span>
+          <div class="course-names">
+            <div class="course-name">AP United States History</div>
+          </div>
         </div>
 
-      </div>
+        <div class="course-group">
+          <div class="course-grade">12th Grade</div>
 
-
-      <!-- 11th Grade -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          11th Grade
-        </div>
-
-      </div>
-
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            AP United States History
-          </span>
-        </div>
-
-      </div>
-
-
-      <!-- 12th Grade -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          12th Grade
-        </div>
-
-      </div>
-
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            AP World History
-          </span>
+          <div class="course-names">
+            <div class="course-name">AP World History</div>
+          </div>
         </div>
 
       </div>
@@ -1125,60 +853,24 @@
 
       </div>
 
+      <div class="course-list">
 
-      <!-- 10th Grade -->
+        <div class="course-group">
+          <div class="course-grade">10th Grade</div>
 
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          10th Grade
+          <div class="course-names">
+            <div class="course-name">AP Macroeconomics</div>
+            <div class="course-name">AP Microeconomics</div>
+          </div>
         </div>
 
-      </div>
+        <div class="course-group">
+          <div class="course-grade">11th Grade</div>
 
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            AP Microeconomics
-          </span>
-        </div>
-
-        <div class="course">
-          <span class="course-number">02</span>
-          <span class="course-name">
-            AP Macroeconomics
-          </span>
-        </div>
-
-      </div>
-
-
-      <!-- 11th Grade -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          11th Grade
-        </div>
-
-      </div>
-
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            AP Psychology
-          </span>
-        </div>
-
-        <div class="course">
-          <span class="course-number">02</span>
-          <span class="course-name">
-            Philosophy
-          </span>
+          <div class="course-names">
+            <div class="course-name">AP Psychology</div>
+            <div class="course-name">Philosophy</div>
+          </div>
         </div>
 
       </div>
@@ -1187,7 +879,7 @@
 
 
     <!-- =========================
-         ARTS & LANGUAGES
+         FINE ARTS & LANGUAGE
     ========================= -->
 
     <section class="course-section">
@@ -1204,90 +896,38 @@
 
       </div>
 
+      <div class="course-list">
 
-      <!-- Middle School / Earlier -->
+        <div class="course-group">
+          <div class="course-grade">Earlier</div>
 
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          Middle School / Earlier
+          <div class="course-names">
+            <div class="course-name">Spanish I</div>
+          </div>
         </div>
 
-      </div>
+        <div class="course-group">
+          <div class="course-grade">9th Grade</div>
 
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            Spanish I
-          </span>
+          <div class="course-names">
+            <div class="course-name">Spanish II</div>
+          </div>
         </div>
 
-      </div>
+        <div class="course-group">
+          <div class="course-grade">10th Grade</div>
 
-
-      <!-- 9th Grade -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          9th Grade
+          <div class="course-names">
+            <div class="course-name">Digital Art</div>
+          </div>
         </div>
 
-      </div>
+        <div class="course-group">
+          <div class="course-grade">12th Grade</div>
 
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            Spanish II
-          </span>
-        </div>
-
-      </div>
-
-
-      <!-- 10th Grade -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          10th Grade
-        </div>
-
-      </div>
-
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            Digital Art
-          </span>
-        </div>
-
-      </div>
-
-
-      <!-- 12th Grade -->
-
-      <div class="course-section-header">
-
-        <div class="course-section-label">
-          12th Grade
-        </div>
-
-      </div>
-
-      <div class="course-grid">
-
-        <div class="course">
-          <span class="course-number">01</span>
-          <span class="course-name">
-            Advanced Photography
-          </span>
+          <div class="course-names">
+            <div class="course-name">Photography</div>
+          </div>
         </div>
 
       </div>
@@ -1321,7 +961,6 @@
 
     </section>
 
-
   </main>
 
 
@@ -1343,3 +982,4 @@
 
 </body>
 </html>
+```
