@@ -108,6 +108,8 @@ select option { background:#0a1b26; }
 @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
 .title-rule { display:flex; align-items:center; gap:14px; color:var(--brass); width:min(460px, 80%); animation:fadeUp 1s .4s both; }
 .title-rule span { flex:1; height:1px; background:linear-gradient(90deg, transparent, var(--brass), transparent); }
+.title-quote { font-family:var(--body); font-style:italic; font-size:1.05rem; letter-spacing:.12em; color:var(--brass2); opacity:.85; margin:2px 0 14px; animation:fadeUp 1s .35s both; }
+.beta-build { position:absolute; left:0; right:0; bottom:18px; text-align:center; font-family:var(--display); font-weight:800; font-size:.72rem; letter-spacing:.5em; color:rgba(246,213,138,.55); pointer-events:none; }
 .title-sub { color:#cfe2ec; font-size:1.1rem; margin:14px 0 40px; letter-spacing:.04em; animation:fadeUp 1s .5s both; }
 .title-buttons { display:flex; gap:20px; flex-wrap:wrap; justify-content:center; }
 .title-card {
@@ -456,6 +458,7 @@ select option { background:#0a1b26; }
         <div class="title-content">
             <div class="title-kicker">FLEET COMMAND · NAVAL ARCHITECTURE BUREAU</div>
             <h1 class="title-logo">BATTLESHIP</h1>
+            <div class="title-quote">“by 244187”</div>
             <div class="title-rule"><span></span>⚓<span></span></div>
             <div class="title-sub">Design your warships. Build your fleet. Command the sea.</div>
             <div class="title-buttons">
@@ -476,6 +479,7 @@ select option { background:#0a1b26; }
                 <span class="pill yen">¥ <b class="yen-val">5000</b></span>
                 <span class="pill">⚓ FLEET <b class="fleet-val">0</b></span>
             </div>
+            <div class="beta-build">BETA BUILD</div>
             <div class="title-tools">
                 <span class="save-info" id="saveInfo">💾 Auto-save on</span>
                 <button class="ghost sm" id="btnTutorial">📘 Tutorial</button>
@@ -896,7 +900,7 @@ const PLANES = {
         jink: 0.025, jinkFreq: 0.09, dodge: 2.6, span: 20, len: 16, hitR: 9, cost: 260,
         desc: 'Drops one light 10 kg torpedo per sortie. Rear gunner engages aircraft.' },
     bomber: { key: 'bomber', name: 'Bomber', card: 'Bomber', short: 'BMR', speed: 2.3, turn: 0.035, hull: 38, engine: 45, cockpit: 32,
-        gunDmg: 3, gunRate: 10, gunRange: 160, forwardGuns: false, ammo: 3, payload: 60, payloadName: 'bomb',
+        gunDmg: 3, gunRate: 10, gunRange: 160, forwardGuns: false, ammo: 3, payload: 140, payloadName: 'bomb',
         jink: 0.015, jinkFreq: 0.07, dodge: 1.7, span: 28, len: 20, hitR: 12, cost: 380,
         desc: 'Slow and tough. Carries 3 bombs for ships; gunners engage aircraft.' }
 };
@@ -910,8 +914,8 @@ const ENGINES = {
 };
 const ARMORS = {
     light:  { name: 'Light', weight: 100, cost: 50, armorValue: 10, hullHp: 100 },
-    medium: { name: 'Medium', weight: 300, cost: 150, armorValue: 25, hullHp: 250 },
-    heavy:  { name: 'Heavy', weight: 600, cost: 350, armorValue: 45, hullHp: 500 }
+    medium: { name: 'Medium', weight: 300, cost: 150, armorValue: 25, hullHp: 220 },
+    heavy:  { name: 'Heavy', weight: 600, cost: 350, armorValue: 45, hullHp: 380 }
 };
 const OXYGENS = {
     small:  { name: 'Small', weight: 50, cost: 30, oxygenSeconds: 50 },
@@ -925,22 +929,22 @@ const HULL_COST_MULT = { destroyer: 1.0, cruiser: 1.4, battleship: 2.0, carrier:
 //  weight – multiplier on armour tonnage (bigger hulls need more plate)
 //  inner  – base hit points of internals (engine, bridge, turrets)
 const HULL_TOUGHNESS = {
-    destroyer:  { hp: 0.8,  armor: 0.6,  weight: 0.6, inner: 70 },
-    cruiser:    { hp: 1.0,  armor: 0.85, weight: 1.0, inner: 90 },
-    battleship: { hp: 1.35, armor: 1.15, weight: 1.6, inner: 120 },
-    carrier:    { hp: 1.15, armor: 0.75, weight: 1.4, inner: 110 },
-    submarine:  { hp: 0.7,  armor: 0.5,  weight: 0.5, inner: 65 }
+    destroyer:  { hp: 0.8,  armor: 0.6,  weight: 0.6, inner: 95 },
+    cruiser:    { hp: 1.0,  armor: 0.85, weight: 1.0, inner: 120 },
+    battleship: { hp: 1.35, armor: 1.0,  weight: 1.6, inner: 160 },
+    carrier:    { hp: 1.3,  armor: 0.75, weight: 1.4, inner: 165 },
+    submarine:  { hp: 0.7,  armor: 0.5,  weight: 0.5, inner: 85 }
 };
 function effectiveArmor(hull, armorKey) { const a = ARMORS[armorKey] || ARMORS.light, t = HULL_TOUGHNESS[hull] || HULL_TOUGHNESS.cruiser; return Math.min(55, Math.round(a.armorValue * t.armor)); }
-function sectionHp(hull, armorKey, size) { const a = ARMORS[armorKey] || ARMORS.light, t = HULL_TOUGHNESS[hull] || HULL_TOUGHNESS.cruiser; return Math.floor(a.hullHp * (SIZE_MULT[size] || 1) * t.hp); }
+function sectionHp(hull, armorKey, size) { const a = ARMORS[armorKey] || ARMORS.light, t = HULL_TOUGHNESS[hull] || HULL_TOUGHNESS.cruiser; return Math.floor(a.hullHp * (1 + ((SIZE_MULT[size] || 1) - 1) * 0.6) * t.hp); }
 function innerHp(hull, size) { const t = HULL_TOUGHNESS[hull] || HULL_TOUGHNESS.cruiser; return Math.round(t.inner * (1 + ((SIZE_MULT[size] || 1) - 1) * 0.3)); }
 function armorWeight(hull, armorKey) { return Math.round((ARMORS[armorKey] || ARMORS.light).weight * (HULL_TOUGHNESS[hull] || HULL_TOUGHNESS.cruiser).weight); }
 
 const MISSION_TYPES = [
-    { id: 'patrol', name: 'Patrol', desc: 'Secure every capture zone in the sector. Enemy reinforcements will keep arriving from long range while you hold position.', baseReward: 400, obj: 'Capture all zones' },
-    { id: 'intercept', name: 'Intercept', desc: 'A high-value enemy battleship is crossing the sector. Find it and sink it before it escapes.', baseReward: 600, obj: 'Sink the target battleship' },
-    { id: 'escort', name: 'Escort', desc: 'Three supply ships are crossing the sector in formation. Raiders will keep coming — keep at least one afloat until the convoy reaches safety.', baseReward: 500, obj: 'Protect the convoy' },
-    { id: 'demolish', name: 'Demolish', desc: 'Destroy every enemy vessel in the sector. No survivors.', baseReward: 550, obj: 'Destroy all enemy ships' }
+    { id: 'patrol', name: 'Patrol', desc: 'Secure every capture zone in the sector. Enemy reinforcements will keep arriving from long range while you hold position.', baseReward: 500, obj: 'Capture all zones' },
+    { id: 'intercept', name: 'Intercept', desc: 'A high-value enemy battleship is crossing the sector. Find it and sink it before it escapes.', baseReward: 750, obj: 'Sink the target battleship' },
+    { id: 'escort', name: 'Escort', desc: 'Three supply ships are crossing the sector in formation. Raiders will keep coming — keep at least one afloat until the convoy reaches safety.', baseReward: 650, obj: 'Protect the convoy' },
+    { id: 'demolish', name: 'Demolish', desc: 'Destroy every enemy vessel in the sector. No survivors.', baseReward: 700, obj: 'Destroy all enemy ships' }
 ];
 const MISSION_ICONS = {
     patrol: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="16" cy="16" r="11" stroke-dasharray="4 3"/><path d="M12 24 V8 L22 11 L12 14"/></svg>',
@@ -957,7 +961,7 @@ const PLANE_ICONS = {
 const DIFFICULTY_MULT = { easy: 1.0, medium: 1.6, hard: 2.4 };
 const ESCORT_TIME = { easy: 60, medium: 90, hard: 140 };           // seconds the convoy must survive
 const SPAWN_RULES = {                                                // reinforcements: every N seconds, up to cap alive
-    escort: { easy: { every: 14, cap: 4 }, medium: { every: 11, cap: 6 }, hard: { every: 8, cap: 8 } },
+    escort: { easy: { every: 15, cap: 4 }, medium: { every: 12, cap: 5 }, hard: { every: 10, cap: 6 } },
     patrol: { easy: { every: 24, cap: 3 }, medium: { every: 18, cap: 5 }, hard: { every: 13, cap: 7 } }
 };
 const CONVOY_NAMES = ['Supply ship Aurora', 'Supply ship Bounty', 'Supply ship Cormorant'];
@@ -2203,7 +2207,7 @@ function drawDockyard() {
 function getEnemyTypesForDifficulty(difficulty) {
     if (difficulty === 'easy') return ['destroyer'];
     if (difficulty === 'medium') return ['destroyer', 'destroyer', 'destroyer', 'cruiser', 'carrier'];
-    return ['destroyer', 'destroyer', 'cruiser', 'cruiser', 'submarine', 'battleship', 'carrier'];
+    return ['destroyer', 'cruiser', 'cruiser', 'cruiser', 'submarine', 'battleship', 'battleship', 'carrier'];
 }
 function createRandomMission() {
     const type = MISSION_TYPES[Math.floor(Math.random() * MISSION_TYPES.length)];
@@ -2330,14 +2334,23 @@ let B = null, entityCounter = 0;
 const keys = {};
 let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2 - 120;
 
+// Difficulty tuning for enemy ships: toughness, firepower, rate of fire, accuracy and how well they lead moving targets
+const ENEMY_DIFF = {
+    training: { hp: 0.6,  dmg: 0.5,  reload: 1.3,  spread: 0.16, lead: 0 },
+    easy:     { hp: 0.85, dmg: 0.85, reload: 1.15, spread: 0.13, lead: 0.2 },
+    medium:   { hp: 1.05, dmg: 1.0,  reload: 1.0,  spread: 0.1,  lead: 0.55 },
+    hard:     { hp: 1.4,  dmg: 1.35, reload: 0.85, spread: 0.075, lead: 0.85 }
+};
+function enemyDiff() { return !B || !B.mission ? ENEMY_DIFF.medium : B.mission.training ? ENEMY_DIFF.training : (ENEMY_DIFF[B.mission.difficulty] || ENEMY_DIFF.medium); }
 const ENEMY_SIZE = { destroyer: 'small', cruiser: 'medium', battleship: 'large', submarine: 'small', carrier: 'large' };
 const ENEMY_DEF = {
     // armor = % damage reduction, scaled to each hull's toughness (light destroyer plate vs heavy battleship belt)
-    destroyer:  { hp: 50,  eng: 55, inner: 50, armor: 6,  spd: [12, 20], fire: { dmg: 12, size: 6, interval: 80 }, turn: 0.01 },
-    cruiser:    { hp: 75,  eng: 65, inner: 60, armor: 14, spd: [10, 15], fire: { dmg: 14, size: 7, interval: 90 }, turn: 0.008 },
-    battleship: { hp: 130, eng: 80, inner: 75, armor: 30, spd: [6, 10],  fire: { dmg: 20, size: 9, interval: 110 }, turn: 0.006 },
-    submarine:  { hp: 45,  eng: 50, inner: 45, armor: 5,  spd: [8, 12],  fire: null, turn: 0.01 },
-    carrier:    { hp: 95,  eng: 75, inner: 70, armor: 9,  spd: [8, 12],  fire: null, turn: 0.007 }
+    // range = the distance the ship tries to fight from (it circles there instead of ramming)
+    destroyer:  { hp: 85,  eng: 75,  inner: 60,  armor: 8,  spd: [12, 20], fire: { dmg: 12, size: 6, interval: 80 },  turn: 0.011, range: 260 },
+    cruiser:    { hp: 135, eng: 95,  inner: 80,  armor: 18, spd: [10, 15], fire: { dmg: 15, size: 7, interval: 90 },  turn: 0.008, range: 400 },
+    battleship: { hp: 230, eng: 130, inner: 105, armor: 32, spd: [6, 10],  fire: { dmg: 22, size: 9, interval: 110 }, turn: 0.006, range: 480 },
+    submarine:  { hp: 75,  eng: 70,  inner: 55,  armor: 6,  spd: [8, 12],  fire: null, turn: 0.01, range: 450 },
+    carrier:    { hp: 160, eng: 105, inner: 85,  armor: 12, spd: [8, 12],  fire: null, turn: 0.007, range: 850 }
 };
 
 function toWorld(s, lx, ly) { const c = Math.cos(s.heading), sn = Math.sin(s.heading); return { x: s.x + c * lx - sn * ly, y: s.y + sn * lx + c * ly }; }
@@ -2367,7 +2380,7 @@ function makeShipEntity(o) {
         sinking: false, sinkTimer: 0, sinkDir: Math.random() < 0.5 ? -1 : 1,
         wake: [], lastRam: -999, lastIce: -999, repairCooldown: 0, repairMax: 1800,
         isTarget: !!o.isTarget, fire: o.fire || null, turnRate: o.turnRate || 0.008,
-        ai: { circle: Math.random() < 0.5 ? -1 : 1, launchDelay: 150 + Math.random() * 150, gunIdx: 0 },
+        ai: { circle: Math.random() < 0.5 ? -1 : 1, launchDelay: 150 + Math.random() * 150, gunIdx: 0, flipT: 600 + Math.random() * 600, bump: 0 },
         fireCooldown: Math.random() * 60, secCooldown: Math.random() * 40, subTorpCd: 200 + Math.random() * 300,
         engineColor: o.engine && ENGINES[o.engine] ? ENGINES[o.engine].color : null,
         smokeCol: o.engine && ENGINES[o.engine] ? ENGINES[o.engine].smoke : 'rgba(80,80,80,'
@@ -2392,28 +2405,29 @@ function enemyArms(type) {
 }
 
 function createEnemyShip(x, y, type, isTarget) {
-    const d = ENEMY_DEF[type];
-    const hp = d.hp, s = () => ({ health: d.inner, maxHealth: d.inner, damaged: false });
+    const d = ENEMY_DEF[type], df = enemyDiff(), k = df.hp * (isTarget ? 1.25 : 1);
+    const hp = Math.round(d.hp * k), inner = Math.round(d.inner * k), eng = Math.round(d.eng * k);
+    const s = () => ({ health: inner, maxHealth: inner, damaged: false });
     const sections = {
         hullBow: { health: hp, maxHealth: hp }, hullPort: { health: hp, maxHealth: hp }, hullStarboard: { health: hp, maxHealth: hp }, hullStern: { health: hp, maxHealth: hp },
-        engine: { health: d.eng, maxHealth: d.eng, damaged: false, onFire: false, fireTimer: 0 }, bridge: s(), mainGun1: s(), mainGun2: s()
+        engine: { health: eng, maxHealth: eng, damaged: false, onFire: false, fireTimer: 0 }, bridge: s(), mainGun1: s(), mainGun2: s()
     };
     const e = makeShipEntity({
         side: 'enemy', hull: type, size: ENEMY_SIZE[type], name: HULL_NAMES[type], arms: enemyArms(type), engine: 'steam',
         armor: type === 'battleship' ? 'heavy' : type === 'cruiser' ? 'medium' : 'light', palette: isTarget ? PAL.target : PAL.enemy,
         x, y, heading: Math.random() * TAU, maxSpeed: d.spd[1], moveScale: 1 / 30, sections, armorValue: d.armor, internalMult: 1.3,
-        isTarget, fire: d.fire, turnRate: d.turn
+        isTarget, fire: d.fire ? { dmg: d.fire.dmg * df.dmg, size: d.fire.size, interval: d.fire.interval * df.reload } : null, turnRate: d.turn
     });
-    e.speed = rand(d.spd[0], d.spd[1]);
+    e.speed = rand(d.spd[0], d.spd[1]); e.range = d.range * rand(0.85, 1.15); e.diff = df;
     e.engineColor = '#7a5050';
     return e;
 }
 
 function createConvoyShip(x, y, i) {
-    const hp = 220, sec = () => ({ health: 110, maxHealth: 110, damaged: false });
+    const hp = 260, sec = () => ({ health: 120, maxHealth: 120, damaged: false });
     const sections = {
         hullBow: { health: hp, maxHealth: hp }, hullPort: { health: hp, maxHealth: hp }, hullStarboard: { health: hp, maxHealth: hp }, hullStern: { health: hp, maxHealth: hp },
-        engine: { health: 170, maxHealth: 170, damaged: false, onFire: false, fireTimer: 0 }, bridge: sec(), mainGun1: sec(), mainGun2: sec()
+        engine: { health: 200, maxHealth: 200, damaged: false, onFire: false, fireTimer: 0 }, bridge: sec(), mainGun1: sec(), mainGun2: sec()
     };
     const e = makeShipEntity({ side: 'player', hull: 'transport', size: 'medium', name: CONVOY_NAMES[i], arms: [], engine: 'diesel', armor: 'light',
         palette: PAL.convoy, x, y, heading: 0, maxSpeed: 9, moveScale: 1 / 30, sections, armorValue: 18, internalMult: 1.2 });
@@ -2460,6 +2474,8 @@ function updateSpawns() {
 }
 function updateConvoy(s) {
     const eng = s.sections.engine, mod = eng.onFire || eng.damaged ? 0.55 : 1, mv = s.speed * s.moveScale * mod;
+    s.heading += clamp(angDiff(0, s.heading), -0.004, 0.004);   // steer back onto the convoy route after a bump
+    s.speed = Math.min(9, s.speed + 0.02);
     if (s.x < WORLD_SIZE / 2 - 150) { s.x += Math.cos(s.heading) * mv; s.y += Math.sin(s.heading) * mv; }
 }
 // Enemies hunt the closest friendly ship, with a preference for convoy ships
@@ -2506,21 +2522,21 @@ function setupBattle(rec, mission) {
         side: 'player', hull: rec.hull, size: rec.size, name: rec.name, arms: rec.arms, engine: rec.engine, armor: rec.armor, oxygen: rec.oxygen,
         palette: PAL.player, x: 0, y: 0, heading: -Math.PI / 2, maxSpeed: rec.speed, moveScale: 1 / 20,
         sections: rec.hasDamage && rec.sections ? cloneSections(rec.sections) : createDefaultSections(rec.armor, rec.size, rec.hull),
-        armorValue: effectiveArmor(rec.hull, rec.armor), internalMult: 1.1
+        armorValue: effectiveArmor(rec.hull, rec.armor), internalMult: 1.0
     });
     (rec.lostPlanes || []).forEach(i => { const h = p.hangars[i]; if (h && h.plane) h.state = 'lost'; });
     if (p.isSub) { const ox = OXYGENS[rec.oxygen || 'small'] || OXYGENS.small; p.maxOxygen = ox.oxygenSeconds; p.oxygen = p.maxOxygen; }
     B.player = p; B.ships.push(p);
 
     let count;
-    if (mission.type === 'demolish') count = mission.difficulty === 'easy' ? 6 : mission.difficulty === 'medium' ? 9 : 12;
+    if (mission.type === 'demolish') count = mission.difficulty === 'easy' ? 5 : mission.difficulty === 'medium' ? 8 : 11;
     else count = mission.difficulty === 'easy' ? 2 : mission.difficulty === 'medium' ? 3 : 4;
     if (mission.training) {
         // tutorial drill: two slow, poorly-aimed destroyers straight ahead
         for (let i = 0; i < 2; i++) {
             const a = -Math.PI / 2 + (i ? 0.5 : -0.5), d = 750 + i * 120;
             const e = createEnemyShip(Math.cos(a) * d, Math.sin(a) * d, 'destroyer', false);
-            e.speed = 8; e.fire = Object.assign({}, e.fire, { dmg: 6 }); e.heading = a + Math.PI;
+            e.speed = 8; e.heading = a + Math.PI;
             B.ships.push(e); B.enemyTotal++;
         }
     } else if (mission.type === 'escort') {
@@ -2677,7 +2693,7 @@ function damageShip(s, dmg, hx, hy, o = {}) {
     const gc = s.mainGuns.length;
     let internalKey = null, amount = actual;
     if (o.torpedo) internalKey = pickInternal(gc, 0.6, 0.25);
-    else if (o.bomb && Math.random() < 0.3) internalKey = pickInternal(gc, 0.45, 0.3);
+    else if (o.bomb && Math.random() < 0.45) internalKey = pickInternal(gc, 0.45, 0.3);
     else {
         const key = locateHullSection(s, hx, hy), sec = s.sections[key];
         if (sec.health > 0) {
@@ -3057,8 +3073,20 @@ function updateEnemy(e) {
     if (e.sinking) return;
     const p = enemyTarget(e);
     const dx = p.x - e.x, dy = p.y - e.y, dist = Math.hypot(dx, dy);
-    let desired = Math.atan2(dy, dx);
-    if (e.hull === 'carrier') { if (dist < 700) desired += Math.PI; else if (dist < 1000) desired += e.ai.circle * Math.PI / 2; }
+    const toTarget = Math.atan2(dy, dx);
+    // hold a fighting range: close in when far, circle at range (broadside), open up when too close
+    let desired = toTarget;
+    if (dist < e.range * 0.75) desired = toTarget + Math.PI - e.ai.circle * 0.6;
+    else if (dist < e.range * 1.25) desired = toTarget + e.ai.circle * Math.PI / 2 * clamp((e.range * 1.25 - dist) / (e.range * 0.5), 0.35, 1);
+    if (e.ai.flipT-- <= 0) { e.ai.flipT = 600 + Math.random() * 600; if (Math.random() < 0.35) e.ai.circle *= -1; }
+    // steer away from nearby ships so the fleet doesn't pile up
+    let ax = 0, ay = 0;
+    for (const o of B.ships) {
+        if (o === e || o.sinking || o === p) continue;
+        const ox = e.x - o.x, oy = e.y - o.y, od = Math.hypot(ox, oy), near = (e.L + o.L) * 0.75;
+        if (od < near && od > 1) { const w = (near - od) / near; ax += ox / od * w; ay += oy / od * w; }
+    }
+    if (ax || ay) { const w = clamp(Math.hypot(ax, ay), 0, 1); desired = Math.atan2(Math.sin(desired) * (1 - w) + ay, Math.cos(desired) * (1 - w) + ax); }
     // Torpedo avoidance: turn away from the torpedo's path at the ship's normal turn rate and speed
     const threat = findTorpedoThreat(e);
     if (threat) {
@@ -3067,17 +3095,18 @@ function updateEnemy(e) {
     }
     e.heading += clamp(angDiff(desired, e.heading), -e.turnRate, e.turnRate);
     const engMod = e.sections.engine.onFire || e.sections.engine.damaged ? 0.6 : 1;
-    if (dist > 150 || e.hull === 'carrier' || threat) {
-        const mv = e.speed * e.moveScale * engMod;
-        e.x = clamp(e.x + Math.cos(e.heading) * mv, -WORLD_SIZE / 2, WORLD_SIZE / 2);
-        e.y = clamp(e.y + Math.sin(e.heading) * mv, -WORLD_SIZE / 2, WORLD_SIZE / 2);
-    }
+    const mv = e.speed * e.moveScale * engMod * (e.ai.bump > 0 ? 0.4 : 1);
+    if (e.ai.bump > 0) e.ai.bump--;
+    e.x = clamp(e.x + Math.cos(e.heading) * mv, -WORLD_SIZE / 2, WORLD_SIZE / 2);
+    e.y = clamp(e.y + Math.sin(e.heading) * mv, -WORLD_SIZE / 2, WORLD_SIZE / 2);
+    // aim point: lead the target by its velocity (better on harder difficulties)
+    const lt = dist / 12 * e.diff.lead, aimX = p.x + p.vx * lt, aimY = p.y + p.vy * lt;
     const visible = !p.sinking && !p.submerged;
     // main turrets slew toward the player
     e.mainGuns.forEach((g, i) => {
         if (e.sections[gunKey(i)].damaged) return;
         const tp = toWorld(e, g.off.x, g.off.y);
-        const want = visible && dist < 900 ? angDiff(Math.atan2(p.y - tp.y, p.x - tp.x), e.heading) : (g.off.x >= 0 ? 0 : Math.PI);
+        const want = visible && dist < 900 ? angDiff(Math.atan2(aimY - tp.y, aimX - tp.x), e.heading) : (g.off.x >= 0 ? 0 : Math.PI);
         const rate = (TURRET_SPEED[g.type] || 0.02) * 0.9;
         g.angle = angDiff(g.angle + clamp(angDiff(want, g.angle), -rate, rate), 0);
     });
@@ -3089,14 +3118,14 @@ function updateEnemy(e) {
                 const i = (e.ai.gunIdx + k) % n, g = e.mainGuns[i];
                 if (e.sections[gunKey(i)].damaged) continue;
                 const tp = toWorld(e, g.off.x, g.off.y);
-                const want = angDiff(Math.atan2(p.y - tp.y, p.x - tp.x), e.heading);
+                const want = angDiff(Math.atan2(aimY - tp.y, aimX - tp.x), e.heading);
                 if (Math.abs(angDiff(want, g.angle)) > 0.22) continue;
-                const a = e.heading + g.angle + rand(-0.1, 0.1), bl = (MAIN_R[g.type] || 6) * 2.4;
+                const a = e.heading + g.angle + rand(-e.diff.spread, e.diff.spread), bl = (MAIN_R[g.type] || 6) * 2.4;
                 const sx = tp.x + Math.cos(a) * bl, sy = tp.y + Math.sin(a) * bl;
                 spawnShell({ x: sx, y: sy, vx: Math.cos(a) * 12, vy: Math.sin(a) * 12, side: 'enemy', damage: e.fire.dmg, life: 120, size: e.fire.size, kind: 'main' });
                 muzzleFlash(sx, sy, a, (MAIN_R[g.type] || 6) / 7); sfx('cannon', { x: sx, y: sy, size: (MAIN_R[g.type] || 6) / 7, vol: 0.75 });
                 g.recoil = (MAIN_R[g.type] || 6) * 0.5;
-                e.ai.gunIdx = i + 1; e.fireCooldown = e.fire.interval * 1.35 + Math.random() * 50;
+                e.ai.gunIdx = i + 1; e.fireCooldown = e.fire.interval * 1.35 + Math.random() * 50 * e.diff.reload;
                 break;
             }
         }
@@ -3119,7 +3148,7 @@ function updateEnemy(e) {
             s.aim = e.heading + s.ang;
             if (!ready || Math.abs(angDiff(want, s.ang)) > 0.2 || (target === p && !shipOk)) return;
             const a = s.aim + rand(-0.08, 0.08);
-            spawnShell({ x: o.x + Math.cos(a) * 5, y: o.y + Math.sin(a) * 5, vx: Math.cos(a) * 7, vy: Math.sin(a) * 7, side: 'enemy', damage: 6, life: 80, size: 4, kind: 'secondary', aa: s.aa });
+            spawnShell({ x: o.x + Math.cos(a) * 5, y: o.y + Math.sin(a) * 5, vx: Math.cos(a) * 7, vy: Math.sin(a) * 7, side: 'enemy', damage: 6 * e.diff.dmg, life: 80, size: 4, kind: 'secondary', aa: s.aa });
             fired = true;
         });
         if (fired) { e.secCooldown = 60; sfx('gun', { x: e.x, y: e.y, vol: 0.6 }); }
@@ -3132,7 +3161,7 @@ function updateEnemy(e) {
             const a = Math.atan2(dy, dx), spd = 5;
             const o = toWorld(e, e.L * 0.4, 0);
             sfx('torpedo', { x: o.x, y: o.y, vol: 0.6 });
-            B.projectiles.push({ x: o.x, y: o.y, vx: Math.cos(a) * spd, vy: Math.sin(a) * spd, side: 'enemy', damage: 35, life: Math.floor(1400 / spd), kind: 'torpedo', size: 5, aa: false, hitsShips: true });
+            B.projectiles.push({ x: o.x, y: o.y, vx: Math.cos(a) * spd, vy: Math.sin(a) * spd, side: 'enemy', damage: 35 * e.diff.dmg, life: Math.floor(1400 / spd), kind: 'torpedo', size: 5, aa: false, hitsShips: true });
         }
     }
     // carrier operations
@@ -3189,20 +3218,62 @@ function updateShipCommon(s) {
     if (eng.health <= 0) sinkShip(s);
 }
 
+// Ship-vs-ship collision with oriented boxes (separating axis test) — long hulls collide along their real shape
+function shipMass(s) { return s.L * s.W * (s.hull === 'battleship' ? 1.4 : s.hull === 'carrier' ? 1.2 : s.isSub ? 0.8 : 1); }
+function shipCorners(s) {
+    const c = Math.cos(s.heading), sn = Math.sin(s.heading), hl = s.L * 0.47, hw = s.W * 0.45;
+    return [[hl, -hw * 0.55], [hl, hw * 0.55], [-hl, hw], [-hl, -hw], [hl * 0.45, hw], [hl * 0.45, -hw]].map(([x, y]) => [s.x + c * x - sn * y, s.y + sn * x + c * y]);
+}
+function obbHit(a, b) {
+    const ca = shipCorners(a), cb = shipCorners(b);
+    let depth = Infinity, nx = 0, ny = 0;
+    for (const h of [a.heading, a.heading + Math.PI / 2, b.heading, b.heading + Math.PI / 2]) {
+        const ux = Math.cos(h), uy = Math.sin(h);
+        let a0 = Infinity, a1 = -Infinity, b0 = Infinity, b1 = -Infinity;
+        for (const [x, y] of ca) { const d = x * ux + y * uy; if (d < a0) a0 = d; if (d > a1) a1 = d; }
+        for (const [x, y] of cb) { const d = x * ux + y * uy; if (d < b0) b0 = d; if (d > b1) b1 = d; }
+        const ov = Math.min(a1, b1) - Math.max(a0, b0);
+        if (ov <= 0) return null;
+        if (ov < depth) { depth = ov; nx = ux; ny = uy; }
+    }
+    if ((a.x - b.x) * nx + (a.y - b.y) * ny < 0) { nx = -nx; ny = -ny; }   // normal points from b to a
+    // contact point: the corner of one hull that pokes deepest into the other
+    let best = null, bd = -Infinity;
+    for (const [x, y] of cb) { const d = -((x - a.x) * nx + (y - a.y) * ny); if (pointInShip(a, x, y, 2) && d > bd) { bd = d; best = [x, y]; } }
+    for (const [x, y] of ca) { const d = (x - b.x) * nx + (y - b.y) * ny; if (pointInShip(b, x, y, 2) && -d > bd) { bd = -d; best = [x, y]; } }
+    if (!best) best = [(a.x + b.x) / 2, (a.y + b.y) / 2];
+    return { depth, nx, ny, cx: best[0], cy: best[1] };
+}
 function updateCollisions() {
     const S = B.ships;
     for (let i = 0; i < S.length; i++) {
-        const a = S[i]; if (a.sinking) continue;
+        const a = S[i]; if (a.sinking || a.submerged) continue;
         for (let j = i + 1; j < S.length; j++) {
-            const b = S[j]; if (b.sinking || a.submerged || b.submerged) continue;
-            const dx = a.x - b.x, dy = a.y - b.y, dist = Math.hypot(dx, dy), minD = (a.L + b.L) * 0.2 + 8;
-            if (dist < minD && dist > 0.01) {
-                const ov = (minD - dist) * 0.5, nx = dx / dist, ny = dy / dist;
-                a.x += nx * ov; a.y += ny * ov; b.x -= nx * ov; b.y -= ny * ov;
-                if (a.side !== b.side && B.time - Math.max(a.lastRam, b.lastRam) > 30) {
-                    a.lastRam = b.lastRam = B.time;
-                    damageShip(a, 15, a.x, a.y, { from: b.side }); damageShip(b, 15, b.x, b.y, { from: a.side });
-                    sparks((a.x + b.x) / 2, (a.y + b.y) / 2, 18); B.shake = Math.max(B.shake, 9);
+            const b = S[j]; if (b.sinking || b.submerged) continue;
+            if (Math.hypot(a.x - b.x, a.y - b.y) > (a.L + b.L) * 0.5 + 4) continue;   // cheap broad phase
+            const hit = obbHit(a, b); if (!hit) continue;
+            const ma = shipMass(a), mb = shipMass(b), tot = ma + mb;
+            // push apart, the lighter ship moves more
+            const push = hit.depth + 0.3;
+            a.x += hit.nx * push * (mb / tot); a.y += hit.ny * push * (mb / tot);
+            b.x -= hit.nx * push * (ma / tot); b.y -= hit.ny * push * (ma / tot);
+            // closing speed along the contact normal (px/frame)
+            const vn = (b.vx - a.vx) * hit.nx + (b.vy - a.vy) * hit.ny;
+            if (vn > 0.02) {
+                a.speed *= 1 - 0.55 * (mb / tot); b.speed *= 1 - 0.55 * (ma / tot);
+                // glancing blows twist the hulls a little
+                const ta = (hit.cx - a.x) * hit.ny - (hit.cy - a.y) * hit.nx, tb = (hit.cx - b.x) * hit.ny - (hit.cy - b.y) * hit.nx;
+                a.heading += clamp(ta / a.L, -1, 1) * 0.012 * (mb / tot); b.heading -= clamp(tb / b.L, -1, 1) * 0.012 * (ma / tot);
+            }
+            if (a.side === 'enemy') a.ai.bump = 40; if (b.side === 'enemy') b.ai.bump = 40;
+            if (B.time - Math.max(a.lastRam, b.lastRam) > 30 && vn > 0.08) {
+                a.lastRam = b.lastRam = B.time;
+                sparks(hit.cx, hit.cy, 10 + Math.round(vn * 14), [255, 190, 110]); sfx('hit', { x: hit.cx, y: hit.cy });
+                if (a.side !== b.side) {
+                    // ram damage scales with impact speed and how much heavier the other ship is
+                    const dA = clamp(6 + vn * 34 * Math.sqrt(mb / ma), 6, 90), dB = clamp(6 + vn * 34 * Math.sqrt(ma / mb), 6, 90);
+                    damageShip(a, dA, hit.cx, hit.cy, { from: b.side }); damageShip(b, dB, hit.cx, hit.cy, { from: a.side });
+                    if (a === B.player || b === B.player) { B.shake = Math.max(B.shake, 6 + vn * 10); addText(hit.cx, hit.cy - 10, 'RAM!', '#ffb347', true); }
                 }
             }
         }
