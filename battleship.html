@@ -402,6 +402,47 @@ select option { background:#0a1b26; }
 .modal-buttons { display:flex; gap:12px; }
 .modal-buttons button { flex:1; }
 
+/* supplies */
+.deploy-left { display:flex; flex-direction:column; gap:18px; }
+.supply { display:grid; grid-template-columns:46px minmax(0,1fr); gap:12px; align-items:center; }
+.supply-icon { width:46px; height:46px; border-radius:12px; display:grid; place-items:center; font-size:1.5rem; background:rgba(92,194,122,.12); border:1px solid rgba(92,194,122,.4); }
+.supply-desc { font-size:.78rem; color:var(--muted); line-height:1.35; margin-top:2px; }
+.supply-buy { display:flex; gap:8px; margin-top:12px; }
+.supply-buy button { flex:1; padding:10px 8px; font-size:.8rem; }
+.kit-note { font-family:var(--body); font-weight:700; font-size:.72rem; opacity:.8; margin-left:6px; letter-spacing:0; }
+
+/* medals */
+.title-card { width:205px; }
+.title-card:nth-child(4) { animation-delay:.9s; }
+.medal-summary { display:flex; align-items:center; gap:22px; flex-wrap:wrap; margin-bottom:22px; }
+.ms-item { display:flex; flex-direction:column; align-items:center; min-width:76px; }
+.ms-item .medal-svg { width:46px; height:56px; }
+.ms-item b { font-family:var(--display); font-size:1.25rem; margin-top:2px; }
+.ms-item span { font-size:.64rem; letter-spacing:.18em; color:var(--dim); font-weight:700; text-transform:uppercase; }
+.ms-progress { flex:1; min-width:260px; }
+.ms-head { display:flex; justify-content:space-between; font-family:var(--display); letter-spacing:.22em; font-size:.72rem; color:var(--muted); font-weight:700; }
+.ms-head b { font-size:1.4rem; color:var(--brass2); letter-spacing:.02em; }
+.ms-sub { font-size:.8rem; color:var(--dim); margin-top:6px; }
+.medal-section { font-family:var(--display); font-size:1rem; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); margin:8px 0 14px; display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; }
+.medal-section small { font-family:var(--body); letter-spacing:.02em; text-transform:none; color:var(--dim); font-size:.82rem; font-weight:500; }
+.medal-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(330px, 1fr)); gap:14px; margin-bottom:28px; }
+.medal-card { display:grid; grid-template-columns:86px minmax(0,1fr); gap:14px; align-items:center; padding:14px 16px; border-radius:16px; background:linear-gradient(180deg, var(--panel-a), var(--panel-b)); border:1px solid var(--line); box-shadow:0 10px 26px rgba(0,0,0,.3); transition:transform .2s, border-color .2s; animation:panelIn .5s both; }
+.medal-card:hover { transform:translateY(-3px); }
+.medal-card.tier1 { border-color:rgba(196,124,60,.5); } .medal-card.tier2 { border-color:rgba(196,205,213,.5); } .medal-card.tier3 { border-color:rgba(233,181,47,.65); box-shadow:0 10px 26px rgba(0,0,0,.3), 0 0 22px rgba(233,181,47,.12); }
+.medal-card.feat.tier3 { border-color:rgba(200,107,255,.6); box-shadow:0 10px 26px rgba(0,0,0,.3), 0 0 24px rgba(200,107,255,.18); }
+.medal-art .medal-svg { width:86px; height:103px; display:block; filter:drop-shadow(0 6px 10px rgba(0,0,0,.5)); }
+.medal-svg.locked { opacity:.55; }
+.medal-tier { font-family:var(--display); font-size:.62rem; letter-spacing:.24em; font-weight:800; }
+.medal-tier.t0 { color:var(--dim); } .medal-tier.t1 { color:#e3a46c; } .medal-tier.t2 { color:#dfe6ec; } .medal-tier.t3 { color:var(--brass2); } .medal-tier.legend { color:#d99bff; }
+.medal-name { font-family:var(--display); font-weight:800; font-size:1.15rem; margin:2px 0; }
+.medal-desc { font-size:.82rem; color:var(--muted); margin-bottom:8px; line-height:1.35; }
+.medal-prog { font-size:.75rem; color:var(--muted); margin-top:6px; }
+.medal-prog b { color:var(--brass2); }
+.medal-pips { display:flex; gap:6px; margin-top:7px; flex-wrap:wrap; }
+.pip { font-size:.62rem; font-weight:700; padding:2px 7px; border-radius:999px; border:1px solid var(--line); color:var(--dim); }
+.pip.on.p1 { color:#e3a46c; border-color:rgba(196,124,60,.6); } .pip.on.p2 { color:#e6edf2; border-color:rgba(196,205,213,.6); } .pip.on.p3 { color:var(--brass2); border-color:rgba(233,181,47,.7); }
+.result-medals { margin:-4px 0 16px; padding:10px 14px; border-radius:12px; background:rgba(200,107,255,.08); border:1px solid rgba(217,164,65,.35); text-align:left; font-size:.86rem; font-weight:700; color:var(--brass2); display:flex; flex-direction:column; gap:4px; }
+
 /* save tools + tutorial */
 .title-tools { display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:center; margin-top:16px; animation:fadeUp 1s 1.1s both; }
 .audio-ctl { display:inline-flex; align-items:center; gap:10px; padding:4px 6px 4px 12px; border-radius:12px; border:1px solid var(--line); background:rgba(4,13,20,.6); }
@@ -468,16 +509,21 @@ select option { background:#0a1b26; }
                 </button>
                 <button class="title-card" id="btnGoDockyard">
                     <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 42 V8 H40 M12 15 L21 8 M40 8 V17"/><rect x="36" y="17" width="8" height="6" fill="currentColor"/><path d="M4 42 H44"/><path d="M7 42 L12 33 L17 42"/></svg>
-                    <span class="tc-name">DOCKYARD</span><span class="tc-desc">Inspect &amp; repair your fleet</span>
+                    <span class="tc-name">DOCKYARD</span><span class="tc-desc">Inspect &amp; repair ships</span>
                 </button>
                 <button class="title-card" id="btnGoDeploy">
                     <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 28 H42 L37 36 H11 Z" fill="currentColor"/><path d="M16 28 V20 H28 V28 M22 20 V13 M29 24 H37"/><path d="M4 42 q5 -4 10 0 t10 0 t10 0 t10 0"/></svg>
                     <span class="tc-name">DEPLOY</span><span class="tc-desc">Take on naval missions</span>
                 </button>
+                <button class="title-card" id="btnGoMedals">
+                    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M16 4 H24 L21 18 H13 Z M24 4 H32 L35 18 H27 Z" fill="currentColor" fill-opacity=".35"/><circle cx="24" cy="31" r="12"/><path d="M24 24 L26 29 L31 29 L27 32 L28.5 37 L24 34 L19.5 37 L21 32 L17 29 L22 29 Z" fill="currentColor"/></svg>
+                    <span class="tc-name">MEDALS</span><span class="tc-desc">Achievements &amp; career</span>
+                </button>
             </div>
             <div class="title-status">
                 <span class="pill yen">¥ <b class="yen-val">5000</b></span>
                 <span class="pill">⚓ FLEET <b class="fleet-val">0</b></span>
+                <span class="pill">🧰 KITS <b class="kit-val">0</b></span>
             </div>
             <div class="beta-build">BETA BUILD</div>
             <div class="title-tools">
@@ -606,6 +652,22 @@ select option { background:#0a1b26; }
         <div class="dock-strip" id="dockStrip"></div>
     </section>
 
+    <!-- ================= MEDALS ================= -->
+    <section id="medalsUI" class="screen">
+        <div class="screen-head">
+            <div class="head-left">
+                <button class="ghost" id="btnBackMedals">← Title</button>
+                <h1 class="screen-title"><small>HALL OF HONOUR</small>MEDALS</h1>
+            </div>
+            <div class="head-right"><span class="pill yen">¥ <b class="yen-val">5000</b></span></div>
+        </div>
+        <div class="panel medal-summary" id="medalSummary"></div>
+        <h2 class="medal-section">Service Medals <small>Bronze → Silver → Gold through career milestones</small></h2>
+        <div class="medal-grid" id="medalGrid"></div>
+        <h2 class="medal-section">Legendary Feats <small>One-off challenges for true admirals</small></h2>
+        <div class="medal-grid" id="featGrid"></div>
+    </section>
+
     <!-- ================= DEPLOY ================= -->
     <section id="deployUI" class="screen">
         <div class="screen-head">
@@ -618,9 +680,25 @@ select option { background:#0a1b26; }
             </div>
         </div>
         <div class="deploy-layout">
+            <div class="deploy-left">
             <div class="panel">
                 <div class="panel-title"><span>Select Vessel</span><span class="tag" id="deploySelTag">NONE</span></div>
                 <div id="fleetPick"></div>
+            </div>
+            <div class="panel" id="suppliesPanel">
+                <div class="panel-title"><span>Supplies</span><span class="tag" id="kitCount">0 KITS</span></div>
+                <div class="supply">
+                    <div class="supply-icon">🧰</div>
+                    <div>
+                        <div class="item-name">Repair kit</div>
+                        <div class="supply-desc">Used by emergency repair (R) — restores 25% of every section and puts out fires. Max 3 per mission.</div>
+                    </div>
+                </div>
+                <div class="supply-buy">
+                    <button class="green" id="buyKit1">Buy 1 · ¥150</button>
+                    <button class="primary" id="buyKit5">Buy 5 · ¥650</button>
+                </div>
+            </div>
             </div>
             <div>
                 <div class="deploy-hint" id="deployHint">Choose a ship, then pick a mission to deploy.</div>
@@ -674,7 +752,7 @@ select option { background:#0a1b26; }
             </div>
             <button class="act-btn dive hidden" id="submergeBtn"><span><span class="key">C</span><span id="diveLabel">DIVE</span></span><span class="cd" id="diveInfo">O2</span></button>
             <button class="act-btn torp hidden" id="torpedoBtn"><span><span class="key">F</span>TORPEDO</span><span class="cd" id="torpedoCooldown">READY</span></button>
-            <button class="act-btn green" id="repairBtn"><span><span class="key">R</span>REPAIR</span><span class="cd" id="repairCooldown">READY</span></button>
+            <button class="act-btn green" id="repairBtn"><span><span class="key">R</span>REPAIR <small class="kit-note" id="repairKitsHud">🧰 0</small></span><span class="cd" id="repairCooldown">READY</span></button>
         </div>
         <div id="centerBanner"></div>
         <div id="fireWarning" class="fire-warning hidden">🔥 ENGINE FIRE — REPAIR (R)</div>
@@ -702,6 +780,7 @@ select option { background:#0a1b26; }
         <div class="result-title" id="resultTitle">VICTORY</div>
         <div class="result-mission" id="resultMission">—</div>
         <div class="result-stats" id="resultStats"></div>
+        <div class="result-medals hidden" id="resultMedals"></div>
         <div class="result-reward"><span id="resultRewardLabel">REWARD</span><b id="resultReward">¥0</b></div>
         <button class="primary" id="resultBtn" style="width:100%; padding:14px;">Return to Port</button>
     </div>
@@ -873,7 +952,10 @@ const WEAPONS = {
     'light': [
         { name: '7 inch gun', weight: 160, cost: 60, shellSize: 7, fireRate: 90, damage: 18 },
         { name: '6 inch gun', weight: 130, cost: 50, shellSize: 6, fireRate: 82, damage: 15 },
-        { name: '5 inch double barrage', weight: 110, cost: 45, shellSize: 5, fireRate: 75, damage: 12 }
+        { name: '5 inch double barrage', weight: 110, cost: 45, shellSize: 5, fireRate: 75, damage: 12 },
+        // anti-aircraft guns: very fast, light shells with proximity fuses — deadly to planes, weak against hulls
+        { name: '4 inch AA gun', weight: 95, cost: 70, shellSize: 3.5, fireRate: 22, damage: 7, aa: true, aaMult: 3, shipMult: 0.5, flak: 18, shellSpeed: 11, range: 440 },
+        { name: '3 inch AA gun', weight: 70, cost: 55, shellSize: 3, fireRate: 14, damage: 5, aa: true, aaMult: 3, shipMult: 0.5, flak: 15, shellSpeed: 12, range: 410 }
     ],
     'torpedo': [
         { name: '20 kg torpedo', weight: 40, cost: 25, shellSize: 4, fireRate: 1800, damage: 30, speed: 8 },
@@ -885,6 +967,7 @@ const WEAPONS = {
         { name: 'Fighter', plane: 'fighter', weight: 60, cost: 120 },
         { name: 'Torpedo Bomber', plane: 'torpedo', weight: 95, cost: 260 },
         { name: 'Bomber', plane: 'bomber', weight: 140, cost: 380 },
+        { name: 'Heavy Bomber', plane: 'heavy', weight: 230, cost: 620 },
         { name: 'Empty', plane: null, weight: 0, cost: 0 }
     ]
 };
@@ -902,7 +985,11 @@ const PLANES = {
     bomber: { key: 'bomber', name: 'Bomber', card: 'Bomber', short: 'BMR', speed: 2.3, turn: 0.035, hull: 38, engine: 45, cockpit: 32,
         gunDmg: 3, gunRate: 10, gunRange: 160, forwardGuns: false, ammo: 3, payload: 140, payloadName: 'bomb',
         jink: 0.015, jinkFreq: 0.07, dodge: 1.7, span: 28, len: 20, hitR: 12, cost: 380,
-        desc: 'Slow and tough. Carries 3 bombs for ships; gunners engage aircraft.' }
+        desc: 'Slow and tough. Carries 3 bombs for ships; gunners engage aircraft.' },
+    heavy: { key: 'heavy', name: 'Heavy Bomber', card: 'Hvy Bomber', short: 'HBR', speed: 1.55, turn: 0.022, hull: 58, engine: 70, cockpit: 48,
+        gunDmg: 3, gunRate: 8, gunRange: 175, forwardGuns: false, ammo: 6, payload: 120, payloadName: 'bomb',
+        jink: 0.008, jinkFreq: 0.05, dodge: 0.9, span: 36, len: 26, hitR: 15, cost: 620,
+        desc: 'Very slow, very tough. Carries 6 bombs; several gun turrets cover it.' }
 };
 const HANGAR_COOLDOWN = 900; // 15 seconds at 60 fps
 
@@ -956,6 +1043,7 @@ const PLANE_ICONS = {
     fighter: '<svg viewBox="0 0 40 40" fill="currentColor"><path d="M20 2 L22.5 11 L38 16 L38 19.5 L22.5 19 L21.5 30 L27 33 L27 35.5 L13 35.5 L13 33 L18.5 30 L17.5 19 L2 19.5 L2 16 L17.5 11 Z"/></svg>',
     torpedo: '<svg viewBox="0 0 40 40" fill="currentColor"><path d="M20 2 L22.5 12 L39 15 L39 19 L22.5 19.5 L21.5 31 L28 34 L28 36.5 L12 36.5 L12 34 L18.5 31 L17.5 19.5 L1 19 L1 15 L17.5 12 Z"/><rect x="18.6" y="13" width="2.8" height="15" rx="1.4" fill="#f08a4b"/></svg>',
     bomber: '<svg viewBox="0 0 40 40" fill="currentColor"><path d="M20 2 L23 13 L39.5 16 L39.5 20 L23 20.5 L22 32 L29 34.5 L29 37 L11 37 L11 34.5 L18 32 L17 20.5 L0.5 20 L0.5 16 L17 13 Z"/><rect x="8.5" y="10" width="3.5" height="9" rx="1.5"/><rect x="28" y="10" width="3.5" height="9" rx="1.5"/></svg>',
+    heavy: '<svg viewBox="0 0 40 40" fill="currentColor"><path d="M20 1 L22.5 12 L39.8 15 L39.8 20 L22.5 20.5 L21.6 33 L28.5 35 L28.5 38 L11.5 38 L11.5 35 L18.4 33 L17.5 20.5 L0.2 20 L0.2 15 L17.5 12 Z"/><rect x="5" y="10" width="3" height="8" rx="1.3"/><rect x="11" y="9" width="3" height="9" rx="1.3"/><rect x="26" y="9" width="3" height="9" rx="1.3"/><rect x="32" y="10" width="3" height="8" rx="1.3"/></svg>',
     empty: '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"><rect x="6" y="6" width="28" height="28" rx="5"/></svg>'
 };
 const DIFFICULTY_MULT = { easy: 1.0, medium: 1.6, hard: 2.4 };
@@ -966,6 +1054,7 @@ const SPAWN_RULES = {                                                // reinforc
 };
 const CONVOY_NAMES = ['Supply ship Aurora', 'Supply ship Bounty', 'Supply ship Cormorant'];
 const EMERGENCY_REPAIR_PCT = 0.25;
+const REPAIR_KIT_PRICE = 150, REPAIR_KIT_BUNDLE = { n: 5, price: 650 }, MAX_REPAIRS_PER_MISSION = 3, START_REPAIR_KITS = 5;
 const SECTION_NAMES = { hullBow: 'Bow', hullPort: 'Port side', hullStarboard: 'Starboard', hullStern: 'Stern', engine: 'Engine', bridge: 'Bridge', mainGun1: 'Turret M1', mainGun2: 'Turret M2' };
 
 // =====================================================================
@@ -1417,7 +1506,8 @@ function drawPlane(c, key, PP, o = {}) {
     const sil = o.silhouette;
     if (o.shadow) { c.save(); c.translate(1.2, 1.8); drawPlane(c, key, PP, { silhouette: 'rgba(0,0,0,0.35)' }); c.restore(); }
     if (key === 'torpedo' && o.payload && !sil) { c.fillStyle = '#3a4248'; rr(c, -hl * 0.4, -1, L * 0.66, 2, 1); c.fill(); c.fillStyle = '#c86a2a'; c.fillRect(hl * 0.22, -1, 1.2, 2); }
-    const wx0 = hl * (key === 'fighter' ? 0.3 : 0.28), wx1 = -hl * (key === 'bomber' ? 0.18 : 0.15);
+    const big = key === 'bomber' || key === 'heavy';
+    const wx0 = hl * (key === 'fighter' ? 0.3 : 0.28), wx1 = -hl * (big ? 0.18 : 0.15);
     const tx0 = wx0 - L * 0.09, tx1 = wx1 + L * 0.05;
     c.beginPath();
     c.moveTo(wx0, 0); c.lineTo(tx0, -S / 2); c.quadraticCurveTo(tx0 - 1.2, -S / 2 - 0.9, tx1, -S / 2); c.lineTo(wx1, 0);
@@ -1428,22 +1518,23 @@ function drawPlane(c, key, PP, o = {}) {
     c.moveTo(-hl * 0.62, 0); c.lineTo(-hl * 0.8, -S * 0.2); c.lineTo(-hl * 0.99, -S * 0.2); c.lineTo(-hl * 0.9, 0);
     c.lineTo(-hl * 0.99, S * 0.2); c.lineTo(-hl * 0.8, S * 0.2); c.closePath();
     c.fillStyle = sil || PP.wing; c.fill();
-    if (key === 'bomber') {
-        for (const sy of [-S * 0.22, S * 0.22]) {
+    if (big) {
+        for (const sy of key === 'heavy' ? [-S * 0.34, -S * 0.17, S * 0.17, S * 0.34] : [-S * 0.22, S * 0.22]) {
             c.fillStyle = sil || PP.dark; ell(c, hl * 0.26, sy, L * 0.17, 1.7); c.fill();
             if (!sil && o.prop) { c.fillStyle = 'rgba(220,232,238,0.35)'; ell(c, hl * 0.45, sy, 0.6, S * 0.11); c.fill(); }
         }
     }
-    ell(c, 0, 0, hl, L * (key === 'bomber' ? 0.11 : 0.12));
+    ell(c, 0, 0, hl, L * (big ? 0.11 : 0.12));
     if (sil) { c.fillStyle = sil; c.fill(); return; }
     const g = c.createLinearGradient(0, -L * 0.12, 0, L * 0.12); g.addColorStop(0, '#ffffff'); g.addColorStop(0.25, PP.body); g.addColorStop(1, PP.dark);
     c.fillStyle = g; c.fill(); c.lineWidth = MODEL_LW * (0.3); c.strokeStyle = PP.dark; c.stroke();
-    c.fillStyle = PP.glass; ell(c, key === 'bomber' ? hl * 0.82 : hl * 0.12, 0, L * (key === 'bomber' ? 0.08 : 0.1), L * 0.05); c.fill();
-    if (key === 'bomber') { ell(c, -hl * 0.1, 0, L * 0.06, L * 0.04); c.fill(); }
+    c.fillStyle = PP.glass; ell(c, big ? hl * 0.82 : hl * 0.12, 0, L * (big ? 0.08 : 0.1), L * 0.05); c.fill();
+    if (big) { ell(c, -hl * 0.1, 0, L * 0.06, L * 0.04); c.fill(); }
     const rx = wx1 + (wx0 - wx1) * 0.45 - L * 0.03, rr_ = S * 0.065;
     for (const sy of [-S * 0.33, S * 0.33]) { c.fillStyle = PP.roundelOuter; circ(c, rx, sy, rr_); c.fill(); c.fillStyle = PP.roundel; circ(c, rx, sy, rr_ * 0.6); c.fill(); }
     c.strokeStyle = PP.dark; c.lineWidth = MODEL_LW * (0.9); c.beginPath(); c.moveTo(-hl * 0.6, 0); c.lineTo(-hl * 0.98, 0); c.stroke();
-    if (o.prop && key !== 'bomber') { c.fillStyle = 'rgba(220,232,238,0.38)'; ell(c, hl + 0.5, 0, 0.7, S * 0.21); c.fill(); }
+    if (key === 'heavy') { c.fillStyle = PP.glass; circ(c, -hl * 0.92, 0, L * 0.035); c.fill(); }
+    if (o.prop && !big) { c.fillStyle = 'rgba(220,232,238,0.38)'; ell(c, hl + 0.5, 0, 0.7, S * 0.21); c.fill(); }
     if (o.damaged) { c.fillStyle = 'rgba(20,10,5,0.45)'; circ(c, -hl * 0.1, S * 0.18, S * 0.12); c.fill(); }
 }
 
@@ -1574,6 +1665,7 @@ function drawShipProfile(c, spec, w, h, P, t) {
 // =====================================================================
 //  GAME STATE
 // =====================================================================
+let repairKits = START_REPAIR_KITS;
 let yen = 5000, dockCapacity = 2, dockShips = [], blueprints = [], blueprintId = 0, shipIdCounter = 1;
 let activeMissions = [], missionIdCounter = 0;
 let selectedDeployShipId = null, dockViewIndex = 0;
@@ -1583,7 +1675,7 @@ let designSpec = null, designData = null, previewHot = null;
 const DPR = Math.min(2, window.devicePixelRatio || 1);
 
 const $ = id => document.getElementById(id);
-const SCREENS = { title: $('titleScreen'), design: $('mainUI'), dockyard: $('dockyardUI'), deploy: $('deployUI') };
+const SCREENS = { title: $('titleScreen'), design: $('mainUI'), dockyard: $('dockyardUI'), deploy: $('deployUI'), medals: $('medalsUI') };
 const hullSelect = $('hullSelect'), sizeSelect = $('sizeSelect'), engineSelect = $('engineSelect'), armorSelect = $('armorSelect'), oxygenSelect = $('oxygenSelect');
 const armsContainer = $('armsContainer');
 const shipCanvas = $('shipCanvas'), shipCtx = shipCanvas.getContext('2d');
@@ -1620,7 +1712,7 @@ function shortWeapon(a) {
     if (!a) return '';
     if (a.type === 'hangar') return a.plane ? PLANES[a.plane].name : 'Empty';
     if (a.type === 'torpedo') return a.name.replace(' torpedo', '').replace(' ', '');
-    const m = a.name.match(/^([\d.]+) inch/); const twin = /double/.test(a.name) ? ' twin' : '';
+    const m = a.name.match(/^([\d.]+) inch/); const twin = /double/.test(a.name) ? ' twin' : /AA/.test(a.name) ? ' AA' : '';
     return m ? `${m[1]}"${twin}` : a.name;
 }
 function slotCode(cat, i) { return { main: 'M', sec: 'S', torp: 'T', hangar: 'H' }[cat] + (i + 1); }
@@ -1671,11 +1763,23 @@ function setScreen(name) {
     if (name === 'dockyard') renderDockyard();
     if (name === 'deploy') { if (activeMissions.length === 0) generateMissions(); renderDeploy(); }
     if (name === 'title') { updateTitleStats(); updateSaveInfo(); }
+    if (name === 'medals') renderMedals();
     AudioSys.setMusic('menu');
     window.scrollTo({ top: 0 });
 }
 function goTo(name) { if (currentScreen === name) return; fadeThen(() => setScreen(name)); }
-function updateYenDisplay() { document.querySelectorAll('.yen-val').forEach(e => e.textContent = yen.toLocaleString()); markDirty(); }
+function updateYenDisplay() { document.querySelectorAll('.yen-val').forEach(e => e.textContent = yen.toLocaleString()); updateKitDisplay(); markDirty(); }
+function updateKitDisplay() {
+    document.querySelectorAll('.kit-val').forEach(e => e.textContent = repairKits);
+    const kc = $('kitCount'); if (kc) kc.textContent = `${repairKits} KIT${repairKits === 1 ? '' : 'S'}`;
+    const b1 = $('buyKit1'), b5 = $('buyKit5');
+    if (b1) b1.disabled = yen < REPAIR_KIT_PRICE; if (b5) b5.disabled = yen < REPAIR_KIT_BUNDLE.price;
+}
+function buyKits(n, price) {
+    if (yen < price) { toast(`Not enough yen — ¥${price} needed.`, 'bad'); return; }
+    yen -= price; repairKits += n; updateYenDisplay();
+    toast(`🧰 Bought ${n} repair kit${n > 1 ? 's' : ''} · ${repairKits} in stock`, 'good'); sfx('coins');
+}
 function updateDockStatus() { markDirty(); document.querySelectorAll('.dock-val').forEach(e => e.textContent = `${dockShips.length}/${dockCapacity}`); updateTitleStats(); }
 function updateTitleStats() { document.querySelectorAll('.fleet-val').forEach(e => e.textContent = dockShips.filter(s => !s.sunk).length); }
 
@@ -1745,6 +1849,7 @@ function weaponStatsLine(type, name) {
         return [['SPD', p.speed.toFixed(1)], ['HP', p.hull * 4 + p.engine], [p.ammo ? 'LOAD' : 'ROLE', p.ammo ? `${p.ammo}× ${p.payloadName}` : 'air-to-air'], ['¥', w.cost]];
     }
     if (type === 'torpedo') return [['DMG', w.damage], ['SPD', w.speed], ['WT', w.weight], ['¥', w.cost]];
+    if (w.aaMult) return [['DMG', w.damage], ['RELOAD', (w.fireRate / 60).toFixed(2) + 's'], ['VS AIR', '×' + w.aaMult], ['VS SHIPS', '×' + w.shipMult], ['¥', w.cost]];
     return [['DMG', w.damage], ['RELOAD', (w.fireRate / 60).toFixed(1) + 's'], ['SHELL', w.shellSize + '"'], ['WT', w.weight], ['¥', w.cost]];
 }
 function fillStats(el, type, name) {
@@ -1809,10 +1914,10 @@ function computeCurrentDesign() {
 
 function designMetrics(d) {
     const g = splitArms(d.arms);
-    const dps = a => a.damage * 60 / a.fireRate;
+    const dps = a => a.damage * (a.shipMult || 1) * 60 / a.fireRate;
     const fire = g.mains.concat(g.secondaries).reduce((s, a) => s + dps(a), 0);
     const planes = g.hangars.filter(h => h.plane);
-    const aa = g.secondaries.filter(a => a.type === 'light').reduce((s, a) => s + dps(a), 0) + planes.reduce((s, h) => s + (h.plane === 'fighter' ? 24 : 8), 0);
+    const aa = g.secondaries.filter(a => a.type === 'light').reduce((s, a) => s + a.damage * (a.aaMult || 1) * 60 / a.fireRate, 0) + planes.reduce((s, h) => s + (h.plane === 'fighter' ? 24 : 8), 0);
     const torp = g.torpedoes.reduce((s, a) => s + a.damage, 0);
     const strike = planes.reduce((s, h) => s + PLANES[h.plane].payload * PLANES[h.plane].ammo, 0);
     return { fire, aa, torp, strike, planes };
@@ -1831,7 +1936,7 @@ function updateDesign() {
         ['Armor', `${d.armorName} · ${d.armorValue}% reduction`, d.armorValue / 55, 'brass'],
         ['Toughness', `${d.sectionHp.toLocaleString()} HP × 4 · core ${d.innerHp}`, Math.sqrt((d.sectionHp * 4) / (1 - d.armorValue / 100) / 17000), 'brass'],
         ['Firepower', m.fire ? `${m.fire.toFixed(0)} dmg/s` : '—', m.fire / 280, 'red'],
-        ['Anti-air', m.aa ? m.aa.toFixed(0) : '—', m.aa / 140, 'teal'],
+        ['Anti-air', m.aa ? m.aa.toFixed(0) : '—', m.aa / 220, 'teal'],
     ];
     if (d.hull === 'carrier') bars.push(['Air strike', m.planes.length ? `${m.planes.length} aircraft · ${m.strike} dmg` : 'No aircraft', m.strike / 560, 'sky']);
     else bars.push(['Torpedo', m.torp ? `${m.torp} dmg` : '—', m.torp / 400, 'torp']);
@@ -2014,7 +2119,7 @@ function confirmBuild(id) {
     dockShips.push(ship);
     if (selectedDeployShipId === null) selectedDeployShipId = ship.id;
     renderDockList(); updateDockStatus();
-    toast(`⚓ ${ship.name} launched into the dockyard.`, 'good'); sfx('build');
+    toast(`⚓ ${ship.name} launched into the dockyard.`, 'good'); sfx('build'); addStat('built');
 }
 
 function shipStatus(ship) {
@@ -2405,7 +2510,7 @@ function enemyArms(type) {
 }
 
 function createEnemyShip(x, y, type, isTarget) {
-    const d = ENEMY_DEF[type], df = enemyDiff(), k = df.hp * (isTarget ? 1.25 : 1);
+    const d = ENEMY_DEF[type], df = enemyDiff(), k = df.hp * (isTarget ? 2.2 : 1);
     const hp = Math.round(d.hp * k), inner = Math.round(d.inner * k), eng = Math.round(d.eng * k);
     const s = () => ({ health: inner, maxHealth: inner, damaged: false });
     const sections = {
@@ -2557,6 +2662,14 @@ function setupBattle(rec, mission) {
         const a = Math.random() * TAU, dist = ENEMY_SPAWN_RADIUS * (0.8 + Math.random() * 0.4);
         const t = createEnemyShip(Math.cos(a) * dist, Math.sin(a) * dist, 'battleship', true);
         t.maxSpeed = 15; t.speed = 8; B.ships.push(t); B.enemyTotal++;
+        // cruiser escort screening the target battleship
+        const nEsc = mission.training ? 0 : { easy: 2, medium: 3, hard: 5 }[mission.difficulty] || 2;
+        for (let i = 0; i < nEsc; i++) {
+            const sa = (TAU / nEsc) * i + Math.PI / nEsc, slot = { x: Math.cos(sa) * 230, y: Math.sin(sa) * 230 };
+            const w = toWorld(t, slot.x, slot.y), e = createEnemyShip(w.x, w.y, 'cruiser', false);
+            e.escortOf = t; e.escortSlot = slot; e.heading = t.heading; e.name = 'Escort cruiser';
+            B.ships.push(e); B.enemyTotal++;
+        }
     }
     const iceCount = mission.training ? 0 : mission.difficulty === 'easy' ? 2 : mission.difficulty === 'medium' ? 4 : 6;
     for (let i = 0; i < iceCount; i++) {
@@ -2718,7 +2831,7 @@ function sinkShip(s) {
     setTimeout(() => { if (B && B.running) explode(s.x + rand(-s.L * 0.3, s.L * 0.3), s.y + rand(-8, 8), 0.9); }, 260);
     addSlick(s.x, s.y, s.L * 0.55); sfx('sink', { x: s.x, y: s.y });
     if (s.side === 'enemy') {
-        B.stats.kills++;
+        B.stats.kills++; addStat('kills');
         pushFeed(`${s.isTarget ? '🎯 TARGET ' : ''}Enemy ${s.name.toLowerCase()} sunk`, 'kill');
         addText(s.x, s.y - 26, s.isTarget ? 'TARGET SUNK' : 'SUNK', '#f6d58a', true);
     } else if (s.isConvoy) {
@@ -2765,7 +2878,7 @@ function launchPlane(ship, h) {
     };
     B.planes.push(pl);
     h.state = 'air'; h.planeRef = pl; h.cooldown = HANGAR_COOLDOWN;
-    if (ship.side === 'player') pushFeed(`✈ ${d.name} launched from H${h.idx + 1}`);
+    if (ship === B.player) { pushFeed(`✈ ${d.name} launched from H${h.idx + 1}`); addStat('launches'); }
     sfx('planeLaunch', { x: pos.x, y: pos.y, vol: ship.side === 'player' ? 1 : 0.6 });
     return pl;
 }
@@ -2785,7 +2898,7 @@ function crashPlane(pl) {
     if (h && h.planeRef === pl) { h.planeRef = null; h.state = 'lost'; h.cooldown = 0; }
     explode(pl.x, pl.y, 0.45); sfx('planeDown', { x: pl.x, y: pl.y });
     if (pl.side === 'player') { B.stats.planesLost++; pushFeed(`Our ${pl.def.name.toLowerCase()} was shot down`, 'warn'); }
-    else { B.stats.planesDowned++; pushFeed(`Enemy ${pl.def.name.toLowerCase()} shot down`, 'kill'); addText(pl.x, pl.y - 12, 'SPLASH', '#9fd6ff', true); }
+    else { B.stats.planesDowned++; addStat('planesDowned'); pushFeed(`Enemy ${pl.def.name.toLowerCase()} shot down`, 'kill'); addText(pl.x, pl.y - 12, 'SPLASH', '#9fd6ff', true); }
 }
 function hangarAction(i) {
     if (!B || !B.running || B.paused || B.outcome) return;
@@ -2830,7 +2943,7 @@ function defensiveGuns(pl) {
 }
 function dropTorpedo(pl) {
     const a = pl.heading, sp = pl.def.torpSpeed || 4.5;
-    B.projectiles.push({ x: pl.x, y: pl.y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, side: pl.side, damage: pl.def.payload, life: Math.floor(1500 / sp), size: 3.5, kind: 'torpedo', aa: false, hitsShips: true, from: pl.side });
+    B.projectiles.push({ x: pl.x, y: pl.y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, side: pl.side, damage: pl.def.payload * (pl.side === 'enemy' ? 2 : 1), life: Math.floor(1500 / sp), size: 3.5, kind: 'torpedo', aa: false, hitsShips: true, from: pl.side });
     pl.ammo = 0; pl.breakT = 70;
     splash(pl.x, pl.y, 4);
 }
@@ -2970,6 +3083,8 @@ function playerFireTorpedo() {
 function useEmergencyRepair() {
     const p = B && B.player;
     if (!p || !B.running || B.paused || p.repairCooldown > 0 || p.sinking) return;
+    if ((B.repairsUsed || 0) >= MAX_REPAIRS_PER_MISSION) { pushFeed(`Repair limit reached — ${MAX_REPAIRS_PER_MISSION} per mission`, 'warn'); return; }
+    if (repairKits <= 0) { pushFeed('No repair kits left — buy more in the Deploy screen', 'warn'); return; }
     let any = false;
     for (const k in p.sections) {
         const s = p.sections[k];
@@ -2983,7 +3098,8 @@ function useEmergencyRepair() {
     if (any) {
         p.repairCooldown = p.repairMax; B.shake = Math.max(B.shake, 4);
         for (let i = 0; i < 26; i++) { const o = toWorld(p, rand(-p.L / 2, p.L / 2), rand(-p.W / 2, p.W / 2)); addP(o.x, o.y, rand(-0.3, 0.3), rand(-0.8, -0.2), rand(1.5, 3), [140, 255, 170], 0.9, 0.025, -0.02, true); }
-        pushFeed('🔧 Damage control: +25% to every section'); sfx('repair');
+        repairKits--; B.repairsUsed = (B.repairsUsed || 0) + 1; updateKitDisplay(); markDirty();
+        pushFeed(`🔧 Damage control: +25% to every section · ${MAX_REPAIRS_PER_MISSION - B.repairsUsed} repair${MAX_REPAIRS_PER_MISSION - B.repairsUsed === 1 ? '' : 's'} left this mission`); sfx('repair'); addStat('repairs');
     } else pushFeed('No damage to repair');
 }
 function toggleDive() {
@@ -3030,25 +3146,27 @@ function updatePlayer(p) {
     // secondaries: light guns prefer aircraft in range, medium guns only engage ships
     p.secondaries.forEach(s => { if (s.cooldown > 0) s.cooldown--; });
     if (p.secondaries.length && !p.submerged) {
-        const R = 350;
+        const R = 440;
         let ship = null, sd = R, plane = null, pd = R;
         for (const e of B.ships) { if (e.side === 'player' || e.sinking) continue; const d = Math.hypot(e.x - p.x, e.y - p.y); if (d < sd) { sd = d; ship = e; } }
         for (const pl of B.planes) { if (pl.side === 'player' || pl.dead || pl.state === 'crashing' || pl.alt < 0.5) continue; const d = Math.hypot(pl.x - p.x, pl.y - p.y); if (d < pd) { pd = d; plane = pl; } }
         p.secondaries.forEach(s => {
-            const target = s.aa && plane ? plane : ship; if (!target) return;
-            const o = toWorld(p, s.off.x, s.off.y), spd = 8;
+            const W = s.weapon, range = W.range || 350;
+            const target = s.aa && plane && pd < range ? plane : (ship && sd < range ? ship : null); if (!target) return;
+            const o = toWorld(p, s.off.x, s.off.y), spd = W.shellSpeed || 8;
             let tx = target.x, ty = target.y;
             const isPlane = target === plane;
             if (isPlane) { const lt = Math.hypot(tx - o.x, ty - o.y) / spd; tx += target.vx * lt * 0.9; ty += target.vy * lt * 0.9; }
-            const want = angDiff(Math.atan2(ty - o.y, tx - o.x), p.heading), rate = SEC_TURN_SPEED[s.type] || 0.04;
+            const want = angDiff(Math.atan2(ty - o.y, tx - o.x), p.heading), rate = (SEC_TURN_SPEED[s.type] || 0.04) * (W.aaMult ? 1.6 : 1);
             s.ang = angDiff(s.ang + clamp(angDiff(want, s.ang), -rate, rate), 0);
             const a = p.heading + s.ang + (isPlane ? rand(-0.06, 0.06) : 0);
             s.aim = a;
             if (s.cooldown <= 0 && Math.abs(angDiff(want, s.ang)) < 0.12) {
-                s.cooldown = s.weapon.fireRate;
+                s.cooldown = W.fireRate;
                 const mx = o.x + Math.cos(a) * 6, my = o.y + Math.sin(a) * 6;
-                spawnShell({ x: mx, y: my, vx: Math.cos(a) * spd, vy: Math.sin(a) * spd, side: 'player', damage: s.weapon.damage, life: 100, size: s.weapon.shellSize, kind: 'secondary', aa: s.aa, from: 'player' });
-                muzzleFlash(mx, my, a, 0.4); sfx('gun', { x: mx, y: my, vol: 0.8 });
+                spawnShell({ x: mx, y: my, vx: Math.cos(a) * spd, vy: Math.sin(a) * spd, side: 'player', damage: W.damage, life: Math.ceil((range + 60) / spd), size: W.shellSize, kind: 'secondary', aa: s.aa, from: 'player',
+                    aaMult: W.aaMult || 1, shipMult: W.shipMult || 1, flak: W.flak || 0 });
+                muzzleFlash(mx, my, a, W.aaMult ? 0.25 : 0.4); sfx(W.aaMult ? 'mg' : 'gun', { x: mx, y: my, vol: 0.8 });
             }
         });
     }
@@ -3078,6 +3196,13 @@ function updateEnemy(e) {
     let desired = toTarget;
     if (dist < e.range * 0.75) desired = toTarget + Math.PI - e.ai.circle * 0.6;
     else if (dist < e.range * 1.25) desired = toTarget + e.ai.circle * Math.PI / 2 * clamp((e.range * 1.25 - dist) / (e.range * 0.5), 0.35, 1);
+    let formationSpeed = null;
+    if (e.escortOf && !e.escortOf.sinking && dist > 650) {
+        // escorts keep station around the target until the enemy comes close
+        const g = toWorld(e.escortOf, e.escortSlot.x, e.escortSlot.y), gd = Math.hypot(g.x - e.x, g.y - e.y);
+        desired = gd > 25 ? Math.atan2(g.y - e.y, g.x - e.x) : e.escortOf.heading;
+        formationSpeed = gd > 120 ? e.speed : e.escortOf.speed * (0.9 + gd / 300);
+    }
     if (e.ai.flipT-- <= 0) { e.ai.flipT = 600 + Math.random() * 600; if (Math.random() < 0.35) e.ai.circle *= -1; }
     // steer away from nearby ships so the fleet doesn't pile up
     let ax = 0, ay = 0;
@@ -3095,7 +3220,7 @@ function updateEnemy(e) {
     }
     e.heading += clamp(angDiff(desired, e.heading), -e.turnRate, e.turnRate);
     const engMod = e.sections.engine.onFire || e.sections.engine.damaged ? 0.6 : 1;
-    const mv = e.speed * e.moveScale * engMod * (e.ai.bump > 0 ? 0.4 : 1);
+    const mv = (formationSpeed == null ? e.speed : Math.min(e.speed, formationSpeed)) * e.moveScale * engMod * (e.ai.bump > 0 ? 0.4 : 1);
     if (e.ai.bump > 0) e.ai.bump--;
     e.x = clamp(e.x + Math.cos(e.heading) * mv, -WORLD_SIZE / 2, WORLD_SIZE / 2);
     e.y = clamp(e.y + Math.sin(e.heading) * mv, -WORLD_SIZE / 2, WORLD_SIZE / 2);
@@ -3161,7 +3286,7 @@ function updateEnemy(e) {
             const a = Math.atan2(dy, dx), spd = 5;
             const o = toWorld(e, e.L * 0.4, 0);
             sfx('torpedo', { x: o.x, y: o.y, vol: 0.6 });
-            B.projectiles.push({ x: o.x, y: o.y, vx: Math.cos(a) * spd, vy: Math.sin(a) * spd, side: 'enemy', damage: 35 * e.diff.dmg, life: Math.floor(1400 / spd), kind: 'torpedo', size: 5, aa: false, hitsShips: true });
+            B.projectiles.push({ x: o.x, y: o.y, vx: Math.cos(a) * spd, vy: Math.sin(a) * spd, side: 'enemy', damage: 60 * e.diff.dmg, life: Math.floor(1400 / spd), kind: 'torpedo', size: 5, aa: false, hitsShips: true });
         }
     }
     // carrier operations
@@ -3273,7 +3398,7 @@ function updateCollisions() {
                     // ram damage scales with impact speed and how much heavier the other ship is
                     const dA = clamp(6 + vn * 34 * Math.sqrt(mb / ma), 6, 90), dB = clamp(6 + vn * 34 * Math.sqrt(ma / mb), 6, 90);
                     damageShip(a, dA, hit.cx, hit.cy, { from: b.side }); damageShip(b, dB, hit.cx, hit.cy, { from: a.side });
-                    if (a === B.player || b === B.player) { B.shake = Math.max(B.shake, 6 + vn * 10); addText(hit.cx, hit.cy - 10, 'RAM!', '#ffb347', true); }
+                    if (a === B.player || b === B.player) { addStat('rams'); B.shake = Math.max(B.shake, 6 + vn * 10); addText(hit.cx, hit.cy - 10, 'RAM!', '#ffb347', true); }
                 }
             }
         }
@@ -3307,7 +3432,11 @@ function updateProjectiles() {
         if (!remove && p.aa) {
             for (const pl of B.planes) {
                 if (pl.side === p.side || pl.dead || pl.state === 'crashing' || pl.alt < 0.35) continue;
-                if (Math.hypot(p.x - pl.x, p.y - pl.y) < pl.def.hitR) { damagePlane(pl, p.damage, p.x, p.y, p.side); remove = true; break; }
+                if (Math.hypot(p.x - pl.x, p.y - pl.y) < pl.def.hitR + (p.flak || 0)) {
+                    damagePlane(pl, p.damage * (p.aaMult || 1), p.x, p.y, p.side);
+                    if (p.flak) { B.flashes.push({ x: p.x, y: p.y, r: 14, life: 1, decay: 0.2, col: '255,210,150' }); addP(p.x, p.y, B.wind.x, B.wind.y, 4, [60, 58, 56], 0.6, 0.02, 0.12); }
+                    remove = true; break;
+                }
             }
         }
         if (!remove && p.hitsShips) {
@@ -3316,8 +3445,9 @@ function updateProjectiles() {
                 if (s.submerged && p.kind !== 'torpedo') continue;
                 if (pointInShip(s, p.x, p.y, p.kind === 'torpedo' ? 3 : 1)) {
                     if (p.kind === 'torpedo') { damageShip(s, p.damage, p.x, p.y, { torpedo: true, from: p.side }); explode(p.x, p.y, 1.1); splash(p.x, p.y, 12); }
-                    else { damageShip(s, p.damage, p.x, p.y, { from: p.side }); sparks(p.x, p.y, 6 + p.size, [255, 200, 110]); B.flashes.push({ x: p.x, y: p.y, r: 10 + p.size * 2, life: 1, decay: 0.15, col: '255,190,110' }); }
-                    if (p.counted) { B.stats.hits++; B.hitMarker = 12; sfx('tick'); }
+                    else { damageShip(s, p.damage * (p.shipMult || 1), p.x, p.y, { from: p.side }); sparks(p.x, p.y, 6 + p.size, [255, 200, 110]); B.flashes.push({ x: p.x, y: p.y, r: 10 + p.size * 2, life: 1, decay: 0.15, col: '255,190,110' }); }
+                    if (p.counted) { B.stats.hits++; B.hitMarker = 12; sfx('tick'); addStat('mainHits'); }
+                    if (p.kind === 'torpedo' && p.side === 'player') addStat('torpHits');
                     remove = true; break;
                 }
             }
@@ -3397,6 +3527,7 @@ function battleStep() {
     updatePlayer(B.player);
     for (const s of B.ships) { if (s.side === 'enemy') updateEnemy(s); else if (s.isConvoy && !s.sinking) updateConvoy(s); }
     updateSpawns();
+    if (!B.player.sinking) { B.distPx = (B.distPx || 0) + Math.hypot(B.player.vx, B.player.vy); if (B.time % 60 === 0 && B.distPx >= NM_PX) { const nm = Math.floor(B.distPx / NM_PX); B.distPx -= nm * NM_PX; addStat('distance', nm); } }
     if (B.time % 10 === 0) AudioSys.setDrone(B.planes.filter(pl => pl.state !== 'crashing' && Math.hypot(pl.x - B.camX, pl.y - B.camY) < 700).length / 4);
     for (const s of B.ships) updateShipCommon(s);
     updateCollisions();
@@ -3425,10 +3556,16 @@ function showResult(victory) {
         reward = B.mission.reward; yen += reward; updateYenDisplay();
         const idx = activeMissions.findIndex(m => m.id === B.mission.id);
         if (idx !== -1) { if (B.mission.training) activeMissions.splice(idx, 1); else activeMissions.splice(idx, 1, createRandomMission()); }
+        addStat('wins'); if (B.mission.type === 'escort') addStat('escortWins');
+        if (reward > 0) addStat('yenEarned', reward);
+        if (!B.mission.training) {
+            const S = B.player.sections, hullPct = (S.hullBow.health + S.hullPort.health + S.hullStarboard.health + S.hullStern.health) / (S.hullBow.maxHealth * 4);
+            checkFeats({ type: B.mission.type, diff: B.mission.difficulty, hull: B.rec.hull, hullPct, convoySafe: B.ships.filter(s => s.isConvoy && !s.sinking).length });
+        }
     } else {
         // consolation pay for a lost mission: 10% of the reward plus ¥25 per enemy sunk, capped at 35%
         reward = Math.min(Math.floor(B.mission.reward * 0.35), Math.floor(B.mission.reward * 0.1) + B.stats.kills * 25);
-        yen += reward; updateYenDisplay();
+        yen += reward; updateYenDisplay(); if (reward > 0) addStat('yenEarned', reward);
     }
     const el = $('resultScreen');
     el.classList.toggle('defeat', !victory);
@@ -3466,6 +3603,9 @@ function showResult(victory) {
         rEl.textContent = '+¥' + Math.round(reward * e).toLocaleString();
         if (k < 1 && !el.classList.contains('hidden')) requestAnimationFrame(tick);
     })(t0);
+    const rm = $('resultMedals'); rm.replaceChildren();
+    (B.newMedals || []).forEach(t => { const d = document.createElement('div'); d.textContent = t; rm.appendChild(d); });
+    rm.classList.toggle('hidden', !(B.newMedals || []).length);
     resultFx = { victory, parts: [], t: 0 };
     if (reward > 0) setTimeout(() => sfx('coins'), 1700);
 }
@@ -3506,6 +3646,7 @@ function snapshot() {
     return {
         v: SAVE_VERSION, savedAt: Date.now(), yen, dockCapacity, blueprintId, shipIdCounter, missionIdCounter, selectedDeployShipId, tutorialSeen,
         blueprints, dockShips, activeMissions: activeMissions.filter(m => !m.training),
+        career, medalTiers, feats, repairKits,
         audio: { music: AudioSys.settings.music, sfx: AudioSys.settings.sfx, muted: AudioSys.settings.muted }
     };
 }
@@ -3535,6 +3676,8 @@ function applySave(d) {
     yen = Number.isFinite(d.yen) ? d.yen : 5000;
     dockCapacity = Number.isFinite(d.dockCapacity) ? d.dockCapacity : 2;
     tutorialSeen = !!d.tutorialSeen;
+    repairKits = Number.isFinite(d.repairKits) ? Math.max(0, d.repairKits) : START_REPAIR_KITS;
+    career = Object.assign(defaultCareer(), d.career || {}); medalTiers = Object.assign({}, d.medalTiers || {}); feats = Object.assign({}, d.feats || {});
     if (d.audio) { AudioSys.setSettings(d.audio); syncAudioUI(); }
     blueprints = d.blueprints.filter(b => b && HULLS[b.hull]).map(b => Object.assign({}, b, { arms: normalizeArms(b.arms), armorValue: effectiveArmor(b.hull, b.armor) }));
     dockShips = d.dockShips.filter(s => s && HULLS[s.hull]).map(s => {
@@ -3576,6 +3719,7 @@ function resetState() {
     loadingSave = true;
     yen = 5000; dockCapacity = 2; dockShips = []; blueprints = []; blueprintId = 0; shipIdCounter = 1;
     activeMissions = []; missionIdCounter = 0; selectedDeployShipId = null; dockViewIndex = 0;
+    career = defaultCareer(); medalTiers = {}; feats = {}; repairKits = START_REPAIR_KITS;
     presetBlueprint('Starter Destroyer', 'destroyer', 'small', 'steam', 'light', ['7 inch gun', '6 inch gun', '20 kg torpedo']);
     presetBlueprint('Escort Carrier', 'carrier', 'large', 'diesel', 'light', ['Fighter', 'Torpedo Bomber', 'Fighter', '6 inch gun']);
     hullSelect.value = 'destroyer'; refreshSizeOptions(); engineSelect.value = 'steam'; armorSelect.value = 'light'; updateDesign();
@@ -3652,12 +3796,13 @@ const TUT_STEPS = [
     { battle: true, delay: 3300, title: 'Get under way', text: 'Hold W to speed up and S to slow down. Steer with A and D. Get moving!', done: () => B && B.player.speed > 6 },
     { battle: true, title: 'Aim and fire', text: 'Move the mouse to aim — turrets swing toward the cursor (big guns turn slowly, the aim line shows where they point). Click or hold the left button to fire. The rings around the crosshair show reloading.', done: () => B && B.stats.shots >= 2 },
     { battle: true, title: 'Hunt them down', text: 'Red blips on the radar (top left) are enemies, and arrows on the screen edge point toward them. Secondary guns fire by themselves at close range. Sink a destroyer!', done: () => B && B.stats.kills >= 1 },
-    { battle: true, title: 'Damage control', text: 'The armor diagram (bottom) shows which sections are hurt. Press R for an emergency repair and F to fire torpedoes. Finish the last target!', done: () => !B || !B.running || !!B.outcome },
+    { battle: true, title: 'Damage control', text: 'The armor diagram (bottom) shows which sections are hurt. Press R for an emergency repair — each uses a repair kit, max 3 per mission (buy more in the Deploy screen). F fires torpedoes. Finish the last target!', done: () => !B || !B.running || !!B.outcome },
     { target: '#resultBtn', title: 'Mission report', text: 'Rewards are paid in yen. Press RETURN TO PORT.', done: () => !B && currentScreen === 'deploy' },
     { center: true, title: 'You’re ready, Admiral!', text: 'Repair damaged ships in the DOCKYARD, design bigger warships and carriers, and take on missions for more yen. Your progress saves automatically.', next: true, nextText: 'Finish' }
 ];
 function startTutorial() {
     Object.assign(TUT, { active: true, i: 0, shown: -1, flags: {}, base: { bp: blueprints.length, ships: dockShips.length } });
+    if (repairKits < 2) { repairKits = 2; updateKitDisplay(); }
     if (currentScreen !== 'title') goTo('title');
 }
 function endTutorial() {
@@ -3717,6 +3862,137 @@ function tutTick() {
     }
     card.style.left = Math.round(x) + 'px'; card.style.top = Math.round(y) + 'px';
     if (st.done && performance.now() - TUT.t0 > 600 && st.done()) tutAdvance();
+}
+
+// =====================================================================
+//  MEDALS & ACHIEVEMENTS
+//  Service medals level up Bronze → Silver → Gold through career milestones.
+//  Legendary feats are one-off challenges with specific ship / mission / difficulty.
+// =====================================================================
+const TIER_NAMES = ['Locked', 'Bronze', 'Silver', 'Gold'];
+const NM_PX = 500; // world pixels per nautical mile
+const MEDALS = [
+    { id: 'kills', name: 'Sea Wolf', icon: '⚓', desc: 'Sink enemy ships.', stat: 'kills', tiers: [10, 50, 200], unit: 'ships sunk' },
+    { id: 'wins', name: 'Victorious', icon: '🏆', desc: 'Win missions.', stat: 'wins', tiers: [5, 25, 100], unit: 'victories' },
+    { id: 'repairs', name: 'Damage Control', icon: '🔧', desc: 'Use emergency repair kits in battle.', stat: 'repairs', tiers: [5, 25, 100], unit: 'repairs' },
+    { id: 'distance', name: 'Blue Water Sailor', icon: '🧭', desc: 'Sail distance in battle.', stat: 'distance', tiers: [50, 250, 1000], unit: 'nautical miles' },
+    { id: 'hits', name: 'Big Guns', icon: '💥', desc: 'Land main-gun hits on enemy ships.', stat: 'mainHits', tiers: [50, 300, 1500], unit: 'hits' },
+    { id: 'torps', name: 'Torpedoman', icon: '🎯', desc: 'Hit enemy ships with torpedoes.', stat: 'torpHits', tiers: [5, 25, 100], unit: 'torpedo hits' },
+    { id: 'planes', name: 'Flak Ace', icon: '✈️', desc: 'Shoot down enemy aircraft.', stat: 'planesDowned', tiers: [10, 50, 150], unit: 'aircraft downed' },
+    { id: 'launches', name: 'Flight Deck', icon: '🛫', desc: 'Launch aircraft from your carriers.', stat: 'launches', tiers: [20, 100, 400], unit: 'launches' },
+    { id: 'rams', name: 'Iron Prow', icon: '🛡️', desc: 'Ram enemy ships.', stat: 'rams', tiers: [5, 25, 75], unit: 'rams' },
+    { id: 'convoy', name: 'Shepherd', icon: '🚢', desc: 'Win Escort missions.', stat: 'escortWins', tiers: [3, 10, 25], unit: 'escorts won' },
+    { id: 'built', name: 'Shipwright', icon: '🔨', desc: 'Build ships in the dockyard.', stat: 'built', tiers: [3, 10, 25], unit: 'ships built' },
+    { id: 'yen', name: 'War Chest', icon: '💰', desc: 'Earn yen from missions.', stat: 'yenEarned', tiers: [5000, 25000, 100000], unit: 'yen earned' }
+];
+const FEATS = [
+    { id: 'tidal', name: 'Tidal Legend', icon: '🌊', desc: 'Win an Intercept mission on Hard with a destroyer.', test: c => c.type === 'intercept' && c.diff === 'hard' && c.hull === 'destroyer' },
+    { id: 'shark', name: 'King Shark', icon: '🦈', desc: 'Win a Demolish mission on Hard with a submarine.', test: c => c.type === 'demolish' && c.diff === 'hard' && c.hull === 'submarine' },
+    { id: 'tail', name: 'Tail End', icon: '🏁', desc: 'Win a Patrol mission on Hard with a destroyer.', test: c => c.type === 'patrol' && c.diff === 'hard' && c.hull === 'destroyer' },
+    { id: 'air', name: 'Air Supremacy', icon: '🦅', desc: 'Win a Demolish mission on Hard with a carrier.', test: c => c.type === 'demolish' && c.diff === 'hard' && c.hull === 'carrier' },
+    { id: 'shepherd', name: 'Good Shepherd', icon: '🛟', desc: 'Win an Escort mission on Hard with all three supply ships afloat.', test: c => c.type === 'escort' && c.diff === 'hard' && c.convoySafe === 3 },
+    { id: 'untouch', name: 'Untouchable', icon: '✨', desc: 'Win any Hard mission with at least 90% hull left.', test: c => c.diff === 'hard' && c.hullPct >= 0.9 }
+];
+function defaultCareer() { return { kills: 0, wins: 0, repairs: 0, distance: 0, mainHits: 0, torpHits: 0, planesDowned: 0, launches: 0, rams: 0, escortWins: 0, built: 0, yenEarned: 0 }; }
+let career = defaultCareer(), medalTiers = {}, feats = {};
+
+function medalTier(m) { const v = career[m.stat] || 0; let t = 0; m.tiers.forEach((th, i) => { if (v >= th) t = i + 1; }); return t; }
+function addStat(key, n = 1) {
+    if (!n) return;
+    career[key] = (career[key] || 0) + n;
+    MEDALS.forEach(m => {
+        if (m.stat !== key) return;
+        const t = medalTier(m);
+        if (t > (medalTiers[m.id] || 0)) { medalTiers[m.id] = t; announceMedal(`${TIER_NAMES[t]} medal`, m.name, m.icon); }
+    });
+    markDirty();
+}
+function announceMedal(kind, name, icon) {
+    toast(`${icon} ${kind}: ${name}`, 'gold');
+    setTimeout(() => sfx('medal'), 150);
+    if (B && B.running) { pushFeed(`🏅 ${kind} — ${name}`, 'kill'); }
+    if (B) (B.newMedals = B.newMedals || []).push(`${icon} ${kind}: ${name}`);
+}
+function checkFeats(ctx) {
+    FEATS.forEach(f => {
+        if (feats[f.id] || !f.test(ctx)) return;
+        feats[f.id] = Date.now(); announceMedal('Legendary feat', f.name, f.icon);
+    });
+    markDirty();
+}
+
+// ---------- medal artwork (SVG) ----------
+let medalSvgId = 0;
+const TIER_COLORS = [['#5d6a74', '#38434b', '#20282e'], ['#f4c08f', '#c47c3c', '#6e3d14'], ['#ffffff', '#c4cdd5', '#69757f'], ['#fff3b8', '#e9b52f', '#8a5d0a']];
+const RIBBONS = [['#2a3238', '#3a444b'], ['#7a2d2d', '#c47c3c'], ['#24476b', '#c4cdd5'], ['#7a1f1f', '#e9b52f']];
+function medalSVG(tier, icon, legend) {
+    const id = 'md' + (++medalSvgId);
+    const [hi, mid, lo] = legend && tier ? ['#fff4d6', '#e9b52f', '#7a4a06'] : TIER_COLORS[tier];
+    const [r1, r2] = legend && tier ? ['#4b1d6b', '#c86bff'] : RIBBONS[tier];
+    const shape = legend
+        ? `<polygon points="${Array.from({ length: 16 }, (_, i) => { const a = -Math.PI / 2 + i * Math.PI / 8, r = i % 2 ? 30 : 40; return `${50 + Math.cos(a) * r},${76 + Math.sin(a) * r}`; }).join(' ')}" fill="${lo}"/>
+           <polygon points="${Array.from({ length: 16 }, (_, i) => { const a = -Math.PI / 2 + i * Math.PI / 8, r = i % 2 ? 26 : 35; return `${50 + Math.cos(a) * r},${76 + Math.sin(a) * r}`; }).join(' ')}" fill="url(#${id})"/>`
+        : `<circle cx="50" cy="76" r="37" fill="${lo}"/><circle cx="50" cy="76" r="33" fill="url(#${id})"/>`;
+    return `<svg viewBox="0 0 100 120" class="medal-svg${tier ? '' : ' locked'}" aria-hidden="true">
+        <defs><radialGradient id="${id}" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="${hi}"/><stop offset=".55" stop-color="${mid}"/><stop offset="1" stop-color="${lo}"/></radialGradient></defs>
+        <path d="M28 0 H50 L44 44 H20 Z" fill="${r1}"/><path d="M50 0 H72 L80 44 H56 Z" fill="${r1}"/>
+        <path d="M34 0 H42 L34 44 H28 Z" fill="${r2}" opacity=".9"/><path d="M58 0 H66 L72 44 H64 Z" fill="${r2}" opacity=".9"/>
+        <rect x="30" y="38" width="40" height="8" rx="2" fill="${lo}"/>
+        ${shape}
+        <circle cx="50" cy="76" r="22" fill="none" stroke="${lo}" stroke-opacity=".55" stroke-width="1.5" stroke-dasharray="2 3"/>
+        <text x="50" y="84" text-anchor="middle" font-size="24" style="${tier ? '' : 'filter:grayscale(1);opacity:.45'}">${icon}</text>
+        ${tier ? '<ellipse cx="38" cy="58" rx="12" ry="6" fill="#fff" opacity=".22" transform="rotate(-30 38 58)"/>' : ''}
+    </svg>`;
+}
+
+// ---------- medals screen ----------
+function renderMedals() {
+    const counts = [0, 0, 0, 0];
+    MEDALS.forEach(m => counts[medalTier(m)]++);
+    const bronzeUp = MEDALS.filter(m => medalTier(m) >= 1).length, silverUp = MEDALS.filter(m => medalTier(m) >= 2).length, gold = counts[3];
+    const featCount = FEATS.filter(f => feats[f.id]).length;
+    const total = MEDALS.length * 3 + FEATS.length, done = MEDALS.reduce((s, m) => s + medalTier(m), 0) + featCount;
+    $('medalSummary').innerHTML = `
+        <div class="ms-item">${medalSVG(1, '⚓')}<b>${bronzeUp}</b><span>Bronze+</span></div>
+        <div class="ms-item">${medalSVG(2, '⚓')}<b>${silverUp}</b><span>Silver+</span></div>
+        <div class="ms-item">${medalSVG(3, '⚓')}<b>${gold}</b><span>Gold</span></div>
+        <div class="ms-item">${medalSVG(3, '★', true)}<b>${featCount} / ${FEATS.length}</b><span>Legendary</span></div>
+        <div class="ms-progress"><div class="ms-head"><span>COLLECTION</span><b>${Math.round(done / total * 100)}%</b></div>
+            <div class="stat-track"><div class="stat-fill brass" style="width:${(done / total * 100).toFixed(1)}%"></div></div>
+            <div class="ms-sub">${done} of ${total} medal ranks earned · ${Math.floor(career.distance)} nm sailed · ${career.kills} ships sunk</div></div>`;
+    const grid = $('medalGrid'); grid.replaceChildren();
+    MEDALS.forEach(m => {
+        const t = medalTier(m), v = career[m.stat] || 0, next = m.tiers[t];
+        const prev = t ? m.tiers[t - 1] : 0, frac = next ? clamp((v - prev) / (next - prev), 0, 1) : 1;
+        const card = document.createElement('div'); card.className = `medal-card tier${t}`;
+        const fmt = n => m.stat === 'yenEarned' ? '¥' + n.toLocaleString() : Math.floor(n).toLocaleString();
+        card.innerHTML = `<div class="medal-art">${medalSVG(t, m.icon)}</div>
+            <div class="medal-body">
+                <div class="medal-tier t${t}">${TIER_NAMES[t].toUpperCase()}</div>
+                <div class="medal-name"></div>
+                <div class="medal-desc"></div>
+                <div class="stat-track"><div class="stat-fill ${t >= 2 ? 'brass' : ''}" style="width:${(frac * 100).toFixed(1)}%"></div></div>
+                <div class="medal-prog">${next ? `${fmt(v)} / ${fmt(next)} ${m.unit} → <b>${TIER_NAMES[t + 1]}</b>` : `${fmt(v)} ${m.unit} · <b>Maxed</b>`}</div>
+                <div class="medal-pips">${m.tiers.map((th, i) => `<span class="pip p${i + 1}${t > i ? ' on' : ''}">${TIER_NAMES[i + 1][0]} ${fmt(th)}</span>`).join('')}</div>
+            </div>`;
+        card.querySelector('.medal-name').textContent = m.name;
+        card.querySelector('.medal-desc').textContent = m.desc;
+        grid.appendChild(card);
+    });
+    const fg = $('featGrid'); fg.replaceChildren();
+    FEATS.forEach(f => {
+        const got = feats[f.id];
+        const card = document.createElement('div'); card.className = 'medal-card feat' + (got ? ' tier3' : ' tier0');
+        card.innerHTML = `<div class="medal-art">${medalSVG(got ? 3 : 0, f.icon, true)}</div>
+            <div class="medal-body">
+                <div class="medal-tier ${got ? 'legend' : 't0'}">${got ? 'LEGENDARY · EARNED' : 'LEGENDARY · LOCKED'}</div>
+                <div class="medal-name"></div><div class="medal-desc"></div>
+                ${got ? `<div class="medal-prog">Earned ${new Date(got).toLocaleDateString()}</div>` : ''}
+            </div>`;
+        card.querySelector('.medal-name').textContent = f.name;
+        card.querySelector('.medal-desc').textContent = f.desc;
+        fg.appendChild(card);
+    });
 }
 
 // =====================================================================
@@ -3833,6 +4109,7 @@ const AudioSys = (() => {
         click: { gap: 0.03, len: 0.1, fn(t, v) { const out = voice(0.1 * v); tone(t, out, 'sine', 1100, 700, 0.002, 0.05, 1); } },
         tick: { gap: 0.05, len: 0.1, fn(t, v) { const out = voice(0.1 * v); tone(t, out, 'triangle', 1900, 1900, 0.001, 0.035, 1); } },
         build: { gap: 0.5, len: 1.2, fn(t, v) { const out = voice(0.35 * v, 0, 0.3); for (let i = 0; i < 3; i++) { burst(t + i * 0.13, out, 'bandpass', 2400, 1200, 3, 0.001, 0.08, 1); tone(t + i * 0.13, out, 'triangle', 330, 300, 0.001, 0.1, 0.6); } [784, 1047].forEach((f, i) => tone(t + 0.45 + i * 0.1, out, 'sine', f, f, 0.005, 0.5, 0.8)); } },
+        medal: { gap: 0.4, len: 1.6, fn(t, v) { const out = voice(0.3 * v, 0, 0.5); [784, 988, 1175, 1568, 1976].forEach((f, i) => tone(t + i * 0.07, out, 'triangle', f, f, 0.003, 0.5 + i * 0.1, 0.9)); tone(t + 0.36, out, 'sine', 2637, 2637, 0.002, 1.1, 0.5); } },
         coins: { gap: 0.2, len: 0.8, fn(t, v) { const out = voice(0.22 * v, 0, 0.25); [1047, 1319, 1568, 2093].forEach((f, i) => tone(t + i * 0.055, out, 'triangle', f, f, 0.002, 0.22, 1)); } },
         horn: { gap: 1, len: 2.2, fn(t, v) {
             const out = voice(0.35 * v, 0, 0.5);
@@ -4420,8 +4697,10 @@ function updateHUD() {
         } else if (r.type === 'sec') setT(r.state, p.submerged ? 'OFFLINE' : 'AUTO');
     }
     const rb = $('repairBtn');
-    rb.disabled = p.repairCooldown > 0 || p.sinking;
-    setT($('repairCooldown'), p.repairCooldown > 0 ? Math.ceil(p.repairCooldown / 60) + 's' : 'READY');
+    const usedUp = (B.repairsUsed || 0) >= MAX_REPAIRS_PER_MISSION, noKits = repairKits <= 0;
+    rb.disabled = p.repairCooldown > 0 || p.sinking || usedUp || noKits;
+    setT($('repairCooldown'), p.repairCooldown > 0 ? Math.ceil(p.repairCooldown / 60) + 's' : usedUp ? 'LIMIT' : noKits ? 'NO KITS' : `${MAX_REPAIRS_PER_MISSION - (B.repairsUsed || 0)} LEFT`);
+    setT($('repairKitsHud'), `🧰 ${repairKits}`);
     if (p.torpedoes.length) { $('torpedoBtn').disabled = p.torpedoCooldown > 0 || p.sinking; setT($('torpedoCooldown'), p.torpedoCooldown > 0 ? Math.ceil(p.torpedoCooldown / 60) + 's' : 'READY'); }
     if (p.isSub) {
         const db = $('submergeBtn');
@@ -4628,6 +4907,10 @@ function init() {
     $('btnGoDesign').onclick = () => goTo('design');
     $('btnGoDockyard').onclick = () => goTo('dockyard');
     $('btnGoDeploy').onclick = () => goTo('deploy');
+    $('btnGoMedals').onclick = () => goTo('medals');
+    $('buyKit1').onclick = () => buyKits(1, REPAIR_KIT_PRICE);
+    $('buyKit5').onclick = () => buyKits(REPAIR_KIT_BUNDLE.n, REPAIR_KIT_BUNDLE.price);
+    $('btnBackMedals').onclick = () => goTo('title');
     ['btnBackDesign', 'btnBackDock', 'btnBackDeploy'].forEach(id => $(id).onclick = () => goTo('title'));
     $('btnGoDockyardView').onclick = () => goTo('dockyard');
     $('btnBackToDesignFromDockyard').onclick = () => goTo('design');
