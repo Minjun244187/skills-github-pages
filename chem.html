@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chem Saver</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>:root{--bg:#f6f5fb;--card:#fff;--ink:#3b3a4a;--mute:#8b8aa0;--line:#e6e4f0;--pri:#7c5cff;--priD:#5b3fd9;--ok:#58cc02;--okD:#46a302;--okBg:#d7ffb8;--okInk:#3c8a00;--bad:#ff4b4b;--badD:#ea2b2b;--badBg:#ffdfe0;--badInk:#c4271f;--gold:#ffc800;--goldD:#e0a600;--blue:#1cb0f6;--blueD:#1899d6;--blueBg:#ddf4ff}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Nunito,system-ui,sans-serif;font-weight:700}
+button{font:inherit;color:inherit}
+#app{max-width:560px;margin:0 auto;min-height:100vh;padding-bottom:96px}
+.splash{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:90vh;gap:14px;text-align:center;padding:24px}
+.splash h1{font-weight:900;font-size:34px;margin:0;color:var(--pri)}
+.muted{color:var(--mute)}
+.small{font-size:13px}
+.btn{font-weight:800;text-transform:uppercase;letter-spacing:.05em;font-size:15px;border:0;border-radius:16px;padding:14px 18px;background:var(--pri);color:#fff;box-shadow:0 4px 0 var(--priD);cursor:pointer;transition:transform .06s,filter .15s;user-select:none}
+.btn:hover{filter:brightness(1.05)}
+.btn:active{transform:translateY(4px);box-shadow:0 0 0 var(--priD)}
+.btn.ok{background:var(--ok);box-shadow:0 4px 0 var(--okD)}
+.btn.bad{background:var(--bad);box-shadow:0 4px 0 var(--badD)}
+.btn.blue{background:var(--blue);box-shadow:0 4px 0 var(--blueD)}
+.btn.gold{background:var(--gold);box-shadow:0 4px 0 var(--goldD);color:#5a4300}
+.btn.ghost{background:#fff;color:var(--ink);border:2px solid var(--line);box-shadow:0 4px 0 var(--line)}
+.btn.sm{padding:8px 12px;font-size:12px;border-radius:12px}
+.btn.wide{width:100%}
+.btn:disabled{background:#e5e5e5!important;color:#afafaf!important;box-shadow:0 4px 0 #cfcfcf!important;cursor:default;transform:none}
+input.txt{font:inherit;font-weight:700;width:100%;padding:14px;border:2px solid var(--line);border-radius:14px;background:#f7f7fb;font-size:17px;outline:none;color:var(--ink)}
+input.txt:focus{border-color:var(--blue);background:#fff}
+/* top bar */
+.top{position:sticky;top:0;z-index:20;background:rgba(246,245,251,.94);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:2px solid var(--line)}
+.chip{display:flex;align-items:center;gap:5px;font-weight:900;font-size:16px;padding:4px 8px;border-radius:12px;cursor:pointer;border:0;background:none}
+.chip:hover{background:#ecebf5}
+.chip.fire{color:#ff9600}.chip.gem{color:#1cb0f6}.chip.heart{color:#ff4b4b}
+.eltile{width:34px;height:34px;border-radius:8px;background:var(--pri);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;box-shadow:0 3px 0 var(--priD)}
+.eltile b{font-size:15px;font-weight:900}.eltile i{font-style:normal;font-size:8px;opacity:.85}
+.subj{padding:14px 16px 0;display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-size:12px;font-weight:800;background:#fff;border:2px solid var(--line);border-radius:999px;padding:4px 10px;color:var(--mute)}
+/* bottom nav */
+.nav{position:fixed;bottom:0;left:0;right:0;z-index:30;background:#fff;border-top:2px solid var(--line);display:flex;justify-content:center;padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
+.nav .in{display:flex;max-width:560px;width:100%;justify-content:space-around}
+.nav button{border:2px solid transparent;background:none;border-radius:14px;padding:6px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;font-size:11px;font-weight:800;color:var(--mute);position:relative;min-width:58px}
+.nav button span.ic{font-size:24px;line-height:1.1;filter:grayscale(.6);opacity:.8}
+.nav button.on{border-color:#c9bfff;background:#f1edff;color:var(--pri)}
+.nav button.on span.ic{filter:none;opacity:1}
+.dot{position:absolute;top:2px;right:10px;background:var(--bad);color:#fff;font-size:10px;border-radius:999px;min-width:17px;height:17px;display:flex;align-items:center;justify-content:center;padding:0 4px}
+/* path */
+.unit{margin:18px 14px 6px;border-radius:18px;padding:16px 18px;color:#fff;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+.unit small{font-weight:900;opacity:.85;letter-spacing:.06em}
+.unit h2{margin:2px 0 4px;font-size:21px;font-weight:900}
+.unit p{margin:0;opacity:.92;font-size:14px}
+.unit .ubar{margin-top:10px;height:8px;border-radius:9px;background:rgba(255,255,255,.3);overflow:hidden}
+.unit .ubar div{height:100%;background:#fff;border-radius:9px}
+.path{display:flex;flex-direction:column;align-items:center;padding:12px 0 6px;gap:14px}
+.node{width:76px;height:70px;border-radius:50%;border:0;cursor:pointer;font-size:30px;display:flex;align-items:center;justify-content:center;position:relative;transition:transform .08s}
+.node:active{transform:translateY(5px)}
+.node.locked{background:#e5e5e5!important;box-shadow:0 7px 0 #c8c8c8!important;filter:grayscale(1);opacity:.85}
+.node.cur{animation:bob 1.6s ease-in-out infinite}
+.node .crown{position:absolute;bottom:-6px;right:-6px;font-size:20px}
+.node .start{position:absolute;top:-34px;left:50%;transform:translateX(-50%);background:#fff;border:2px solid var(--line);border-radius:12px;padding:4px 10px;font-size:13px;font-weight:900;color:var(--pri);white-space:nowrap;box-shadow:0 3px 0 var(--line)}
+.node .start:after{content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#fff}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -6px}}
+.nlabel{font-size:12px;color:var(--mute);margin-top:-8px;max-width:150px;text-align:center}
+/* cards */
+.sec{padding:16px}
+.sec h3{margin:6px 0 10px;font-size:20px;font-weight:900}
+.card{background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}
+.row{display:flex;align-items:center;gap:12px}
+.grow{flex:1;min-width:0}
+.ptitle{font-weight:900;font-size:17px}
+.big{font-size:40px;line-height:1}
+/* overlay / modal */
+#overlay{position:fixed;inset:0;z-index:50;display:none}
+#overlay.on{display:block}
+.scrim{position:absolute;inset:0;background:rgba(30,25,60,.45);display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:#fff;width:100%;max-width:560px;border-radius:24px 24px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));animation:up .22s ease-out;max-height:90vh;overflow:auto}
+.scrim.center{align-items:center;padding:16px}
+.scrim.center .sheet{border-radius:24px}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+.full{position:absolute;inset:0;background:#fff;display:flex;flex-direction:column;overflow:auto}
+.full .inner{max-width:600px;width:100%;margin:0 auto;padding:16px 18px;flex:1;display:flex;flex-direction:column}
+/* lesson */
+.lhead{display:flex;align-items:center;gap:12px;padding:6px 0 18px}
+.xbtn{border:0;background:none;font-size:26px;color:#aaa;cursor:pointer;padding:0 4px}
+.prog{flex:1;height:16px;background:#e8e7f0;border-radius:99px;overflow:hidden}
+.prog div{height:100%;background:var(--ok);border-radius:99px;transition:width .35s;position:relative}
+.prog div:after{content:'';position:absolute;left:8px;right:8px;top:3px;height:4px;background:rgba(255,255,255,.35);border-radius:9px}
+.hearts{color:var(--bad);font-weight:900;font-size:18px}
+.qtype{font-size:13px;font-weight:900;letter-spacing:.06em;color:var(--pri);text-transform:uppercase;margin-bottom:6px}
+.qtext{font-size:23px;font-weight:900;line-height:1.3;margin:0 0 20px}
+.opts{display:grid;gap:10px}
+.opts.two{grid-template-columns:1fr 1fr}
+.opt{text-align:left;background:#fff;border:2px solid var(--line);border-bottom-width:4px;border-radius:16px;padding:14px 16px;font-size:17px;font-weight:700;cursor:pointer;display:flex;gap:12px;align-items:center}
+.opt .k{flex:none;width:28px;height:28px;border-radius:8px;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--mute)}
+.opts.two .opt{justify-content:center;font-size:20px;font-weight:900;padding:22px 10px}
+.opt:hover{background:#f7f7fb}
+.opt.sel{border-color:#84d8ff;background:var(--blueBg);color:#1478a8}
+.opt.sel .k{border-color:#84d8ff;color:#1478a8}
+.opt.right{border-color:#a5ed6e;background:var(--okBg);color:var(--okInk)}
+.opt.wrong{border-color:#ffb2b2;background:var(--badBg);color:var(--badInk)}
+.opt:disabled{cursor:default}
+.learn{border:2px solid var(--line);border-radius:20px;padding:22px;font-size:17px;line-height:1.55;font-weight:600}
+.learn .em{font-size:52px;margin-bottom:6px}
+.learn h2{margin:0 0 10px;font-size:24px;font-weight:900}
+.learn b{font-weight:900;color:var(--pri)}
+table.trend{border-collapse:collapse;width:100%;font-size:14px}
+table.trend th,table.trend td{border:2px solid var(--line);padding:6px 8px;text-align:center}
+table.trend td:first-child{text-align:left;font-weight:800}
+.stmt{border:2px dashed #ffb2b2;background:#fff6f6;border-radius:14px;padding:12px 14px;margin-bottom:16px;font-size:17px}
+.tfbig{font-size:21px;font-weight:800;background:#f7f7fb;border-radius:16px;padding:18px;margin-bottom:18px;border:2px solid var(--line)}
+.bank,.slot{display:flex;flex-wrap:wrap;gap:10px;min-height:58px;padding:8px 0}
+.slot{border-bottom:2px solid var(--line);margin-bottom:18px;align-items:center}
+.slot:empty:before{content:'Tap in order →';color:#c2c1d0;font-size:14px}
+.tok{background:#fff;border:2px solid var(--line);border-bottom-width:4px;border-radius:12px;padding:10px 16px;font-size:18px;font-weight:900;cursor:pointer}
+.tok.used{visibility:hidden}
+.match{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.match .col{display:flex;flex-direction:column;gap:10px}
+.mtile{background:#fff;border:2px solid var(--line);border-bottom-width:4px;border-radius:14px;padding:14px 10px;font-size:15px;font-weight:800;cursor:pointer;min-height:58px}
+.mtile.sel{border-color:#84d8ff;background:var(--blueBg)}
+.mtile.done{opacity:.35;cursor:default;border-color:#a5ed6e;background:var(--okBg)}
+.mtile.shake{animation:shake .35s;border-color:#ffb2b2;background:var(--badBg)}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.foot{position:sticky;bottom:0;margin:auto -18px 0;padding:16px 18px calc(16px + env(safe-area-inset-bottom));border-top:2px solid var(--line);background:#fff}
+.foot.good{background:var(--okBg);border-color:transparent}
+.foot.badf{background:var(--badBg);border-color:transparent}
+.fb{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.fb .ico{width:44px;height:44px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;flex:none}
+.fb h4{margin:0;font-size:21px;font-weight:900}
+.foot.good h4,.foot.good .why{color:var(--okInk)}
+.foot.badf h4,.foot.badf .why{color:var(--badInk)}
+.why{font-size:15px;margin-top:3px}
+.end{align-items:center;text-align:center;justify-content:center;gap:10px}
+.end h1{margin:0;font-size:30px;font-weight:900;color:var(--gold)}
+.stats3{display:flex;gap:10px;justify-content:center;width:100%;margin:12px 0}
+.stat{flex:1;max-width:150px;border:2px solid;border-radius:16px;overflow:hidden}
+.stat .lab{font-size:11px;font-weight:900;color:#fff;padding:4px;text-transform:uppercase;letter-spacing:.05em}
+.stat .val{font-size:22px;font-weight:900;padding:10px 4px}
+/* flashcard */
+.fc{perspective:1200px;height:300px;margin:6px 0 20px;cursor:pointer}
+.fc .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.fc.flip .in{transform:rotateY(180deg)}
+.fc .face{position:absolute;inset:0;backface-visibility:hidden;border:2px solid var(--line);border-bottom-width:6px;border-radius:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;font-size:22px;font-weight:900;background:#fff}
+.fc .back{transform:rotateY(180deg);background:#f1edff;border-color:#c9bfff;color:var(--priD)}
+.fc .face small{position:absolute;top:14px;font-size:11px;letter-spacing:.08em;color:var(--mute)}
+/* shop / profile */
+.avstage{display:flex;justify-content:center;padding:16px 0 6px;position:relative}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:6px 16px 10px;scrollbar-width:none}
+.tabs button{flex:none;border:2px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-weight:900;font-size:13px;cursor:pointer}
+.tabs button.on{background:var(--pri);border-color:var(--pri);color:#fff}
+.items{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:0 16px}
+.item{background:#fff;border:2px solid var(--line);border-bottom-width:4px;border-radius:16px;padding:8px 6px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;font-weight:800;position:relative}
+.item.eq{border-color:var(--pri);background:#f4f1ff}
+.item .tag{font-size:12px;font-weight:900}
+.item.lock{opacity:.6}
+.badges{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.badge{border:2px solid var(--line);border-radius:16px;padding:12px 6px;text-align:center;background:#fff;cursor:pointer;position:relative}
+.badge .be{font-size:34px}
+.badge .bn{font-size:12px;font-weight:900;margin-top:4px}
+.badge .bd{font-size:10.5px;color:var(--mute);margin-top:2px;font-weight:700}
+.badge.off .be{filter:grayscale(1);opacity:.35}
+.badge.off .bn{color:var(--mute)}
+.badge.pin{border-color:var(--gold);background:#fffaeb}
+.badge .pinmark{position:absolute;top:6px;right:8px;font-size:13px}
+.showcase{display:flex;gap:10px;justify-content:center}
+.showcase .slotb{width:84px;height:84px;border-radius:20px;border:2px dashed var(--line);display:flex;align-items:center;justify-content:center;font-size:38px;background:#fff}
+.showcase .slotb.f{border:2px solid var(--gold);background:#fffaeb}
+.xpbar{height:14px;border-radius:99px;background:#ecebf5;overflow:hidden;margin:6px 0}
+.xpbar div{height:100%;background:linear-gradient(90deg,var(--gold),#ff9600);border-radius:99px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sbox{border:2px solid var(--line);border-radius:16px;padding:12px;display:flex;gap:10px;align-items:center;background:#fff}
+.sbox .n{font-size:19px;font-weight:900;line-height:1.1}
+.sbox .l{font-size:12px;color:var(--mute)}
+.lb{display:flex;align-items:center;gap:12px;padding:10px 6px;border-radius:14px;cursor:pointer}
+.lb:hover{background:#f7f7fb}
+.lb.me{background:#f1edff}
+.rank{width:26px;text-align:center;font-weight:900;color:var(--mute)}
+.empty{text-align:center;padding:22px 10px;color:var(--mute)}
+#toast{position:fixed;left:50%;top:12px;transform:translateX(-50%) translateY(-20px);background:#3b3a4a;color:#fff;padding:12px 18px;border-radius:14px;font-weight:800;z-index:99;opacity:0;pointer-events:none;transition:.25s;max-width:90vw;text-align:center}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:98}
+.switch{width:52px;height:30px;border-radius:99px;background:#ddd;border:0;position:relative;cursor:pointer;flex:none}
+.switch:after{content:'';position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#fff;transition:.2s}
+.switch.on{background:var(--ok)}.switch.on:after{left:25px}
+.lvlup .eltile{width:110px;height:110px;border-radius:22px;box-shadow:0 8px 0 var(--priD);margin:10px auto}
+.lvlup .eltile b{font-size:46px}.lvlup .eltile i{font-size:14px}
+@media (max-width:380px){.qtext{font-size:20px}.items{grid-template-columns:repeat(2,1fr)}}
+</style></head><body><div id="app"></div><div id="overlay"></div><div id="toast"></div>
+<script>// ===== CONTENT: Hon Chem · Chapter 6 · Periodicity =====
+const mc=(q,opts,why)=>({t:'mc',q,opts,why});
+const tf=(q,a,why)=>({t:'tf',q,a,why});
+const fix=(q,opts,why)=>({t:'fix',q,opts,why});
+const ty=(q,acc,why)=>({t:'type',q,acc,why});
+const ord=(q,items,why)=>({t:'order',q,items,why});
+const mt=(q,pairs)=>({t:'match',q,pairs});
+const LN=(title,emoji,body)=>({t:'learn',title,emoji,body});
+
+const SUBJECT={name:'Hon Chem',chapter:'Chapter 6',topic:'Periodicity'};
+
+const UNITS=[
+{id:'u1',title:'Organizing the Elements',desc:'6.1 · Mendeleev, Moseley & the periodic law',color:'#7c5cff',dark:'#5b3fd9',lessons:[
+ {id:'u1l1',title:'Sorting the Elements',items:[
+  LN('How it started','🗂️','Chemists first used the <b>properties</b> of elements to sort them into groups.<br><br>For example, <b>chlorine, bromine and iodine</b> have very similar <b>chemical</b> properties, so they belong together.'),
+  LN('Mendeleev’s table','📜','<b>Dmitri Mendeleev</b> arranged the elements in order of increasing <b>atomic mass</b>.<br><br>His table could even <b>predict the properties of elements nobody had discovered yet.</b>'),
+  mc('Who arranged the periodic table in order of increasing atomic mass?',['Mendeleev','Moseley','Dalton','Bohr'],'Mendeleev ordered elements by increasing atomic mass.'),
+  mc('Early chemists sorted elements into groups using their…',['properties','colors only','discovery dates','alphabetical names'],'Chemists used the properties of elements to sort them.'),
+  tf('Chlorine, bromine, and iodine have very similar chemical properties.',true,'They are all halogens (Group 7A) and react in similar ways.'),
+  mc('Mendeleev’s periodic table could be used to predict…',['the properties of undiscovered elements','the exact date of each discovery','the number of isotopes of each element','which elements are radioactive'],'He left gaps and predicted the properties of elements that were later discovered.'),
+  mc('Mendeleev ordered his table by increasing…',['atomic mass','atomic number','number of neutrons','melting point'],'Atomic MASS — Moseley later switched to atomic number.'),
+  ty('Type the name: who ordered the elements by atomic mass?',['Mendeleev','mendeleyev','dmitri mendeleev'],'Mendeleev — atomic mass.'),
+ ]},
+ {id:'u1l2',title:'Moseley & the Periodic Law',items:[
+  LN('Moseley fixes the table','🔬','In <b>1913</b>, <b>Henry Moseley</b> used <b>X-ray experiments</b> to find the atomic numbers of elements.<br><br>Ordering by mass had put some elements (like iodine) in the wrong spot. Moseley showed elements should be ordered by <b>atomic number</b>.'),
+  LN('The periodic law','🔁','<b>When elements are arranged in order of increasing atomic number, there is a periodic repetition of their physical and chemical properties.</b><br><br>Properties change across a period, and the pattern <b>repeats</b> in the next period.'),
+  mc('The modern periodic table is arranged in order of increasing…',['atomic number','atomic mass','atomic radius','electronegativity'],'Modern table = increasing atomic number (Moseley).'),
+  mc('How did Moseley determine the atomic numbers of elements?',['X-ray experiments','Gold foil experiment','Cathode ray tubes','Flame tests'],'Moseley used X-ray experiments in 1913.'),
+  fix('FALSE: “Moseley arranged the modern periodic table by increasing atomic mass.” Pick the correction.',['…by increasing atomic number.','…by increasing number of neutrons.','…by increasing atomic radius.','…alphabetically by symbol.'],'Mendeleev = atomic mass. Moseley = atomic number.'),
+  mc('Which statement is the periodic law?',['Arranged by increasing atomic number, properties repeat periodically.','Arranged by increasing atomic mass, every element is unique.','Elements in the same period have identical properties.','Atomic number equals atomic mass.'],'Periodic law: increasing atomic number → periodic repetition of physical & chemical properties.'),
+  tf('The pattern of properties within a period repeats as you move from one period to the next.',true,'That repetition is what “periodic” means.'),
+  mt('Match each scientist or idea to what it’s about.',[['Mendeleev','Atomic mass'],['Moseley','Atomic number'],['Periodic law','Repeating properties'],['1913','Moseley’s X-rays']]),
+ ]},
+ {id:'u1l3',title:'Periods & Groups',items:[
+  LN('Rows and columns','🧭','<b>Horizontal rows</b> = <b>periods</b>.<br><b>Vertical columns</b> = <b>groups</b> (families).<br><br>The <b>period number</b> tells the <b>highest occupied energy level</b>. Elements in the same <b>group</b> have <b>similar chemical properties</b>.'),
+  mc('Horizontal rows of the periodic table are called…',['periods','groups','families','blocks'],'Rows = periods.'),
+  mc('Vertical columns of the periodic table are called…',['groups (families)','periods','series','shells'],'Columns = groups, also called families.'),
+  mc('What does the period number of a row tell you?',['The highest occupied energy level of its elements','The number of neutrons','The atomic mass','The number of isotopes'],'Period number = highest occupied energy level.'),
+  mc('Elements in the same vertical column share…',['the same group and similar chemical properties','the same atomic mass','the same number of energy levels','the same number of neutrons'],'Same group → similar chemical properties.'),
+  mc('An element in Period 4 has its valence electrons in energy level…',['4','2','8','It depends on the group'],'Period number = highest occupied energy level.'),
+  fix('FALSE: “Across a period from left to right, elements become MORE metallic.” Pick the correction.',['…become LESS metallic and more nonmetallic.','…become more radioactive.','…gain energy levels.','…stay exactly the same.'],'Across a period, properties become less metallic and more nonmetallic.'),
+  mt('Match the term to its meaning.',[['Period','Horizontal row'],['Group','Vertical column'],['Period #','Highest energy level'],['Family','Another name for group']]),
+ ]},
+]},
+{id:'u2',title:'Metals, Nonmetals & Metalloids',desc:'6.1 · The three classes of elements',color:'#1cb0f6',dark:'#1588c2',lessons:[
+ {id:'u2l1',title:'Meet the Metals',items:[
+  LN('Metals','🔩','<b>About 80%</b> of elements are metals, found on the <b>left side</b> of the table.<br><br>Metals are <b>good conductors</b> of heat and electric current, have a <b>high luster</b> (shiny), and are <b>ductile</b> (drawn into wires) and <b>malleable</b> (hammered into sheets).'),
+  mc('Which general type of element makes up most of the periodic table?',['Metals','Nonmetals','Metalloids','Noble gases'],'About 80% of elements are metals.'),
+  mc('Where are metals typically located on the periodic table?',['On the left side','On the right side','Only in the top row','Along the stair-step line'],'Metals are on the left (and center).'),
+  mc('Which is a property of metals?',['Good conductor of heat and electricity','Usually a gas at room temperature','Brittle and dull','Poor conductor of electricity'],'Metals conduct heat and electric current well.'),
+  tf('About 80% of the elements are metals.',true,'Most of the table is metals.'),
+  mc('Metals tend to ___ electrons when they react.',['lose','gain','share equally','destroy'],'Metals LOSE electrons; nonmetals GAIN electrons.'),
+  mt('Match each metal property to its meaning.',[['Luster','Shiny'],['Ductile','Drawn into wires'],['Malleable','Hammered into sheets'],['Conductor','Lets heat & current flow']]),
+  fix('FALSE: “Metals are brittle and have a dull surface.” Pick the correction.',['Metals are malleable and have a high luster.','Metals are gases with no luster.','Metals are liquids at room temperature.','Metals are poor conductors.'],'Metals are malleable, ductile, and shiny.'),
+ ]},
+ {id:'u2l2',title:'Nonmetals & Metalloids',items:[
+  LN('Nonmetals','💨','Nonmetals are on the <b>right side</b>. They are <b>poor conductors</b> of heat and electric current.<br><br><b>Most are gases</b> at room temperature. A few are solids, like <b>sulfur</b> and <b>phosphorus</b>. <b>Bromine</b> is a dark-red <b>liquid</b>.'),
+  LN('Metalloids','🪜','<b>Metalloids</b> (also called <b>semimetals</b>) sit along the <b>stair-step line</b>.<br><br>They have properties <b>similar to both metals and nonmetals</b>, and their behavior can be <b>controlled by changing conditions</b>.'),
+  mc('Are nonmetals typically located on the left or right side of the periodic table?',['On the right side','On the left side','In the middle','Only at the bottom'],'Nonmetals are on the right.'),
+  mc('Which nonmetal is a dark-red liquid at room temperature?',['Bromine','Chlorine','Sulfur','Iodine'],'Bromine is the liquid nonmetal.'),
+  mc('Most nonmetals at room temperature are…',['gases','liquids','shiny solids','metals'],'Most nonmetals are gases.'),
+  mc('Which of these is a SOLID nonmetal?',['Sulfur','Bromine','Neon','Chlorine'],'Sulfur and phosphorus are solid nonmetals.'),
+  mc('Where are metalloids located on the periodic table?',['Along the stair-step line','In Group 1','In the f block','In the noble gases'],'Metalloids border the stair-step line.'),
+  tf('Metalloids generally have properties similar to both metals and nonmetals.',true,'And their behavior can be controlled by changing conditions.'),
+  fix('FALSE: “Nonmetals are generally good conductors of heat and electric current.” Pick the correction.',['Nonmetals are generally POOR conductors.','Nonmetals only conduct when frozen.','Nonmetals are all liquids.','Nonmetals are found on the left side.'],'Nonmetals are poor conductors.'),
+  mc('“Semimetals” is another name for…',['metalloids','alkali metals','halogens','transition metals'],'Semimetals = metalloids.'),
+  mc('Nonmetals tend to ___ electrons when they react.',['gain','lose','never touch','split'],'Nonmetals gain electrons to reach an octet.'),
+ ]},
+]},
+{id:'u3',title:'Element Families',desc:'6.2 · Groups, blocks & electrons',color:'#ff9600',dark:'#d97f00',lessons:[
+ {id:'u3l1',title:'Named Groups',items:[
+  LN('The famous families','👨‍👩‍👧','<b>Group 1 (1A)</b> = <b>alkali metals</b><br><b>Group 2 (2A)</b> = <b>alkaline earth metals</b><br><b>Group 17 (7A)</b> = <b>halogens</b><br><b>Group 18 (8A)</b> = <b>noble gases</b><br><br>The <b>d block</b> = <b>transition metals</b>. The <b>f block</b> (lanthanide & actinide series) = <b>inner transition metals</b>.'),
+  mc('What is the name of Group 1?',['Alkali metals','Alkaline earth metals','Halogens','Noble gases'],'Group 1 = alkali metals.'),
+  mc('What is the name of Group 2?',['Alkaline earth metals','Alkali metals','Transition metals','Halogens'],'Group 2 = alkaline earth metals.'),
+  mc('What is the name of Group 17?',['Halogens','Noble gases','Chalcogens','Alkali metals'],'Group 17 (7A) = halogens.'),
+  mc('What is the name of Group 18?',['Noble gases','Halogens','Inert metals','Alkaline earth metals'],'Group 18 (8A) = noble gases.'),
+  mc('What is another name for the d block?',['Transition metals','Inner transition metals','Representative elements','Metalloids'],'d block = transition metals.'),
+  mc('The lanthanide and actinide series are the…',['inner transition metals (f block)','alkali metals','noble gases','metalloids'],'They are the f-block inner transition metals.'),
+  ty('Type the name of Group 17.',['halogens','halogen','the halogens'],'Group 17 = halogens.'),
+  mt('Match the group to its family name.',[['Group 1','Alkali metals'],['Group 2','Alkaline earth'],['Group 17','Halogens'],['Group 18','Noble gases']]),
+ ]},
+ {id:'u3l2',title:'Classes by Electrons',items:[
+  LN('Noble gases & representative elements','🎈','<b>Noble gases</b> have <b>full s and p orbitals</b> — their outermost energy level is completely filled, so they are generally <b>nonreactive</b>.<br><br><b>Representative elements</b> are Groups <b>1A–7A</b>. Their highest s & p sublevels are <b>not</b> filled, and the <b>group number = number of electrons in the highest occupied energy level</b>.'),
+  LN('Transition elements','🔀','<b>Transition metals</b>: the highest occupied <b>s</b> sublevel and a nearby <b>d</b> sublevel contain electrons.<br><br><b>Inner transition metals</b>: the highest occupied <b>s</b> sublevel and a nearby <b>f</b> sublevel contain electrons.'),
+  mc('Why are noble gases generally nonreactive?',['Their outermost energy levels are completely filled','They have no electrons','They are too heavy to react','They are metals'],'Full s and p orbitals = stable.'),
+  mc('Which groups are the representative elements?',['Groups 1A–7A','Only Group 8A','The d block','The f block'],'1A through 7A show a wide range of properties.'),
+  mc('Atoms of Group 1A elements have how many electrons in their highest occupied energy level?',['1','2','7','8'],'Group number = electrons in highest occupied level.'),
+  mc('Atoms of Group 4A elements have how many electrons in their highest occupied energy level?',['4','14','2','8'],'4A → 4 electrons.'),
+  mc('In a transition metal, electrons are in the highest occupied s sublevel and a nearby…',['d sublevel','f sublevel','p sublevel only','nucleus'],'Transition = s + d.'),
+  mc('In an inner transition metal, electrons are in the highest occupied s sublevel and a nearby…',['f sublevel','d sublevel','p sublevel','g sublevel'],'Inner transition = s + f.'),
+  fix('FALSE: “Elements in Groups 1A–7A are called transition elements.” Pick the correction.',['They are called representative elements.','They are called noble gases.','They are called inner transition metals.','They are called metalloids.'],'1A–7A = representative elements.'),
+ ]},
+ {id:'u3l3',title:'Valence & Kernel Electrons',items:[
+  LN('Valence vs. kernel','🎯','<b>Valence electrons</b> = the s & p electrons in the <b>highest energy level</b>.<br><b>Kernel electrons</b> = electrons <b>not</b> in the highest energy level.<br><br>The <b>electron</b> is the subatomic particle that most strongly influences an element’s chemical behavior.'),
+  LN('The octet rule','🎱','Atoms are “trying” to get <b>8 valence electrons</b> (or a full energy level).<br><br><b>Metals LOSE electrons. Nonmetals GAIN electrons.</b><br><br>Most active metal: <b>Francium</b>. Most active nonmetal: <b>Fluorine</b>.'),
+  mc('Valence electrons are…',['s & p electrons in the highest energy level','all electrons in the atom','electrons in the nucleus','electrons in the lowest energy level'],'Valence = highest energy level s & p electrons.'),
+  mc('Kernel electrons are…',['electrons NOT in the highest energy level','electrons in the highest energy level','protons and neutrons','shared electrons only'],'Kernel = inner electrons.'),
+  mc('Which subatomic particle most strongly influences an element’s chemical behavior?',['The electron','The proton','The neutron','The quark'],'Electrons (especially valence) decide reactions.'),
+  mc('Sodium is 1s² 2s² 2p⁶ 3s¹. How many valence electrons does it have?',['1','11','10','3'],'Only the 3s¹ electron is in the highest level.'),
+  mc('Sodium (1s² 2s² 2p⁶ 3s¹) has how many kernel electrons?',['10','1','11','8'],'1s² 2s² 2p⁶ = 10 kernel electrons.'),
+  mc('Chlorine is in Group 7A. How many valence electrons does it have?',['7','17','1','8'],'7A → 7 valence electrons; it gains 1 to reach 8.'),
+  mc('How many electrons does oxygen (6 valence e⁻) gain to satisfy the octet rule?',['2','6','1','8'],'6 + 2 = 8.'),
+  mc('What is the most active metal?',['Francium','Fluorine','Gold','Sodium'],'Francium — bottom-left.'),
+  mc('What is the most active nonmetal?',['Fluorine','Francium','Helium','Oxygen'],'Fluorine — top-right (excluding noble gases).'),
+  fix('FALSE: “Kernel electrons are the electrons in the highest energy level.” Pick the correction.',['Kernel electrons are NOT in the highest energy level.','Kernel electrons are protons.','Kernel electrons are always shared.','Kernel electrons are in the nucleus.'],'Those in the highest level are valence electrons.'),
+ ]},
+]},
+{id:'u4',title:'Coulombic Forces & Shielding',desc:'6.3 · Why the trends happen',color:'#ff4b9a',dark:'#d6327c',lessons:[
+ {id:'u4l1',title:'Attraction & Shielding',items:[
+  LN('Coulombic attraction','🧲','Opposite charges attract.<br><br>• As the <b>amount of charge increases</b>, the attraction <b>increases</b>.<br>• As the <b>distance decreases</b>, the attraction <b>increases</b>.<br><br>Many periodic properties come from the pull between the (+) nucleus and (−) electrons.'),
+  LN('The shielding effect','🛡️','<b>Shielding</b> is caused by repulsion between <b>kernel electrons</b> and <b>valence electrons</b>.<br><br>Inner electrons lie between the nucleus and the outer electrons, <b>shielding</b> the outer electrons from the nuclear charge.<br><br>Down a group, shielding <b>increases</b> (more energy levels). Across a period, shielding stays about the same.'),
+  mc('As the amount of charge increases, the force of attraction…',['increases','decreases','stays the same','disappears'],'More charge → stronger attraction.'),
+  mc('As the distance between charges decreases, the force of attraction…',['increases','decreases','stays the same','reverses'],'Closer → stronger pull.'),
+  mc('The shielding effect is caused by repulsion between…',['kernel electrons and valence electrons','protons and neutrons','two nuclei','neutrons and electrons'],'Inner (kernel) electrons repel outer (valence) electrons.'),
+  tf('Electrons between the nucleus and the valence electrons shield the valence electrons from the nuclear charge.',true,'That is the shielding effect.'),
+  mc('Going down a group, shielding…',['increases','decreases','stays the same','becomes zero'],'More energy levels = more electrons in between.'),
+  mc('Going across a period, shielding…',['stays about the same (no new energy levels)','increases a lot','drops to zero','doubles each element'],'Electrons are added to the same energy level.'),
+  fix('FALSE: “As the distance between charges increases, the force of attraction increases.” Pick the correction.',['…the force of attraction DECREASES.','…the charges disappear.','…the atom gains protons.','…the force doesn’t depend on distance.'],'Farther apart = weaker attraction.'),
+  mc('Whose valence electron feels a stronger pull from its nucleus?',['Lithium (energy level 2)','Cesium (energy level 6)','They feel the same','Neither has valence electrons'],'Li’s valence electron is much closer, with less shielding.'),
+  mc('What is the underlying cause of periodic trends?',['Coulombic attraction: nuclear charge, distance & shielding','The color of the element','Atomic mass alone','The number of neutrons'],'Charge, distance and shielding explain every trend.'),
+ ]},
+]},
+{id:'u5',title:'Atomic Radius',desc:'6.3 · Trends in atomic size',color:'#00b894',dark:'#00967a',lessons:[
+ {id:'u5l1',title:'Radius Rules',items:[
+  LN('What is atomic radius?','📏','<b>Atomic radius</b> = <b>one half</b> the distance between the nuclei of two atoms of the same element when joined.<br><br>Example: in Cl₂ the nuclei are 198 pm apart → covalent radius of Cl = 198 ÷ 2 = <b>99 pm</b>.'),
+  LN('The trends','↕️','<b>Down a group → INCREASES</b><br>• larger distance from nucleus to valence electrons (more energy levels)<br>• more shielding<br><br><b>Across a period → DECREASES</b><br>• greater nuclear charge<br>• electrons added to the same energy level'),
+  mc('Atomic radius is…',['half the distance between the nuclei of two joined atoms of the same element','the full width of a molecule','the distance from nucleus to neutron','the radius of the nucleus'],'One half of the nucleus-to-nucleus distance.'),
+  mc('The nuclei in a Cl₂ molecule are 198 pm apart. What is chlorine’s covalent radius?',['99 pm','198 pm','396 pm','49.5 pm'],'198 ÷ 2 = 99 pm.'),
+  mc('What trend is observed in atomic radius as you move DOWN a group?',['It increases','It decreases','It stays the same','It increases then decreases'],'Additional energy levels are added.'),
+  mc('What trend is observed in atomic radius as you move UP a group?',['It decreases','It increases','It stays the same','It doubles'],'Fewer energy levels going up.'),
+  mc('How does atomic radius change from left to right across a period?',['It decreases','It increases','It stays the same','It is random'],'Greater nuclear charge pulls electrons in.'),
+  mc('Why does atomic size increase as you go down a column?',['Additional energy levels are added','The nuclear charge decreases','Electrons are removed','Neutrons push electrons outward'],'More energy levels = larger atoms.'),
+  mc('Why does atomic radius decrease across a period?',['Greater nuclear charge; electrons go into the same energy level','More energy levels are added','More shielding','Fewer protons'],'Same level, stronger pull.'),
+ ]},
+ {id:'u5l2',title:'Compare the Atoms',items:[
+  mc('Which atom is larger?',['K','Na'],'K is below Na in Group 1 — one more energy level.'),
+  mc('Which atom is larger?',['Na','Cl'],'Same period; Na is farther left.'),
+  mc('Within a single period, which element tends to have the LARGEST atomic radius?',['The element at the far left','The element at the far right','The one in the middle','They’re all equal'],'Far left = least nuclear pull.'),
+  mc('Within a single period, which element tends to have the SMALLEST atomic radius?',['The element at the far right','The element at the far left','The heaviest one','The middle one'],'Far right = greatest nuclear pull.'),
+  mc('In any given period, which type of element tends to have the smallest atomic radius?',['Noble gases','Alkali metals','Alkaline earth metals','Transition metals'],'Noble gases are on the far right.'),
+  ord('Order from SMALLEST to LARGEST atomic radius (Period 2).',['F','O','N','C'],'Across a period radius decreases, so F is smallest.'),
+  ord('Order from SMALLEST to LARGEST atomic radius (Group 2).',['Be','Mg','Ca','Sr'],'Down a group radius increases.'),
+  mc('Which has the largest atomic radius?',['Cs','Li','F','Ne'],'Cs is bottom-left of these.'),
+  fix('FALSE: “Atomic radius increases from left to right across a period.” Pick the correction.',['Atomic radius DECREASES from left to right.','Atomic radius only changes down a group.','Atomic radius increases from right to left in groups.','Atomic radius is the same for every element.'],'Across → decreases.'),
+ ]},
+]},
+{id:'u6',title:'Ions & Ionic Radius',desc:'6.3 · Cations, anions & size',color:'#ff6b4a',dark:'#de4f30',lessons:[
+ {id:'u6l1',title:'Making Ions',items:[
+  LN('Ions','⚡','An <b>ion</b> is an atom or group of atoms with a positive or negative charge.<br><br>• <b>Cation</b> = positive ion (lost electrons)<br>• <b>Anion</b> = negative ion (gained electrons)<br><br>Ions form when <b>electrons are transferred</b> between atoms. Metals (s-block) <b>lose</b> e⁻; nonmetals (p-block) <b>gain</b> e⁻.'),
+  mc('What kind of charge results when an atom LOSES electrons?',['A positive charge (cation)','A negative charge (anion)','No charge','A neutral isotope'],'Losing negative electrons leaves it positive.'),
+  mc('What kind of charge results when an atom GAINS electrons?',['A negative charge (anion)','A positive charge (cation)','No charge','A bigger nucleus'],'Gaining electrons makes it negative.'),
+  mc('What happens to metals in the s-block when they form ions?',['They lose electrons','They gain electrons','They gain protons','They share electrons'],'s-block metals lose electrons → cations.'),
+  mc('When nonmetals in the p-block form ions, what happens to their electrons?',['They gain electrons','They lose electrons','They lose protons','Nothing happens'],'Nonmetals gain electrons → anions.'),
+  mc('Magnesium (Group 2) usually forms which ion?',['Mg²⁺','Mg²⁻','Mg⁺','Mg⁶⁻'],'It loses its 2 valence electrons.'),
+  mc('Chlorine (Group 7A) usually forms which ion?',['Cl⁻','Cl⁺','Cl⁷⁺','Cl²⁻'],'It gains 1 electron to reach 8.'),
+  mc('Oxygen (Group 6A) usually forms which ion?',['O²⁻','O²⁺','O⁶⁺','O⁻'],'It gains 2 electrons.'),
+  tf('Positive and negative ions form when electrons are transferred between atoms.',true,'Electron transfer creates ions.'),
+  mt('Match each term or change.',[['Cation','Positive ion'],['Anion','Negative ion'],['Mg → Mg²⁺','Lost 2 e⁻'],['N → N³⁻','Gained 3 e⁻']]),
+ ]},
+ {id:'u6l2',title:'Ionic Radius',items:[
+  LN('Cations shrink, anions grow','🎈','<b>Cations are always smaller</b> than the atoms they form from.<br>Mg = 0.136 nm → Mg²⁺ = 0.065 nm<br><br><b>Anions are always larger</b> than the atoms they form from.<br>N = 0.070 nm → N³⁻ = 0.171 nm<br><br>Ionic radius <b>increases down a group</b>.'),
+  LN('Isoelectronic species','🟰','<b>Isoelectronic</b> species have the <b>same number of electrons</b> (e.g., N³⁻, O²⁻, F⁻, Na⁺, Mg²⁺ all have 10).<br><br>The one with <b>more protons</b> pulls harder, so it is <b>smaller</b>.'),
+  mc('How does the size of a negatively charged ion compare to its neutral atom?',['The anion is larger','The anion is smaller','They are the same size','It depends on the neutrons'],'Added electrons repel and spread out.'),
+  mc('Which is larger?',['Mg atom','Mg²⁺ ion'],'Cations are smaller than their atoms.'),
+  mc('Within a group, which atom tends to have the SMALLEST ionic radius?',['The one at the top of the group','The one at the bottom','The one in the middle','All are equal'],'Ionic radius increases down a group.'),
+  mc('Within a group, which atom tends to have the LARGEST ionic radius?',['The one at the bottom of the group','The one at the top','The middle one','None'],'Most energy levels at the bottom.'),
+  mc('Within a group, which atom forms the largest positive ion?',['The one lowest in the group','The one highest in the group','The middle one','They’re identical'],'Bottom of the group = biggest ions.'),
+  mc('Which is the biggest: N³⁻, O²⁻, or F⁻?',['N³⁻','O²⁻','F⁻','All equal'],'All have 10 e⁻; N has the fewest protons (7), so the weakest pull.'),
+  mc('Which is the smallest: Mg²⁺ or Na⁺?',['Mg²⁺','Na⁺'],'Both have 10 e⁻; Mg has 12 protons vs Na’s 11.'),
+  mc('Isoelectronic species are atoms or ions that have the same…',['number of electrons','number of protons','mass','number of neutrons'],'Iso = same, electronic = electrons.'),
+  ord('Order these isoelectronic ions from SMALLEST to LARGEST.',['Mg²⁺','Na⁺','F⁻','O²⁻'],'More protons for the same 10 electrons = smaller.'),
+  fix('FALSE: “Cations are always larger than the atoms they form from.” Pick the correction.',['Cations are always SMALLER than their atoms.','Cations are the same size as their atoms.','Cations have more electrons than their atoms.','Only anions can form from metals.'],'Cations shrink, anions grow.'),
+ ]},
+]},
+{id:'u7',title:'Ionization Energy',desc:'6.3 · Pulling electrons off',color:'#f5a700',dark:'#cc8a00',lessons:[
+ {id:'u7l1',title:'Removing Electrons',items:[
+  LN('Ionization energy','🔋','<b>Ionization energy</b> = the energy required to remove an electron from an atom.<br><br>• <b>1st IE</b> removes the first electron.<br>• <b>2nd IE</b> removes an electron from a <b>1+ ion</b>.<br><br>Nitrogen: 1st = 1.4, 2nd = 2.9, 3rd = 4.6 (kJ/mol × 10³). Each one gets harder!'),
+  LN('The trends','📉','<b>Down a group → DECREASES</b><br>• atoms are larger, more shielding, more distance<br><br><b>Across a period → INCREASES</b><br>• greater nuclear charge, atoms not larger<br>• no additional shielding'),
+  mc('Ionization energy is the energy required to…',['remove an electron from an atom','add an electron to an atom','split the nucleus','form a covalent bond'],'IE = energy to remove an electron.'),
+  mc('The second ionization energy removes an electron from…',['an ion with a 1+ charge','a neutral atom','an ion with a 1− charge','the nucleus'],'After the first electron is gone, the atom is a 1+ ion.'),
+  mc('Going down a group, first ionization energy…',['decreases','increases','stays the same','becomes zero'],'Larger atoms, more shielding.'),
+  mc('Going across a period, first ionization energy…',['increases','decreases','stays the same','is random'],'Greater nuclear charge, no extra shielding.'),
+  mc('Why does ionization energy decrease down a group?',['Atoms are larger with more shielding','The nuclear charge disappears','Electrons are closer to the nucleus','There are fewer electrons'],'Distance + shielding make electrons easier to remove.'),
+  mc('For nitrogen, which ionization energy is largest?',['3rd (4.6)','1st (1.4)','2nd (2.9)','They are equal'],'Each successive electron is harder to remove.'),
+  mc('Which has the HIGHER first ionization energy?',['Cl','Na'],'Same period; Cl is farther right.'),
+  mc('Which has the LOWER first ionization energy?',['K','Li'],'K is lower in Group 1.'),
+  fix('FALSE: “First ionization energy increases from top to bottom within a group.” Pick the correction.',['It DECREASES from top to bottom within a group.','It only changes across periods.','It is the same for the whole group.','It increases only for metals.'],'Down a group → decreases.'),
+  mc('Which of these has the highest first ionization energy?',['He','Li','F','Fr'],'He is top-right: tiny atom, no shielding.'),
+ ]},
+]},
+{id:'u8',title:'Electronegativity & Bonds',desc:'6.3 · Electron tug-of-war',color:'#2f6fed',dark:'#1f55c4',lessons:[
+ {id:'u8l1',title:'Electronegativity',items:[
+  LN('Electronegativity','🧲','<b>Electronegativity</b> = the ability of an atom to <b>attract electrons in a chemical bond</b>.<br><br><b>Down a group → DECREASES</b> (larger distance, more shielding)<br><b>Across a period → INCREASES</b> (greater nuclear charge)<br><br>Fluorine is the most electronegative element.'),
+  mc('Electronegativity measures…',['an atom’s ability to attract electrons in a chemical bond','the energy to remove a proton','the size of an ion','how many neutrons an atom has'],'Tug-of-war strength for bonding electrons.'),
+  mc('Going down a group, electronegativity…',['decreases','increases','stays the same','doubles'],'Larger distance and more shielding.'),
+  mc('Going across a period, electronegativity…',['increases','decreases','stays the same','drops to zero'],'Greater nuclear charges.'),
+  mc('Why does electronegativity increase across a period?',['Greater nuclear charges','More energy levels','More shielding','Fewer protons'],'More protons pulling on the same level.'),
+  mc('Why does electronegativity decrease down a group?',['Larger distance from nucleus & more shielding','Greater nuclear charge','Fewer electrons','Smaller atoms'],'Bonding electrons are farther and more shielded.'),
+  mc('Which element is the most electronegative?',['Fluorine','Francium','Oxygen','Helium'],'Fluorine, top-right.'),
+  mc('Which is more electronegative?',['O','S'],'O is above S in the same group.'),
+  fix('FALSE: “Electronegativity increases going down a group.” Pick the correction.',['Electronegativity DECREASES going down a group.','Electronegativity is the same down a group.','Electronegativity only exists for metals.','Electronegativity increases going left.'],'Down → decreases.'),
+ ]},
+ {id:'u8l2',title:'Bond Types',items:[
+  LN('Covalent vs. ionic','🤝','<b>Covalent bond</b>: a pair of e⁻ is <b>shared</b> between 2 atoms.<br>• <b>Nonpolar</b>: shared <b>evenly</b> (H:H)<br>• <b>Polar</b>: shared <b>unevenly</b><br><br><b>Ionic bond</b>: e⁻ are <b>transferred</b> between atoms.'),
+  LN('Use the EN difference','📊','Electronegativity difference:<br>• <b>0 – 0.3</b> → nonpolar covalent<br>• <b>0.3 – 1.7</b> → polar covalent<br>• <b>above 1.7</b> → ionic'),
+  mc('In an ionic bond, electrons are…',['transferred between atoms','shared evenly','shared unevenly','destroyed'],'Ionic = transfer.'),
+  mc('In a covalent bond…',['a pair of electrons is shared between 2 atoms','electrons are transferred','protons are shared','no electrons are involved'],'Covalent = sharing.'),
+  mc('A nonpolar covalent bond means electrons are…',['shared evenly','shared unevenly','transferred','lost'],'Even sharing, like in H₂.'),
+  mc('An electronegativity difference of 0.1 gives which bond?',['Nonpolar covalent','Polar covalent','Ionic','Metallic'],'0 – 0.3 → nonpolar covalent.'),
+  mc('An electronegativity difference of 1.0 gives which bond?',['Polar covalent','Nonpolar covalent','Ionic','No bond'],'0.3 – 1.7 → polar covalent.'),
+  mc('An electronegativity difference of 2.1 gives which bond?',['Ionic','Polar covalent','Nonpolar covalent','Hydrogen bond'],'Above 1.7 → ionic.'),
+  mc('Classify Cl₂.',['Nonpolar covalent','Polar covalent','Ionic'],'Two identical atoms → difference of 0.'),
+  mc('Classify NaCl.',['Ionic','Polar covalent','Nonpolar covalent'],'A metal + nonmetal with a big EN difference.'),
+  mc('Classify HCl.',['Polar covalent','Ionic','Nonpolar covalent'],'Cl pulls the shared pair harder than H.'),
+  mt('Match each compound to its bond type.',[['H₂','Nonpolar covalent'],['H₂O','Polar covalent'],['NaCl','Ionic'],['Cl₂','Equal sharing']]),
+ ]},
+]},
+{id:'u9',title:'Chapter 6 Quiz Prep',desc:'Summary of trends + T/F “fix the false” practice',color:'#e0245e',dark:'#b81a4b',lessons:[
+ {id:'u9l1',title:'Summary of Trends',items:[
+  LN('The big summary','🗺️','<table class="trend"><tr><th></th><th>Down a group</th><th>Across a period</th></tr><tr><td>Atomic radius</td><td>↑</td><td>↓</td></tr><tr><td># valence e⁻</td><td>same</td><td>↑</td></tr><tr><td># energy levels</td><td>↑</td><td>same</td></tr><tr><td>Ionic radius</td><td>↑</td><td>—</td></tr><tr><td>Ionization energy</td><td>↓</td><td>↑</td></tr><tr><td>Electronegativity</td><td>↓</td><td>↑</td></tr><tr><td>Metallic</td><td>↑</td><td>↓</td></tr><tr><td>Nonmetallic</td><td>↓</td><td>↑</td></tr></table>'),
+  mc('Number of valence electrons going DOWN a group…',['stays the same','increases','decreases','doubles'],'Same group = same number of valence electrons.'),
+  mc('Number of valence electrons going ACROSS a period…',['increases','decreases','stays the same','resets each element'],'One more each step (in the A groups).'),
+  mc('Number of energy levels going DOWN a group…',['increases','decreases','stays the same','becomes 8'],'Each new period adds an energy level.'),
+  mc('Number of energy levels going ACROSS a period…',['stays the same','increases','decreases','doubles'],'Same row = same highest energy level.'),
+  mc('Metallic properties going ACROSS a period…',['decrease','increase','stay the same','are random'],'Less metallic, more nonmetallic left → right.'),
+  mc('Metallic properties going DOWN a group…',['increase','decrease','stay the same','disappear'],'Electrons are easier to lose lower down.'),
+  mc('Nonmetallic properties going ACROSS a period…',['increase','decrease','stay the same','vanish'],'Right side = nonmetals.'),
+  mt('Match each trend DOWN a group.',[['Atomic radius','Increases'],['Ionization energy','Decreases'],['Valence electrons','Same'],['Electronegativity','Goes down too']]),
+ ]},
+ {id:'u9l2',title:'True or False — Fix It!',items:[
+  LN('Quiz format','📝','Your real quiz is <b>15 True/False</b> in 12 minutes — and you must <b>correct the false statements</b>.<br><br>Here, if a statement is false, you’ll pick the fix next. Go fast!'),
+  tf('Mendeleev arranged the elements by increasing atomic number.',false,'Mendeleev = atomic MASS. Moseley = atomic number.'),
+  fix('“Mendeleev arranged the elements by increasing atomic number.” Fix it:',['Mendeleev arranged them by increasing atomic MASS.','Mendeleev arranged them by electronegativity.','Moseley arranged them by atomic mass.','Mendeleev arranged them by color.'],'Mendeleev → atomic mass.'),
+  tf('Valence electrons are the s and p electrons in the highest energy level.',true,'Exactly right.'),
+  tf('Nonmetals tend to lose electrons to reach an octet.',false,'Nonmetals GAIN electrons; metals lose them.'),
+  fix('“Nonmetals tend to lose electrons.” Fix it:',['Nonmetals tend to GAIN electrons.','Nonmetals tend to lose protons.','Nonmetals never react.','Nonmetals share neutrons.'],'Metals lose, nonmetals gain.'),
+  tf('Atomic radius increases going down a group because more energy levels are added.',true,'More distance and more shielding.'),
+  tf('Anions are smaller than the neutral atoms they form from.',false,'Anions are LARGER.'),
+  fix('“Anions are smaller than their neutral atoms.” Fix it:',['Anions are LARGER than their neutral atoms.','Anions have fewer electrons.','Anions are positive ions.','Anions are the same size as their atoms.'],'Gaining electrons makes ions larger.'),
+  tf('Group 2 elements are called the alkali metals.',false,'Group 2 = alkaline earth metals. Group 1 = alkali metals.'),
+  fix('“Group 2 elements are called the alkali metals.” Fix it:',['Group 2 elements are the ALKALINE EARTH metals.','Group 2 elements are the halogens.','Group 2 elements are the noble gases.','Group 2 elements are the transition metals.'],'Group 1 = alkali, Group 2 = alkaline earth.'),
+  tf('Ionization energy increases across a period because of greater nuclear charge.',true,'More protons, no new energy level.'),
+  tf('Metalloids are found along the stair-step line.',true,'Yes, they border the line.'),
+  tf('Atomic radius increases across a period because more electrons are added.',false,'It DECREASES — greater nuclear charge, same energy level.'),
+  fix('“Atomic radius increases across a period.” Fix it:',['Atomic radius DECREASES across a period.','Atomic radius only changes for metals.','Atomic radius doubles across a period.','Atomic radius is measured in grams.'],'Across → smaller.'),
+  tf('Kernel electrons shield valence electrons from the nucleus.',true,'That’s the shielding effect.'),
+ ]},
+ {id:'u9l3',title:'Final Boss: Chapter Review',items:[
+  mc('Who organized the modern periodic table by atomic number?',['Moseley','Mendeleev','Rutherford','Thomson'],'Moseley, 1913.'),
+  mc('What is the name of Group 18?',['Noble gases','Halogens','Alkali metals','Metalloids'],'Group 18 = noble gases.'),
+  mc('Which is the largest atom?',['Fr','F','He','Li'],'Bottom-left = largest.'),
+  mc('Which is the most electronegative?',['F','Fr','Cs','Na'],'Top-right (not counting noble gases).'),
+  ord('Order from LOWEST to HIGHEST first ionization energy (Period 3).',['Na','Mg','Si','Cl'],'IE increases across a period.'),
+  mc('How are elements arranged in the modern periodic table?',['In order of increasing atomic number','In order of increasing atomic mass','By color','By discovery date'],'Periodic law: increasing atomic number.'),
+  mc('Classify H₂O.',['Polar covalent','Ionic','Nonpolar covalent'],'O pulls the shared electrons harder than H.'),
+  mc('Which is smaller?',['Na⁺','Na'],'Cations are smaller than their atoms.'),
+  ty('Type the name of the most active metal.',['francium','fr'],'Francium.'),
+  mc('Electrons in the highest energy level are called…',['valence electrons','kernel electrons','core protons','isotopes'],'Valence electrons.'),
+  tf('Noble gases are reactive because their outer energy levels are full.',false,'Full outer levels make them NONreactive.'),
+  mc('The atomic radius of an element is half the distance between…',['the nuclei of two joined atoms of that element','an electron and a proton','two energy levels','the nucleus and a neutron'],'Half the nucleus-to-nucleus distance.'),
+ ]},
+]},
+];
+
+// 36 flashcards from Periodic_Trends_Quiz_Flashcards.pdf
+const FLASHCARDS=[
+['What trend is observed in atomic radius as you move up a group?','The atomic radius decreases.'],
+['Are nonmetals typically located on the left or right side of the periodic table?','On the right side.'],
+['What kind of charge results when an atom loses electrons?','A positive charge (cation).'],
+['Which subatomic particle most strongly influences an element’s chemical behavior?','The electron.'],
+['What trend is observed in atomic radius as you move down a group?','The atomic radius increases.'],
+['Within a group, which atom tends to have the smallest ionic radius?','The one at the top of the group.'],
+['What kind of charge results when an atom gains electrons?','A negative charge (anion).'],
+['Within a group, which atom tends to have the largest ionic radius?','The one at the bottom of the group.'],
+['Within a single period, which element tends to have the largest atomic radius?','The element at the far left end of the period.'],
+['What is the name of group 17?','Halogens.'],
+['How does atomic radius change as you move from left to right across a period?','It decreases.'],
+['Which general type of element makes up most of the periodic table?','Metals.'],
+['What happens to metals in the s-block when they form ions?','They lose electrons.'],
+['How does the size of a negatively charged ion compare to its neutral atom?','The anion is larger than its neutral atom.'],
+['Are metals typically located on the left or right side of the periodic table?','On the left side.'],
+['What is the name of group 1?','Alkali metals.'],
+['Why does atomic size increase as you go down a column in the periodic table?','Because additional energy levels are added.'],
+['Within a single period, which element tends to have the smallest atomic radius?','The element at the far right of the period.'],
+['How are elements arranged in the modern periodic table?','In order of increasing atomic number.'],
+['When nonmetals in the p-block form ions, what happens to their electrons?','They gain electrons.'],
+['What is another name for the d block?','Transition metals.'],
+['Who arranged the periodic table in order of increasing atomic mass?','Mendeleev.'],
+['In any given period, which type of element tends to have the smallest atomic radius?','The noble gases (far right of the period).'],
+['What is the name of group 2?','Alkaline earth metals.'],
+['Elements in the same vertical column share what in common?','They belong to the same group and have similar chemical properties.'],
+['Where are metalloids located on the periodic table?','Along the stair-step line.'],
+['What does the number of a period on the periodic table indicate?','The highest occupied energy level of that row’s elements.'],
+['Why are noble gases generally nonreactive?','Their outermost energy levels are completely filled.'],
+['Within a group, which atom forms the largest positive ion?','The one lowest in the group.'],
+['What is the name of group 18?','Noble gases.'],
+['Who organized the modern periodic table by atomic number?','Henry Moseley (1913, X-ray experiments).'],
+['What is the periodic law?','Arranged by increasing atomic number, physical & chemical properties repeat periodically.'],
+['What are kernel electrons?','Electrons NOT in the highest energy level.'],
+['What is ionization energy?','The energy required to remove an electron from an atom.'],
+['What is electronegativity?','The ability of an atom to attract electrons in a chemical bond.'],
+['EN difference ranges for bond types?','0–0.3 nonpolar covalent · 0.3–1.7 polar covalent · above 1.7 ionic.'],
+];
+
+// ===== Chem Saver app =====
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const todayStr=(d=new Date())=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+const yesterdayStr=()=>{const d=new Date();d.setDate(d.getDate()-1);return todayStr(d)};
+
+// ---------- lessons index ----------
+const LESSONS=[];const LESSON={};const QMAP={};
+UNITS.forEach((u,ui)=>u.lessons.forEach((l,li)=>{l.unit=u;l.ui=ui;l.li=li;l.idx=LESSONS.length;LESSONS.push(l);LESSON[l.id]=l;
+  l.items.forEach((q,i)=>{q.id=l.id+'.'+i;q.lesson=l.id;QMAP[q.id]=q});
+  l.qcount=l.items.filter(q=>q.t!=='learn').length;}));
+
+// ---------- levels: named after elements ----------
+const ELEMENTS=[['H','Hydrogen'],['He','Helium'],['Li','Lithium'],['Be','Beryllium'],['B','Boron'],['C','Carbon'],['N','Nitrogen'],['O','Oxygen'],['F','Fluorine'],['Ne','Neon'],['Na','Sodium'],['Mg','Magnesium'],['Al','Aluminum'],['Si','Silicon'],['P','Phosphorus'],['S','Sulfur'],['Cl','Chlorine'],['Ar','Argon'],['K','Potassium'],['Ca','Calcium'],['Sc','Scandium'],['Ti','Titanium'],['V','Vanadium'],['Cr','Chromium'],['Mn','Manganese'],['Fe','Iron'],['Co','Cobalt'],['Ni','Nickel'],['Cu','Copper'],['Zn','Zinc'],['Ga','Gallium'],['Ge','Germanium'],['As','Arsenic'],['Se','Selenium'],['Br','Bromine'],['Kr','Krypton'],['Rb','Rubidium'],['Sr','Strontium'],['Y','Yttrium'],['Zr','Zirconium'],['Nb','Niobium'],['Mo','Molybdenum'],['Tc','Technetium'],['Ru','Ruthenium'],['Rh','Rhodium'],['Pd','Palladium'],['Ag','Silver'],['Cd','Cadmium'],['In','Indium'],['Sn','Tin']];
+const need=L=>60+30*(L-1);
+function levelInfo(xp){let L=1,base=0;while(L<ELEMENTS.length&&xp>=base+need(L)){base+=need(L);L++}return{L,into:xp-base,need:need(L),el:ELEMENTS[L-1]}}
+const elTile=(L,cls='')=>{const e=ELEMENTS[Math.min(L,ELEMENTS.length)-1];return `<div class="eltile ${cls}"><i>${L}</i><b>${e[0]}</b></div>`};
+
+// ---------- avatar ----------
+const AV={
+ body:[{id:'purple',n:'Grape',c:'#8b6cff'},{id:'green',n:'Lime',c:'#58cc02'},{id:'blue',n:'Sky',c:'#1cb0f6'},{id:'pink',n:'Bubblegum',c:'#ff86d0',price:30},{id:'orange',n:'Tangerine',c:'#ff9600',price:30},{id:'red',n:'Cherry',c:'#ff4b4b',price:40},{id:'teal',n:'Mint',c:'#00cd9c',price:40},{id:'gold',n:'Gold',c:'#ffc800',lvl:5},{id:'midnight',n:'Midnight',c:'#4a4f8c',lvl:8}],
+ eyes:[{id:'round',n:'Round'},{id:'happy',n:'Happy'},{id:'sleepy',n:'Sleepy',price:20},{id:'wink',n:'Wink',price:25},{id:'star',n:'Starry',lvl:3},{id:'big',n:'Sparkle',price:40}],
+ mouth:[{id:'smile',n:'Smile'},{id:'grin',n:'Grin'},{id:'o',n:'Whoa',price:20},{id:'tongue',n:'Silly',price:25},{id:'smirk',n:'Smirk',price:25}],
+ hat:[{id:'none',n:'None'},{id:'beanie',n:'Beanie',price:40},{id:'party',n:'Party',price:40},{id:'grad',n:'Grad cap',lvl:4},{id:'goggles',n:'Lab goggles',price:60},{id:'phones',n:'Headphones',price:60},{id:'wizard',n:'Wizard',price:80},{id:'flask',n:'Flask hat',lvl:6},{id:'crown',n:'Crown',lvl:10}],
+ acc:[{id:'none',n:'None'},{id:'labcoat',n:'Lab coat',lvl:2},{id:'bowtie',n:'Bow tie',price:30},{id:'glasses',n:'Glasses',price:40},{id:'scarf',n:'Scarf',price:40},{id:'medal',n:'Medal',lvl:7}],
+ orbit:[{id:'none',n:'None'},{id:'ring',n:'Electron ring',lvl:2},{id:'double',n:'Double orbit',price:80},{id:'rainbow',n:'Rainbow',lvl:9}],
+ bg:[{id:'sky',n:'Sky',c:'#ddf4ff'},{id:'mint',n:'Mint',c:'#d7ffb8'},{id:'peach',n:'Peach',c:'#ffe4cc'},{id:'lilac',n:'Lilac',c:'#ece6ff',price:20},{id:'night',n:'Night',c:'#2b2d55',price:50},{id:'lab',n:'Lab',c:'#fff3b0',lvl:3}],
+};
+const CATS=[['body','Color'],['eyes','Eyes'],['mouth','Mouth'],['hat','Hats'],['acc','Extras'],['orbit','Orbits'],['bg','Background']];
+const DEFAULT_AV={body:'purple',eyes:'round',mouth:'smile',hat:'none',acc:'none',orbit:'none',bg:'sky'};
+const avItem=(cat,id)=>AV[cat].find(o=>o.id===id)||AV[cat][0];
+function shade(hex,amt){const n=parseInt(hex.slice(1),16);let r=(n>>16)+amt,g=(n>>8&255)+amt,b=(n&255)+amt;r=Math.max(0,Math.min(255,r));g=Math.max(0,Math.min(255,g));b=Math.max(0,Math.min(255,b));return '#'+((r<<16)|(g<<8)|b).toString(16).padStart(6,'0')}
+function avatarSVG(a,size=96){
+ a=Object.assign({},DEFAULT_AV,a||{});
+ const C=avItem('body',a.body).c, D=shade(C,-40), BG=avItem('bg',a.bg).c, ink='#2b2b3a';
+ let s=`<svg viewBox="0 0 120 120" width="${size}" height="${size}" style="display:block"><defs><clipPath id="cp"><circle cx="60" cy="60" r="60"/></clipPath></defs><g clip-path="url(#cp)"><rect width="120" height="120" fill="${BG}"/>`;
+ if(a.bg==='night')s+=`<circle cx="20" cy="22" r="1.6" fill="#fff"/><circle cx="98" cy="30" r="1.2" fill="#fff"/><circle cx="88" cy="12" r="1.8" fill="#ffe680"/><circle cx="14" cy="60" r="1" fill="#fff"/>`;
+ if(a.bg==='lab')s+=`<rect x="0" y="96" width="120" height="24" fill="#e8d98a"/><path d="M8 96 l6-14 h6 l6 14z" fill="#9be7ff" opacity=".8"/><path d="M98 96 v-16 h8 v16z" fill="#ffb3d1" opacity=".8"/>`;
+ const orbitCol=a.orbit==='rainbow'?'url(#rb)':D;
+ if(a.orbit==='rainbow')s+=`<defs><linearGradient id="rb"><stop offset="0" stop-color="#ff4b4b"/><stop offset=".33" stop-color="#ffc800"/><stop offset=".66" stop-color="#58cc02"/><stop offset="1" stop-color="#1cb0f6"/></linearGradient></defs>`;
+ const orbits=a.orbit==='none'?[]:a.orbit==='double'?[-22,22]:[-18];
+ orbits.forEach(r=>{s+=`<ellipse cx="60" cy="70" rx="54" ry="15" fill="none" stroke="${orbitCol}" stroke-width="3" opacity=".75" transform="rotate(${r} 60 70)"/>`});
+ // body
+ s+=`<ellipse cx="44" cy="104" rx="10" ry="6" fill="${D}"/><ellipse cx="76" cy="104" rx="10" ry="6" fill="${D}"/>`;
+ s+=`<ellipse cx="60" cy="70" rx="37" ry="35" fill="${C}"/><ellipse cx="60" cy="88" rx="30" ry="15" fill="#000" opacity=".07"/><ellipse cx="45" cy="50" rx="9" ry="5" fill="#fff" opacity=".35" transform="rotate(-25 45 50)"/>`;
+ s+=`<circle cx="38" cy="80" r="5" fill="#ff7aa8" opacity=".45"/><circle cx="82" cy="80" r="5" fill="#ff7aa8" opacity=".45"/>`;
+ // electrons in front
+ orbits.forEach(r=>{const rad=r*Math.PI/180;[[0.0,1],[Math.PI*0.95,1]].forEach(([t])=>{const x=54*Math.cos(t),y=15*Math.sin(t)+3;const X=60+x*Math.cos(rad)-y*Math.sin(rad),Y=70+x*Math.sin(rad)+y*Math.cos(rad);s+=`<circle cx="${X.toFixed(1)}" cy="${Y.toFixed(1)}" r="4.5" fill="${a.orbit==='rainbow'?'#ffc800':'#fff'}" stroke="${D}" stroke-width="2"/>`})});
+ // eyes
+ const eye=(x,kind)=>{switch(kind){
+  case 'happy':return `<path d="M${x-7} 67 Q${x} 58 ${x+7} 67" stroke="${ink}" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+  case 'sleepy':return `<path d="M${x-7} 65 Q${x} 70 ${x+7} 65" stroke="${ink}" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+  case 'star':return `<path d="M${x} 56 L${x+2.6} 62.4 L${x+9} 63 L${x+4} 67 L${x+5.6} 73.5 L${x} 70 L${x-5.6} 73.5 L${x-4} 67 L${x-9} 63 L${x-2.6} 62.4Z" fill="#ffc800" stroke="${ink}" stroke-width="1.6" stroke-linejoin="round"/>`;
+  case 'big':return `<circle cx="${x}" cy="64" r="10" fill="#fff"/><circle cx="${x+1}" cy="65" r="7" fill="${ink}"/><circle cx="${x+3.5}" cy="61.5" r="2.6" fill="#fff"/><circle cx="${x-1.5}" cy="68" r="1.3" fill="#fff"/>`;
+  default:return `<circle cx="${x}" cy="64" r="8" fill="#fff"/><circle cx="${x+1}" cy="65" r="4.4" fill="${ink}"/><circle cx="${x+2.5}" cy="63" r="1.5" fill="#fff"/>`;}};
+ if(a.eyes==='wink')s+=eye(47,'round')+eye(73,'happy');else s+=eye(47,a.eyes)+eye(73,a.eyes);
+ // mouth
+ switch(a.mouth){
+  case 'grin':s+=`<path d="M50 79 Q60 93 70 79Z" fill="${ink}"/><path d="M53 80 h14 v2 q-7 2 -14 0z" fill="#fff"/>`;break;
+  case 'o':s+=`<ellipse cx="60" cy="83" rx="4.5" ry="5.5" fill="${ink}"/>`;break;
+  case 'tongue':s+=`<path d="M50 79 Q60 92 70 79Z" fill="${ink}"/><ellipse cx="62" cy="86" rx="5" ry="4" fill="#ff7aa8"/>`;break;
+  case 'smirk':s+=`<path d="M53 83 Q63 87 69 78" stroke="${ink}" stroke-width="4" fill="none" stroke-linecap="round"/>`;break;
+  default:s+=`<path d="M51 80 Q60 89 69 80" stroke="${ink}" stroke-width="4" fill="none" stroke-linecap="round"/>`;}
+ // accessories
+ switch(a.acc){
+  case 'labcoat':s+=`<path d="M30 92 Q60 112 90 92 L94 120 H26Z" fill="#fff"/><path d="M60 104 L48 92 L44 100Z M60 104 L72 92 L76 100Z" fill="#e6e6ef"/><circle cx="60" cy="110" r="2" fill="#bbb"/><rect x="72" y="104" width="9" height="7" rx="1.5" fill="#e6e6ef"/><path d="M75 103 v-4" stroke="#1cb0f6" stroke-width="2"/>`;break;
+  case 'bowtie':s+=`<path d="M60 97 L47 90 L47 104Z M60 97 L73 90 L73 104Z" fill="#ff4b4b"/><circle cx="60" cy="97" r="3.5" fill="#d12f2f"/>`;break;
+  case 'glasses':s+=`<circle cx="47" cy="64" r="11" fill="none" stroke="${ink}" stroke-width="3"/><circle cx="73" cy="64" r="11" fill="none" stroke="${ink}" stroke-width="3"/><path d="M58 63 h4" stroke="${ink}" stroke-width="3"/>`;break;
+  case 'scarf':s+=`<path d="M28 92 Q60 106 92 92 L92 100 Q60 114 28 100Z" fill="#ff4b4b"/><path d="M72 100 l6 18 h8 l-4 -20z" fill="#e03a3a"/><path d="M34 96 l4 6 M46 100 l3 6 M58 102 l2 6" stroke="#fff" stroke-width="2" opacity=".6"/>`;break;
+  case 'medal':s+=`<path d="M52 88 L60 100 L68 88" stroke="#1cb0f6" stroke-width="5" fill="none"/><circle cx="60" cy="102" r="7" fill="#ffc800" stroke="#e0a600" stroke-width="2"/><text x="60" y="105.5" font-size="8" text-anchor="middle" font-weight="900" fill="#8a6a00">1</text>`;break;}
+ // hats
+ switch(a.hat){
+  case 'beanie':s+=`<path d="M27 48 Q60 0 93 48Z" fill="#ff4b4b"/><rect x="25" y="42" width="70" height="11" rx="5" fill="#d12f2f"/><circle cx="60" cy="14" r="7" fill="#fff"/>`;break;
+  case 'party':s+=`<path d="M44 42 L60 2 L76 42Z" fill="#1cb0f6"/><path d="M50 27 L70 27 M47 35 L73 35 M54 18 L66 18" stroke="#ffc800" stroke-width="4"/><circle cx="60" cy="4" r="5" fill="#ff86d0"/>`;break;
+  case 'grad':s+=`<path d="M36 34 h48 v12 q-24 8 -48 0z" fill="#2b2b3a"/><path d="M20 30 L60 16 L100 30 L60 44Z" fill="#3b3b4f"/><path d="M60 30 L88 34 L88 50" stroke="#ffc800" stroke-width="2.5" fill="none"/><circle cx="88" cy="52" r="3.5" fill="#ffc800"/>`;break;
+  case 'goggles':s+=`<rect x="22" y="40" width="76" height="8" rx="4" fill="#2b2b3a"/><rect x="32" y="33" width="24" height="18" rx="8" fill="#9be7ff" stroke="#2b2b3a" stroke-width="3"/><rect x="64" y="33" width="24" height="18" rx="8" fill="#9be7ff" stroke="#2b2b3a" stroke-width="3"/><path d="M37 38 l6 0" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><path d="M69 38 l6 0" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>`;break;
+  case 'phones':s+=`<path d="M24 70 Q22 26 60 26 Q98 26 96 70" stroke="#2b2b3a" stroke-width="6" fill="none"/><rect x="16" y="58" width="14" height="24" rx="6" fill="#ff4b4b"/><rect x="90" y="58" width="14" height="24" rx="6" fill="#ff4b4b"/>`;break;
+  case 'wizard':s+=`<path d="M30 44 L66 -4 L88 44Z" fill="#5b3fd9"/><ellipse cx="60" cy="44" rx="38" ry="7" fill="#4a30b8"/><path d="M58 22 l2 -5 l2 5 l5 0 l-4 3 l2 5 l-5 -3 l-5 3 l2 -5 l-4 -3z" fill="#ffc800"/><circle cx="72" cy="34" r="2" fill="#ffc800"/>`;break;
+  case 'flask':s+=`<path d="M52 4 h16 v4 h-2 v12 l14 24 H40 l14 -24 V8 h-2z" fill="#eafcff" stroke="#2b2b3a" stroke-width="2.5" stroke-linejoin="round"/><path d="M45 36 l-4 8 h38 l-4 -8z" fill="#58cc02"/><circle cx="56" cy="30" r="2.5" fill="#58cc02"/><circle cx="64" cy="24" r="1.8" fill="#58cc02"/>`;break;
+  case 'crown':s+=`<path d="M34 44 L36 16 L48 30 L60 10 L72 30 L84 16 L86 44Z" fill="#ffc800" stroke="#e0a600" stroke-width="2.5" stroke-linejoin="round"/><circle cx="60" cy="34" r="4" fill="#ff4b4b"/><circle cx="46" cy="38" r="3" fill="#1cb0f6"/><circle cx="74" cy="38" r="3" fill="#58cc02"/>`;break;}
+ return s+'</g></svg>';
+}
+
+// ---------- badges ----------
+const UNIT_BADGES={u1:['📜','Mendeleev’s Apprentice'],u2:['🔩','Metal Detector'],u3:['👨‍👩‍👧','Family Reunion'],u4:['🛡️','Shield Up'],u5:['📏','Size Matters'],u6:['➕','Ion Maker'],u7:['🔋','Energy Thief'],u8:['🧲','Electron Hog'],u9:['🏆','Quiz Ready']};
+const unitDone=(p,u)=>u.lessons.every(l=>p.done[l.id]);
+const BADGES=[
+ {id:'first',e:'🧪',n:'First Reaction',d:'Finish your first lesson',test:p=>p.stats.lessons>=1},
+ {id:'perfect',e:'💯',n:'Flawless',d:'A lesson with zero mistakes',test:p=>p.stats.perfect>=1},
+ {id:'perfect5',e:'🎯',n:'Precision',d:'5 perfect lessons',test:p=>p.stats.perfect>=5},
+ ...UNITS.map(u=>({id:'unit_'+u.id,e:UNIT_BADGES[u.id][0],n:UNIT_BADGES[u.id][1],d:'Complete “'+u.title+'”',test:p=>unitDone(p,u)})),
+ {id:'streak3',e:'🔥',n:'On Fire',d:'3-day streak',test:p=>p.best>=3},
+ {id:'streak7',e:'☄️',n:'Eternal Flame',d:'7-day streak',test:p=>p.best>=7},
+ {id:'lvl5',e:'⭐',n:'Boron Rising',d:'Reach level 5',test:p=>levelInfo(p.xp).L>=5},
+ {id:'lvl10',e:'🌟',n:'Neon Glow',d:'Reach level 10',test:p=>levelInfo(p.xp).L>=10},
+ {id:'xp1000',e:'⚡',n:'Kilojoule',d:'Earn 1,000 XP',test:p=>p.xp>=1000},
+ {id:'cards',e:'🃏',n:'Card Shark',d:'Review 36 flashcards',test:p=>p.stats.cards>=36},
+ {id:'fixer',e:'🩹',n:'Mistake Fixer',d:'Fix 10 mistakes in Practice',test:p=>p.stats.fixed>=10},
+ {id:'shop',e:'🛍️',n:'Drip Chemist',d:'Buy something in the shop',test:p=>p.owned.length>=1},
+ {id:'friend',e:'🤝',n:'Bonded',d:'Make your first friend',test:p=>friendIds().length>=1},
+ {id:'friends3',e:'🫂',n:'Covalent Crew',d:'Have 3 friends',test:p=>friendIds().length>=3},
+];
+const BADGE=Object.fromEntries(BADGES.map(b=>[b.id,b]));
+
+// ---------- player model ----------
+function newPlayer(name,body){return{v:1,username:name,avatar:{...DEFAULT_AV,body:body||'purple'},xp:0,coins:25,hearts:5,heartsAt:Date.now(),streak:0,lastDay:'',best:0,done:{},badges:[],showcase:[],owned:[],follows:[],declined:[],mistakes:[],stats:{lessons:0,perfect:0,correct:0,answered:0,cards:0,fixed:0},sound:true,created:Date.now()}}
+const num=(v,d=0)=>typeof v==='number'&&isFinite(v)?v:d;
+const strArr=(v,max=200)=>Array.isArray(v)?v.filter(x=>typeof x==='string').slice(0,max):[];
+function normalize(raw){
+ const p=newPlayer('');raw=raw&&typeof raw==='object'?raw:{};
+ p.username=typeof raw.username==='string'?raw.username.slice(0,20):'Player';
+ const av=raw.avatar&&typeof raw.avatar==='object'?raw.avatar:{};
+ for(const k in DEFAULT_AV)p.avatar[k]=AV[k].some(o=>o.id===av[k])?av[k]:DEFAULT_AV[k];
+ ['xp','coins','streak','best','created'].forEach(k=>p[k]=Math.max(0,num(raw[k],p[k])));
+ p.hearts=Math.max(0,Math.min(5,num(raw.hearts,5)));p.heartsAt=num(raw.heartsAt,Date.now());
+ p.lastDay=typeof raw.lastDay==='string'?raw.lastDay:'';
+ p.done={};if(raw.done&&typeof raw.done==='object')for(const k in raw.done)if(LESSON[k])p.done[k]=Math.max(1,Math.min(3,num(raw.done[k],1)));
+ p.badges=strArr(raw.badges).filter(b=>BADGE[b]);p.showcase=strArr(raw.showcase,3).filter(b=>p.badges.includes(b));
+ p.owned=strArr(raw.owned);p.follows=strArr(raw.follows,300);p.declined=strArr(raw.declined,300);p.mistakes=strArr(raw.mistakes,60).filter(q=>QMAP[q]);
+ const st=raw.stats&&typeof raw.stats==='object'?raw.stats:{};for(const k in p.stats)p.stats[k]=Math.max(0,num(st[k],0));
+ p.sound=raw.sound!==false;
+ return p;
+}
+const shownStreak=p=>(p.lastDay===todayStr()||p.lastDay===yesterdayStr())?p.streak:0;
+
+// ---------- backend ----------
+let DB=null,UID=null,mode='local',readOnly=false,me=null,players={},playersLoaded=false,playersErr=null,playersTimedOut=false;
+const LSKEY=()=>'chemsaver:'+(UID||'local');
+function lsGet(){try{const s=localStorage.getItem(LSKEY());return s?JSON.parse(s):null}catch(e){return null}}
+function lsSet(){try{localStorage.setItem(LSKEY(),JSON.stringify(me))}catch(e){}}
+async function initBackend(){
+ if(!window.claude||typeof window.claude.use!=='function')return;
+ try{
+  const [db,user]=await Promise.all([window.claude.use('db'),window.claude.use('user')]);
+  if(db&&user){const id=await user.id();if(id){DB=db;UID=id;mode='cloud'}}
+ }catch(e){}
+}
+let saveTimer=null,saving=false,saveAgain=false,lastSaved='',retried=false;
+function save(){lsSet();clearTimeout(saveTimer);saveTimer=setTimeout(flush,800)}
+async function flush(){
+ if(mode!=='cloud'||readOnly||!me)return;
+ const body=JSON.stringify(me);if(body===lastSaved)return;
+ if(saving){saveAgain=true;return}
+ saving=true;
+ try{await DB.doc('players/'+UID).set(JSON.parse(body));lastSaved=body;retried=false}
+ catch(e){const c=e&&e.code;
+  if(c==='invalid_argument'||c==='revoked'||c==='not_granted'){readOnly=true;toast('Your progress is saved on this device only. Ask the owner for edit access to join friends.',5000)}
+  else if(c==='quota_exceeded'){toast('The shared game is full right now, so progress is kept on this device.',5000)}
+  else if(!retried){retried=true;setTimeout(flush,1200+Math.random()*1500)}}
+ saving=false;
+ if(saveAgain){saveAgain=false;flush()}
+}
+function subscribePlayers(){
+ if(mode!=='cloud')return;
+ const t=setTimeout(()=>{if(!playersLoaded){playersTimedOut=true;if(view==='friends')render()}},10000);
+ DB.collection('players').limit(500).onSnapshot(snap=>{
+  const next={};snap.docs.forEach(d=>{if(d.exists)next[d.id]=normalize(d.data())});players=next;
+  if(!snap.metadata.fromCache){playersLoaded=true;playersTimedOut=false;clearTimeout(t)}else if(Object.keys(next).length)playersLoaded=true;
+  updateNavDot();if(view==='friends'&&!document.querySelector('#overlay.on')){if(document.activeElement&&document.activeElement.id==='fsearch')searchPlayers(document.activeElement.value);else render()}
+ },err=>{clearTimeout(t);playersErr=err&&err.code||'unavailable';if(view==='friends')render()});
+}
+
+// ---------- friends logic ----------
+const others=()=>Object.keys(players).filter(id=>id!==UID);
+function friendIds(){if(!me)return[];return me.follows.filter(id=>players[id]&&players[id].follows.includes(UID))}
+function incomingIds(){if(!me)return[];return others().filter(id=>players[id].follows.includes(UID)&&!me.follows.includes(id)&&!me.declined.includes(id))}
+function outgoingIds(){return me.follows.filter(id=>!(players[id]&&players[id].follows.includes(UID)))}
+function relation(id){if(me.follows.includes(id))return players[id]&&players[id].follows.includes(UID)?'friend':'sent';if(players[id]&&players[id].follows.includes(UID)&&!me.declined.includes(id))return 'incoming';return 'none'}
+function addFriend(id){if(!me.follows.includes(id))me.follows.push(id);me.declined=me.declined.filter(x=>x!==id);save();const r=relation(id);toast(r==='friend'?'You’re now friends! 🤝':'Friend request sent ✉️');sfx('ok');checkBadges(true)}
+function declineReq(id){if(!me.declined.includes(id))me.declined.push(id);save();toast('Request declined')}
+function cancelReq(id){me.follows=me.follows.filter(x=>x!==id);save();toast('Request canceled')}
+function unfriend(id){me.follows=me.follows.filter(x=>x!==id);if(!me.declined.includes(id))me.declined.push(id);save();toast('Removed friend')}
+
+// ---------- hearts ----------
+const REGEN=20*60*1000;
+function materialize(){const n=Math.floor((Date.now()-me.heartsAt)/REGEN);if(n>0){me.hearts=Math.min(5,me.hearts+n);me.heartsAt=me.hearts>=5?Date.now():me.heartsAt+n*REGEN}if(me.hearts>=5)me.heartsAt=Date.now()}
+function effHearts(){if(!me)return 5;const n=Math.floor((Date.now()-me.heartsAt)/REGEN);return Math.min(5,me.hearts+Math.max(0,n))}
+function loseHeart(){materialize();if(me.hearts>=5)me.heartsAt=Date.now();me.hearts=Math.max(0,me.hearts-1);save()}
+function addHearts(n){materialize();me.hearts=Math.min(5,me.hearts+n);if(me.hearts>=5)me.heartsAt=Date.now()}
+function nextHeartIn(){const ms=REGEN-((Date.now()-me.heartsAt)%REGEN);const m=Math.floor(ms/60000),s=Math.floor(ms%60000/1000);return m+':'+String(s).padStart(2,'0')}
+
+// ---------- badges ----------
+function checkBadges(announce){
+ const got=[];BADGES.forEach(b=>{if(!me.badges.includes(b.id)&&b.test(me)){me.badges.push(b.id);got.push(b);if(me.showcase.length<3)me.showcase.push(b.id)}});
+ if(got.length){save();if(announce)got.forEach((b,i)=>setTimeout(()=>toast(b.e+' Badge unlocked: '+b.n,2600),i*2700))}
+ return got;
+}
+
+// ---------- sound ----------
+let AC=null;
+function sfx(kind){if(!me||!me.sound)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const seq=kind==='ok'?[[660,0],[880,.09]]:kind==='bad'?[[220,0],[180,.12]]:kind==='win'?[[523,0],[659,.12],[784,.24],[1046,.36]]:[[500,0]];
+ seq.forEach(([f,t])=>{const o=AC.createOscillator(),g=AC.createGain();o.type=kind==='bad'?'sawtooth':'triangle';o.frequency.value=f;g.gain.setValueAtTime(.0001,AC.currentTime+t);g.gain.exponentialRampToValueAtTime(.18,AC.currentTime+t+.02);g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+t+.18);o.connect(g).connect(AC.destination);o.start(AC.currentTime+t);o.stop(AC.currentTime+t+.2)})}catch(e){}}
+
+// ---------- ui helpers ----------
+let toastT=null;
+function toast(msg,ms=2200){const t=$('#toast');t.textContent=msg;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),ms)}
+function openOverlay(html,cls=''){const o=$('#overlay');o.innerHTML=html;o.className='on '+cls}
+function closeOverlay(){const o=$('#overlay');o.className='';o.innerHTML='';S=null;render()}
+function sheet(html,center){openOverlay(`<div class="scrim ${center?'center':''}" data-close="1"><div class="sheet">${html}</div></div>`);
+ const sc=$('#overlay .scrim');sc.addEventListener('click',e=>{if(e.target===sc)closeOverlay()})}
+function confetti(){const c=document.createElement('canvas');c.className='confetti';c.width=innerWidth;c.height=innerHeight;document.body.appendChild(c);const x=c.getContext('2d');const cols=['#7c5cff','#58cc02','#1cb0f6','#ffc800','#ff4b4b','#ff86d0'];
+ const P=Array.from({length:120},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,vx:(Math.random()-.5)*4,vy:2+Math.random()*4,r:Math.random()*6.28,s:5+Math.random()*6,c:cols[Math.random()*cols.length|0]}));let f=0;
+ (function step(){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.05;p.r+=.1;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);x.restore()});if(++f<180)requestAnimationFrame(step);else c.remove()})()}
+
+// ---------- views ----------
+let view='learn',shopCat='body',editShowcase=false;
+function topBar(){const li=levelInfo(me.xp);const h=effHearts();
+ return `<div class="top"><button class="chip" data-go="profile" title="Level ${li.L} · ${li.el[1]}">${elTile(li.L)}<span style="font-size:13px;color:var(--mute)">Lv ${li.L}</span></button>
+ <button class="chip fire" data-act="streakinfo">🔥 ${shownStreak(me)}</button>
+ <button class="chip gem" data-go="shop">💎 ${me.coins}</button>
+ <button class="chip heart" data-act="heartinfo">❤️ ${h}</button></div>`}
+function navBar(){const inc=mode==='cloud'?incomingIds().length:0;const tabs=[['learn','🧪','Learn'],['practice','🃏','Practice'],['friends','👥','Friends'],['shop','🎨','Customize'],['profile','👤','Profile']];
+ return `<nav class="nav"><div class="in">${tabs.map(([id,ic,n])=>`<button class="${view===id?'on':''}" data-go="${id}"><span class="ic">${ic}</span>${n}${id==='friends'&&inc?`<span class="dot">${inc}</span>`:''}</button>`).join('')}</div></nav>`}
+function updateNavDot(){const nb=document.querySelector('.nav');if(nb)nb.outerHTML=navBar()}
+function render(){
+ if(!me)return;
+ let body='';
+ if(view==='learn')body=viewLearn();else if(view==='practice')body=viewPractice();else if(view==='friends')body=viewFriends();else if(view==='shop')body=viewShop();else body=viewProfile();
+ $('#app').innerHTML=topBar()+body+navBar();
+}
+const unlocked=l=>l.idx===0||!!me.done[LESSONS[l.idx-1].id];
+function viewLearn(){
+ const cur=LESSONS.find(l=>!me.done[l.id]&&unlocked(l));
+ let h=`<div class="subj"><span class="pill">📚 ${SUBJECT.name}</span><span class="pill">${SUBJECT.chapter}</span><span class="pill">⚛️ ${SUBJECT.topic}</span></div>`;
+ UNITS.forEach((u,ui)=>{const d=u.lessons.filter(l=>me.done[l.id]).length;
+  h+=`<div class="unit" style="background:${u.color}"><small>UNIT ${ui+1}</small><h2>${u.title}</h2><p>${u.desc}</p><div class="ubar"><div style="width:${d/u.lessons.length*100}%"></div></div></div><div class="path">`;
+  u.lessons.forEach((l,li)=>{const off=Math.round(Math.sin((l.idx)*1.2)*70);const st=me.done[l.id]?'done':unlocked(l)?(l===cur?'cur':'open'):'locked';
+   const icon=st==='done'?'⭐':st==='locked'?'🔒':li===u.lessons.length-1&&u.id==='u9'?'👑':['⚛️','🧪','🔬','⚗️'][li%4];
+   const bg=st==='done'?'var(--gold)':u.color, sh=st==='done'?'var(--goldD)':u.dark;
+   h+=`<div style="transform:translateX(${off}px);display:flex;flex-direction:column;align-items:center;gap:12px"><button class="node ${st}" data-lesson="${l.id}" style="background:${bg};box-shadow:0 7px 0 ${sh}">${st==='cur'?'<span class="start">START</span>':''}${icon}${st==='done'&&me.done[l.id]>=3?'<span class="crown">👑</span>':''}</button><div class="nlabel">${l.title}</div></div>`});
+  h+=`</div>`});
+ h+=`<div class="empty" style="padding:30px">More chapters coming soon 🚀</div>`;
+ return h;
+}
+function lessonSheet(id){const l=LESSON[id];const st=me.done[id];
+ if(!unlocked(l)){sheet(`<div class="ptitle">🔒 ${l.title}</div><p class="muted">Finish “${LESSONS[l.idx-1].title}” to unlock this lesson.</p><button class="btn ghost wide" data-close-btn>OK</button>`);return}
+ sheet(`<div class="row"><div class="big">${st?'⭐':'⚛️'}</div><div class="grow"><div class="small muted">UNIT ${l.ui+1} · LESSON ${l.li+1}</div><div class="ptitle">${l.title}</div><div class="small muted">${l.qcount} questions${st?' · '+'★'.repeat(st)+'☆'.repeat(3-st):''}</div></div></div>
+ <div style="height:16px"></div><button class="btn ok wide" data-start="${id}">${st?'Practice again +XP':'Start +'+(l.qcount*10+5)+' XP'}</button>`)}
+function viewPractice(){
+ const nm=me.mistakes.length;const h=effHearts();
+ return `<div class="sec"><h3>Practice</h3>
+ <div class="card row"><div class="big">🩹</div><div class="grow"><div class="ptitle">Fix your mistakes</div><div class="small muted">${nm?nm+' question'+(nm>1?'s':'')+' to review':'No mistakes saved — nice!'} · +1 ❤️</div></div><button class="btn blue sm" data-act="mistakes" ${nm?'':'disabled'}>Go</button></div>
+ <div class="card row"><div class="big">🃏</div><div class="grow"><div class="ptitle">Flashcards</div><div class="small muted">${FLASHCARDS.length} periodic trends cards · +1 ❤️</div></div><button class="btn sm" data-act="flash">Go</button></div>
+ <div class="card row"><div class="big">⚡</div><div class="grow"><div class="ptitle">Quick review</div><div class="small muted">10 random questions from lessons you’ve done</div></div><button class="btn ok sm" data-act="quick">Go</button></div>
+ <div class="card row"><div class="big">❤️</div><div class="grow"><div class="ptitle">Hearts: ${h}/5</div><div class="small muted">${h<5?'Next heart in '+nextHeartIn()+' · practice earns hearts too':'Full hearts!'}</div></div><button class="btn gold sm" data-act="refill" ${h>=5?'disabled':''}>Refill 30💎</button></div>
+ </div>`}
+function viewFriends(){
+ if(mode!=='cloud')return `<div class="sec"><h3>Friends</h3><div class="card empty"><div class="big">🔌</div><p>Friends need the shared online game.</p><p class="small">Open this game from its claude.ai link while signed in to add friends.</p></div></div>`;
+ let h=`<div class="sec"><h3>Friends</h3>`;
+ if(readOnly)h+=`<div class="card small" style="background:#fff8e1;border-color:#ffe08a">You can see players but can’t send requests yet — ask the game’s owner to give you edit access.</div>`;
+ h+=`<input class="txt" id="fsearch" placeholder="🔍 Search players by username" autocomplete="off"><div id="fresults"></div>`;
+ if(playersErr)h+=`<div class="card empty">Couldn’t load players right now.</div>`;
+ else if(!playersLoaded)h+=`<div class="card empty">${playersTimedOut?'Can’t reach the player list yet — check your connection.':'Loading players…'}</div>`;
+ else{
+  const inc=incomingIds();
+  if(inc.length){h+=`<h3 style="margin-top:18px">Friend requests <span class="pill">${inc.length}</span></h3><div class="card">`+inc.map(id=>playerRow(id,`<button class="btn ok sm" data-accept="${id}">Accept</button> <button class="btn ghost sm" data-decline="${id}">✕</button>`)).join('')+`</div>`}
+  const fr=friendIds();const board=[UID,...fr].map(id=>id===UID?{id,p:me}:{id,p:players[id]}).sort((a,b)=>b.p.xp-a.p.xp);
+  h+=`<h3 style="margin-top:18px">🏆 Friends leaderboard</h3><div class="card">`;
+  board.forEach((r,i)=>{const li=levelInfo(r.p.xp);h+=`<div class="lb ${r.id===UID?'me':''}" data-prof="${r.id}"><div class="rank">${['🥇','🥈','🥉'][i]||i+1}</div>${avatarSVG(r.p.avatar,44)}<div class="grow"><div class="ptitle" style="font-size:15px">${esc(r.p.username)}${r.id===UID?' (you)':''}</div><div class="small muted">Lv ${li.L} ${li.el[1]} · 🔥 ${shownStreak(r.p)}</div></div><div style="font-weight:900;color:var(--gold)">${r.p.xp} XP</div></div>`});
+  if(!fr.length)h+=`<div class="empty small">Add friends below to compete on XP!</div>`;
+  h+=`</div>`;
+  const out=outgoingIds();
+  if(out.length)h+=`<h3 style="margin-top:18px">Sent requests</h3><div class="card">`+out.map(id=>players[id]?playerRow(id,`<button class="btn ghost sm" data-cancel="${id}">Cancel</button>`):'').join('')+`</div>`;
+  const disc=others().filter(id=>relation(id)==='none').sort((a,b)=>players[b].xp-players[a].xp).slice(0,30);
+  h+=`<h3 style="margin-top:18px">Find players</h3><div class="card">`+(disc.length?disc.map(id=>playerRow(id,addBtn(id))).join(''):`<div class="empty small">No other players yet. Share the game link with classmates!</div>`)+`</div>`;
+ }
+ return h+`</div>`}
+const addBtn=id=>`<button class="btn blue sm" data-add="${id}" ${readOnly?'disabled':''}>+ Add</button>`;
+function playerRow(id,actions){const p=players[id];if(!p)return '';const li=levelInfo(p.xp);
+ return `<div class="lb" data-prof="${id}">${avatarSVG(p.avatar,44)}<div class="grow"><div class="ptitle" style="font-size:15px">${esc(p.username)}</div><div class="small muted">Lv ${li.L} ${li.el[1]} · ${p.xp} XP</div></div><div>${actions}</div></div>`}
+function searchPlayers(q){const box=$('#fresults');if(!box)return;q=q.trim().toLowerCase();if(!q){box.innerHTML='';return}
+ const hits=others().filter(id=>players[id].username.toLowerCase().includes(q)).slice(0,12);
+ box.innerHTML=`<div class="card" style="margin-top:10px">`+(hits.length?hits.map(id=>{const r=relation(id);return playerRow(id,r==='none'?addBtn(id):r==='incoming'?`<button class="btn ok sm" data-accept="${id}">Accept</button>`:`<span class="pill">${r==='friend'?'Friends ✓':'Sent'}</span>`)}).join(''):`<div class="empty small">No players match “${esc(q)}”.</div>`)+`</div>`}
+function profileSheet(id){if(id===UID){view='profile';closeOverlay();return}
+ const p=players[id];if(!p)return;const li=levelInfo(p.xp);const r=relation(id);const units=UNITS.filter(u=>unitDone(p,u)).length;
+ const act=r==='friend'?`<button class="btn ghost wide" data-unfriend="${id}">Remove friend</button>`:r==='sent'?`<button class="btn ghost wide" data-cancel="${id}">Cancel request</button>`:r==='incoming'?`<button class="btn ok wide" data-accept="${id}">Accept friend request</button>`:`<button class="btn blue wide" data-add="${id}" ${readOnly?'disabled':''}>+ Add friend</button>`;
+ sheet(`<div style="text-align:center">${avatarSVG(p.avatar,120).replace('<svg','<svg style="margin:0 auto;display:block"')}<div class="ptitle" style="font-size:22px;margin-top:8px">${esc(p.username)}</div><div class="muted small">Level ${li.L} · ${li.el[1]}</div></div>
+ <div class="grid2" style="margin:16px 0"><div class="sbox"><span class="big" style="font-size:26px">⚡</span><div><div class="n">${p.xp}</div><div class="l">Total XP</div></div></div><div class="sbox"><span style="font-size:26px">🔥</span><div><div class="n">${shownStreak(p)}</div><div class="l">Day streak</div></div></div><div class="sbox"><span style="font-size:26px">📘</span><div><div class="n">${units}/${UNITS.length}</div><div class="l">Units done</div></div></div><div class="sbox"><span style="font-size:26px">🏅</span><div><div class="n">${p.badges.length}</div><div class="l">Badges</div></div></div></div>
+ <div class="small muted" style="text-align:center;margin-bottom:8px">SHOWCASE</div><div class="showcase" style="margin-bottom:18px">${[0,1,2].map(i=>{const b=BADGE[p.showcase[i]];return b?`<div class="slotb f" title="${esc(b.n)}">${b.e}</div>`:`<div class="slotb"></div>`}).join('')}</div>${act}`)}
+function viewShop(){
+ const li=levelInfo(me.xp);
+ let h=`<div class="avstage">${avatarSVG(me.avatar,170)}</div><div style="text-align:center" class="ptitle">${esc(me.username)}</div><div style="text-align:center" class="small muted">💎 ${me.coins} gems · Lv ${li.L}</div>
+ <div class="tabs">${CATS.map(([k,n])=>`<button class="${shopCat===k?'on':''}" data-cat="${k}">${n}</button>`).join('')}</div><div class="items">`;
+ AV[shopCat].forEach(o=>{const key=shopCat+':'+o.id;const owned=!o.price&&!o.lvl||me.owned.includes(key)||(o.lvl&&li.L>=o.lvl);const eq=me.avatar[shopCat]===o.id;
+  const prev=avatarSVG({...me.avatar,[shopCat]:o.id},74);
+  const tag=eq?'<span class="tag" style="color:var(--pri)">✓ Wearing</span>':owned?'<span class="tag" style="color:var(--okInk)">Owned</span>':o.lvl?`<span class="tag">🔒 Lv ${o.lvl}</span>`:`<span class="tag" style="color:var(--blue)">💎 ${o.price}</span>`;
+  h+=`<button class="item ${eq?'eq':''} ${!owned&&o.lvl?'lock':''}" data-item="${o.id}">${prev}<div>${o.n}</div>${tag}</button>`});
+ return h+`</div><div class="empty small">Earn 💎 by finishing lessons (+5, +10 more for a perfect one).</div>`}
+function buyOrEquip(id){const o=AV[shopCat].find(x=>x.id===id);if(!o)return;const key=shopCat+':'+id;const L=levelInfo(me.xp).L;
+ const owned=!o.price&&!o.lvl||me.owned.includes(key)||(o.lvl&&L>=o.lvl);
+ if(owned){me.avatar[shopCat]=id;save();sfx('tap');render();return}
+ if(o.lvl){toast('🔒 Reach level '+o.lvl+' ('+ELEMENTS[o.lvl-1][1]+') to unlock '+o.n);return}
+ if(me.coins<o.price){toast('You need '+(o.price-me.coins)+' more 💎');return}
+ sheet(`<div style="text-align:center">${avatarSVG({...me.avatar,[shopCat]:id},110).replace('<svg','<svg style="margin:0 auto;display:block"')}<div class="ptitle" style="margin:10px 0">Buy ${esc(o.n)} for 💎 ${o.price}?</div></div><div class="grid2"><button class="btn ghost" data-close-btn>Not now</button><button class="btn blue" data-buy="${id}">Buy</button></div>`,true)}
+function viewProfile(){const li=levelInfo(me.xp);const acc=me.stats.answered?Math.round(me.stats.correct/me.stats.answered*100):0;
+ let h=`<div class="sec"><div class="card" style="text-align:center"><div style="display:flex;justify-content:center">${avatarSVG(me.avatar,130)}</div>
+ <div class="ptitle" style="font-size:24px;margin-top:8px">${esc(me.username)} <button class="btn ghost sm" data-act="rename" style="vertical-align:middle">✏️</button></div>
+ <div class="row" style="justify-content:center;margin-top:10px">${elTile(li.L)}<div style="text-align:left"><div class="ptitle" style="font-size:16px">Level ${li.L} · ${li.el[1]}</div><div class="small muted">${li.into}/${li.need} XP to ${ELEMENTS[Math.min(li.L,ELEMENTS.length-1)][1]}</div></div></div>
+ <div class="xpbar"><div style="width:${Math.min(100,li.into/li.need*100)}%"></div></div>
+ <button class="btn ghost sm" data-go="shop" style="margin-top:8px">🎨 Customize character</button></div>
+ <div class="grid2"><div class="sbox"><span style="font-size:26px">🔥</span><div><div class="n">${shownStreak(me)}</div><div class="l">Day streak (best ${me.best})</div></div></div><div class="sbox"><span style="font-size:26px">⚡</span><div><div class="n">${me.xp}</div><div class="l">Total XP</div></div></div><div class="sbox"><span style="font-size:26px">📘</span><div><div class="n">${Object.keys(me.done).length}/${LESSONS.length}</div><div class="l">Lessons</div></div></div><div class="sbox"><span style="font-size:26px">🎯</span><div><div class="n">${acc}%</div><div class="l">Accuracy</div></div></div></div>
+ <h3 style="margin-top:20px">Badge showcase</h3><p class="small muted" style="margin-top:-6px">Friends see these 3 badges on your profile.</p>
+ <div class="showcase">${[0,1,2].map(i=>{const b=BADGE[me.showcase[i]];return b?`<div class="slotb f" title="${esc(b.n)}">${b.e}</div>`:`<div class="slotb"></div>`}).join('')}</div>
+ <div style="text-align:center;margin:12px 0"><button class="btn ${editShowcase?'ok':'ghost'} sm" data-act="editshow">${editShowcase?'✓ Done':'📌 Choose showcase badges'}</button></div>
+ ${editShowcase?'<p class="small" style="text-align:center;color:var(--pri)">Tap earned badges to pin or unpin (up to 3).</p>':''}
+ <h3>Badges <span class="pill">${me.badges.length}/${BADGES.length}</span></h3><div class="badges">`;
+ BADGES.forEach(b=>{const has=me.badges.includes(b.id);const pin=me.showcase.includes(b.id);h+=`<div class="badge ${has?'':'off'} ${pin?'pin':''}" data-badge="${b.id}">${pin?'<span class="pinmark">📌</span>':''}<div class="be">${b.e}</div><div class="bn">${b.n}</div><div class="bd">${b.d}</div></div>`});
+ h+=`</div><h3 style="margin-top:20px">Settings</h3><div class="card"><div class="row"><div class="grow">🔊 Sound effects</div><button class="switch ${me.sound?'on':''}" data-act="sound" aria-label="Sound"></button></div>
+ <div class="small muted" style="margin-top:12px">${mode==='cloud'?(readOnly?'Saved on this device only (no edit access to the shared game).':'☁️ Progress saves to your account.'):'💾 Progress saves in this browser.'}</div></div></div>`;
+ return h}
+function toggleShowcase(id){if(!editShowcase){const b=BADGE[id];toast(b.e+' '+b.n+' — '+b.d);return}
+ if(!me.badges.includes(id)){toast('Earn this badge first!');return}
+ if(me.showcase.includes(id))me.showcase=me.showcase.filter(x=>x!==id);else{if(me.showcase.length>=3){toast('Showcase is full — unpin one first');return}me.showcase.push(id)}
+ save();render()}
+function renameSheet(){sheet(`<div class="ptitle">Change username</div><div style="height:10px"></div><input class="txt" id="rn" maxlength="16" value="${esc(me.username)}"><div class="small muted" style="margin:6px 0 14px">3–16 letters, numbers, _ or .</div><button class="btn wide" data-act="dorename">Save</button>`,true);setTimeout(()=>$('#rn')&&$('#rn').focus(),50)}
+const validName=n=>/^[A-Za-z0-9_.]{3,16}$/.test(n);
+
+// ---------- lesson engine ----------
+let S=null;
+function startSession(kind,items,lesson){
+ if(kind==='lesson'&&effHearts()<=0){outOfHearts();return}
+ S={kind,lesson,queue:items.slice(),i:0,seen:new Set(),wrong:new Set(),first:0,qTotal:items.filter(q=>q.t!=='learn').length,fixed:0,state:'ask',sel:null,tries:{}};
+ renderStep();
+}
+function curQ(){return S.queue[S.i]}
+function renderStep(){
+ const q=curQ();const pct=Math.round(S.i/S.queue.length*100);
+ let main='';const k=S.kind==='lesson';
+ S.sel=null;S.state='ask';S.order=[];S.matchWrong=false;
+ if(q.t==='learn'){main=`<div class="learn"><div class="em">${q.emoji}</div><h2>${q.title}</h2>${q.body}</div>`}
+ else if(q.t==='mc'||q.t==='fix'){S.opts=shuffle(q.opts);const two=S.opts.length===2&&S.opts.every(o=>o.length<12);
+  main=`<div class="qtype">${q.t==='fix'?'🩹 Correct the false statement':'Choose the answer'}</div><p class="qtext">${q.q}</p><div class="opts ${two?'two':''}">${S.opts.map((o,i)=>`<button class="opt" data-opt="${i}">${two?'':`<span class="k">${i+1}</span>`}<span>${o}</span></button>`).join('')}</div>`}
+ else if(q.t==='tf'){S.opts=['True','False'];main=`<div class="qtype">True or false?</div><div class="tfbig">${q.q}</div><div class="opts two"><button class="opt" data-opt="0">✅ True</button><button class="opt" data-opt="1">❌ False</button></div>`}
+ else if(q.t==='type'){main=`<div class="qtype">Type your answer</div><p class="qtext">${q.q}</p><input class="txt" id="tyin" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type here…">`}
+ else if(q.t==='order'){S.bank=shuffle(q.items.map((t,i)=>({t,i})));if(S.bank.every((b,i)=>b.i===i))S.bank.reverse();
+  main=`<div class="qtype">Put in order</div><p class="qtext">${q.q}</p><div class="slot" id="slot"></div><div class="bank" id="bank">${S.bank.map((b,j)=>`<button class="tok" data-tok="${j}">${b.t}</button>`).join('')}</div>`}
+ else if(q.t==='match'){S.L=shuffle(q.pairs.map((p,i)=>({t:p[0],i})));S.R=shuffle(q.pairs.map((p,i)=>({t:p[1],i})));S.mdone=new Set();S.msel=null;
+  main=`<div class="qtype">Match the pairs</div><p class="qtext">${q.q}</p><div class="match"><div class="col">${S.L.map(x=>`<button class="mtile" data-ml="${x.i}">${x.t}</button>`).join('')}</div><div class="col">${S.R.map(x=>`<button class="mtile" data-mr="${x.i}">${x.t}</button>`).join('')}</div></div>`}
+ const btn=q.t==='learn'?`<button class="btn wide" id="go">Continue</button>`:q.t==='match'?`<button class="btn wide" id="go" disabled>Match all pairs</button>`:`<button class="btn ok wide" id="go" disabled>Check</button>`;
+ openOverlay(`<div class="full"><div class="inner"><div class="lhead"><button class="xbtn" data-act="quit" aria-label="Quit">✕</button><div class="prog"><div style="width:${pct}%"></div></div>${k?`<span class="hearts">❤️ ${effHearts()}</span>`:'<span class="hearts" style="color:var(--blue)">🏋️</span>'}</div>
+ <div style="flex:1">${main}</div><div class="foot" id="foot">${btn}</div></div></div>`);
+ if(q.t==='type'){const inp=$('#tyin');inp.focus();inp.addEventListener('input',()=>{$('#go').disabled=!inp.value.trim()})}
+}
+const norm=s=>String(s).toLowerCase().replace(/[’'`.,!?]/g,'').replace(/^the\s+/,'').replace(/\s+/g,' ').trim();
+function judge(){const q=curQ();
+ if(q.t==='mc'||q.t==='fix')return S.opts[S.sel]===q.opts[0];
+ if(q.t==='tf')return (S.sel===0)===q.a;
+ if(q.t==='type'){const v=norm($('#tyin').value);return q.acc.some(a=>norm(a)===v)}
+ if(q.t==='order')return S.order.length===q.items.length&&S.order.every((b,i)=>S.bank[b].i===i);
+ return false}
+function correctText(q){if(q.t==='mc'||q.t==='fix')return q.opts[0];if(q.t==='tf')return q.a?'True':'False';if(q.t==='type')return q.acc[0];if(q.t==='order')return q.items.join(' → ');return ''}
+function check(){const q=curQ();if(S.state!=='ask')return;
+ if(q.t==='learn'){next();return}
+ const ok=judge();S.state='fb';record(q,ok);
+ document.querySelectorAll('.opt,.tok,#tyin').forEach(b=>b.disabled=true);
+ if(q.t==='mc'||q.t==='fix'||q.t==='tf'){document.querySelectorAll('.opt').forEach(b=>{const i=+b.dataset.opt;const isRight=q.t==='tf'?((i===0)===q.a):S.opts[i]===q.opts[0];if(isRight)b.classList.add('right');else if(i===S.sel)b.classList.add('wrong')})}
+ showFeedback(ok,q)}
+function record(q,ok){
+ const firstTime=!S.seen.has(q.id);S.seen.add(q.id);
+ if(firstTime){me.stats.answered++;if(ok){me.stats.correct++;S.first++}}
+ if(ok){if(S.kind!=='lesson'&&me.mistakes.includes(q.id)){me.mistakes=me.mistakes.filter(x=>x!==q.id);S.fixed++}}
+ else{S.wrong.add(q.id);if(!me.mistakes.includes(q.id)){me.mistakes.push(q.id);if(me.mistakes.length>60)me.mistakes.shift()}
+  S.tries[q.id]=(S.tries[q.id]||0)+1;if(S.tries[q.id]<=2)S.queue.push(q);
+  if(S.kind==='lesson')loseHeart()}
+ sfx(ok?'ok':'bad')}
+function showFeedback(ok,q){const f=$('#foot');const praise=['Nice!','Great job!','Correct!','You got it!','Excellent!','Awesome!'];
+ f.className='foot '+(ok?'good':'badf');
+ f.innerHTML=`<div class="fb"><div class="ico">${ok?'✅':'❌'}</div><div><h4>${ok?praise[Math.random()*praise.length|0]:'Not quite'}</h4>${ok?'':`<div class="why"><b>Correct answer:</b> ${correctText(q)}</div>`}${q.why?`<div class="why">${q.why}</div>`:''}</div></div><button class="btn ${ok?'ok':'bad'} wide" id="go">Continue</button>`;
+ const h=document.querySelector('.lhead .hearts');if(h&&S.kind==='lesson')h.textContent='❤️ '+effHearts()}
+function next(){S.i++;if(S.i>=S.queue.length){finish();return}
+ if(S.kind==='lesson'&&effHearts()<=0){S._paused=true;outOfHearts(true);return}
+ renderStep()}
+function matchClick(side,i,el){
+ if(side==='l'){if(S.mdone.has(i))return;document.querySelectorAll('[data-ml]').forEach(b=>b.classList.remove('sel'));el.classList.add('sel');S.msel=i;sfx('tap');return}
+ if(S.msel===null){toast('Tap a left tile first');return}
+ if(S.mdone.has(i))return;
+ const L=document.querySelector(`[data-ml="${S.msel}"]`);
+ if(i===S.msel){S.mdone.add(i);L.classList.remove('sel');L.classList.add('done');el.classList.add('done');L.disabled=el.disabled=true;sfx('ok');S.msel=null;
+  if(S.mdone.size===S.L.length){const q=curQ();S.state='fb';record(q,!S.matchWrong);showFeedback(!S.matchWrong,q)}}
+ else{S.matchWrong=true;el.classList.add('shake');L.classList.add('shake');sfx('bad');setTimeout(()=>{el.classList.remove('shake');L.classList.remove('shake');L.classList.remove('sel')},380);S.msel=null}}
+function finish(){
+ const before=levelInfo(me.xp).L;const perfect=S.wrong.size===0;let xp=0,coins=0,stars=0;
+ if(S.kind==='lesson'){xp=S.first*10+5+(perfect?10:0);coins=5+(perfect?10:0);stars=perfect?3:S.wrong.size<=2?2:1;me.done[S.lesson.id]=Math.max(me.done[S.lesson.id]||0,stars);me.stats.lessons++;if(perfect)me.stats.perfect++}
+ else{xp=S.first*5+5;coins=2;addHearts(1);me.stats.fixed+=S.fixed}
+ me.xp+=xp;me.coins+=coins;
+ const t=todayStr();if(me.lastDay!==t){me.streak=me.lastDay===yesterdayStr()?me.streak+1:1;me.lastDay=t;me.best=Math.max(me.best,me.streak)}
+ const got=checkBadges(false);save();
+ const after=levelInfo(me.xp);const acc=S.qTotal?Math.round(S.first/S.qTotal*100):100;
+ sfx('win');confetti();
+ openOverlay(`<div class="full"><div class="inner end">${avatarSVG({...me.avatar,mouth:'grin',eyes:'happy'},140)}
+ <h1>${S.kind==='lesson'?(perfect?'Perfect lesson!':'Lesson complete!'):'Practice complete!'}</h1>
+ ${S.kind==='lesson'?`<div style="font-size:28px;letter-spacing:4px">${'⭐'.repeat(stars)+'☆'.repeat(3-stars)}</div>`:'<div class="muted">+1 ❤️ earned</div>'}
+ <div class="stats3"><div class="stat" style="border-color:var(--gold)"><div class="lab" style="background:var(--gold)">Total XP</div><div class="val" style="color:var(--goldD)">⚡ ${xp}</div></div><div class="stat" style="border-color:var(--ok)"><div class="lab" style="background:var(--ok)">Accuracy</div><div class="val" style="color:var(--okD)">🎯 ${acc}%</div></div><div class="stat" style="border-color:var(--blue)"><div class="lab" style="background:var(--blue)">Gems</div><div class="val" style="color:var(--blueD)">💎 ${coins}</div></div></div>
+ ${after.L>before?`<div class="card lvlup" style="width:100%;border-color:#c9bfff;background:#f6f3ff"><div class="ptitle" style="color:var(--pri)">LEVEL UP!</div>${elTile(after.L)}<div class="ptitle">You’re now ${after.el[1]}!</div><div class="small muted">Level ${after.L} — check Customize for new unlocks</div></div>`:''}
+ ${got.length?`<div class="card" style="width:100%"><div class="ptitle" style="margin-bottom:8px">🏅 New badge${got.length>1?'s':''}!</div>${got.map(b=>`<div class="row" style="justify-content:center;gap:8px;margin:4px 0"><span style="font-size:28px">${b.e}</span><b>${b.n}</b></div>`).join('')}</div>`:''}
+ <div style="flex:1"></div><button class="btn ok wide" data-act="endok">Continue</button></div></div>`);
+ S=null;
+}
+function outOfHearts(mid){
+ sheet(`<div style="text-align:center"><div class="big" style="font-size:60px">💔</div><div class="ptitle" style="font-size:22px">You’re out of hearts</div><p class="muted">Next heart in ${nextHeartIn()}. Practice earns hearts, or refill now.</p></div>
+ <button class="btn gold wide" data-act="refill2" ${me.coins<30?'disabled':''}>Refill hearts · 💎 30</button><div style="height:10px"></div>
+ <button class="btn blue wide" data-act="topractice">Practice to earn hearts</button><div style="height:10px"></div><button class="btn ghost wide" data-close-btn>${mid?'Quit lesson':'Not now'}</button>`,true)}
+function quickItems(){let pool=LESSONS.filter(l=>me.done[l.id]);if(!pool.length)pool=[LESSONS[0]];return shuffle(pool.flatMap(l=>l.items.filter(q=>q.t!=='learn'&&q.t!=='match'))).slice(0,10)}
+
+// ---------- flashcards ----------
+let FC=null;
+function startFlash(){FC={deck:shuffle(FLASHCARDS.map((c,i)=>i)),i:0,known:0,again:[],seen:0};renderFlash()}
+function renderFlash(){if(FC.i>=FC.deck.length){if(FC.again.length){FC.deck=FC.deck.concat(shuffle(FC.again));FC.again=[]}else return endFlash()}
+ const c=FLASHCARDS[FC.deck[FC.i]];const pct=Math.round(FC.i/FC.deck.length*100);
+ openOverlay(`<div class="full"><div class="inner"><div class="lhead"><button class="xbtn" data-act="fcquit">✕</button><div class="prog"><div style="width:${pct}%;background:var(--pri)"></div></div><span class="small muted">${FC.i+1}/${FC.deck.length}</span></div>
+ <div class="qtype">🃏 Flashcards · tap to flip</div><div class="fc" id="fc"><div class="in"><div class="face"><small>QUESTION</small>${c[0]}</div><div class="face back"><small>ANSWER</small>${c[1]}</div></div></div>
+ <div class="grid2"><button class="btn ghost" data-act="fcagain">😅 Still learning</button><button class="btn ok" data-act="fcgot">😎 Got it</button></div><p class="small muted" style="text-align:center">“Still learning” cards come back at the end.</p></div></div>`)}
+function fcAnswer(got){FC.seen++;if(got)FC.known++;else FC.again.push(FC.deck[FC.i]);FC.i++;sfx(got?'ok':'tap');renderFlash()}
+function endFlash(){me.stats.cards+=FC.seen;const xp=Math.min(30,5+Math.floor(FC.seen/3));me.xp+=xp;addHearts(1);
+ const t=todayStr();if(me.lastDay!==t){me.streak=me.lastDay===yesterdayStr()?me.streak+1:1;me.lastDay=t;me.best=Math.max(me.best,me.streak)}
+ const got=checkBadges(false);save();sfx('win');confetti();
+ openOverlay(`<div class="full"><div class="inner end">${avatarSVG({...me.avatar,eyes:'happy',mouth:'grin'},130)}<h1>Deck complete!</h1><p class="muted">${FC.seen} cards reviewed · +1 ❤️</p>
+ <div class="stats3"><div class="stat" style="border-color:var(--gold)"><div class="lab" style="background:var(--gold)">XP</div><div class="val" style="color:var(--goldD)">⚡ ${xp}</div></div></div>
+ ${got.length?`<div class="card" style="width:100%">${got.map(b=>`<div class="row" style="justify-content:center;gap:8px"><span style="font-size:28px">${b.e}</span><b>New badge: ${b.n}</b></div>`).join('')}</div>`:''}
+ <div style="flex:1"></div><button class="btn ok wide" data-act="endok">Continue</button></div></div>`);FC=null}
+
+// ---------- onboarding ----------
+let obBody='purple';
+function onboarding(suggest){
+ $('#app').innerHTML=`<div class="splash"><div id="obav">${avatarSVG({...DEFAULT_AV,body:obBody},150)}</div><h1>Chem Saver</h1><p class="muted" style="margin:0">Learn ${SUBJECT.name} · ${SUBJECT.chapter}: ${SUBJECT.topic}<br>one bite-sized lesson at a time.</p>
+ <div style="width:100%;max-width:360px;text-align:left"><div class="small muted" style="margin:10px 0 6px">Pick your atom buddy’s color</div><div class="row" style="flex-wrap:wrap;gap:8px">${AV.body.filter(o=>!o.price&&!o.lvl).map(o=>`<button data-obc="${o.id}" style="width:44px;height:44px;border-radius:50%;border:4px solid ${o.id===obBody?'var(--ink)':'#fff'};background:${o.c};cursor:pointer"></button>`).join('')}</div>
+ <div class="small muted" style="margin:14px 0 6px">Choose a username (friends will see it)</div><input class="txt" id="obname" maxlength="16" value="${esc(suggest||'')}" placeholder="e.g. atom_ace"><div class="small muted" style="margin-top:6px">3–16 letters, numbers, _ or .</div>
+ <div style="height:16px"></div><button class="btn ok wide" id="obgo">Let’s go!</button></div></div>`;
+}
+
+// ---------- events ----------
+document.addEventListener('click',e=>{
+ const t=e.target.closest('button,[data-prof],[data-badge]');if(!t)return;const d=t.dataset;
+ if(d.obc){obBody=d.obc;const nm=$('#obname').value;onboarding(nm);return}
+ if(t.id==='obgo'){const n=$('#obname').value.trim();if(!validName(n)){toast('Username must be 3–16 letters, numbers, _ or .');return}me=newPlayer(n,obBody);save();flush();render();toast('Welcome, '+n+'! 🎉');return}
+ if(d.go){view=d.go;editShowcase=false;if(document.querySelector('#overlay.on'))closeOverlay();checkBadges(true);render();scrollTo(0,0);return}
+ if(d.lesson){lessonSheet(d.lesson);return}
+ if(d.start){const l=LESSON[d.start];$('#overlay').className='';if(effHearts()<=0){outOfHearts();return}startSession('lesson',l.items,l);return}
+ if('closeBtn' in d){closeOverlay();return}
+ if(d.cat){shopCat=d.cat;render();return}
+ if(d.item){buyOrEquip(d.item);return}
+ if(d.buy){const o=AV[shopCat].find(x=>x.id===d.buy);if(o&&me.coins>=o.price){me.coins-=o.price;me.owned.push(shopCat+':'+o.id);me.avatar[shopCat]=o.id;checkBadges(true);save();sfx('win');closeOverlay();toast('New look unlocked! ✨')}return}
+ if(d.badge){toggleShowcase(d.badge);return}
+ if(d.add){if(readOnly)return;addFriend(d.add);refreshSocial();return}
+ if(d.accept){if(readOnly)return;addFriend(d.accept);refreshSocial();return}
+ if(d.decline){declineReq(d.decline);refreshSocial();return}
+ if(d.cancel){cancelReq(d.cancel);refreshSocial();return}
+ if(d.unfriend){unfriend(d.unfriend);refreshSocial();return}
+ if(d.prof&&!e.target.closest('[data-add],[data-accept],[data-decline],[data-cancel]')){profileSheet(d.prof);return}
+ if(d.opt!==undefined&&S&&S.state==='ask'){document.querySelectorAll('.opt').forEach(b=>b.classList.remove('sel'));t.classList.add('sel');S.sel=+d.opt;$('#go').disabled=false;sfx('tap');return}
+ if(d.tok!==undefined&&S&&S.state==='ask'){const j=+d.tok;if(t.parentElement.id==='bank'){S.order.push(j);t.classList.add('used');const b=document.createElement('button');b.className='tok';b.dataset.tok=j;b.textContent=S.bank[j].t;$('#slot').appendChild(b)}else{S.order=S.order.filter(x=>x!==j);t.remove();document.querySelector(`#bank [data-tok="${j}"]`).classList.remove('used')}$('#go').disabled=S.order.length!==S.bank.length;sfx('tap');return}
+ if(d.ml!==undefined&&S&&S.state==='ask'){matchClick('l',+d.ml,t);return}
+ if(d.mr!==undefined&&S&&S.state==='ask'){matchClick('r',+d.mr,t);return}
+ if(t.id==='go'&&S){if(S.state==='ask')check();else next();return}
+ const a=d.act;if(!a)return;
+ if(a==='quit'){sheet(`<div style="text-align:center"><div class="big" style="font-size:54px">🥺</div><div class="ptitle" style="font-size:20px">Wait, don’t go!</div><p class="muted">You’ll lose this ${S&&S.kind==='lesson'?'lesson’s':'session’s'} progress if you quit now.</p></div><button class="btn wide" data-act="resume">Keep learning</button><div style="height:10px"></div><button class="btn ghost wide" data-act="reallyquit" style="color:var(--bad)">End session</button>`,true);S._paused=true;return}
+ if(a==='resume'){renderStepKeep();return}
+ if(a==='reallyquit'){save();closeOverlay();return}
+ if(a==='endok'){closeOverlay();return}
+ if(a==='mistakes'){startSession('practice',shuffle(me.mistakes.map(id=>QMAP[id]).filter(Boolean)).slice(0,12));return}
+ if(a==='quick'){startSession('practice',quickItems());return}
+ if(a==='flash'){startFlash();return}
+ if(a==='fcgot'){fcAnswer(true);return}if(a==='fcagain'){fcAnswer(false);return}
+ if(a==='fcquit'){if(FC&&FC.seen){me.stats.cards+=FC.seen;checkBadges(true);save()}FC=null;closeOverlay();return}
+ if(a==='refill'||a==='refill2'){if(me.coins<30){toast('You need 30 💎');return}me.coins-=30;me.hearts=5;me.heartsAt=Date.now();save();sfx('win');toast('Hearts refilled ❤️');if(a==='refill2'){const keep=S;$('#overlay').className='';if(keep){S=keep;renderStepKeep()}else closeOverlay()}else render();return}
+ if(a==='topractice'){S=null;view='practice';closeOverlay();return}
+ if(a==='heartinfo'){sheet(`<div class="ptitle">❤️ Hearts: ${effHearts()}/5</div><p class="muted">You lose a heart for each mistake in a lesson. Hearts refill 1 every 20 min${effHearts()<5?' (next in '+nextHeartIn()+')':''}. Practice sessions and flashcards earn hearts back!</p><button class="btn blue wide" data-go="practice">Go practice</button>`);return}
+ if(a==='streakinfo'){sheet(`<div class="ptitle">🔥 ${shownStreak(me)} day streak</div><p class="muted">Finish a lesson, practice, or flashcard deck every day to keep your streak going. Best: ${me.best} days.</p><button class="btn ghost wide" data-close-btn>OK</button>`);return}
+ if(a==='editshow'){editShowcase=!editShowcase;render();return}
+ if(a==='rename'){renameSheet();return}
+ if(a==='dorename'){const n=$('#rn').value.trim();if(!validName(n)){toast('3–16 letters, numbers, _ or .');return}me.username=n;save();closeOverlay();toast('Username updated');return}
+ if(a==='sound'){me.sound=!me.sound;save();render();return}
+});
+function renderStepKeep(){// redraw current question without re-shuffling state loss: re-render step fresh
+ if(!S)return closeOverlay();S._paused=false;renderStep()}
+function refreshSocial(){if($('#overlay.on')&&!S)closeOverlay();else render();const q=$('#fsearch');if(q&&q.value)searchPlayers(q.value)}
+document.addEventListener('input',e=>{if(e.target.id==='fsearch')searchPlayers(e.target.value)});
+document.addEventListener('click',e=>{if(e.target.closest('#fc'))e.target.closest('#fc').classList.toggle('flip')});
+document.addEventListener('keydown',e=>{
+ if(FC&&$('#fc')){if(e.key===' '){e.preventDefault();$('#fc').classList.toggle('flip')}if(e.key==='ArrowRight'||e.key==='2')fcAnswer(true);if(e.key==='ArrowLeft'||e.key==='1')fcAnswer(false);return}
+ if(!S||S._paused)return;const go=$('#go');
+ if(e.key==='Enter'&&go&&!go.disabled){e.preventDefault();go.click();return}
+ if(S.state==='ask'&&/^[1-9]$/.test(e.key)&&document.activeElement.id!=='tyin'){const b=document.querySelector(`.opt[data-opt="${+e.key-1}"]`);if(b)b.click()}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id==='obname')$('#obgo').click();if(e.key==='Enter'&&e.target.id==='rn')document.querySelector('[data-act="dorename"]').click()});
+
+// ---------- boot ----------
+(async function boot(){
+ $('#app').innerHTML=`<div class="splash">${avatarSVG(DEFAULT_AV,130)}<h1>Chem Saver</h1><p class="muted">Loading your lab…</p></div>`;
+ await Promise.race([initBackend(),new Promise(r=>setTimeout(r,10000))]);
+ let data=null,fromCloud=false;
+ if(mode==='cloud'){try{const snap=await Promise.race([DB.doc('players/'+UID).get(),new Promise((_,rej)=>setTimeout(()=>rej({code:'timeout'}),10000))]);if(snap.exists){data=snap.data();fromCloud=true}}catch(e){}
+  if(!data)data=lsGet();subscribePlayers()}
+ else data=lsGet();
+ if(data){me=normalize(data);if(fromCloud)lastSaved=JSON.stringify(me);checkBadges(false);render();if(mode==='cloud')save()}
+ else onboarding('');
+})();
+setInterval(()=>{if(me&&!document.querySelector('#overlay.on')&&(view==='practice'))render()},30000);
+</script></body></html>
