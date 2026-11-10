@@ -486,6 +486,198 @@ const FLASHCARDS=[
 ['EN difference ranges for bond types?','0–0.3 nonpolar covalent · 0.3–1.7 polar covalent · above 1.7 ionic.'],
 ];
 
+// ===== NEW SECTION: Bauer Periodicity slides · Unit Test Review =====
+const SECTION2={name:'Unit Test Review',from:'Bauer Periodicity slides',emoji:'📊'};
+UNITS.push(
+{id:'u10',section:SECTION2,title:'History Detectives',desc:'Döbereiner, Newlands, Mendeleev & Moseley',color:'#8e44ad',dark:'#6c3483',lessons:[
+ {id:'u10l1',title:'Triads & Octaves',items:[
+  LN('Döbereiner’s triads','🔺','<b>Johann Döbereiner</b> (1780–1849) noticed that <b>Ca, Ba and Sr</b> had very similar properties.<br><br>He grouped elements in sets of three called <b>triads</b>: Ca–Ba–Sr, Cl–I–Br, S–Te–Se.<br><br>Triads are most like our <b>groups</b> (columns).'),
+  LN('Newlands’ octaves','🎹','<b>John Newlands</b> (1835–1895) arranged elements by increasing <b>atomic mass</b> in rows of <b>seven</b>, so every 8th element repeated properties — the <b>Law of Octaves</b>.<br><br>Li Be B C N O F<br>Na Mg Al Si P S Cl<br><br>Octaves are most like our <b>periods</b> (rows).'),
+  mc('Who arranged the elements into triads?',['Döbereiner','Newlands','Mendeleev','Moseley'],'Döbereiner grouped similar elements in threes.'),
+  mc('Who arranged the elements into octaves?',['Newlands','Döbereiner','Moseley','Mendeleev'],'Newlands — the Law of Octaves.'),
+  mc('Are Döbereiner’s triads more like our groups or periods?',['Groups','Periods'],'A triad holds similar elements — like a column.'),
+  mc('Are Newlands’ octaves more like our groups or periods?',['Periods','Groups'],'Each octave is a row of elements.'),
+  mc('Which three metals did Döbereiner find had very similar properties?',['Ca, Ba, Sr','Na, Cl, Ar','Fe, Cu, Al','H, He, Li'],'Ca, Ba and Sr — a triad.'),
+  mc('Newlands arranged elements in order of increasing…',['atomic mass','atomic number','electronegativity','atomic radius'],'Like Mendeleev, he used atomic mass.'),
+  mt('Match each scientist to their idea.',[['Döbereiner','Triads'],['Newlands','Octaves'],['Mendeleev','Atomic mass + gaps'],['Moseley','Atomic number']]),
+ ]},
+ {id:'u10l2',title:'Mendeleev’s Predictions',items:[
+  LN('Mendeleev gets the credit','📜','<b>Dmitri Mendeleev</b> (1834–1907) is given credit for our modern periodic table.<br><br>• Arranged elements by increasing <b>atomic mass</b><br>• Grouped elements with similar properties<br>• Left <b>empty spaces</b> for undiscovered elements and <b>predicted their properties</b>'),
+  LN('The eka-elements','🔮','Mendeleev predicted three missing elements:<br><br>• <b>Eka-aluminum</b> → <b>gallium</b> (1875)<br>• <b>Eka-boron</b> → <b>scandium</b> (1877)<br>• <b>Eka-silicon</b> → <b>germanium</b> (1886)<br><br>Their observed properties closely matched his predictions!'),
+  mc('Why is Mendeleev given credit for the periodic table?',['He grouped similar elements and predicted undiscovered ones','He discovered the proton','He measured atomic numbers with X-rays','He invented the octet rule'],'His gaps + predictions proved the table worked.'),
+  mc('What did Mendeleev do when an element seemed to be missing?',['Left an empty space and predicted its properties','Skipped it and moved on','Put a noble gas there','Moved iodine into the gap'],'He left gaps on purpose.'),
+  mc('Mendeleev’s “eka-aluminum” turned out to be…',['gallium','scandium','germanium','boron'],'Discovered in 1875.'),
+  mc('Mendeleev’s “eka-silicon” turned out to be…',['germanium','gallium','tin','scandium'],'Discovered in 1886.'),
+  mc('Mendeleev’s “eka-boron” turned out to be…',['scandium','gallium','germanium','aluminum'],'Discovered in 1877.'),
+  mt('Match the prediction to the real element.',[['Eka-aluminum','Gallium'],['Eka-boron','Scandium'],['Eka-silicon','Germanium'],['Predicted by','Mendeleev']]),
+ ]},
+ {id:'u10l3',title:'Moseley & the Periodic Function',items:[
+  LN('Moseley','🔬','<b>Henry Moseley</b> did experiments to find the <b># of protons</b> in each element and called it the <b>atomic number</b>.<br><br>He rearranged the table by <b>atomic number, not atomic mass</b> — and now there were <b>no exceptions</b>.'),
+  LN('Periodic function','📈','Periodic law: “The physical and chemical properties of the elements are <b>periodic functions</b> of their atomic number.”<br><br>• <b>Periodic</b> = occurring at regular intervals<br>• <b>Function</b> = quality, trait, or characteristic<br><br>So: arranged by atomic number, <b>similar properties appear at regular intervals</b>.'),
+  mc('Moseley called the number of protons in an atom the…',['atomic number','atomic mass','mass number','period number'],'# of protons = atomic number.'),
+  mc('In the periodic law, “periodic” means…',['occurring at regular intervals','happening only once','random','related to periods of time only'],'Regular intervals.'),
+  mc('In the periodic law, “function” means…',['a quality, trait, or characteristic','a math formula only','a type of bond','an energy level'],'Function = trait/characteristic.'),
+  mc('After Moseley’s change, how many exceptions were there in element order?',['None','A few, like iodine','Every transition metal','All noble gases'],'Ordering by atomic number fixed them all.'),
+  mc('Why are the lanthanide and actinide series pulled out of the main table?',['The table would be too wide otherwise','They are not real elements','They are all gases','They have no electrons'],'Just to save space!'),
+  mc('What is the name of the 4f series?',['Lanthanides','Actinides','Halogens','Transition metals'],'4f = lanthanides.'),
+  mc('What is the name of the 5f series?',['Actinides','Lanthanides','Alkali metals','Metalloids'],'5f = actinides.'),
+  fix('FALSE: “Moseley rearranged elements by atomic mass.” Pick the correction.',['He rearranged them by atomic number (# of protons).','He rearranged them by color.','He arranged them in triads.','He arranged them in octaves.'],'Write down MOSELEY = atomic number!'),
+ ]},
+]},
+{id:'u11',section:SECTION2,title:'Properties Deep Dive',desc:'Metals vs. nonmetals vs. semimetals',color:'#16a085',dark:'#117a65',lessons:[
+ {id:'u11l1',title:'Metal vs. Nonmetal Checklist',items:[
+  LN('Properties of metals','🔩','a. <b>Low</b> ionization energy<br>b. <b>Low</b> electronegativity<br>c. <b>High</b> luster<br>d. Malleable and ductile<br>e. Good conductor of heat & electricity<br>f. <b>Solid</b> at room temp — except <b>mercury (Hg)</b><br>g. <b>Loses</b> electrons → positive ions'),
+  LN('Properties of nonmetals','💨','a. <b>High</b> ionization energy<br>b. <b>High</b> electronegativity<br>c. <b>Low</b> luster<br>d. <b>Brittle</b><br>e. Poor conductor of heat & electricity<br>f. <b>Gas or solid</b> at room temp — except <b>bromine (Br)</b><br>g. <b>Gains</b> electrons → negative ions'),
+  mc('Metals have ___ ionization energy and ___ electronegativity.',['low, low','high, high','low, high','high, low'],'Metals give electrons away easily.'),
+  mc('Nonmetals have ___ ionization energy and ___ electronegativity.',['high, high','low, low','high, low','low, high'],'Nonmetals hold on to electrons tightly.'),
+  mc('Which metal is NOT a solid at room temperature?',['Mercury (Hg)','Iron (Fe)','Copper (Cu)','Sodium (Na)'],'Mercury is a liquid metal.'),
+  mc('What state are metals most likely to be found in?',['Solid','Liquid','Gas'],'All metals except Hg are solids.'),
+  mc('Where can you find a poor conductor?',['Nonmetals','Metals','Semimetals only'],'Nonmetals are poor conductors.'),
+  mc('Which group is composed of only gases?',['Noble gases','Halogens','Alkali metals','Alkaline earth metals'],'Group 18 — all gases.'),
+  mc('Which property does NOT describe a nonmetal?',['High luster','Brittle','Poor conductor','Gains electrons'],'Nonmetals have LOW luster.'),
+  mt('Match each to its fact.',[['Metals','Low ionization energy'],['Nonmetals','High electronegativity'],['Mercury','Liquid metal'],['Bromine','Liquid nonmetal']]),
+ ]},
+ {id:'u11l2',title:'Semimetals & Real Uses',items:[
+  LN('Semimetals','🪜','<b>Semimetals = metalloids</b><br>• Touch the <b>step divider</b> between metals and nonmetals<br>• <b>7 elements</b> total<br>• Characteristics of <b>both</b> metals and nonmetals<br><br>Mix a little <b>boron</b> into <b>silicon</b> and it becomes a good conductor. Silicon wafers make <b>computer chips</b>!'),
+  LN('Metals at work','🏗️','<b>Iron</b> → steel. The Gateway Arch is stainless steel: iron + chromium + nickel — shiny, malleable, strong, and it resists rusting.<br><br><b>Copper</b> → electrical wires (great conductor).<br><br><b>Aluminum</b> → foil and cans (light, malleable).'),
+  mc('How many elements are semimetals (metalloids)?',['7','3','12','80'],'7 elements touch the step line.'),
+  mc('Mixing a small amount of boron with silicon makes the mixture…',['a good conductor of electric current','a noble gas','a liquid metal','an ionic compound'],'That’s how semiconductors work.'),
+  mc('Silicon can be cut into wafers to make…',['computer chips','aluminum foil','copper wire','table salt'],'Silicon → chips.'),
+  mc('Stainless steel (like the Gateway Arch) is mostly iron mixed with…',['chromium and nickel','sodium and chlorine','helium and neon','carbon dioxide'],'Cr + Ni help it resist rust.'),
+  mc('Which metal is used most for electrical wires?',['Copper','Iron','Mercury','Sodium'],'Copper is an excellent conductor.'),
+  mc('Nitrogen and phosphorus are nonmetals. Arsenic and antimony are…',['metalloids','alkali metals','noble gases','transition metals'],'As and Sb sit on the step line. Bismuth is a metal.'),
+  tf('Semimetals have characteristics of both metals and nonmetals.',true,'That’s why they’re “semi.”'),
+ ]},
+]},
+{id:'u12',section:SECTION2,title:'Charges & Electron Configs',desc:'Valence electrons, ion charges & sublevels',color:'#d35400',dark:'#a04000',lessons:[
+ {id:'u12l1',title:'Ion Charges by Group',items:[
+  LN('The charge table','➕','<table class="trend"><tr><th>Group</th><th>Val e⁻</th><th>Charge</th></tr><tr><td>1</td><td>1</td><td>+1 (lose 1)</td></tr><tr><td>2</td><td>2</td><td>+2 (lose 2)</td></tr><tr><td>3</td><td>3</td><td>+3 (lose 3)</td></tr><tr><td>4</td><td>4</td><td>±4 (lose/gain 4)</td></tr><tr><td>5</td><td>5</td><td>−3 (gain 3)</td></tr><tr><td>6</td><td>6</td><td>−2 (gain 2)</td></tr><tr><td>7</td><td>7</td><td>−1 (gain 1)</td></tr><tr><td>8</td><td>8</td><td>0</td></tr></table><br><b>+ = lose e⁻ → cation (smaller)</b><br><b>− = gain e⁻ → anion (bigger)</b>'),
+  mc('What charge do Group 1 elements usually form?',['+1','−1','+2','0'],'They lose 1 electron.'),
+  mc('What charge do Group 6 (6A) elements usually form?',['−2','+6','+2','−6'],'They gain 2 electrons to reach 8.'),
+  mc('What charge do Group 5 (5A) elements usually form?',['−3','+5','+3','−5'],'Gain 3 → −3.'),
+  mc('What charge do Group 3 (3A) elements like Al usually form?',['+3','−3','+5','0'],'Lose 3 → +3.'),
+  mc('What charge do noble gases (Group 8) have?',['0','+8','−8','+1'],'They already have 8 — no need to change.'),
+  mc('Group 4 elements like carbon can…',['lose or gain 4 (±4)','only lose 1','only gain 1','never bond'],'Halfway to 8 either way.'),
+  mc('A + charge means the atom…',['lost electrons and formed a cation','gained electrons and formed an anion','gained protons','lost protons'],'Lose e⁻ → positive.'),
+  ty('How many electrons do all elements want in their outer level to be stable? (number)',['8','eight'],'The octet rule: eight.'),
+  mt('Match the group to its usual ion.',[['Group 1','+1'],['Group 2','+2'],['Group 6','−2'],['Group 7','−1']]),
+ ]},
+ {id:'u12l2',title:'Electron Configurations',items:[
+  LN('Reading configurations','🧩','Fill sublevels in order: 1s 2s 2p 3s 3p 4s 3d 4p…<br><br>• Carbon (6 e⁻): <b>1s² 2s² 2p²</b><br>• Sodium: …<b>3s¹</b> · Magnesium: …<b>3s²</b><br>• Aluminum: …3s² <b>3p¹</b> · Chlorine: …3s² <b>3p⁵</b><br><br>Check: the superscripts add up to the <b>atomic number</b>.'),
+  LN('Noble gas configs','🎈','He: 1s²<br>Ne: 1s² 2s² <b>2p⁶</b><br>Ar: 1s² 2s² 2p⁶ 3s² <b>3p⁶</b><br>Kr: …4s² 3d¹⁰ <b>4p⁶</b><br><br>Full s and p sublevels → stable and unreactive.'),
+  mc('Which is the electron configuration of carbon (6 electrons)?',['1s² 2s² 2p²','1s² 2s² 2p⁶','1s² 2s⁴','1s² 2p⁴'],'2 + 2 + 2 = 6.'),
+  mc('How can you check that an electron configuration is correct?',['The superscripts add up to the atomic number','The coefficients add up to 8','It always ends in p⁶','It has exactly 3 sublevels'],'Add the superscripts.'),
+  mc('Which ending belongs to sodium?',['3s¹','3s²','3p¹','2p⁶'],'Na is Group 1, Period 3.'),
+  mc('Which ending belongs to chlorine?',['3s² 3p⁵','3s² 3p⁶','3s¹','3s² 3p¹'],'Cl has 7 valence electrons.'),
+  mc('Which noble gas is 1s² 2s² 2p⁶?',['Neon','Helium','Argon','Krypton'],'10 electrons = Ne.'),
+  mc('Vanadium is a transition metal. Its highest occupied sublevel being filled is a…',['d sublevel (3d)','p sublevel','f sublevel','s sublevel only'],'Transition metals fill d sublevels.'),
+  mc('Core electrons are…',['electrons not in the highest energy level','the valence electrons','protons in the core','electrons that are shared'],'Core = kernel electrons.'),
+  mc('A metal has a huge jump between its 2nd and 3rd ionization energies. What ion does it form?',['2+','1+','3+','2−'],'After 2 electrons are gone, the next one is a core electron — much harder to remove.'),
+ ]},
+]},
+{id:'u13',section:SECTION2,title:'Radius & Ion Drills',desc:'Worksheet pairs: which is bigger?',color:'#27ae60',dark:'#1e8449',lessons:[
+ {id:'u13l1',title:'Bigger Atom?',items:[
+  LN('Speed rule','📏','Bigger atom = <b>lower</b> on the table and <b>farther left</b>.<br><br>Down a group: more energy levels, more shielding → <b>bigger</b>.<br>Across a period: more protons pull e⁻ in, same energy level → <b>smaller</b>.'),
+  mc('Larger atomic radius?',['K','Li'],'K is lower in Group 1.'),
+  mc('Larger atomic radius?',['Ca','Ni'],'Same period; Ca is farther left.'),
+  mc('Larger atomic radius?',['Ga','B'],'Ga is lower in the group.'),
+  mc('Larger atomic radius?',['C','O'],'Same period; C is farther left.'),
+  mc('Larger atomic radius?',['Br','Cl'],'Br is below Cl.'),
+  mc('Larger atomic radius?',['Ba','Be'],'Ba is way down Group 2.'),
+  mc('Larger atomic radius?',['Si','S'],'Same period; Si is farther left.'),
+  mc('Larger atomic radius?',['Au','Fe'],'Au is in period 6, Fe in period 4.'),
+  mc('Why do atoms get smaller left to right in a period?',['More nuclear charge pulls e⁻ closer; no new energy levels','More energy levels','More shielding','Fewer protons'],'Same level, stronger pull.'),
+ ]},
+ {id:'u13l2',title:'Ions & Radius Types',items:[
+  LN('Three kinds of radius','📐','<b>Covalent radius</b>: ½ the distance between nuclei in a covalent bond (Cl₂: 198 ÷ 2 = 99 pm).<br><br><b>Van der Waals radius</b>: ½ the distance between nuclei of identical atoms that formed <b>no bond</b> (He: 31 pm).<br><br><b>Metallic radius</b>: ½ the distance between two nuclei in a <b>crystalline metal</b> (Mg: 160 pm).'),
+  LN('Ion size rule','🎈','<b>(−) ion radii &gt; neutral atom radii &gt; (+) ion radii</b><br><br>Cations: lose e⁻ → <b>smaller</b>.<br>Anions: gain e⁻ → <b>bigger</b>.'),
+  mc('Which radius is ½ the distance between nuclei of identical atoms that have formed NO bond?',['Van der Waals radius','Covalent radius','Metallic radius','Ionic radius'],'Like two helium atoms.'),
+  mc('Which radius is measured in a crystalline metal?',['Metallic radius','Van der Waals radius','Covalent radius','Nuclear radius'],'Like two Mg atoms in a metal.'),
+  mc('Larger radius?',['Na','Na⁺'],'Cations are smaller.'),
+  mc('Larger radius?',['S²⁻','S'],'Anions are larger.'),
+  mc('Larger radius?',['I⁻','I'],'Anions are larger.'),
+  mc('Larger radius?',['Al','Al³⁺'],'Cations are smaller.'),
+  ord('Order from SMALLEST to LARGEST radius.',['Mg²⁺','Mg'],'The cation is smaller.'),
+  mc('Which correctly ranks sizes?',['anion > neutral atom > cation','cation > neutral atom > anion','neutral atom > anion > cation','all the same'],'(−) > neutral > (+).'),
+  mc('Explain: how does an ion’s charge relate to its size compared to its atom?',['Positive ions are smaller; negative ions are larger','Positive ions are larger; negative ions are smaller','Charge has no effect','All ions are bigger'],'Losing e⁻ shrinks, gaining e⁻ grows.'),
+ ]},
+]},
+{id:'u14',section:SECTION2,title:'IE & EN Drills',desc:'Compare values & do the EN math',color:'#2980b9',dark:'#1f618d',lessons:[
+ {id:'u14l1',title:'Higher Ionization Energy?',items:[
+  LN('Speed rule','🔋','Higher IE = <b>higher up</b> and <b>farther right</b>.<br><br>Down a group IE <b>decreases</b> (more distance + shielding).<br>Across a period IE <b>increases</b> (more nuclear charge, shielding stays constant).'),
+  mc('Larger ionization energy?',['O','Na'],'O is farther right and higher.'),
+  mc('Larger ionization energy?',['Be','Ba'],'Be is at the top of Group 2.'),
+  mc('Larger ionization energy?',['Cu','Ra'],'Ra is huge and far down.'),
+  mc('Larger ionization energy?',['Ne','I'],'Ne is top-right.'),
+  mc('Larger ionization energy?',['V','K'],'Same period; V is farther right.'),
+  mc('Larger ionization energy?',['Ca','Fr'],'Fr is the most active metal — lowest IE.'),
+  mc('Larger ionization energy?',['Se','W'],'Se is higher and farther right.'),
+  ord('Arrange in order of INCREASING ionization energy.',['Sr','Mg','Be'],'Down Group 2 IE decreases, so Sr is lowest.'),
+  ord('Arrange in order of INCREASING ionization energy.',['Cs','Ba','Bi'],'Across period 6, IE increases.'),
+  ord('Arrange in order of INCREASING ionization energy.',['Na','Al','S'],'Across period 3, IE increases.'),
+ ]},
+ {id:'u14l2',title:'Electronegativity Math',items:[
+  LN('Higher EN?','🧲','EN: <b>decreases down</b> a group, <b>increases across</b> a period.<br><br>Values to know: <b>H = 2.1 · Cl = 3.0 · O = 3.5 · Na = 0.9</b><br><br>Subtract (bigger − smaller):<br>0–0.3 nonpolar · 0.3–1.7 polar · above 1.7 ionic'),
+  LN('Electron affinity & shielding','📊','<b>Electron affinity</b>: increases across a period, decreases down a group (same pattern as EN).<br><br><b>Shielding effect</b>: increases down a group, stays <b>constant</b> across a period.'),
+  mc('Higher electronegativity?',['F','Cl'],'F is above Cl.'),
+  mc('Higher electronegativity?',['N','C'],'N is farther right.'),
+  mc('Higher electronegativity?',['As','Ca'],'As is farther right in period 4.'),
+  mc('Is Na or S more attracted to its electrons?',['S','Na'],'More protons, same energy level.'),
+  mc('Is O or F more attracted to its electrons?',['F','O'],'F has more nuclear charge.'),
+  mc('H = 2.1 and Cl = 3.0. What is the EN difference in HCl?',['0.9','5.1','2.1','0.3'],'3.0 − 2.1 = 0.9 → polar covalent.'),
+  mc('H = 2.1 and O = 3.5. What is the EN difference in H₂O, and what bond is it?',['1.4, polar covalent','1.4, ionic','5.6, ionic','0.3, nonpolar'],'1.4 is between 0.3 and 1.7.'),
+  mc('Na = 0.9 and Cl = 3.0. What is the EN difference in NaCl, and what bond is it?',['2.1, ionic','2.1, polar covalent','3.9, nonpolar','0.9, polar'],'2.1 > 1.7 → ionic.'),
+  mc('Cl = 3.0 and Cl = 3.0. What bond is in Cl₂?',['Nonpolar covalent (difference 0)','Ionic','Polar covalent','Metallic'],'Equal sharing.'),
+  mc('Going across a period, the shielding effect…',['stays constant','increases','decreases','doubles'],'No new energy levels across a row.'),
+  mc('Electron affinity going across a period…',['increases','decreases','stays constant'],'Same direction as electronegativity.'),
+ ]},
+]},
+{id:'u15',section:SECTION2,title:'Unit Test Warm-Ups',desc:'Warm-up fill-ins + final mixed review',color:'#c0392b',dark:'#922b21',lessons:[
+ {id:'u15l1',title:'Warm-Up Fill-Ins',items:[
+  LN('Warm-up recap','✏️','“The electrons in the outermost energy level are called <b>valence</b> electrons. These are <b>shared</b> in a covalent bond. In an <b>ionic</b> bond they are <b>transferred</b>. When metals <b>lose</b> electrons they become <b>cations</b>. When nonmetals <b>gain</b> electrons they become <b>anions</b>. All elements want <b>eight</b>.”'),
+  ty('The electrons in the outermost energy level are called ______ electrons.',['valence'],'Valence electrons.'),
+  mc('Valence electrons are ______ in a covalent bond.',['shared','transferred','destroyed','ignored'],'Covalent = sharing.'),
+  mc('In an ionic bond, valence electrons are ______.',['transferred','shared evenly','shared unevenly','doubled'],'Ionic = transfer.'),
+  mc('When metals ______ electrons, they become positive ions called ______.',['lose; cations','gain; anions','lose; anions','gain; cations'],'Lose → cations.'),
+  mc('When nonmetals ______ electrons, they become negative ions called ______.',['gain; anions','lose; cations','gain; cations','lose; anions'],'Gain → anions.'),
+  mc('Ionization energy measures how much energy it takes to ______ an electron from an ______.',['remove; atom','add; atom','remove; nucleus','add; ion'],'Remove from an atom.'),
+  mc('As energy levels increase, ionization energy ______ because of more distance and shielding.',['decreases','increases','stays constant'],'Down a group IE decreases.'),
+  mc('Going across a period, shielding ______ but ionization energy ______ with more nuclear charge.',['stays constant; increases','increases; decreases','decreases; increases','increases; increases'],'Constant shielding, bigger pull.'),
+  ty('This explains why ______ is the most active metal.',['francium','fr'],'Francium: lowest IE.'),
+ ]},
+ {id:'u15l2',title:'Unit Test Final Boss',items:[
+  mc('Who arranged the periodic table in order of increasing atomic number?',['Moseley','Mendeleev','Newlands','Döbereiner'],'Moseley.'),
+  mc('Most reactive nonmetal?',['F','Fr','He','O'],'Fluorine.'),
+  mc('Which correctly lists the trend for electronegativity?',['Decreases down, increases across','Increases down, decreases across','Increases down and across','Constant everywhere'],'Down ↓, across ↑.'),
+  mc('Larger atomic radius?',['Ba','Be'],'Lower in the group.'),
+  mc('Larger ionization energy?',['Ne','I'],'Top-right.'),
+  mc('Larger radius?',['S²⁻','S'],'Anion is bigger.'),
+  mc('Group 7 elements usually form ions with charge…',['−1','+7','+1','−7'],'Gain 1.'),
+  mc('Which is a property of nonmetals?',['High electronegativity','Low ionization energy','High luster','Malleable'],'Nonmetals pull electrons strongly.'),
+  mc('Newlands’ octaves are most like our…',['periods','groups'],'Rows.'),
+  mc('NaCl has an EN difference of 2.1. The bond is…',['ionic','polar covalent','nonpolar covalent'],'Above 1.7.'),
+  ord('Arrange in order of INCREASING atomic radius.',['S','Si','Na'],'Across period 3 radius decreases, so Na is biggest.'),
+  tf('Shielding increases down a group and stays constant across a period.',true,'Exactly.'),
+ ]},
+]});
+
+FLASHCARDS.push(
+['Who arranged the elements into triads?','Döbereiner.'],
+['Are Döbereiner’s triads more like our groups or periods?','Groups.'],
+['Who arranged the elements into octaves?','Newlands.'],
+['Are Newlands’ octaves more like our groups or periods?','Periods.'],
+['Where can you find a poor conductor (metal, nonmetal, semimetal)?','Nonmetals.'],
+['What group is composed of only gases?','Noble gases.'],
+['What is the name of the 4f series?','Lanthanides.'],
+['What is the name of the 5f series?','Actinides.'],
+['What state are metals most likely to be found in?','Solid (except mercury).'],
+['Is Na or S more attracted to its electrons?','S.'],
+['Is O or F more attracted to its electrons?','F.'],
+['How does the shielding effect change down a group and across a period?','Increases down a group; stays constant across a period.'],
+['Why are the lanthanides and actinides pulled out of the table?','The periodic table would be too wide otherwise!'],
+['How many elements are semimetals?','7 — the ones touching the stair-step line.'],
+);
+
 // ===== Chem Saver app =====
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -571,7 +763,7 @@ function avatarSVG(a,size=96){
 }
 
 // ---------- badges ----------
-const UNIT_BADGES={u1:['📜','Mendeleev’s Apprentice'],u2:['🔩','Metal Detector'],u3:['👨‍👩‍👧','Family Reunion'],u4:['🛡️','Shield Up'],u5:['📏','Size Matters'],u6:['➕','Ion Maker'],u7:['🔋','Energy Thief'],u8:['🧲','Electron Hog'],u9:['🏆','Quiz Ready']};
+const UNIT_BADGES={u1:['📜','Mendeleev’s Apprentice'],u2:['🔩','Metal Detector'],u3:['👨‍👩‍👧','Family Reunion'],u4:['🛡️','Shield Up'],u5:['📏','Size Matters'],u6:['➕','Ion Maker'],u7:['🔋','Energy Thief'],u8:['🧲','Electron Hog'],u9:['🏆','Quiz Ready'],u10:['🕵️','History Detective'],u11:['💻','Chip Maker'],u12:['🧩','Config Master'],u13:['🔍','Size Spotter'],u14:['🧮','EN Mathlete'],u15:['🎓','Test Ready']};
 const unitDone=(p,u)=>u.lessons.every(l=>p.done[l.id]);
 const BADGES=[
  {id:'first',e:'🧪',n:'First Reaction',d:'Finish your first lesson',test:p=>p.stats.lessons>=1},
@@ -707,11 +899,12 @@ function render(){
  if(view==='learn')body=viewLearn();else if(view==='practice')body=viewPractice();else if(view==='friends')body=viewFriends();else if(view==='shop')body=viewShop();else body=viewProfile();
  $('#app').innerHTML=topBar()+body+navBar();
 }
-const unlocked=l=>l.idx===0||!!me.done[LESSONS[l.idx-1].id];
+const unlocked=l=>l.idx===0||(l.li===0&&l.unit.section&&!(UNITS[l.ui-1]||{}).section)||!!me.done[LESSONS[l.idx-1].id];
 function viewLearn(){
  const cur=LESSONS.find(l=>!me.done[l.id]&&unlocked(l));
  let h=`<div class="subj"><span class="pill">📚 ${SUBJECT.name}</span><span class="pill">${SUBJECT.chapter}</span><span class="pill">⚛️ ${SUBJECT.topic}</span></div>`;
  UNITS.forEach((u,ui)=>{const d=u.lessons.filter(l=>me.done[l.id]).length;
+  if(u.section&&!(UNITS[ui-1]||{}).section)h+=`<div class="subj" style="margin-top:26px;border-top:2px dashed var(--line);padding-top:20px"><span class="pill" style="background:var(--pri);color:#fff;border-color:var(--pri)">${u.section.emoji} ${u.section.name}</span><span class="pill">📑 ${u.section.from}</span><span class="pill">${SUBJECT.chapter}</span></div>`;
   h+=`<div class="unit" style="background:${u.color}"><small>UNIT ${ui+1}</small><h2>${u.title}</h2><p>${u.desc}</p><div class="ubar"><div style="width:${d/u.lessons.length*100}%"></div></div></div><div class="path">`;
   u.lessons.forEach((l,li)=>{const off=Math.round(Math.sin((l.idx)*1.2)*70);const st=me.done[l.id]?'done':unlocked(l)?(l===cur?'cur':'open'):'locked';
    const icon=st==='done'?'⭐':st==='locked'?'🔒':li===u.lessons.length-1&&u.id==='u9'?'👑':['⚛️','🧪','🔬','⚗️'][li%4];
