@@ -486,7 +486,6 @@ input[type=text]{font-family:var(--body);font-size:16px;font-weight:700}
     <button class="hud-btn speed" id="btnSpeed" title="Game speed" aria-label="Change game speed"></button>
     <button class="hud-btn ico" id="btnPause" title="Pause" aria-label="Pause"></button>
     <button class="hud-btn shopbtn" id="btnShop" title="Shop (B)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2z" fill="#fff8ef"/><path d="M9 8a3 3 0 016 0"/></svg>Shop</button>
-    <button class="hud-btn" data-act="debugToggle" title="Debug menu (~)">Debug</button>
     <button class="hud-btn" data-act="updates" title="What’s new">Updates</button>
     <button class="hud-btn" id="btnEdit" title="Edit mode">Edit</button>
     <button class="hud-btn go" id="btnOpen">Open café</button>
@@ -2917,7 +2916,7 @@ function buy(key,quiet){
 }
 function act(a,ds,el){
   initAudio();
-  if(a==='debugToggle'){setDebug(!debugOn);return}
+  if(a==='debugToggle')return;
   if(a.startsWith('dbg')){if(debugOn)debugAct(a);return}
   if(menuChoiceAction(a,ds))return;
   if(shopBrowseAction(a,ds,el))return;
@@ -3250,8 +3249,8 @@ function panelStorage(){
 }
 
 /* Debug controls: enabled by default for this development build. */
-let debugOn=true;try{debugOn=localStorage.getItem('mapamapa.debug.v49')!=='0'}catch(e){}
-function setDebug(on){debugOn=!!on;try{localStorage.setItem('mapamapa.debug.v49',debugOn?'1':'0')}catch(e){}renderDebug();toast(debugOn?'Debug mode on. Press ~ to hide.':'Debug mode off.');R.dirty=true}
+let debugOn=false;
+function setDebug(on){debugOn=false;renderDebug();R.dirty=true}
 function renderDebug(){
  const el=$('#debug'),on=debugOn&&G&&$('#title').hidden;el.hidden=!on;$('#sceneWrap').classList.toggle('dbg',!!on);if(!on)return;
  if(el.dataset.built)return;el.dataset.built='1';
@@ -3279,7 +3278,6 @@ function debugAct(a){
  }
  R.amb=computeAmb();R.dirty=true;
 }
-document.addEventListener('keydown',e=>{if(e.code==='Backquote'&&G&&$('#title').hidden&&!/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)){e.preventDefault();setDebug(!debugOn)}});
 /* Mapamapa v4 — Signature Studio, specialty stock, and independent save slots. */
 const SPECIALTY=[
  ['mango','Mango','#f5b52b','fruit',18],['banana','Banana','#f8dc70','fruit',16],
