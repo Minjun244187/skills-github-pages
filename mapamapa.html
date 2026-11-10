@@ -793,7 +793,7 @@ const RECIPES=[
  {id:'lava',name:'Chocolate Lava Cake',cat:'Dessert',price:8,star:3,eq:['oven'],ing:['bakingkit','chocolate'],cup:'plate',dessert:'lava',steps:[st.pick(['bakingkit','chocolate']),st.mix(),st.bake(.11)]},
  {id:'cheesecake',name:'Cheesecake',cat:'Dessert',price:8,star:3,eq:['oven'],ing:['bakingkit','creamcheese'],cup:'plate',dessert:'cheesecake',steps:[st.pick(['bakingkit','creamcheese']),st.mix(),st.bake()]},
  {id:'shortcake',name:'Strawberry Shortcake',cat:'Dessert',price:8.5,star:3,eq:['oven'],ing:['bakingkit','strawberry','whipped'],cup:'plate',dessert:'shortcake',steps:[st.pick(['bakingkit'],'Gather the batter'),st.mix(),st.bake(),st.pick(['whipped','strawberry'],'Decorate')]},
- {id:'macaron',name:'Macarons',cat:'Dessert',price:9,star:4,eq:['oven'],ing:['almond','sugar'],cup:'plate',dessert:'macaron',steps:[st.pick(['almond','sugar'],'Gather the batter'),st.mix('Fold the batter'),st.bake(.12)]}, {id:'meatpie',name:'Mystery Meat Pie',cat:'Dessert',price:48,star:0,eq:['oven'],ing:['bakingkit'],meat:true,cup:'plate',dessert:'pie',steps:[st.pick(['bakingkit','meat'],'Gather the filling'),st.mix('Roll the pastry'),st.bake()]},
+ {id:'macaron',name:'Macarons',cat:'Dessert',price:9,star:4,eq:['oven'],ing:['almond','sugar'],cup:'plate',dessert:'macaron',steps:[st.pick(['almond','sugar'],'Gather the batter'),st.mix('Fold the batter'),st.bake(.12)]}, {id:'suspiciousSteak',name:'Suspicious Steak',cat:'Savory',price:110,star:0,eq:['oven'],ing:['meat'],meat:2,cup:'plate',dessert:'steak',steps:[st.pick(['meat'],'Prepare 2 portions of Suspicious Meat'),st.bake()]}, {id:'meatpie',name:'Mystery Meat Pie',cat:'Dessert',price:48,star:0,eq:['oven'],ing:['bakingkit'],meat:true,cup:'plate',dessert:'pie',steps:[st.pick(['bakingkit','meat'],'Gather the filling'),st.mix('Roll the pastry'),st.bake()]},
 ];
 const RMAP=Object.fromEntries(RECIPES.map(r=>[r.id,r]));
 RECIPES.forEach(r=>r.usesBeans=r.steps.some(s=>s.beans));
@@ -1111,6 +1111,7 @@ function drawDessert(c,kind,cx,cy,s,d){
     case 'lava':{c.beginPath();c.moveTo(-28,0);c.lineTo(28,0);c.quadraticCurveTo(30,-36,0,-38);c.quadraticCurveTo(-30,-36,-28,0);fs(c,col('#4a2618','#8a6a52'));if(baked){c.fillStyle='#6b2f1a';c.beginPath();c.moveTo(-8,-36);c.quadraticCurveTo(-12,-14,-6,0);c.lineTo(4,0);c.quadraticCurveTo(6,-20,6,-37);c.fill();c.fillStyle='#fff';for(let i=0;i<14;i++){circ(c,-18+hash(i,1)*36,-34+hash(i,2)*10,1.2);c.fill()}c.fillStyle='#e9506a';circ(c,8,-40,5);fs(c,'#e9506a')}break}
     case 'cheesecake':{c.beginPath();c.moveTo(-34,0);c.lineTo(34,0);c.lineTo(34,-26);c.lineTo(-34,-26);c.closePath();fs(c,col('#fbe7b5','#fff6dc'));c.fillStyle='#c58b4f';c.fillRect(-33,-7,66,6);c.beginPath();c.moveTo(-34,-26);c.lineTo(34,-26);c.lineTo(20,-38);c.lineTo(-20,-38);c.closePath();fs(c,col('#f1d48c','#fff6dc'));if(baked){c.fillStyle='#e9506a';c.beginPath();c.moveTo(-18,-36);c.lineTo(18,-36);c.lineTo(28,-27);c.quadraticCurveTo(10,-20,-2,-27);c.quadraticCurveTo(-14,-18,-28,-27);c.closePath();c.fill()}break}
     case 'shortcake':{const ly=[['#f4d38f',10],['#ffffff',6],['#f4d38f',10],['#ffffff',8]];let y=0;for(const[cc,h]of ly){c.fillStyle=cc==='#ffffff'&&!(d.stage==='deco'||d.stage==='final')?'#f4d38f':col(cc,'#f6e7c2');c.fillRect(-30,y-h,60,h);c.strokeRect(-30,y-h,60,h);y-=h}if(d.stage==='deco'||d.stage==='final'){for(let i=0;i<5;i++){circ(c,-24+i*12,y-2,6);fs(c,'#fffaf2')}c.save();c.translate(0,y-12);heart(c,0,0,14);c.rotate(Math.PI);c.restore();c.beginPath();c.moveTo(0,y-2);c.bezierCurveTo(-10,y-10,-6,y-22,0,y-20);c.bezierCurveTo(6,y-22,10,y-10,0,y-2);fs(c,'#e9506a');c.fillStyle='#6cbf6a';ell(c,0,y-21,5,2.5);c.fill();c.stroke()}break}
+    case 'steak':{ell(c,0,-7,30,17,-.12);fs(c,baked?'#804735':'#bc6464');ell(c,0,-9,25,12,-.12);fs(c,baked?'#ad6950':'#de9290');c.strokeStyle=baked?'#4e3027':'#f6c6b0';c.lineWidth=3;for(let i=-2;i<=2;i++){c.beginPath();c.moveTo(i*8-5,-16);c.lineTo(i*8+5,-3);c.stroke()}ol(c,2);break}
     case 'pie':{c.beginPath();c.moveTo(-34,0);c.lineTo(34,0);c.lineTo(29,-15);c.lineTo(-29,-15);c.closePath();fs(c,col('#d9944a','#f3dcb0'));ell(c,0,-15,29,8);fs(c,col('#e8ac5e','#f6e2bb'));if(baked){c.strokeStyle='#b8742f';c.lineWidth=2.2;for(let i=-2;i<=2;i++){c.beginPath();c.moveTo(i*10-4,-21);c.lineTo(i*10+4,-9);c.stroke()}ol(c,2.2);c.fillStyle='#a8303c';ell(c,-14,-13,3,1.6);c.fill();ell(c,11,-17,2.4,1.3);c.fill();c.strokeStyle='rgba(140,190,90,.7)';c.lineWidth=2;c.beginPath();c.moveTo(-4,-26);c.bezierCurveTo(-8,-32,0,-36,-4,-42);c.stroke();ol(c,2.2)}else{c.fillStyle='#c45a5a';ell(c,0,-15,20,5);c.fill()}break}
     case 'macaron':{const cs=[['#f6a9bb',-26,-8],['#9ad0b6',26,-8],['#c9b6ee',0,-24]];for(const[cc,x,y]of cs){const cl=baked?cc:'#f6ead2';ell(c,x,y+5,17,7);fs(c,cl);c.fillStyle='#fffaf2';c.fillRect(x-15,y-2,30,5);c.strokeRect(x-15,y-2,30,5);ell(c,x,y-5,17,8);fs(c,cl);c.fillStyle='rgba(255,255,255,.4)';ell(c,x-5,y-8,6,2);c.fill()}break}
   }
@@ -1739,7 +1740,7 @@ function newGame(name){
   normalizeStudioSave();normalizeSpecialSave();const f=G.floors[0];rebuildOcc();G.cands=genCandidates();
   let n=0,guard=0;while(n<12&&guard++<400){const c=rndi(0,f.w-1),r=rndi(0,f.h-1);if(isWalk(0,c,r)&&!f.dirt.some(d=>d.c===c&&d.r===r)){f.dirt.push({id:uid(),c,r,kind:pick(['grime','grime','mud','spill']),hp:3,s:Math.random()});n++}}
 }
-function resetRuntime(){R.dogs=[];R.traps=[];R.queue=[];R.throws=[];R.rushId=null;R.rushBanner=null;R.rob=null;R.shopOpen=false;R.custs=[];R.orders=[];R.parts=[];R.floats=[];R.actors={};R.spots=[null,null,null,null,null];R.view=0;R.mg=null;R.build=null;R.edit=false;R.sel=null;R.log=[];rebuildOcc();syncStaff()}
+function resetRuntime(){R.assassinTutorial=false;R.dogs=[];R.traps=[];R.queue=[];R.throws=[];R.rushId=null;R.rushBanner=null;R.rob=null;R.shopOpen=false;R.custs=[];R.orders=[];R.parts=[];R.floats=[];R.actors={};R.spots=[null,null,null,null,null];R.view=0;R.mg=null;R.build=null;R.edit=false;R.sel=null;R.log=[];rebuildOcc();syncStaff()}
 
 /* ============ grid helpers ============ */
 const doorCell=()=>({c:G.floors[0].w-1,r:0});
@@ -1860,6 +1861,7 @@ function spawnCustomer(force){
   if(rush){cu.rush=true;cu.speed*=1.15;cu.pat*=.9;cu.patMax=cu.pat}
   initGuestHealth(cu);if(!special&&Math.random()<.12)addCompanionDog(cu);if(special)G.specialDay.arrived++;R.custs.push(cu);sfx('door');
   if(spot>=0){R.spots[spot]=cu.id;goTo(cu,0,{c:spot,r:2},()=>arriveSpot(cu))}else{cu.spot=null;joinQueue(cu)}
+  if(special&&special.id==='assassin')showFirstAssassinTutorial();
   if(Math.random()<.1&&G.floors[0].dirt.length<40){const f=G.floors[0];const c=rndi(Math.max(0,f.w-4),f.w-1),r=rndi(1,Math.min(3,f.h-1));if(isWalk(0,c,r))addDirt(0,c,r,'mud')}
 }
 function arriveSpot(cu){
@@ -1925,7 +1927,7 @@ function serveOrderBase(o,q,byBarista){
   if(!stockReady(r)){toast('Ingredients ran out. Restock at Mapa Mart.','bad');o.status='waiting';R.dirty=true;return false}
   for(const id of r.ing)if(ING[id].pack)G.stock[id]--;
   if(r.usesBeans){if(G.beans<=0){toast('No beans left for that order!','bad');o.status='waiting';return false}G.beans--}
-  if(r.meat){if(G.meat<=0){toast('No suspicious meat left for that order!','bad');o.status='waiting';return false}G.meat--}
+  if(r.meat){if(G.meat<Number(r.meat)){toast('Not enough suspicious meat for that order!','bad');o.status='waiting';return false}G.meat-=Number(r.meat)}
   if(r.ing.some(id=>ING[id].made||id==='gunpowder')){
     reactToSpecialDrink(cu,r);
     tutEvent('served');return true;
@@ -2105,7 +2107,7 @@ function confetti(){const f=G.floors[R.view];for(let i=0;i<90;i++)addPart(rnd(0,
 
 /* ============ main update ============ */
 function update(dt){
-  if(!G||R.paused||R.shopOpen||R.studioOpen)return;
+  if(!G||R.paused||R.shopOpen||R.studioOpen||R.assassinTutorial)return;
   const realDt=dt;dt*=G.speed||1;
   R.t+=dt;
   R.ambT-=dt;if(R.ambT<=0||!R.amb){R.amb=computeAmb();R.ambT=.5}
@@ -2113,7 +2115,7 @@ function update(dt){
   if(G.dayActive){
     G.time+=dt*(DAY_END-DAY_START)/DAY_SECONDS;
     if(G.open){if(G.time>=DAY_END-20){G.open=false;toast('Closing time! Finishing the last orders.');R.dirty=true}
-      else if(!R.rob){if(G.robAt&&G.time>=G.robAt){G.robAt=null;startRobbery()}R.spawnT-=dt;if(R.spawnT<=0){spawnCustomer();R.spawnT=spawnInterval()*rnd(.7,1.3)}}
+      else if(!R.rob){if(G.robAt&&G.time>=G.robAt){G.robAt=null;startRobbery()}R.spawnT-=dt;if(R.spawnT<=0){spawnCustomer();if(R.assassinTutorial)return;R.spawnT=spawnInterval()*rnd(.7,1.3)}}
       R.dustT-=dt;if(R.dustT<=0){R.dustT=rnd(18,30);const fi=rndi(0,G.floors.length-1),f=G.floors[fi];const c=rndi(0,f.w-1),r=rndi(0,f.h-1);if(isWalk(fi,c,r)&&R.custs.length)addDirt(fi,c,r,pick(['spill','mud']))}}
     if(!G.open&&R.custs.length===0&&!R.rob)endDay();
   }
@@ -2824,10 +2826,10 @@ function panelOrders(){
   return h;
 }
 let menuCat='All';
-function panelMenu(){const on=RECIPES.filter(r=>menuEnabled(r)&&recipeOn(r)).length;const cats=['All','Coffee','Iced','Tea','Other','Dessert'];
+function panelMenu(){const on=RECIPES.filter(r=>menuEnabled(r)&&recipeOn(r)).length;const cats=['All','Coffee','Iced','Tea','Other','Dessert','Savory'];
   let h=studioMenuHTML()+`<h2>Menu</h2><p class="sub"><b>${on} of ${RECIPES.length}</b> enabled, unlocked recipes. Turn items on or off below. Disabled items receive no new orders; existing orders can still be served.</p><div class="seg">${cats.map(c=>`<button data-act="menucat" data-k="${c}" class="${menuCat===c?'on':''}">${c}</button>`).join('')}</div>`;
   for(const r of RECIPES){if(menuCat!=='All'&&r.cat!==menuCat)continue;const miss=recipeMissing(r);const gr=BEAN_GRADES[G.grade];const pr=r.price*(r.usesBeans?gr.mult:1);
-    h+=`<div class="mitem menu-choice ${miss.length?'lk':''} ${menuEnabled(r)?'':'menu-disabled'}" data-menu-id="${r.id}"><img src="${iconURL('rec:'+r.id)}" alt=""><div style="min-width:0"><div class="nm">${esc(r.name)}</div><div class="reqs">${menuStateLabel(r)}${miss.length?miss.map(m=>m.t==='star'?`<span class="tag star">${'★'.repeat(m.n)}</span>`:`<span class="tag no">${esc(m.label||(m.t==='eq'?EQ[m.id].name:ING[m.id].name))}</span>`).join(''):`<span class="tag ${stockReady(r)?'ok':'no'}">${stockReady(r)?'Stock ready':'Out of stock'}</span>${r.usesBeans?'<span class="tag">uses beans</span>':''}${r.meat?`<span class="tag ${G.meat?'':'no'}">meat ×${G.meat}</span>`:''}<span class="tag">${r.steps.length} steps</span>`}</div></div><div class="menu-choice-controls"><span class="price">${fmt(pr)}</span>${menuToggleHTML(r)}</div></div>`}
+    h+=`<div class="mitem menu-choice ${miss.length?'lk':''} ${menuEnabled(r)?'':'menu-disabled'}" data-menu-id="${r.id}"><img src="${iconURL('rec:'+r.id)}" alt=""><div style="min-width:0"><div class="nm">${esc(r.name)}</div><div class="reqs">${menuStateLabel(r)}${miss.length?miss.map(m=>m.t==='star'?`<span class="tag star">${'★'.repeat(m.n)}</span>`:`<span class="tag no">${esc(m.label||(m.t==='eq'?EQ[m.id].name:ING[m.id].name))}</span>`).join(''):`<span class="tag ${stockReady(r)?'ok':'no'}">${stockReady(r)?'Stock ready':'Out of stock'}</span>${r.usesBeans?'<span class="tag">uses beans</span>':''}${r.meat?`<span class="tag ${G.meat>=Number(r.meat)?'':'no'}">meat ${G.meat} / ${Number(r.meat)} required</span>`:''}<span class="tag">${r.steps.length} steps</span>`}</div></div><div class="menu-choice-controls"><span class="price">${fmt(pr)}</span>${menuToggleHTML(r)}</div></div>`}
   return h;
 }
 function staffStats(s){const t=traitOf(s);return s.role==='janitor'?`<span>Cleaning</span><b>${janitorCleanTime(s).toFixed(1)}s per mess</b><span>Walk speed</span><b>${((1.6+.28*s.lvl)*(t.speed||1)).toFixed(1)} tiles/s</b>`:`<span>Drink quality</span><b>${Math.round(clamp(.5+.1*(s.lvl-1)+(t.q||0),0,1)*100)}%</b><span>Speed</span><b>~${Math.round(baristaMakeTime(s,{steps:{length:4.5}}))}s per drink</b>`}
@@ -3319,7 +3321,7 @@ const DRINK_BASES={
 };
 const STUDIO_ING=Object.keys(ING).filter(id=>!ING[id].hidden&&!['bakingkit','creamcheese','almond','milk','tea'].includes(id));
 let studio=null;
-function stockReady(r){return (!r.usesBeans||G.beans>0)&&(!r.meat||G.meat>0)&&r.ing.every(id=>!ING[id].pack||(G.stock[id]||0)>0)}
+function stockReady(r){return (!r.usesBeans||G.beans>0)&&(!r.meat||G.meat>=Number(r.meat))&&r.ing.every(id=>!ING[id].pack||(G.stock[id]||0)>0)}
 function cleanRecipeDraft(d){
  if(!d||!DRINK_BASES[d.base]||!Array.isArray(d.addins))return null;
  const addins=[...new Set(d.addins)].filter(i=>STUDIO_ING.includes(i)).slice(0,5);
@@ -3442,7 +3444,8 @@ function performSlotLoad(i,kind){
  chosenSlot=i;R.pendingNew=false;closeStudio();startGame(false);toast(`Loaded Slot ${i+1} · ${kind==='auto'?'autosave':'manual checkpoint'}`,'good');
 }
 const UPDATE_LOG=[
- {version:'4.x · The Big Café Update',date:'November 10, 2026 · Includes 4.0–4.10',items:[
+ {version:'4.x · The Big Café Update',date:'November 10, 2026 · Includes 4.0–4.11',items:[
+ 'Nana pauses the first assassin visit to explain how to chase them away before ordering. Suspicious Steak uses two Suspicious Meat and an oven.',
  'Click an arriving assassin before they order to chase them away. Floating special-guest names are removed; uniforms and carried equipment identify them.',
  'Some ordinary customers bring a small animated dog. Dogs follow their owner, rest nearby, and leave when the owner departs.',
  'The 3-star Booby-Trap Chair is sold with furniture. Sitting triggers retractable blades; clearing any body completely grants one Suspicious Meat, whether cleaned by you or a janitor. Robber kills no longer grant meat immediately.',
@@ -3982,12 +3985,31 @@ function drawChairBlades(c,trap){
  const rise=trap.t<.22?trap.t/.22:trap.t<.55?1:Math.max(0,(1.1-trap.t)/.55),x=(trap.it.c+.5)*T,y=(WALL+trap.it.r)*T+32;
  c.save();ol(c,1.5);for(const side of[-1,1]){c.beginPath();c.moveTo(x+side*12,y);c.lineTo(x+side*12,y-36*rise);c.lineTo(x+side*5,y-27*rise);c.lineTo(x+side*5,y);c.closePath();fs(c,'#ccdce1');c.strokeStyle='#fff';c.lineWidth=1;c.beginPath();c.moveTo(x+side*10,y-3);c.lineTo(x+side*10,y-29*rise);c.stroke();c.strokeStyle=INK}c.restore();
 }
+/* First assassin visit: saved completion, simulation and input pause. */
+function showFirstAssassinTutorial(){
+ if(G.seen._assassinTutorial||R.assassinTutorial)return;
+ R.assassinTutorial=true;
+ say({who:'nana',tag:'first-assassin',lines:[
+  '* Hold on, dear! An {r}assassin{/} has just entered. I have paused the café so you can learn what to do.',
+  '* Watch their appearance carefully. There is no name label to give them away.',
+  '* {y}Click the assassin before they place an order{/}, while entering or waiting in line. They will flee, and you will prevent the attack.',
+  '* Once they have ordered, clicking will not chase them away. After receiving their drink, they may attack another customer and escape.',
+  '* Ready? Close this message to resume, then click the assassin as they enter!'
+ ],onEnd:()=>{G.seen._assassinTutorial=true;R.assassinTutorial=false;R.dirty=true;saveLocal()}});
+}
+for(const event of ['click','pointerdown','keydown'])document.addEventListener(event,e=>{
+ if(!R.assassinTutorial)return;
+ const dialogue=e.target.closest&&e.target.closest('#say');
+ if(event==='keydown'&&['KeyZ','Space','Enter'].includes(e.code)){e.preventDefault();e.stopImmediatePropagation();if(!e.repeat)sayAdvance();return}
+ if(dialogue)return;
+ e.preventDefault();e.stopImmediatePropagation();
+},true);
 /* ============ brewing minigame ============ */
 function openMinigame(o){
   if(R.mg||R.rob||R.shopOpen||!o||o.status!=='waiting')return;
   if(!stockReady(o.rec)){toast('Out of ingredients! Restock at Mapa Mart.','bad');return}
   if(o.rec.usesBeans&&G.beans<=0){toast('Out of coffee beans! Buy more in the shop.','bad');sfx('bad');return}
-  if(o.rec.meat&&G.meat<=0){toast('No Suspicious Meat left for that order.','bad');sfx('bad');return}
+  if(o.rec.meat&&G.meat<Number(o.rec.meat)){toast('No Suspicious Meat left for that order.','bad');sfx('bad');return}
   if(R.edit)toggleEdit(false);
   o.status='player';R.mg={order:o,rec:o.rec,si:0,scores:[],cup:newCupState(o.rec),lock:0,swing:0};
   const cu=o.cust;
@@ -4173,8 +4195,8 @@ function showTitle(mode){
   let content='';
   if(mode==='new')content=`<p class="title-menu-note">Pick a name for your new favorite place.</p><div class="stack"><label class="title-field-label" for="tName">Café name</label><input type="text" id="tName" maxlength="28" placeholder="Mapamapa" aria-label="Café name"><label class="title-tutorial"><input type="checkbox" id="tTut" checked> Show me the tutorial</label><button class="btn title-primary" data-act="tStart">${titleButtonIcon('cup')}Get the keys<span>→</span></button><button class="btn title-secondary" data-act="tBack">Back to the porch</button></div>`;
   else if(mode==='load')content=`<p class="title-menu-note">Paste your save code or open a save file.</p><div class="stack"><label class="title-field-label" for="tCode">Save code</label><textarea id="tCode" rows="4" placeholder="LBC1.…" aria-label="Save code"></textarea><button class="btn title-primary" data-act="loadCode">${titleButtonIcon('play')}Load code<span>→</span></button><button class="btn title-secondary" data-act="loadFile">${titleButtonIcon('save')}Open a save file</button><button class="btn title-secondary" data-act="tBack">Back to the porch</button></div>`;
-  else content=`${sv?`<div class="title-save-card"><span>YOUR CAFÉ</span><b>${esc(sv.name)}</b><small>Day ${Math.max(1,sv.day)} <i>·</i> ${(+sv.rating||0).toFixed(1)} stars</small></div>`:'<p class="title-menu-note">Brew something lovely. Make room for good company.</p>'}<div class="stack">${sv?`<button class="btn title-primary" data-act="tContinue">${titleButtonIcon('play')}Continue café<span>→</span></button>`:''}<button class="btn ${sv?'title-secondary':'title-primary'}" data-act="tNew">${titleButtonIcon('cup')}Start a new café<span>+</span></button><button class="btn title-secondary" data-act="slots">${titleButtonIcon('save')}Save slots & autosaves</button><div class="title-small-actions"><button class="btn" data-act="tLoad">Import a save</button><button class="btn" data-act="updates">What’s new · v4.10</button></div></div>`;
-  tc.innerHTML=`<header class="title-brand"><span class="title-eyebrow">A COZY LITTLE CAFÉ TYCOON</span><div class="title-wordmark" aria-label="Mapamapa">${Array.from("mapamapa",(letter,i)=>`<span class="title-letter ${i>3?"pink":""}" style="--letter:${i}" aria-hidden="true">${letter}</span>`).join("")}<i aria-hidden="true">✦</i></div><p>A cup of coffee. A place of your own.</p></header><section class="title-world" aria-label="A pastel Mapamapa café with a bear barista"><canvas id="titleCafe" aria-hidden="true"></canvas><span class="title-world-sticker">Made for your<br><b>cozy era ♡</b></span><div class="title-world-caption"><span>BREW</span><i>✦</i><span>DECORATE</span><i>✦</i><span>MAKE IT YOURS</span></div></section><section class="title-menu" aria-label="Game menu"><div class="title-open-tag">${mode?'FRESHLY BREWED':'COME ON IN'} <span>✦</span></div><h1>${intro}</h1>${content}<p class="title-menu-foot">One little café. Endless possibilities.</p></section><footer class="title-footer"><span>Handcrafted cups & happy little moments.</span><span>MAPAMAPA <b>v4.10</b></span></footer>`;
+  else content=`${sv?`<div class="title-save-card"><span>YOUR CAFÉ</span><b>${esc(sv.name)}</b><small>Day ${Math.max(1,sv.day)} <i>·</i> ${(+sv.rating||0).toFixed(1)} stars</small></div>`:'<p class="title-menu-note">Brew something lovely. Make room for good company.</p>'}<div class="stack">${sv?`<button class="btn title-primary" data-act="tContinue">${titleButtonIcon('play')}Continue café<span>→</span></button>`:''}<button class="btn ${sv?'title-secondary':'title-primary'}" data-act="tNew">${titleButtonIcon('cup')}Start a new café<span>+</span></button><button class="btn title-secondary" data-act="slots">${titleButtonIcon('save')}Save slots & autosaves</button><div class="title-small-actions"><button class="btn" data-act="tLoad">Import a save</button><button class="btn" data-act="updates">What’s new · v4.11</button></div></div>`;
+  tc.innerHTML=`<header class="title-brand"><span class="title-eyebrow">A COZY LITTLE CAFÉ TYCOON</span><div class="title-wordmark" aria-label="Mapamapa">${Array.from("mapamapa",(letter,i)=>`<span class="title-letter ${i>3?"pink":""}" style="--letter:${i}" aria-hidden="true">${letter}</span>`).join("")}<i aria-hidden="true">✦</i></div><p>A cup of coffee. A place of your own.</p></header><section class="title-world" aria-label="A pastel Mapamapa café with a bear barista"><canvas id="titleCafe" aria-hidden="true"></canvas><span class="title-world-sticker">Made for your<br><b>cozy era ♡</b></span><div class="title-world-caption"><span>BREW</span><i>✦</i><span>DECORATE</span><i>✦</i><span>MAKE IT YOURS</span></div></section><section class="title-menu" aria-label="Game menu"><div class="title-open-tag">${mode?'FRESHLY BREWED':'COME ON IN'} <span>✦</span></div><h1>${intro}</h1>${content}<p class="title-menu-foot">One little café. Endless possibilities.</p></section><footer class="title-footer"><span>Handcrafted cups & happy little moments.</span><span>MAPAMAPA <b>v4.11</b></span></footer>`;
   if(mode==='new')setTimeout(()=>$('#tName')?.focus(),50);
 }
 function drawTitle(dt){drawCuteTitle(dt)}
