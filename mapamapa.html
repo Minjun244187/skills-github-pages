@@ -486,6 +486,7 @@ input[type=text]{font-family:var(--body);font-size:16px;font-weight:700}
     <button class="hud-btn speed" id="btnSpeed" title="Game speed" aria-label="Change game speed"></button>
     <button class="hud-btn ico" id="btnPause" title="Pause" aria-label="Pause"></button>
     <button class="hud-btn shopbtn" id="btnShop" title="Shop (B)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2z" fill="#fff8ef"/><path d="M9 8a3 3 0 016 0"/></svg>Shop</button>
+    <button class="hud-btn" data-act="debugToggle" title="Debug menu (~)">Debug</button>
     <button class="hud-btn" data-act="updates" title="What’s new">Updates</button>
     <button class="hud-btn" id="btnEdit" title="Edit mode">Edit</button>
     <button class="hud-btn go" id="btnOpen">Open café</button>
@@ -556,7 +557,9 @@ const INK='#4a3238';
 /* ============ ingredients ============ */
 // shape: how the shop icon is drawn. vis: what it does to a cup when added.
 const ING={
-  
+  poop:{name:'Choco pie?',price:0,star:0,shape:'mosaic',c:'#865435',c2:'#b37e54',made:true,vis:{syrup:'#865435'},desc:'Made to order'},
+  pee:{name:'yellow liquid?',price:0,star:0,shape:'mosaic',c:'#eac841',c2:'#fff18c',made:true,vis:{syrup:'#eac841'},desc:'Made to order'},
+  gunpowder:{name:'Gunpowder',price:60,star:0,shape:'bag',c:'#39353e',c2:'#ee896c',pack:6,security:true,vis:{dust:'#39353e'},desc:'Six portions of explosive drink mix'},
   milk:{name:'Fresh Milk',price:40,star:0,shape:'carton',c:'#ffffff',c2:'#8cc4ea',desc:'For lattes and more'},
   cinnamon:{name:'Cinnamon',price:30,star:0,shape:'jar',c:'#a0603a',c2:'#e8c39e',vis:{dust:'#9c5a2c'},desc:'A dusting of warm spice'},
   vanilla:{name:'Vanilla Syrup',price:60,star:0,shape:'bottle',c:'#f3d9a4',c2:'#fff4dc',vis:{syrup:'#f0d494'},desc:'Sweet and smooth'},
@@ -578,9 +581,6 @@ const ING={
   lavender:{name:'Lavender',price:250,star:4,shape:'jar',c:'#a98bd6',c2:'#efe6ff',vis:{dust:'#a98bd6'},desc:'Dried culinary lavender'},
   almond:{name:'Almond Flour',price:200,star:4,shape:'bag',c:'#f2dcb8',c2:'#ef7d93',desc:'Needed for macarons'},
   gold:{name:'Gold Flakes',price:500,star:5,shape:'tin',c:'#f5c84b',c2:'#fff4c4',vis:{dust:'#f5c84b',sparkle:true},desc:'Edible 24k sparkle'},
-  poop:{name:'Choco pie?',price:0,star:0,shape:'mosaic',c:'#865435',c2:'#b37e54',made:true,vis:{syrup:'#865435'},desc:'Smells really bad'},
-  pee:{name:'yellow liquid?',price:0,star:0,shape:'mosaic',c:'#eac841',c2:'#fff18c',made:true,vis:{syrup:'#eac841'},desc:'Not sure if that is drinkable.'},
-  gunpowder:{name:'Gunpowder',price:60,star:0,shape:'bag',c:'#39353e',c2:'#ee896c',pack:6,security:true,vis:{dust:'#39353e'},desc:'Six portions of explosive drink mix'},
 };
 // Beans are a consumable stock, sold in bags.
 const BEAN_BAGS=[
@@ -1200,6 +1200,7 @@ function applyIngVis(s,ingId,r){
 function finalCupState(r){const s=newCupState(r);for(const step of r.steps){if(step.t==='pick')step.need.forEach(i=>applyIngVis(s,i,r));else if(step.t==='produce')applyIngVis(s,step.id,r);else applyFx(s,step.fx,r)}if(s.dessert)s.dessert.stage=s.dessert.stage==='deco'?'deco':'final';return s}
 /* ============ furniture (detailed) ============ */
 function drawFurn(c,id,x,y,o={}){
+  if(id==='boobyChair'){drawTrapChair(c,x,y,o);return}
   const stone=FURN[id]?.memorial;
   if(stone){
     c.save();ol(c,2);rr(c,x+5,y+32,T-10,10,3);fs(c,'#615a70');
@@ -1736,10 +1737,10 @@ function newGame(name){
     floors:[mkFloor(8,6,'rusty','rotten',true)],
     staff:[],cands:[],
     speed:1,arms:{},meat:0,meatEver:0,robAt:null,stats:{served:0,earned:0,tips:0,perfect:0,days:0,lost:0},sat:[],tut:0,sound:true,today:null,seen:{},styles:{wall:{rusty:1},floor:{rotten:1}}};
-  normalizeStudioSave();const f=G.floors[0];rebuildOcc();G.cands=genCandidates();
+  normalizeStudioSave();normalizeSpecialSave();const f=G.floors[0];rebuildOcc();G.cands=genCandidates();
   let n=0,guard=0;while(n<12&&guard++<400){const c=rndi(0,f.w-1),r=rndi(0,f.h-1);if(isWalk(0,c,r)&&!f.dirt.some(d=>d.c===c&&d.r===r)){f.dirt.push({id:uid(),c,r,kind:pick(['grime','grime','mud','spill']),hp:3,s:Math.random()});n++}}
 }
-function resetRuntime(){R.queue=[];R.throws=[];R.rushId=null;R.rushBanner=null;R.rob=null;R.shopOpen=false;R.custs=[];R.orders=[];R.parts=[];R.floats=[];R.actors={};R.spots=[null,null,null,null,null];R.view=0;R.mg=null;R.build=null;R.edit=false;R.sel=null;R.log=[];rebuildOcc();syncStaff()}
+function resetRuntime(){R.dogs=[];R.traps=[];R.queue=[];R.throws=[];R.rushId=null;R.rushBanner=null;R.rob=null;R.shopOpen=false;R.custs=[];R.orders=[];R.parts=[];R.floats=[];R.actors={};R.spots=[null,null,null,null,null];R.view=0;R.mg=null;R.build=null;R.edit=false;R.sel=null;R.log=[];rebuildOcc();syncStaff()}
 
 /* ============ grid helpers ============ */
 const doorCell=()=>({c:G.floors[0].w-1,r:0});
@@ -1813,9 +1814,9 @@ function checkStars(){
 }
 
 /* ============ day loop ============ */
-function startDay(){G.day++;G.time=DAY_START;G.dayActive=true;G.open=true;G.today={served:0,earned:0,tips:0,lost:0,perfect:0,r0:G.rating};R.spawnT=tutBlocksSpawn()?999:2.5;scheduleRobbery();sfx('bell');toast(`Day ${G.day}: the café is open!`,'good');R.dirty=true}
+function startDay(){G.day++;G.time=DAY_START;G.dayActive=true;G.open=true;G.today={served:0,earned:0,tips:0,lost:0,perfect:0,r0:G.rating};R.spawnT=tutBlocksSpawn()?999:2.5;planSpecialGuests();scheduleRobbery();sfx('bell');toast(`Day ${G.day}: the café is open!`,'good');R.dirty=true}
 function endDay(){
-  G.dayActive=false;G.open=false;G.stats.days++;G.robAt=null;
+  settleRobberyRisk();G.dayActive=false;G.open=false;G.stats.days++;G.robAt=null;
   let wages=0;for(const s of G.staff)wages+=wageOf(s);G.cands=genCandidates();
   G.money-=wages;const td=G.today||{served:0,earned:0,tips:0,lost:0,perfect:0,r0:G.rating};
   let gift=0;if(G.money<25&&G.beans<3){gift=40;G.money+=gift}
@@ -1855,10 +1856,10 @@ function spawnCustomer(force){
   if(R.rob)return;
   let spot=R.spots.findIndex(s=>!s);if(R.queue.length)spot=-1;
   if(spot<0&&R.queue.length>=QUEUE_MAX)return;
-  const ct=pickType();const d=doorCell();const rush=!!rushNow();
+  const special=dueSpecialGuest();const ct=special||pickType();const d=doorCell();const rush=!!rushNow();
   const cu={id:uid(),kind:'cust',type:ct,look:makeLook(ct),floor:0,x:d.c+.5,y:-.2,path:[],legs:[],speed:ct.speed,state:'enter',phase:Math.random()*9,blink:Math.random()*4,mood:null,emote:null,spot,pat:ct.pat*teamPat(),patMax:ct.pat*teamPat(),alpha:0};
   if(rush){cu.rush=true;cu.speed*=1.15;cu.pat*=.9;cu.patMax=cu.pat}
-  R.custs.push(cu);sfx('door');
+  initGuestHealth(cu);if(!special&&Math.random()<.12)addCompanionDog(cu);if(special)G.specialDay.arrived++;R.custs.push(cu);sfx('door');
   if(spot>=0){R.spots[spot]=cu.id;goTo(cu,0,{c:spot,r:2},()=>arriveSpot(cu))}else{cu.spot=null;joinQueue(cu)}
   if(Math.random()<.1&&G.floors[0].dirt.length<40){const f=G.floors[0];const c=rndi(Math.max(0,f.w-4),f.w-1),r=rndi(1,Math.min(3,f.h-1));if(isWalk(0,c,r))addDirt(0,c,r,'mud')}
 }
@@ -1896,6 +1897,9 @@ function moveChar(ch,dt){
 }
 function updateCustomers(dt){
   for(const cu of R.custs){
+    if(cu.dead||cu.state==='trapped')continue;
+    if(cu.combat){cu.alpha=1;continue}
+    if(updateAssassin(cu,dt))continue;
     cu.blink+=dt;if(cu.state!=='exit')cu.alpha=Math.min(1,cu.alpha+dt*3);
     if(cu.emote){cu.emote.t-=dt;if(cu.emote.t<=0)cu.emote=null}
     const moving=moveChar(cu,dt);cu.walking=moving;
@@ -1917,7 +1921,7 @@ function updateCustomers(dt){
   }
   R.custs=R.custs.filter(c=>!c.dead);
 }
-function serveOrder(o,q,byBarista){
+function serveOrderBase(o,q,byBarista){
   const cu=o.cust,ct=cu.type,r=o.rec;
   if(!stockReady(r)){toast('Ingredients ran out. Restock at Mapa Mart.','bad');o.status='waiting';R.dirty=true;return false}
   for(const id of r.ing)if(ING[id].pack)G.stock[id]--;
@@ -1928,7 +1932,7 @@ function serveOrder(o,q,byBarista){
     tutEvent('served');return true;
   }
   const gr=BEAN_GRADES[G.grade];const qq=clamp(q+(r.usesBeans?gr.q:0),0,1);
-  const rejection=qq<.25&&r.cup!=='plate'?'throw':qq<.5?'angry':null;
+  const rejection=r.cup!=='plate'&&(qq<.25||(ct.id==='doctor'&&qq<=.8+1e-9))?'throw':qq<.5?'angry':null;
   const base=r.price*(r.usesBeans?gr.mult:1)*(.7+.5*qq)*(rejection==='throw'?0:rejection?.5:1);const vipOK=ct.pay&&qq>=.7;const pay=base*(vipOK?ct.pay:1);
   const seats=freeSeats();
   let sat=clamp(qq*.62+(cu.pat/cu.patMax)*.2+R.amb.clean*.1+(seats.length?.08:.03),0,1);if(ct.pay&&!vipOK)sat*=.75;
@@ -1971,7 +1975,7 @@ function reactToSpecialDrink(cu,rec){
   G.sat.push(.05);if(G.sat.length>30)G.sat.shift();
   G.rating=Math.max(0,G.rating-.06);
   if(explosive){
-    cu.dead=true;sfx('blast');addPart(x,y-20,'blast',{floor:fi});
+    cu.dead=true;cu.hp=0;G.stats.customerDeaths=(G.stats.customerDeaths||0)+1;blastDamage(cu);sfx('blast');addPart(x,y-20,'blast',{floor:fi});
     for(let i=0;i<64;i++){
       addPart(x+rnd(-16,16),y-22+rnd(-12,12),'blood',{floor:fi,size:1.5});
       if(i%3===0)addPart(x+rnd(-24,24),y-20,'smoke',{floor:fi});
@@ -1993,10 +1997,11 @@ function reactToSpecialDrink(cu,rec){
 /* ============ dirt ============ */
 function addDirt(fi,c,r,kind,force){const f=G.floors[fi];if(f.dirt.length>=42&&!force)return;if(f.dirt.some(d=>d.c===c&&d.r===r&&d.kind===kind))return;f.dirt.push({id:uid(),c,r,kind,hp:kind==='trash'?1:kind==='mud'?2:3,s:Math.random()})}
 function scrub(fi,d,byJanitor){
+  if(!G.floors[fi].dirt.includes(d)||d.hp<=0)return;
   d.hp--;const px=(d.c+.5)*T,py=d.counter?counterSpillY():(WALL+d.r+.5)*T;
   if(fi===R.view)for(let i=0;i<4;i++)addPart(px+rnd(-10,10),py+rnd(-8,8),'sparkle');
   if(!byJanitor)sfx(d.kind==='trash'?'pop':'scrub');
-  if(d.hp<=0){const f=G.floors[fi];f.dirt=f.dirt.filter(x=>x!==d);if(!byJanitor){tutEvent('clean')}if(d.kind==='corpse'&&!G.seen._corpse){G.seen._corpse=1;say({who:'narrator',lines:['* You quietly dispose of the body.','* Best not to think about it.'],auto:2.2})}R.dirty=true}
+  if(d.hp<=0){const f=G.floors[fi];f.dirt=f.dirt.filter(x=>x!==d);if(d.kind==='corpse'){G.meat=(G.meat||0)+1;G.meatEver=1;floatText(px,py-25,'+1 Suspicious Meat','#cf5a72');addLog('Body cleared: +1 Suspicious Meat.')}if(!byJanitor){tutEvent('clean')}if(d.kind==='corpse'&&!G.seen._corpse){G.seen._corpse=1;say({who:'narrator',lines:['* You quietly dispose of the body.','* Best not to think about it.'],auto:2.2})}R.dirty=true}
 }
 
 /* ============ staff ============ */
@@ -2026,7 +2031,7 @@ function genCandidates(){
   return out;
 }
 function syncStaff(){
-  for(const s of G.staff){if(R.actors[s.id])continue;
+  for(const s of G.staff){if(R.actors[s.id])continue;normalizeStaffHealth(s);
     if(s.role==='janitor'){const d=doorCell();R.actors[s.id]={sid:s.id,kind:'janitor',floor:0,x:d.c-.5,y:1.5,path:[],legs:[],speed:1.8,state:'idle',phase:Math.random()*5,blink:Math.random()*3,look:s.look}}
     else R.actors[s.id]={sid:s.id,kind:'barista',floor:0,x:2.5,y:.55,path:[],legs:[],speed:2.2,state:'idle',phase:Math.random()*5,blink:Math.random()*3,look:s.look,tx:2.5};
   }
@@ -2037,7 +2042,7 @@ function janitorCleanTime(s){const t=traitOf(s);return cleanTime(s.lvl)*(t.clean
 function baristaMakeTime(s,rec){return Math.max(3,(13-2*(s.lvl-1))*(rec.steps.length/4.5)/(traitOf(s).speed||1))}
 function updateStaff(dt){
   const baristas=Object.values(R.actors).filter(a=>a.kind==='barista');
-  for(const a of Object.values(R.actors)){const s=staffById(a.sid);if(!s)continue;const tr=traitOf(s);if(a.combat){updateCombatStaff(a,s,dt);continue}a.blink+=dt;
+  for(const a of Object.values(R.actors)){const s=staffById(a.sid);if(!s)continue;const tr=traitOf(s);if(a.hp==null){a.hp=s.hp;a.maxHp=staffMaxHp(s)}if(a.combat){updateCombatStaff(a,s,dt);continue}a.blink+=dt;
     if(a.kind==='janitor'){const j=a;j.speed=(1.6+.28*s.lvl)*(tr.speed||1);
       if(j.state==='nap'||j.state==='break'){j.timer-=dt;j.walking=false;j.phase+=dt;if(j.timer<=0)j.state='idle'}
       else if(j.state==='clean'){j.timer-=dt;j.phase+=dt;j.scrub=true;if(j.timer<=0){const f=G.floors[j.floor];if(f.dirt.includes(j.target)){scrub(j.floor,j.target,true);if(f.dirt.includes(j.target)){j.timer=janitorCleanTime(s);continue}}j.state='idle';j.scrub=false}}
@@ -2046,6 +2051,7 @@ function updateStaff(dt){
     }else{const b=a;const home=.8+baristas.indexOf(b)*(3.4/Math.max(1,baristas.length-1||1));
       if(b.state==='return'){b.walking=moveChar(b,dt);continue}
       if(b.state==='make'){b.timer-=dt;b.phase+=dt;b.swT=(b.swT||0)-dt;if(b.swT<=0){b.swT=rnd(.8,1.6);b.tx=rnd(.5,4.5)}const o=b.order;
+        if(!o||!R.orders.includes(o)){b.state='idle';b.order=null;b.producing=null;continue}
         const made=o.rec.ing.filter(id=>ING[id].made);
         const elapsed=b.total-b.timer;
         b.producing=elapsed<made.length*1.25?made[Math.floor(elapsed/1.25)]:null;
@@ -2113,7 +2119,7 @@ function update(dt){
     if(!G.open&&R.custs.length===0&&!R.rob)endDay();
   }
   if(G.dayActive)rushTick();if(R.rushBanner){R.rushBanner.t-=dt;if(R.rushBanner.t<=0)R.rushBanner=null}
-  updateCustomers(dt);updateQueue(dt);scareCustomers();updateStaff(dt);updateRobbery(dt);updateParts(dt);
+  updateTraps(dt);updateCustomers(dt);updateDogs(dt);updateQueue(dt);scareCustomers();updateStaff(dt);updateRobbery(dt);updateParts(dt);
   if(R.mg)mgUpdate(realDt);
   // ambient particles
   const f=G.floors[R.view];
@@ -2128,10 +2134,10 @@ const bestArm=()=>armsOwned()[0]||null;
 const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 function inCounter(a){return a.floor===0&&a.y<2&&a.x<5}
 function liveRobbers(){return R.rob?R.rob.robbers.filter(r=>r.state!=='dead'&&r.state!=='gone'):[]}
-function fighters(){return Object.values(R.actors).filter(a=>a.combat&&a.hp>0)}
-function scheduleRobbery(){G.robAt=null;if(G.tut>=0||G.day<2)return;if(Math.random()<ROB_CHANCE)G.robAt=rnd(DAY_START+150,DAY_END-220)}
+function fighters(){return [...Object.values(R.actors),...R.custs].filter(a=>a.combat&&a.hp>0&&!a.dead)}
+function scheduleRobbery(){G.robAt=null;if(G.tut>=0||G.day<2)return;if(Math.random()<G.robRisk)G.robAt=rnd(DAY_START+150,DAY_END-220)}
 function startRobbery(opt={}){
-  if(R.rob||!G)return;
+  if(R.rob||!G)return;G.robRisk=0;G.lastRobberyDay=G.day;G.robAt=null;
   if(R.mg)closeMinigame(false);
   if(R.edit)toggleEdit(false);
   if(R.shopOpen)closeShop();
@@ -2142,11 +2148,11 @@ function startRobbery(opt={}){
   for(let i=0;i<n;i++){const w=i===0?wpool[0]:pick(wpool),W=ROB_WEAP[w];
     robbers.push({id:uid(),kind:'robber',floor:0,x:d.c+.5,y:-.3-i*.7,path:[],legs:[],speed:2.4,hp:W.hp,maxHp:W.hp,weapon:w,cd:rnd(.4,1),state:'enter',look:{skin:pick(SKINS),hairC:'#2b2b35',shirt:'#fffaf3',hs:0,acc:'robber',pants:'#3d3a4a'},phase:Math.random()*5,blink:0,hurtT:0,repathT:0,alpha:1,aim:Math.PI,delay:i*.55})}
   R.rob={robbers,mode:hasArms()?'fight':'surrender',t:0,stolen:0,recovered:0,killed:0,lost:[],ownerCd:0,fx:[],grabbed:false,grabber:null,meat:0,endT:null,wasArmed:hasArms()};
-  for(const cu of R.custs){if(cu.state==='exit')continue;cu.speed=Math.max(cu.speed,3.6);cu.emote={k:'!',t:2.5};cu.mood='scared';if(cu.seat){cu.seat=null}leave(cu,true);cu.mood='scared'}
+  for(const cu of R.custs){if(cu.dead||cu.state==='exit'||cu.state==='trapped')continue;if(prepareGuestDefender(cu))continue;cu.assassinActive=false;cu.weapon=null;cu.target=null;cu.speed=Math.max(cu.speed,3.6);cu.emote={k:'!',t:2.5};cu.mood='scared';if(cu.seat){cu.seat=null}leave(cu,true);cu.mood='scared'}
   R.orders=[];R.spots=[null,null,null,null,null];
   for(const a of Object.values(R.actors)){if(a.floor!==0)continue;const s=staffById(a.sid);if(!s)continue;
-    a.order=null;a.combat=true;a.state='combat';a.path=[];a.legs=[];a.cb=null;a.target=null;a.scrub=false;a.hp=a.maxHp=100+12*(s.lvl-1);a.cd=rnd(.2,.6);a.weapon=null;a.hurtT=0;a.repathT=0}
-  equipStaff(true);
+    a.order=null;a.combat=true;a.state='combat';a.path=[];a.legs=[];a.cb=null;a.target=null;a.scrub=false;normalizeStaffHealth(s);a.maxHp=staffMaxHp(s);a.hp=s.hp;a.cd=rnd(.2,.6);a.weapon=null;a.hurtT=0;a.repathT=0}
+  if(R.custs.some(c=>c.combat)){R.rob.mode='fight';R.rob.wasArmed=true}equipStaff(true);
   sfx('alarm');duckMusic(true);
   const W=ROB_WEAP[robbers[0].weapon],many=robbers.length>1;
   say({who:'robber',look:robbers[0].look,lines:['* Nobody move! This is a {r}robbery{/}!'],auto:1.6,fast:true,tag:'robstart'});
@@ -2157,7 +2163,7 @@ function startRobbery(opt={}){
 }
 function equipStaff(quiet){
   if(!R.rob)return;const pool=[];for(const k of ARM_ORDER)for(let i=0;i<(G.arms[k]||0);i++)pool.push(k);
-  const fs_=fighters().sort((a,b)=>(staffById(b.sid)?.lvl||0)-(staffById(a.sid)?.lvl||0));
+  const fs_=fighters().filter(a=>a.kind!=='cust').sort((a,b)=>(staffById(b.sid)?.lvl||0)-(staffById(a.sid)?.lvl||0));
   for(const a of fs_)if(a.weapon){const i=pool.indexOf(a.weapon);if(i>=0)pool.splice(i,1)}
   for(const a of fs_)if(!a.weapon&&pool.length)a.weapon=pool.shift();
   if(R.rob.mode==='surrender'&&hasArms()&&!R.rob.grabbed){R.rob.mode='fight';if(!quiet)say({who:'narrator',lines:['* Your team grabs the new weapons. {y}Time to fight back!{/}'],auto:2,fast:true})}
@@ -2203,20 +2209,18 @@ function strike(a,v,dmg,ranged,wk){
   else{a.swingT=.25;sfx(wk==='knife'?'slash':'thwack');rob.fx.push({k:'bonk',x:vx,y:vy-8,life:.4,max:.4,text:wk==='knife'?'SLASH':'BONK'})}
   hurt(v,dmg);
 }
-function hurt(v,dmg){
-  if(v.hp<=0)return;v.hp-=dmg;v.hurtT=.18;const px=v.x*T,py=(WALL+v.y)*T-20,f=G.floors[0];
-  for(let i=0;i<6;i++)addPart(px+rnd(-4,4),py+rnd(-6,6),'blood',{floor:0});
-  if(Math.random()<.6)addDirt(0,clamp(Math.floor(v.x+rnd(-.45,.45)),0,f.w-1),clamp(Math.floor(v.y+rnd(-.2,.6)),0,f.h-1),'blood',true);
-  sfx('hurt');if(v.hp<=0)kill(v);
+function hurt(v,dmg){damageEntity(v,dmg)}
+function addCorpse(v,who){
+ const fi=v.floor||0,f=G.floors[fi];let c=clamp(Math.floor(v.x),0,f.w-1),r=clamp(Math.floor(v.y),0,f.h-1);
+ if(fi===0&&r<=1&&c<=4)r=Math.min(2,f.h-1);
+ f.dirt.push({id:uid(),c,r,kind:'corpse',hp:6,s:Math.random(),who,look:v.look});addDirt(fi,c,r,'blood',true);
 }
-function addCorpse(v,who){const f=G.floors[0];let c=clamp(Math.floor(v.x),0,f.w-1),r=clamp(Math.floor(v.y),0,f.h-1);if(r<=1&&c<=4)r=Math.min(2,f.h-1);f.dirt.push({id:uid(),c,r,kind:'corpse',hp:6,s:Math.random(),who,look:v.look});addDirt(0,c,r,'blood',true)}
 function kill(v){
-  const rob=R.rob;sfx('die');
-  if(v.kind==='robber'){v.state='dead';rob.killed++;rob.meat++;G.meat=(G.meat||0)+1;G.meatEver=1;addCorpse(v,'robber');
-    floatText(v.x*T,(WALL+v.y)*T-50,'+1 Suspicious Meat','#cf5a72',.2);
+  if(v.kind==='cust'){killCustomer(v);return}const rob=R.rob;sfx('die');
+  if(v.kind==='robber'){v.state='dead';rob.killed++;addCorpse(v,'robber');
     if(v.loot){G.money+=v.loot;rob.recovered+=v.loot;floatText(v.x*T,(WALL+v.y)*T-72,'+'+fmt(v.loot)+' back!','#3c977a');for(let i=0;i<10;i++)addPart(v.x*T,(WALL+v.y)*T-30,'coin',{floor:0});v.loot=0}
   }else{const s=staffById(v.sid);addCorpse(v,'staff');
-    if(s){awardTombstone(s.name);rob.lost.push(s.name);G.staff=G.staff.filter(x=>x!==s);G.stats.staffLost=(G.stats.staffLost||0)+1;G.rating=Math.max(0,G.rating-.12);say({who:'narrator',lines:[`* ${s.name} didn't make it...`,'* A named tombstone was added to furniture storage.'],auto:1.8,fast:true})}
+    if(s){awardTombstone(s.name);if(rob)rob.lost.push(s.name);cancelGuestOrder(v);s.hp=0;G.staff=G.staff.filter(x=>x!==s);G.stats.staffLost=(G.stats.staffLost||0)+1;G.rating=Math.max(0,G.rating-.12);say({who:'narrator',lines:[`* ${s.name} didn't make it...`,'* A named tombstone was added to furniture storage.'],auto:1.8,fast:true})}
     delete R.actors[v.sid]}
   R.dirty=true;
 }
@@ -2243,6 +2247,7 @@ function ownerAttack(r){
 }
 function updateRobbery(dt){
   const rob=R.rob;if(!rob)return;rob.t+=dt;rob.ownerCd-=dt;
+  for(const cu of R.custs)if(cu.combat&&!cu.dead)updateCombatStaff(cu,{lvl:1},dt);
   for(const r of rob.robbers)updateRobber(r,dt);
   for(const f of rob.fx)f.life-=dt;rob.fx=rob.fx.filter(f=>f.life>0);
   if(!liveRobbers().length){rob.endT=(rob.endT??1.2)-dt;if(rob.endT<=0)endRobbery()}
@@ -2251,8 +2256,9 @@ function endRobbery(){
   const rob=R.rob;if(!rob)return;R.rob=null;duckMusic(false);sayDropTag('robstart');
   for(const a of Object.values(R.actors)){if(!a.combat)continue;a.combat=false;a.handsUp=false;a.weapon=null;a.path=[];a.legs=[];a.cb=null;a.hurtT=0;
     if(a.kind==='barista'){if(inCounter(a)){a.state='idle';a.y=.55}else{a.state='return';goTo(a,0,{c:5,r:0},()=>{a.state='idle';a.y=.55;a.x=Math.min(a.x,5.2)})}}else a.state='idle'}
+  for(const cu of R.custs)if(cu.combat&&!cu.dead){cu.combat=false;cu.handsUp=false;cu.weapon=null;leave(cu,false)}
   const net=rob.stolen-rob.recovered,lines=[];
-  if(rob.killed)lines.push(`* You stopped ${rob.killed} robber${rob.killed>1?'s':''}. They left behind some... {p}suspicious meat{/}.`);
+  if(rob.killed)lines.push(`* You stopped ${rob.killed} robber${rob.killed>1?'s':''}. Clear the bodies to collect {p}suspicious meat{/}.`);
   if(net>0)lines.push(`* The robbers got away with {r}${fmt(net)}{/}.${!rob.wasArmed&&!rob.lost.length?' Nobody got hurt, at least.':''}`);
   else if(rob.recovered>0)lines.push('* You got every cent back!');
   if(rob.lost.length)lines.push(`* We lost ${rob.lost.join(' and ')}. Rest in peace.`);
@@ -2319,7 +2325,7 @@ const corpseOn=fi=>G.floors[fi]&&G.floors[fi].dirt.some(d=>d.kind==='corpse');
 function scareCustomers(){
   if(R.rob)return;
   for(const cu of R.custs){
-    if(cu.fled||cu.state==='exit'||cu.state==='leaving')continue;
+    if(cu.dead||cu.state==='trapped'||cu.combat||cu.assassinActive||cu.fled||cu.state==='exit'||cu.state==='leaving')continue;
     if(cu.y<.35&&cu.state==='enter')continue;
     if(!corpseOn(cu.floor))continue;
     cu.fled=true;const wasSeated=cu.state==='sitting';
@@ -2343,6 +2349,7 @@ function pickSitAct(cu){
   pool=pool.filter(a=>a!=='chat'||others);return pick(pool.length?pool:['sip']);
 }
 function sitDown(cu,fi,it){
+  if(FURN[it.id]?.trap){triggerChairTrap(cu,fi,it);return}
   cu.state='sitting';cu.x=it.c+.5;cu.y=it.r+.5;cu.sitT=0;cu.timer=cu.timerMax=rnd(16,26);
   cu.act=pickSitAct(cu);cu.sipT=rnd(1,3);cu.sip=0;cu.drink=1;cu.page=0;
   const sd=FURN[it.id];cu.seatKind=it.id;cu.deep=['armchair','sofa','beanbag','booth','eggchair'].includes(it.id);
@@ -2442,6 +2449,8 @@ function renderScene(){
     if(fd.light)pushLight((it.c+.5)*T,(WALL+it.r)*T+(fd.light.flicker?20:-6),fd.light.r*(fd.light.flicker?1+.06*Math.sin(t*11):1),fd.light.c,fd.light.i*(fd.light.flicker?.85+.15*Math.sin(t*13+Math.sin(t*7)):1))}
   if(fi===0){ents.push({y:.25,fn:()=>drawBackCounter(c)});ents.push({y:1.95,fn:()=>drawCounter(c)})}
   for(const cu of R.custs){if(cu.floor!==fi)continue;const sit=cu.state==='sitting';ents.push({y:cu.y+(sit?.42:0),fn:()=>drawCust(c,cu,sit)})}
+  for(const dog of R.dogs||[])if(dog.floor===fi)ents.push({y:dog.y+.15,fn:()=>drawCompanionDog(c,dog)});
+  for(const trap of R.traps||[])if(trap.fi===fi)ents.push({y:trap.it.r+1,fn:()=>drawChairBlades(c,trap)});
   for(const k in R.actors){const a=R.actors[k];if(a.floor!==fi)continue;ents.push({y:a.y,fn:()=>drawActor(c,a)})}
   if(R.rob&&fi===0)for(const r of R.rob.robbers){if(r.state==='dead'||r.state==='gone'||(r.state==='enter'&&r.delay>0))continue;ents.push({y:Math.max(r.y,0),fn:()=>drawActor(c,r)})}
   ents.sort((a,b)=>a.y-b.y);for(const e of ents)e.fn();
@@ -2503,7 +2512,7 @@ function drawDirt(c,d,x,y){c.save();const a=d.kind==='trash'?1:.45+.55*d.hp/3;c.
     case 'corpse':{c.globalAlpha=1;c.fillStyle='rgba(150,22,38,.85)';ell(c,x-2,y+4,25,9);c.fill();c.save();c.translate(x+16,y+3);c.rotate(-Math.PI/2);drawPerson(c,0,0,d.look||{skin:'#e8b48f',hairC:'#3b2a22',shirt:'#8cc4ea',hs:0},{mood:'dead'});c.restore();const fr=d.hp/6;if(fr<1){c.fillStyle=`rgba(255,255,255,${(1-fr)*.45})`;ell(c,x-2,y,26,11);c.fill()}break}
     case 'trash':c.translate(x,y);c.rotate(1.3);c.beginPath();c.moveTo(-6,-5);c.lineTo(6,-6);c.lineTo(4,6);c.lineTo(-4,6);c.closePath();fs(c,'#fffaf3');c.fillStyle='#a8714a';c.fillRect(-5,-2,10,3);c.rotate(-1.3);c.fillStyle='#d9cfc6';ell(c,9,4,4,2.5);c.fill();c.stroke();break;
   }c.restore()}
-function drawCust(c,cu,sit){const x=cu.x*T,fy=(WALL+cu.y+(sit?.62:.32))*T;c.save();c.globalAlpha=clamp(cu.alpha,0,1);
+function drawCust(c,cu,sit){if(cu.combat){drawActor(c,cu);drawSpecialBadge(c,cu);return}const x=cu.x*T,fy=(WALL+cu.y+(sit?.62:.32))*T;c.save();c.globalAlpha=clamp(cu.alpha,0,1);
   if(cu.type.id==='vip'){c.fillStyle='rgba(245,200,75,.25)';ell(c,x,fy-1,15,5);c.fill()}
   if(cu.state==='reacting'&&cu.rejection==='vomit'){
     c.translate(x,fy);c.rotate(.28+Math.sin(cu.reactT*24)*.13);
@@ -2511,7 +2520,7 @@ function drawCust(c,cu,sit){const x=cu.x*T,fy=(WALL+cu.y+(sit?.62:.32))*T;c.save
   }else if(sit)drawSitter(c,cu);
   else if(cu.state==='standUp'){const u=1-cu.standT/.9;drawPerson(c,x,fy,cu.look,{phase:cu.phase*4,handsUp:u<.6,mood:'happy',blinkT:.05})}
   else drawPerson(c,x,fy,cu.look,{walk:cu.walking,phase:cu.phase,back:cu.face==='back'&&!cu.walking,blinkT:cu.blink,mood:cu.flee?'scared':cu.mood,carry:cu.carry,handsUp:!!cu.flee||(cu.state==='reacting'&&cu.rejection==='throw'&&cu.reactT>.8)});
-  c.restore()}
+  c.restore();drawSpecialBadge(c,cu)}
 function drawCustOverlay(c,cu){const x=cu.x*T,sit=cu.state==='sitting',fy=(WALL+cu.y+(sit?.62:.32))*T,hy=fy-(sit?56:62);
   drawSitBubble(c,cu,x,hy);
   if((cu.state==='queue'||cu.state==='toQueue')&&!cu.walking){const fr=clamp(cu.qpat/cu.qpatMax,0,1),rx=x+13,ry=fy-46;
@@ -2566,6 +2575,7 @@ function sceneClick(e){
   const c=Math.floor(p.x/T),r=Math.floor((p.y-WALL*T)/T),onWall=p.y<WALL*T;
   if(R.edit){editClick(fi,f,c,r,onWall);return}
   if(R.rob&&fi===0){let br=null,bd=30;for(const rb of liveRobbers()){const x=rb.x*T,y=(WALL+rb.y+.32)*T-22;const d=Math.hypot(p.x-x,p.y-y);if(d<bd){bd=d;br=rb}}if(br){ownerAttack(br);return}}
+  if(dismissEnteringAssassin(p,fi))return;
   // dirt (nearest within reach)
   let best=null,bd=30;for(const d of f.dirt){const it=itemAt(fi,d.c,d.r);const dx=(d.c+.5)*T,dy=d.counter?counterSpillY():(WALL+d.r)*T+(it&&FURN[it.id].role!=='rug'?(FURN[it.id].role==='table'?16:26):T/2);const dist=Math.hypot(p.x-dx,p.y-dy);if(dist<bd){bd=dist;best=d}}
   if(best){scrub(fi,best);return}
@@ -2606,7 +2616,7 @@ function drawActor(c,a){
     if(melee){const sw=(a.swingT||0)>0?Math.sin((1-a.swingT/.25)*Math.PI)*1.9:0;ang=right?-1.15+sw:Math.PI+1.15-sw}
     c.rotate(ang);if(!right)c.scale(1,-1);drawWeapon(c,wk==='gun'?'pistol':wk);c.restore()}
   if(isR&&a.loot){ol(c,1.6);circ(c,fx-11,fy-15,7);fs(c,'#e9d7c0');c.fillStyle=INK;c.font='700 8px Fredoka, sans-serif';c.textAlign='center';c.fillText('$',fx-11,fy-12)}
-  if((isR||a.combat)&&a.hp>0&&(isR||a.hp<a.maxHp)){const w=28,fr=clamp(a.hp/a.maxHp,0,1);rr(c,fx-w/2,fy-62,w,6,3);ol(c,1.4);fs(c,'#fffaf3');c.fillStyle=isR?'#e0605e':'#5fbf9b';rr(c,fx-w/2+1.2,fy-60.8,(w-2.4)*fr,3.6,1.8);c.fill()}
+  if((isR||a.combat||a.hp<a.maxHp)&&a.hp>0&&(isR||a.hp<a.maxHp)){const w=28,fr=clamp(a.hp/a.maxHp,0,1);rr(c,fx-w/2,fy-62,w,6,3);ol(c,1.4);fs(c,'#fffaf3');c.fillStyle=isR?'#e0605e':'#5fbf9b';rr(c,fx-w/2+1.2,fy-60.8,(w-2.4)*fr,3.6,1.8);c.fill()}
   c.restore();
 }
 /* ============ seated customer animation ============ */
@@ -2806,10 +2816,10 @@ function rushLine(){const r=rushNow(),n=nextRush();const q=R.queue.length;
   if(n)return `<div class="rushline">Next rush: <b>${n.name}</b> at ${clockStr(n.from)}.${q?` ${q} waiting in line.`:''}</div>`;
   return q?`<div class="rushline">${q} waiting in line.</div>`:'';}
 function panelOrders(){
-  let h=`<h2>Orders</h2><p class="sub">Tap a customer or press <b>Make</b> to brew it yourself. Better drinks earn more and get bigger tips. Under 50% quality makes customers angry; drinks under 25% get thrown back.</p>`;h+=rushLine();
+  let h=`<h2>Orders</h2><p class="sub">Tap a customer or press <b>Make</b> to brew it yourself. Better drinks earn more and get bigger tips. Under 50% quality makes customers angry; drinks under 25% get thrown back. Doctors require drinks above 80% quality.</p>`;h+=rushLine();
   if(!R.orders.length){h+=`<div class="empty"><svg viewBox="0 0 100 100"><ellipse cx="50" cy="82" rx="34" ry="6" fill="#efdcc6"/><path d="M24 40h46v22a20 20 0 01-20 20h-6a20 20 0 01-20-20z" fill="#fff" stroke="#4a3238" stroke-width="3"/><path d="M70 46h5a8 8 0 010 16h-5" fill="none" stroke="#4a3238" stroke-width="3"/><path d="M38 30c0-6 6-6 6-12M50 30c0-6 6-6 6-12" stroke="#cdb9a7" stroke-width="3" fill="none" stroke-linecap="round"/></svg>${!G.dayActive?'The café is closed. Get ready, then press <b>Open café</b>.':G.open?'Waiting for customers to stop by…':'Closing time. No new customers.'}</div>`}
   for(const o of R.orders){const cu=o.cust;const vip=cu.type.id==='vip';
-    h+=`<div class="order ${vip?'vip':''}"><img src="${iconURL('rec:'+o.rec.id)}" alt=""><div><div class="who"><span>${esc(cu.type.name)}</span>${vip?'<span class="tag star">pays double</span>':''}${cu.type.critic?'<span class="tag no">critic</span>':''}${cu.floor!==0?'':''}</div><div class="what">${esc(o.rec.name)}</div><div class="pbar"><span id="pb${o.id}" style="width:${clamp(cu.pat/cu.patMax,0,1)*100}%"></span></div></div>
+    h+=`<div class="order ${vip?'vip':''}"><img src="${iconURL('rec:'+o.rec.id)}" alt=""><div><div class="who"><span>${esc(cu.type.name)}</span>${vip?'<span class="tag star">pays double</span>':''}${cu.type.critic?'<span class="tag no">critic</span>':''}${cu.type.id==='doctor'?'<span class="tag no">Needs &gt;80%</span>':''}${cu.type.weapon?'<span class="tag ok">Armed defender</span>':''}${cu.floor!==0?'':''}</div><div class="what">${esc(o.rec.name)}</div><div class="pbar"><span id="pb${o.id}" style="width:${clamp(cu.pat/cu.patMax,0,1)*100}%"></span></div></div>
     <div>${o.status==='waiting'?`<button class="btn" data-act="make" data-id="${o.id}">Make</button>`:o.status==='barista'?'<span class="tag ok">Barista</span>':'<span class="tag star">You</span>'}</div></div>`}
   if(R.log.length)h+=`<div class="log">${R.log.map(l=>`<div>${esc(l)}</div>`).join('')}</div>`;
   return h;
@@ -2828,7 +2838,7 @@ function staffCard(s,hired){
   else if(d.star>G.maxStar)btns=`<span class="tag star">Baristas need ${'★'.repeat(d.star)}</span>`;
   else if(count>=slots)btns=`<span class="tag no">${d.name} spots full (${count}/${slots})</span>`;
   else btns=`<button class="btn" data-act="hire" data-id="${s.id}" data-price="${hireCost(s)}">Hire · ${fmt(hireCost(s))}</button>`;
-  return `<div class="staff"><canvas id="pt_${s.id}" width="144" height="144"></canvas><div style="min-width:0"><div style="font-family:var(--display);font-weight:600;font-size:17px">${esc(s.name)}</div><div class="reqs">${s.special?'<span class="tag star">★ Special</span>':''}<span class="tag">${d.name}</span><span class="tag ${t.wage&&t.wage<1&&t.hireM?'no':'star'}">${esc(t.name)}</span></div><div class="lvl">${[1,2,3,4,5].map(i=>`<i class="${i<=s.lvl?'f':''}"></i>`).join('')}</div><p class="sub" style="margin:2px 0 6px">${esc(t.desc)}</p><div class="kv">${staffStats(s)}<span>Wage</span><b>${fmt(wageOf(s))}/day</b></div><div class="rowbtns">${btns}</div></div></div>`;
+  return `<div class="staff"><canvas id="pt_${s.id}" width="144" height="144"></canvas><div style="min-width:0"><div style="font-family:var(--display);font-weight:600;font-size:17px">${esc(s.name)}</div><div class="reqs">${s.special?'<span class="tag star">★ Special</span>':''}<span class="tag">${d.name}</span><span class="tag ${t.wage&&t.wage<1&&t.hireM?'no':'star'}">${esc(t.name)}</span></div><div class="lvl">${[1,2,3,4,5].map(i=>`<i class="${i<=s.lvl?'f':''}"></i>`).join('')}</div><p class="sub" style="margin:2px 0 6px">${esc(t.desc)}</p><div class="kv">${staffStats(s)}<span>Health</span><b>${Math.ceil(s.hp??staffMaxHp(s))} / ${staffMaxHp(s)}</b><span>Wage</span><b>${fmt(wageOf(s))}/day</b></div><div class="rowbtns">${btns}</div></div></div>`;
 }
 function panelStaff(){
   const cnt=r=>G.staff.filter(s=>s.role===r).length;
@@ -2907,7 +2917,7 @@ function buy(key,quiet){
 }
 function act(a,ds,el){
   initAudio();
-  if(a==='debugToggle')return;
+  if(a==='debugToggle'){setDebug(!debugOn);return}
   if(a.startsWith('dbg')){if(debugOn)debugAct(a);return}
   if(menuChoiceAction(a,ds))return;
   if(shopBrowseAction(a,ds,el))return;
@@ -2980,7 +2990,7 @@ function applySave(s){
   for(const f of G.floors){f.items=(f.items||[]).filter(i=>FURN[i.id]);f.wallItems=(f.wallItems||[]).filter(i=>FURN[i.id]);f.dirt=f.dirt||[];if(!WALLS[f.wall])f.wall='white';if(!FLOORS[f.floor])f.floor='concrete';G.styles.wall[f.wall]=1;G.styles.floor[f.floor]=1}
   let mx=0;for(const f of G.floors)for(const d of f.dirt)mx=Math.max(mx,d.id||0);UID=mx+1;
   if(!Array.isArray(G.staff)){const old=G.staff||{};G.staff=[];for(const k of['janitor','barista'])if(old[k]&&old[k].hired){const nm=STAFF_NAMES.find(n=>!G.staff.some(x=>x.name===n));G.staff.push({id:'s'+uid()+'_m',name:nm,role:k,lvl:old[k].lvl||1,trait:'steady',look:staffLook(k)})}}
-  G.staff=G.staff.filter(s=>s&&STAFF[s.role]);if(!Array.isArray(G.cands)||!G.cands.length)G.cands=genCandidates();normalizeEmployees();
+  G.staff=G.staff.filter(s=>s&&STAFF[s.role]);normalizeSpecialSave();if(!Array.isArray(G.cands)||!G.cands.length)G.cands=genCandidates();normalizeEmployees();
   return true;
 }
 async function downloadSave(){
@@ -3099,7 +3109,7 @@ function shopItems(cat){
     out.push({key:'ing:meat',name:'Suspicious Meat',desc:'One finite portion. Used by meat pies and custom drinks. Shares your existing meat supply.',icon:'ing:meat',price:ING.meat.price,star:ING.meat.star,repeat:true,note:`${G.meat} portions left`,warn:G.meat<3,unl:unlocksBy('ing','meat')});
     if(G.meat>0)out.push({key:'sellmeat',act:'sellmeat',name:'Suspicious Meat',desc:`The butcher out back pays ${fmt(MEAT_PRICE)} each. No questions asked.`,icon:'ing:meat',price:MEAT_PRICE,sell:true,count:G.meat});
   }else if(cat==='equipment'){for(const[id,d]of Object.entries(EQ))out.push({key:'eq:'+id,name:d.name,desc:d.desc,icon:'eq:'+id,price:d.price,star:d.star,owned:!!G.eq[id],unl:unlocksBy('eq',id)})}
-  else if(cat==='furniture'||cat==='decor'){for(const[id,d]of Object.entries(FURN).sort((a,b)=>(a[1].star-b[1].star)||(a[1].price-b[1].price))){if(d.reward||(cat==='decor')!==(d.kind==='wall'))continue;const role={seat:'Seat',table:'Table',decor:'Decor',rug:'Rug'}[d.role];out.push({key:'furn:'+id,name:d.name,desc:`${d.theme?COLLECTIONS[d.theme].name+' collection · ':''}${role} · beauty +${d.beauty}${d.light?' · glows at night':''}`,icon:'furn:'+id,price:d.price,star:d.star,theme:d.theme||'classic',repeat:true,count:(G.inv[id]||0)+placedCount(id)})}}
+  else if(cat==='furniture'||cat==='decor'){for(const[id,d]of Object.entries(FURN).sort((a,b)=>(a[1].star-b[1].star)||(a[1].price-b[1].price))){if(d.reward||(cat==='decor')!==(d.kind==='wall'))continue;const role={seat:'Seat',table:'Table',decor:'Decor',rug:'Rug'}[d.role];out.push({key:'furn:'+id,name:d.name,desc:`${d.theme?COLLECTIONS[d.theme].name+' collection · ':''}${role}${d.trap?' · Lethal blade trap when occupied':''} · beauty +${d.beauty}${d.light?' · glows at night':''}`,icon:'furn:'+id,price:d.price,star:d.star,theme:d.theme||'classic',repeat:true,count:(G.inv[id]||0)+placedCount(id)})}}
   else if(cat==='style'){
     for(const[id,d]of Object.entries(WALLS))out.push({key:'wall:'+id,group:'Walls',name:d.name,desc:d.dirty?'The original grime.':`Style +${d.beauty}`,icon:'wall:'+id,price:G.styles.wall[id]?0:d.price,star:d.star,use:!!G.styles.wall[id],inuse:f.wall===id});
     for(const[id,d]of Object.entries(FLOORS))out.push({key:'floor:'+id,group:'Floors',name:d.name,desc:d.dirty?'Squeaky and soggy.':`Style +${d.beauty}`,icon:'floor:'+id,price:G.styles.floor[id]?0:d.price,star:d.star,use:!!G.styles.floor[id],inuse:f.floor===id});
@@ -3168,7 +3178,7 @@ function renderShop(resetScroll){
     h+=`<h3 class="shead">${q?`Results for “${esc(q)}”`:'Matching items'} <small>${all.length} items · all departments</small></h3>`+(all.length?`<div class="sgrid">${all.map(([it,k])=>shopCard(it,k)).join('')}</div>`:'<div class="empty">No items match. Try another search or stock filter.</div>');
   }else if(cat==='featured')h+=featuredHTML();
   else{
-    if(cat==='security')h+=`<div class="sbanner"><img src="${iconURL('arm:bat')}" alt=""><div><b>Robbery risk: ${Math.round(ROB_CHANCE*100)}% each day.</b> Robbers at your rating carry <b>${G.maxStar>=4?'guns':G.maxStar>=2?'knives':'bats'}</b>.</div></div>`;
+    if(cat==='security')h+=`<div class="sbanner"><img src="${iconURL('arm:bat')}" alt=""><div><b>Robbery risk: ${Math.round(G.robRisk*100)}% for the next daily roll. +5 percentage points after a quiet day; resets to 0% when robbers enter.</b> Robbers at your rating carry <b>${G.maxStar>=4?'guns':G.maxStar>=2?'knives':'bats'}</b>.</div></div>`;
     const groups=shopSections(cat),items=shopItems(cat).filter(filter).sort(shopCompare),selected=R.shopSection||'all';
     let count=0;
     for(const [key,label,note]of groups){if(selected!=='all'&&selected!==key)continue;const list=items.filter(it=>shopItemSection(cat,it)===key);if(!list.length)continue;count+=list.length;h+=`<section class="shop-department"><h3 class="shead">${label}<small>${list.length} items${note?' · '+note:''}</small></h3><div class="sgrid">${list.map(it=>shopCard(it,cat)).join('')}</div></section>`}
@@ -3239,15 +3249,37 @@ function panelStorage(){
   return h;
 }
 
-/* Debug tools are disabled in the player build. Clear preferences from older builds. */
-const debugOn=false;
-try{localStorage.removeItem('mapamapa.debug')}catch(e){}
-function setDebug(){renderDebug()}
+/* Debug controls: enabled by default for this development build. */
+let debugOn=true;try{debugOn=localStorage.getItem('mapamapa.debug.v49')!=='0'}catch(e){}
+function setDebug(on){debugOn=!!on;try{localStorage.setItem('mapamapa.debug.v49',debugOn?'1':'0')}catch(e){}renderDebug();toast(debugOn?'Debug mode on. Press ~ to hide.':'Debug mode off.');R.dirty=true}
 function renderDebug(){
-  const el=$('#debug');el.hidden=true;el.replaceChildren();
-  $('#sceneWrap').classList.remove('dbg');
+ const el=$('#debug'),on=debugOn&&G&&$('#title').hidden;el.hidden=!on;$('#sceneWrap').classList.toggle('dbg',!!on);if(!on)return;
+ if(el.dataset.built)return;el.dataset.built='1';
+ el.innerHTML=`<button class="dbg-head" data-act="dbgFold" aria-expanded="true">DEBUG ▾</button><div class="dbg-body"><p>Changes affect this café and its saves.</p>
+ <button data-act="dbgMoney">+ $1,000</button><button data-act="dbgRestock">Restock all supplies</button><button data-act="dbgEquip">Unlock equipment</button><button data-act="dbgStar">+1 star</button>
+ <button data-act="dbgCust">Spawn customer</button><button data-act="dbgBad">Test angry customer (40%)</button><button data-act="dbgThrow">Test thrown drink (10%)</button>
+ <div class="dbg-rob"><button data-act="dbgRob">Test robbery</button><select id="dbgWeap" aria-label="Robber weapon"><option value="">By stars</option><option value="bat">Bats</option><option value="knife">Knives</option><option value="gun">Guns</option></select></div>
+ <button data-act="dbgClean">Clean everything</button><button data-act="dbgRush">Skip to next rush</button><button data-act="dbgClose">Skip to closing</button><button class="dbg-off" data-act="dbgOff">Turn off debug</button></div>`;
 }
-function debugAct(){}
+function debugAct(a){
+ if(!G||!debugOn)return;
+ switch(a){
+ case 'dbgMoney':G.money+=1000;sfx('bigcoin');break;
+ case 'dbgRestock':G.beans+=300;G.meat+=10;G.meatEver=Math.max(1,G.meatEver);for(const[id,d]of Object.entries(ING))if(!d.hidden){G.ing[id]=1;if(d.pack)G.stock[id]=(G.stock[id]||0)+60}break;
+ case 'dbgEquip':for(const id of Object.keys(EQ))G.eq[id]=1;break;
+ case 'dbgStar':if(G.maxStar<5){G.rating=Math.min(5,G.maxStar+1);checkStars()}break;
+ case 'dbgCust':if(G.dayActive&&G.open&&!R.rob)spawnCustomer(true);else toast('Open the café first.','bad');break;
+ case 'dbgRob':if(!R.rob)startRobbery({weapon:$('#dbgWeap').value||null});break;
+ case 'dbgBad':case 'dbgThrow':{const o=R.orders.find(o=>o.status==='waiting'&&o.rec.cup!=='plate'&&stockReady(o.rec));if(o)serveOrder(o,a==='dbgThrow'?.1:.4,false);else toast('Wait for a stocked drink order first.','bad');break}
+ case 'dbgClean':R.throws=[];for(const f of G.floors)f.dirt=[];sfx('good');break;
+ case 'dbgRush':{const n=G.dayActive&&nextRush();if(n)G.time=n.from;break}
+ case 'dbgClose':if(G.dayActive)G.time=Math.max(G.time,DAY_END-21);break;
+ case 'dbgOff':setDebug(false);break;
+ case 'dbgFold':{const el=$('#debug'),fold=!el.classList.contains('fold');el.classList.toggle('fold',fold);el.querySelector('.dbg-head').setAttribute('aria-expanded',String(!fold));break}
+ }
+ R.amb=computeAmb();R.dirty=true;
+}
+document.addEventListener('keydown',e=>{if(e.code==='Backquote'&&G&&$('#title').hidden&&!/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)){e.preventDefault();setDebug(!debugOn)}});
 /* Mapamapa v4 — Signature Studio, specialty stock, and independent save slots. */
 const SPECIALTY=[
  ['mango','Mango','#f5b52b','fruit',18],['banana','Banana','#f8dc70','fruit',16],
@@ -3412,7 +3444,13 @@ function performSlotLoad(i,kind){
  chosenSlot=i;R.pendingNew=false;closeStudio();startGame(false);toast(`Loaded Slot ${i+1} · ${kind==='auto'?'autosave':'manual checkpoint'}`,'good');
 }
 const UPDATE_LOG=[
- {version:'4.x · The Big Café Update',date:'November 7, 2026 · Includes 4.0–4.8',items:[
+ {version:'4.x · The Big Café Update',date:'November 10, 2026 · Includes 4.0–4.10',items:[
+ 'Click an arriving assassin before they order to chase them away. Floating special-guest names are removed; uniforms and carried equipment identify them.',
+ 'Some ordinary customers bring a small animated dog. Dogs follow their owner, rest nearby, and leave when the owner departs.',
+ 'The 3-star Booby-Trap Chair is sold with furniture. Sitting triggers retractable blades; clearing any body completely grants one Suspicious Meat, whether cleaned by you or a janitor. Robber kills no longer grant meat immediately.',
+ 'Robbery risk starts at 5%, grows by 5 percentage points after each robbery-free eligible day, caps at 100%, and resets to 0% when robbers arrive. Tutorial and day one remain protected.',
+ 'Two or three special visitors per day: strict doctors reject drinks at 80% quality or below; police with pistols and 3-star soldiers with rifles defend the café; 3-star assassins attack one customer after receiving an order, then flee.',
+ 'Explosive drinks now hurt nearby customers and employees on the same floor, with damage falling over distance. Employee health persists in saves; fatal injuries award named tombstones.',
  'Refined all 199 furniture illustrations with richer material shading, wood grain and polished finishes; collection pieces gain upholstery stitching, woven rugs, glass reflections, crafted trim, and distinct gallery artwork.',
  'A cute new title screen with an illustrated café, bear barista, café cat, pastel sky, individually dancing game-name letters, a garden butterfly, drifting petals, a waving and blinking barista, a breathing cat with a swishing tail, rising steam, swaying signs, drifting clouds, twinkling lights, and clearer save/start controls. Responsive on phones and tablets, with reduced-motion support.',
  'Signature Studio unlocks at 3 stars with a replayable guided tutorial. Create up to 20 custom drinks from six bases, choose up to 5 add-ins, and give each drink a name. Ice adds the Iced prefix; the base adds its drink type.',
@@ -3424,7 +3462,7 @@ const UPDATE_LOG=[
  '120 themed furniture and décor pieces across Japanese Kissaten, Korean Hanok, European Bistro, Medieval Tavern, Antique Study, Vintage Corner, Retro Diner, Arcade Lounge, Modern Minimal, and Futuristic Orbital. Includes functional seating, tables, rugs, lights, and decorative statement pieces.',
  'The former Asian collection is replaced with distinct Japanese designs, and a separate Korean collection adds hanji, bojagi, bandaji, dalhangari, and minhwa pieces. Existing furniture placements are preserved.',
  '10 new walls and 10 new floors have distinct patterns and star unlocks. Browse the shop by department and theme, filter stock/availability, sort by price or name, and search across all departments.',
- 'Debug mode is disabled in the player build; its toolbar button, keyboard shortcut, and cheat actions are unavailable.',
+ 'Debug mode is enabled by default in this build. Toggle it with the Debug button or ~; controls include money, supplies, equipment, stars, robbery tests, cleanup and time skips.',
  'Yuna KB is a normal random applicant, without a special badge, forced daily appearance, bundled traits, or guaranteed return after firing. Existing hired Yuna employees remain employed.',
  'Orders below 50% quality make customers angry, with reduced payment and no tip. Drinks below 25% get thrown onto the counter: no payment or tip, a cup animation with whoosh/splash sounds, and a spill you or a janitor can clean.',
  'Three café save slots each have a manual checkpoint and a rolling autosave every 20 real seconds, plus day-end/exit saving. Old saves migrate or import, portable save files work in normal browsers, and the update log is available from the title screen and café toolbar.',
@@ -3771,6 +3809,181 @@ function drawTitleCafe(c,t){
  for(const[a,b,s]of[[62,142,8],[564,204,10],[207,44,6],[563,82,6],[74,260,5]]){c.save();c.globalAlpha=.65+.25*Math.sin(t*.8+a);c.fillStyle='#c1a66b';star5(c,a,b+Math.sin(t*.5+a)*4,s*(.92+.1*Math.sin(t+a)),s*.3);c.fill();c.restore()}
  c.restore();
 }
+/* v4.9 — rare visitors, persistent robbery pressure, and shared damage. */
+const SPECIAL_GUESTS=[
+ {id:'doctor',name:'Doctor',pat:35,tip:[.2,.5],speed:2.3,star:0},
+ {id:'police',name:'Police Officer',pat:52,tip:[.15,.4],speed:2.3,star:0,weapon:'pistol'},
+ {id:'soldier',name:'Soldier',pat:55,tip:[.15,.4],speed:2.4,star:3,weapon:'rifle'},
+ {id:'assassin',name:'Assassin',pat:46,tip:[.1,.3],speed:2.6,star:3}
+];
+const staffMaxHp=s=>100+12*(Math.max(1,Number(s.lvl)||1)-1);
+function normalizeStaffHealth(s){const max=staffMaxHp(s);s.hp=Number.isFinite(s.hp)?clamp(s.hp,1,max):max}
+function normalizeSpecialSave(){
+ G.robRisk=Number.isFinite(G.robRisk)?clamp(G.robRisk,0,1):ROB_CHANCE;
+ G.lastRobberyDay=Number.isInteger(G.lastRobberyDay)?G.lastRobberyDay:-1;
+ G.riskSettledDay=Number.isInteger(G.riskSettledDay)?G.riskSettledDay:-1;
+ for(const s of G.staff||[])normalizeStaffHealth(s);
+ const d=G.specialDay;
+ if(!d||d.day!==G.day||!Array.isArray(d.times)||![2,3].includes(d.times.length))G.specialDay=null;
+ else{d.times=d.times.map(t=>clamp(Number(t)||DAY_START+90,DAY_START+60,DAY_END-90)).sort((a,b)=>a-b);d.arrived=clamp(Math.floor(Number(d.arrived)||0),0,d.times.length)}
+}
+function settleRobberyRisk(){
+ if(G.riskSettledDay===G.day)return;G.riskSettledDay=G.day;
+ if(G.day>=2&&G.tut<0&&G.lastRobberyDay!==G.day)G.robRisk=Math.min(1,Math.round((G.robRisk+.05)*100)/100);
+}
+function planSpecialGuests(){
+ const n=rndi(2,3);G.specialDay={day:G.day,arrived:0,times:Array.from({length:n},(_,i)=>DAY_START+80+i*(DAY_END-DAY_START-200)/n+rnd(0,55))};
+}
+function dueSpecialGuest(){
+ if(G.tut>=0||!G.dayActive||!G.open)return null;
+ if(!G.specialDay)planSpecialGuests();const d=G.specialDay;
+ if(d.arrived>=d.times.length||G.time<d.times[d.arrived])return null;
+ return pick(SPECIAL_GUESTS.filter(t=>t.star<=G.maxStar));
+}
+function initGuestHealth(cu){
+ cu.hp=cu.maxHp=cu.type.id==='soldier'?140:cu.type.id==='police'?120:100;
+ const id=cu.type.id,L=cu.look;
+ if(id==='doctor'){L.shirt='#fffaf3';L.pants='#527c85';L.acc='glasses'}
+ if(id==='soldier'){L.shirt='#65754b';L.pants='#46543b';L.acc='cap';L.capC='#596844'}
+ if(id==='police'){L.shirt='#496b9c';L.pants='#303d5a';L.acc='cap';L.capC='#334969'}
+ if(id==='assassin'){L.shirt='#393345';L.pants='#292632';L.acc='scarf';L.shades=true}
+}
+function cancelGuestOrder(v){
+ const o=v.order;if(!o)return;
+ for(const a of Object.values(R.actors))if(a.order===o){a.order=null;a.producing=null;if(!a.combat)a.state='idle'}
+ if(R.mg?.order===o)closeMinigame(true);
+ R.orders=R.orders.filter(x=>x!==o);v.order=null;
+}
+function releaseGuest(cu){cancelGuestOrder(cu);R.queue=R.queue.filter(x=>x!==cu);cu.qcell=null;if(cu.spot!=null&&R.spots[cu.spot]===cu.id)R.spots[cu.spot]=null;cu.spot=null;cu.seat=null;cu.path=[];cu.legs=[];cu.cb=null;cu.carry=false;cu.face=null}
+function prepareGuestDefender(cu){
+ if(!cu.type.weapon||cu.floor!==0||cu.y<0||cu.state==='leaving'||cu.state==='exit')return false;
+ releaseGuest(cu);cu.assassinActive=false;cu.combat=true;cu.state='combat';cu.weapon=cu.type.weapon;cu.cd=.25;cu.hurtT=0;cu.repathT=0;cu.alpha=1;cu.mood='angry';
+ return true;
+}
+function damageEntity(v,dmg){
+ if(!v||v.dead||v.state==='dead'||v.state==='gone'||!Number.isFinite(dmg)||dmg<=0)return;
+ const s=v.sid?staffById(v.sid):null;
+ if(v.hp==null){if(s){normalizeStaffHealth(s);v.hp=s.hp;v.maxHp=staffMaxHp(s)}else v.hp=v.maxHp=100}
+ if(v.hp<=0)return;v.hp=Math.max(0,v.hp-dmg);v.hurtT=.22;if(s)s.hp=v.hp;
+ const fi=v.floor||0,f=G.floors[fi];for(let i=0;i<5;i++)addPart(v.x*T,(WALL+v.y)*T-20,'blood',{floor:fi});
+ addDirt(fi,clamp(Math.floor(v.x),0,f.w-1),clamp(Math.floor(v.y),0,f.h-1),'blood',true);sfx('hurt');
+ if(v.hp<=0)kill(v);R.dirty=true;
+}
+function killCustomer(cu){
+ if(cu.dead)return;releaseGuest(cu);cu.hp=0;cu.dead=true;cu.combat=false;cu.assassinActive=false;cu.state='dead';addCorpse(cu,'customer');
+ G.stats.customerDeaths=(G.stats.customerDeaths||0)+1;G.stats.lost++;if(G.today)G.today.lost++;G.rating=Math.max(0,G.rating-.08);sfx('die');R.dirty=true;
+}
+function blastDamage(source){
+ const radius=3.25;
+ for(const v of [...R.custs,...Object.values(R.actors)]){
+  if(v===source||v.dead||v.floor!==source.floor||v.state==='exit')continue;
+  const d=dist(source,v);if(d>radius)continue;
+  damageEntity(v,Math.round(120*(1-d/(radius+1))));
+  if(v.kind==='cust'&&!v.dead&&!v.combat){releaseGuest(v);v.assassinActive=false;leave(v,true);v.mood='scared';v.flee=true;v.speed=4}
+ }
+ addLog('The explosion hit nearby customers and employees on the same floor.');
+}
+function serveOrder(o,q,byBarista){
+ if(!o||o.cust.dead||!R.orders.includes(o))return false;
+ const cu=o.cust,result=serveOrderBase(o,q,byBarista);
+ if(result&&cu.type.id==='assassin'&&!cu.dead&&!o.rec.ing.some(id=>ING[id].made||id==='gunpowder'))beginAssassin(cu);
+ return result;
+}
+function beginAssassin(cu){
+ releaseGuest(cu);cu.assassinActive=true;cu.state='hunting';cu.attackWait=.5;cu.huntT=0;cu.target=null;cu.speed=3;cu.alpha=1;cu.weapon='knife';cu.mood=null;
+}
+function updateAssassin(cu,dt){
+ if(!cu.assassinActive)return false;
+ cu.blink+=dt;cu.phase+=dt;cu.huntT+=dt;cu.attackWait-=dt;
+ if(cu.state==='stabbing'){
+  cu.swingT=Math.max(0,(cu.swingT||0)-dt);cu.attackT-=dt;
+  if(!cu.struck&&cu.attackT<=.3){cu.struck=true;const v=cu.target;if(v&&!v.dead&&v.floor===cu.floor&&dist(v,cu)<1.25){damageEntity(v,999);addLog('An assassin attacked a customer and fled!');sfx('slash')}}
+  if(cu.attackT<=0){cu.assassinActive=false;cu.weapon=null;cu.target=null;cu.speed=4.5;leave(cu,false)}return true;
+ }
+ if(cu.attackWait>0)return true;
+ const valid=v=>!!v&&v!==cu&&!v.dead&&!['exit','dead'].includes(v.state)&&v.y>=0;
+ if(!valid(cu.target||{})){
+  cu.target=R.custs.filter(valid).sort((a,b)=>(a.floor===cu.floor?0:100)+dist(cu,a)-((b.floor===cu.floor?0:100)+dist(cu,b)))[0];cu.repathT=0;
+ }
+ if(!cu.target||cu.huntT>18){cu.assassinActive=false;cu.weapon=null;leave(cu,false);return true}
+ const v=cu.target;cu.aim=Math.atan2(v.y-cu.y,v.x-cu.x);
+ if(v.floor===cu.floor&&dist(cu,v)<.85){cu.path=[];cu.legs=[];cu.cb=null;cu.walking=false;cu.state='stabbing';cu.attackT=.6;cu.swingT=.25;cu.struck=false;return true}
+ cu.repathT=(cu.repathT||0)-dt;
+ if(cu.repathT<=0){cu.repathT=.6;goTo(cu,v.floor,{c:Math.floor(v.x),r:Math.floor(v.y)},null)}
+ cu.walking=moveChar(cu,dt);return true;
+}
+function drawSpecialBadge(c,cu){
+ const id=cu.type.id;if(!SPECIAL_GUESTS.some(t=>t.id===id))return;
+ const x=cu.x*T,y=(WALL+cu.y+.32)*T;c.save();c.globalAlpha=clamp(cu.alpha,0,1);ol(c,1);
+ if(!cu.combat&&cu.type.weapon){c.save();c.translate(x+8,y-15);c.rotate(.45);c.scale(.75,.75);drawWeapon(c,cu.type.weapon);c.restore()}
+ if(cu.assassinActive){c.save();c.translate(x+10,y-17);c.rotate(cu.state==='stabbing'?Math.sin((.6-cu.attackT)*8)*1.1:-.6);drawWeapon(c,'knife');c.restore()}
+ if(id==='doctor'){c.strokeStyle='#548d8d';c.lineWidth=1.2;c.beginPath();c.arc(x,y-24,5,0,Math.PI);c.stroke();c.fillStyle='#548d8d';circ(c,x+5,y-24,1.5);c.fill()}
+ if(id==='soldier'||id==='police'){c.fillStyle=id==='police'?'#f5d16c':'#d6d4a8';star5(c,x-5,y-24,2.7,1.3);c.fill()}
+ if(!cu.combat&&cu.hp<cu.maxHp){c.fillStyle='#503e46';c.fillRect(x-13,y-57,26,4);c.fillStyle='#e08080';c.fillRect(x-12,y-56,24*Math.max(0,cu.hp/cu.maxHp),2)}c.restore();
+}
+/* v4.10 — interruptible assassins, visiting dogs and a mechanical trap chair. */
+FURN.boobyChair={name:'Booby-Trap Chair',price:450,star:3,kind:'floor',role:'seat',beauty:2,trap:true};
+function dismissEnteringAssassin(p,fi){
+ let nearest=null,range=32;
+ for(const cu of R.custs){
+  if(cu.floor!==fi||cu.dead||cu.type.id!=='assassin'||cu.order||cu.assassinActive||!['enter','toQueue','queue'].includes(cu.state))continue;
+  const d=Math.hypot(p.x-cu.x*T,p.y-((WALL+cu.y+.32)*T-25));if(d<range){nearest=cu;range=d}
+ }
+ if(!nearest)return false;
+ releaseGuest(nearest);nearest.assassinActive=false;nearest.weapon=null;nearest.speed=4.8;nearest.emote={k:'!',t:1.2};leave(nearest,false);nearest.mood='scared';
+ addLog('You spotted an assassin before they ordered. They fled!');toast('Assassin chased away!','good');sfx('pop');R.dirty=true;return true;
+}
+function addCompanionDog(owner){
+ const dog={owner:owner.id,floor:owner.floor,x:owner.x,y:owner.y-.45,path:[],legs:[],speed:3.2,phase:0,blink:0,alpha:1,color:pick(['#d4a574','#f0e3cd','#8b6856']),state:'follow',repathT:0};
+ (R.dogs||(R.dogs=[])).push(dog);return dog;
+}
+function updateDogs(dt){
+ for(const dog of R.dogs||[]){
+  dog.phase+=dt;const owner=R.custs.find(c=>c.id===dog.owner&&!c.dead);
+  if(dog.state==='exit'){dog.y-=dt*2.2;dog.alpha-=dt*2;continue}
+  if(!owner||['exit','leaving'].includes(owner.state)){
+   if(dog.state!=='leaving'){dog.state='leaving';dog.speed=4;goTo(dog,0,doorCell(),()=>{dog.state='exit'})}
+  }else if(dog.state==='follow'){
+   dog.repathT-=dt;
+   if(dog.repathT<=0){dog.repathT=.5;
+    if(dog.floor!==owner.floor||dist(dog,owner)>1){
+     const f=G.floors[owner.floor],oc=clamp(Math.floor(owner.x),0,f.w-1),or=clamp(Math.floor(owner.y),0,f.h-1);
+     const choices=[[0,1],[-1,0],[1,0],[0,-1],[0,0]].map(([dc,dr])=>({c:oc+dc,r:or+dr})).filter(v=>isWalk(owner.floor,v.c,v.r));
+     if(choices.length)goTo(dog,owner.floor,choices[0],null);
+    }
+   }
+   dog.resting=owner.state==='sitting'&&!dog.path.length;
+  }
+  const oldx=dog.x;dog.walking=moveChar(dog,dt);if(Math.abs(dog.x-oldx)>.001)dog.dir=dog.x>oldx?1:-1;
+ }
+ R.dogs=(R.dogs||[]).filter(d=>d.alpha>0);
+}
+function drawCompanionDog(c,d){
+ const x=d.x*T,y=(WALL+d.y+.3)*T,bob=d.walking?Math.sin(d.phase*18)*1.3:0;
+ c.save();c.globalAlpha=clamp(d.alpha,0,1);c.translate(x,y+bob);c.scale(d.dir||1,1);ol(c,1.4);
+ c.fillStyle='rgba(40,25,30,.18)';ell(c,0,2,12,3);c.fill();
+ if(!d.resting)for(const xx of[-6,6]){const shift=d.walking?Math.sin(d.phase*18+xx)*2:0;rr(c,xx-2,-3,3,5+shift,1.2);fs(c,shade(d.color,-.15))}
+ ell(c,-1,-7,11,d.resting?5:7);fs(c,d.color);
+ c.strokeStyle=d.color;c.lineWidth=3.5;c.lineCap='round';c.beginPath();c.moveTo(-10,-7);c.quadraticCurveTo(-18,-10,-14,-17+Math.sin(d.phase*8)*3);c.stroke();ol(c,1.4);
+ ell(c,8,-13,7,7);fs(c,d.color);ell(c,4,-15,3,6,-.3);fs(c,shade(d.color,-.25));ell(c,13,-11,5,3);fs(c,'#f6e6ca');
+ c.fillStyle=INK;circ(c,15,-12,1.6);c.fill();circ(c,10,-15,1);c.fill();c.fillStyle='#dd858f';rr(c,13,-9,2,3,1);c.fill();c.strokeStyle='#6b9b95';c.lineWidth=2;c.beginPath();c.moveTo(4,-8);c.lineTo(10,-7);c.stroke();c.restore();
+}
+function triggerChairTrap(cu,fi,it){
+ if(cu.dead||cu.state==='trapped')return;
+ releaseGuest(cu);cu.assassinActive=false;cu.state='trapped';cu.floor=fi;cu.x=it.c+.5;cu.y=it.r+.5;cu.seat=it;cu.alpha=1;
+ (R.traps||(R.traps=[])).push({fi,it,cu,t:0,struck:false});sfx('thwack');R.dirty=true;
+}
+function updateTraps(dt){
+ for(const trap of R.traps||[]){trap.t+=dt;if(!trap.struck&&trap.t>=.22){trap.struck=true;if(!trap.cu.dead){damageEntity(trap.cu,999);sfx('slash');addLog('A booby-trap chair sprang its blades!')}}}
+ R.traps=(R.traps||[]).filter(t=>t.t<1.1);
+}
+function drawTrapChair(c,x,y,o){
+ drawFurn(c,'chair',x,y,o);c.save();ol(c,1.2);rr(c,x+9,y+28,30,7,2);fs(c,'#596170');for(const dx of[12,36]){circ(c,x+dx,y+31,1.2);fs(c,'#c8d3d8')}c.strokeStyle='#d7b674';c.lineWidth=1.2;c.beginPath();c.moveTo(x+20,y+29);c.lineTo(x+24,y+33);c.lineTo(x+28,y+29);c.stroke();c.restore();
+}
+function drawChairBlades(c,trap){
+ const rise=trap.t<.22?trap.t/.22:trap.t<.55?1:Math.max(0,(1.1-trap.t)/.55),x=(trap.it.c+.5)*T,y=(WALL+trap.it.r)*T+32;
+ c.save();ol(c,1.5);for(const side of[-1,1]){c.beginPath();c.moveTo(x+side*12,y);c.lineTo(x+side*12,y-36*rise);c.lineTo(x+side*5,y-27*rise);c.lineTo(x+side*5,y);c.closePath();fs(c,'#ccdce1');c.strokeStyle='#fff';c.lineWidth=1;c.beginPath();c.moveTo(x+side*10,y-3);c.lineTo(x+side*10,y-29*rise);c.stroke();c.strokeStyle=INK}c.restore();
+}
 /* ============ brewing minigame ============ */
 function openMinigame(o){
   if(R.mg||R.rob||R.shopOpen||!o||o.status!=='waiting')return;
@@ -3962,8 +4175,8 @@ function showTitle(mode){
   let content='';
   if(mode==='new')content=`<p class="title-menu-note">Pick a name for your new favorite place.</p><div class="stack"><label class="title-field-label" for="tName">Café name</label><input type="text" id="tName" maxlength="28" placeholder="Mapamapa" aria-label="Café name"><label class="title-tutorial"><input type="checkbox" id="tTut" checked> Show me the tutorial</label><button class="btn title-primary" data-act="tStart">${titleButtonIcon('cup')}Get the keys<span>→</span></button><button class="btn title-secondary" data-act="tBack">Back to the porch</button></div>`;
   else if(mode==='load')content=`<p class="title-menu-note">Paste your save code or open a save file.</p><div class="stack"><label class="title-field-label" for="tCode">Save code</label><textarea id="tCode" rows="4" placeholder="LBC1.…" aria-label="Save code"></textarea><button class="btn title-primary" data-act="loadCode">${titleButtonIcon('play')}Load code<span>→</span></button><button class="btn title-secondary" data-act="loadFile">${titleButtonIcon('save')}Open a save file</button><button class="btn title-secondary" data-act="tBack">Back to the porch</button></div>`;
-  else content=`${sv?`<div class="title-save-card"><span>YOUR CAFÉ</span><b>${esc(sv.name)}</b><small>Day ${Math.max(1,sv.day)} <i>·</i> ${(+sv.rating||0).toFixed(1)} stars</small></div>`:'<p class="title-menu-note">Brew something lovely. Make room for good company.</p>'}<div class="stack">${sv?`<button class="btn title-primary" data-act="tContinue">${titleButtonIcon('play')}Continue café<span>→</span></button>`:''}<button class="btn ${sv?'title-secondary':'title-primary'}" data-act="tNew">${titleButtonIcon('cup')}Start a new café<span>+</span></button><button class="btn title-secondary" data-act="slots">${titleButtonIcon('save')}Save slots & autosaves</button><div class="title-small-actions"><button class="btn" data-act="tLoad">Import a save</button><button class="btn" data-act="updates">What’s new · v4.8</button></div></div>`;
-  tc.innerHTML=`<header class="title-brand"><span class="title-eyebrow">A COZY LITTLE CAFÉ TYCOON</span><div class="title-wordmark" aria-label="Mapamapa">${Array.from("mapamapa",(letter,i)=>`<span class="title-letter ${i>3?"pink":""}" style="--letter:${i}" aria-hidden="true">${letter}</span>`).join("")}<i aria-hidden="true">✦</i></div><p>A cup of coffee. A place of your own.</p></header><section class="title-world" aria-label="A pastel Mapamapa café with a bear barista"><canvas id="titleCafe" aria-hidden="true"></canvas><span class="title-world-sticker">Made for your<br><b>cozy era ♡</b></span><div class="title-world-caption"><span>BREW</span><i>✦</i><span>DECORATE</span><i>✦</i><span>MAKE IT YOURS</span></div></section><section class="title-menu" aria-label="Game menu"><div class="title-open-tag">${mode?'FRESHLY BREWED':'COME ON IN'} <span>✦</span></div><h1>${intro}</h1>${content}<p class="title-menu-foot">One little café. Endless possibilities.</p></section><footer class="title-footer"><span>Handcrafted cups & happy little moments.</span><span>MAPAMAPA <b>v4.8</b></span></footer>`;
+  else content=`${sv?`<div class="title-save-card"><span>YOUR CAFÉ</span><b>${esc(sv.name)}</b><small>Day ${Math.max(1,sv.day)} <i>·</i> ${(+sv.rating||0).toFixed(1)} stars</small></div>`:'<p class="title-menu-note">Brew something lovely. Make room for good company.</p>'}<div class="stack">${sv?`<button class="btn title-primary" data-act="tContinue">${titleButtonIcon('play')}Continue café<span>→</span></button>`:''}<button class="btn ${sv?'title-secondary':'title-primary'}" data-act="tNew">${titleButtonIcon('cup')}Start a new café<span>+</span></button><button class="btn title-secondary" data-act="slots">${titleButtonIcon('save')}Save slots & autosaves</button><div class="title-small-actions"><button class="btn" data-act="tLoad">Import a save</button><button class="btn" data-act="updates">What’s new · v4.10</button></div></div>`;
+  tc.innerHTML=`<header class="title-brand"><span class="title-eyebrow">A COZY LITTLE CAFÉ TYCOON</span><div class="title-wordmark" aria-label="Mapamapa">${Array.from("mapamapa",(letter,i)=>`<span class="title-letter ${i>3?"pink":""}" style="--letter:${i}" aria-hidden="true">${letter}</span>`).join("")}<i aria-hidden="true">✦</i></div><p>A cup of coffee. A place of your own.</p></header><section class="title-world" aria-label="A pastel Mapamapa café with a bear barista"><canvas id="titleCafe" aria-hidden="true"></canvas><span class="title-world-sticker">Made for your<br><b>cozy era ♡</b></span><div class="title-world-caption"><span>BREW</span><i>✦</i><span>DECORATE</span><i>✦</i><span>MAKE IT YOURS</span></div></section><section class="title-menu" aria-label="Game menu"><div class="title-open-tag">${mode?'FRESHLY BREWED':'COME ON IN'} <span>✦</span></div><h1>${intro}</h1>${content}<p class="title-menu-foot">One little café. Endless possibilities.</p></section><footer class="title-footer"><span>Handcrafted cups & happy little moments.</span><span>MAPAMAPA <b>v4.10</b></span></footer>`;
   if(mode==='new')setTimeout(()=>$('#tName')?.focus(),50);
 }
 function drawTitle(dt){drawCuteTitle(dt)}
