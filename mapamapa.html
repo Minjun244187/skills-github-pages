@@ -388,7 +388,18 @@ input[type=text]{font-family:var(--body);font-size:16px;font-weight:700}
 .stempty{background:var(--oat2);border-radius:12px;padding:10px 12px;font-size:12.5px;color:var(--ink2);display:flex;flex-wrap:wrap;align-items:center;gap:8px;justify-content:space-between}
 .stempty .btn{padding:3px 10px;font-size:12px}
 
-
+/* debug panel */
+#debug{position:absolute;left:12px;bottom:12px;z-index:5;width:172px;background:#1f171b;color:#ffe9a8;border:2.5px solid var(--honey);border-radius:12px;box-shadow:0 3px 0 #000;font-family:var(--pixel);overflow:hidden}
+.dbg-head{width:100%;display:flex;justify-content:space-between;align-items:center;background:var(--honey);color:#1f171b;border:0;padding:4px 10px;font-family:var(--pixel);font-size:14px;letter-spacing:.14em;cursor:pointer}
+#debug.fold .dbg-body{display:none}
+#debug.fold .dbg-head svg{transform:rotate(-90deg)}
+.dbg-body{display:flex;flex-direction:column;gap:5px;padding:8px}
+.dbg-body button{font-family:var(--pixel);font-size:13px;background:#2f2227;color:#ffe9a8;border:2px solid #6a5560;border-radius:7px;padding:4px 8px;text-align:left;cursor:pointer}
+.dbg-body button:hover,.dbg-body button:focus-visible{border-color:var(--honey);color:#fff;outline:none}
+.dbg-rob{display:grid;grid-template-columns:minmax(0,1fr);gap:4px}
+.dbg-rob button{background:#5a2730;border-color:#b8343c}
+.dbg-rob select{font-family:var(--pixel);font-size:12px;background:#2f2227;color:#ffe9a8;border:2px solid #6a5560;border-radius:7px;padding:3px 6px}
+.dbg-body .dbg-off{color:#c9b3bb;font-size:12px;text-align:center}
 #sceneWrap.dbg #sceneHint{left:196px;transform:none;max-width:calc(100% - 210px)}
 
 @media (max-width:860px){
@@ -475,7 +486,7 @@ input[type=text]{font-family:var(--body);font-size:16px;font-weight:700}
     <button class="hud-btn speed" id="btnSpeed" title="Game speed" aria-label="Change game speed"></button>
     <button class="hud-btn ico" id="btnPause" title="Pause" aria-label="Pause"></button>
     <button class="hud-btn shopbtn" id="btnShop" title="Shop (B)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linejoin="round"><path d="M5 8h14l-1.2 12H6.2z" fill="#fff8ef"/><path d="M9 8a3 3 0 016 0"/></svg>Shop</button>
-    
+    <button class="hud-btn" data-act="debugToggle" title="Debug menu (~)">Debug</button>
     <button class="hud-btn" data-act="updates" title="What’s new">Updates</button>
     <button class="hud-btn" id="btnEdit" title="Edit mode">Edit</button>
     <button class="hud-btn go" id="btnOpen">Open café</button>
