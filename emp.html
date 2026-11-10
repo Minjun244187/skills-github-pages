@@ -303,9 +303,21 @@ table.rank td,table.rank th{padding:4px 8px}
 .si-sp{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0}.sp-chip{font-size:11.5px;background:rgba(214,178,94,.12);border:1px solid rgba(214,178,94,.35);border-radius:10px;padding:1px 7px}
 .recb.old{opacity:.72;border-style:dashed}.mini.oldtg{align-self:flex-start;margin-top:2px}
 .tabs{display:flex;gap:6px;align-items:center;margin-bottom:8px;flex-wrap:wrap}.disp-old{border-top:1px solid var(--line);padding:6px 0}.disp-old h4{margin:2px 0 4px;color:var(--gold,#d9b45a)}
-body.spectating #bTech,body.spectating #bEco,body.spectating #bMil,body.spectating #bTrade,body.spectating #bDip,body.spectating #bUnion,body.spectating #bCap,body.spectating #spirits{display:none!important}
+body.spectating #bTech,body.spectating #bEco,body.spectating #bMil,body.spectating #bDip,body.spectating #bUnion,body.spectating #bPol,body.spectating #bCap,body.spectating #spirits{display:none!important}
 #specBanner{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:30;background:rgba(20,22,28,.92);border:1px solid var(--gold,#d9b45a);border-radius:6px;padding:6px 12px;font-size:13px;color:#eee;box-shadow:0 2px 10px rgba(0,0,0,.5)}
 .saves{display:flex;flex-direction:column;gap:6px}.save-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:var(--panel2)}.sv-l{flex:1}.sv-r{display:flex;gap:4px}
+.m-tabs{display:flex;gap:4px;margin:0 auto 0 18px}.m-tab{background:rgba(255,255,255,.04);border:1px solid var(--line);border-bottom:none;border-radius:6px 6px 0 0;padding:6px 14px;font-size:13px;color:#cdbf98;cursor:pointer;align-self:flex-end}.m-tab:hover{color:#f3e3b6}.m-tab.on{background:rgba(214,178,94,.18);color:#f3e3b6;border-color:rgba(214,178,94,.6);font-weight:600}
+.pol-head{display:flex;gap:18px;padding:4px 2px 12px;border-bottom:1px solid var(--line);margin-bottom:10px}.pol-head h3{font-family:Cinzel;margin:2px 0;font-size:20px;color:#f3e3b6}.pol-head>div:first-child{flex:1}.pol-tot{flex:1.4}.pol-tot>div{margin:4px 0}
+.pol-cat{margin:0 0 12px}.pol-ch{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}.pol-ch b{font-size:14px}.pol-opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px}
+.pol-o{display:flex;flex-direction:column;gap:3px;text-align:left;background:rgba(255,255,255,.035);border:1px solid var(--line);border-radius:6px;padding:7px 9px;color:inherit;cursor:pointer;font:inherit}.pol-o:hover:not([disabled]){border-color:rgba(214,178,94,.7);background:rgba(214,178,94,.07)}.pol-o.on{border-color:#d6b25e;background:rgba(214,178,94,.16);box-shadow:inset 0 0 0 1px rgba(214,178,94,.4)}.pol-o[disabled]{opacity:.5;cursor:not-allowed}.pol-o b{font-size:13px}.pol-o small{font-size:11px;line-height:1.3}
+.lfxs{display:flex;flex-wrap:wrap;gap:3px}.lfx{font-size:10.5px;padding:1px 5px;border-radius:8px;background:rgba(0,0,0,.25);white-space:nowrap}.lfx.pos{color:#8fd18a}.lfx.neg{color:#ff9b85}
+.pol-modal{max-width:1180px}.pol-head{align-items:stretch}.pol-gov{display:flex;gap:14px;align-items:center;flex:1;background:radial-gradient(circle at 20% 40%,rgba(214,178,94,.16),transparent 70%);border:1px solid rgba(214,178,94,.35);border-radius:8px;padding:10px 14px}
+.pol-big .ic{width:72px;height:72px}.pol-strip{display:flex;gap:6px;margin:8px 0 6px;flex-wrap:wrap}.pol-mini{display:flex;flex-direction:column;align-items:center;gap:2px;width:76px;padding:4px 2px;border:1px solid var(--line);border-radius:6px;background:rgba(0,0,0,.2)}.pol-mini .ic{width:28px;height:28px}.pol-mini small{font-size:8.5px;white-space:nowrap;text-transform:uppercase;letter-spacing:.06em;color:#b9a77a}
+.pol-cats{display:grid;grid-template-columns:1fr;gap:4px}.pol-ch{display:flex;align-items:center;gap:8px;justify-content:flex-start;border-bottom:1px solid rgba(214,178,94,.2);padding-bottom:4px}.pol-ch small{margin-left:auto}.pol-cic .ic{width:24px;height:24px}.pol-ch b{font-family:Cinzel;font-size:15px;color:#f3e3b6}
+.pol-o{flex-direction:row;align-items:flex-start;gap:8px}.pol-oi .ic{width:38px;height:38px;flex:none}.pol-ob{display:flex;flex-direction:column;gap:3px;min-width:0}.pol-opts{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}.pol-cf{text-align:center}.pol-cf .ic{width:64px;height:64px}
+.gov-line{display:flex;align-items:center;gap:8px;margin:6px 0 2px;padding:6px 8px;border:1px solid rgba(214,178,94,.3);border-radius:6px;background:rgba(214,178,94,.06)}.gov-line .gov-ic .ic{width:34px;height:34px}.gov-line>div{display:flex;flex-direction:column;line-height:1.15}.gov-line small{font-size:10px;text-transform:uppercase;letter-spacing:.06em}.gov-line .gov-laws{flex-direction:row;margin-left:auto;gap:2px}.gov-laws .ic{width:20px;height:20px;opacity:.85}
+.pause-menu{display:flex;flex-direction:column;gap:8px;min-width:280px;padding:4px 10px}.pause-menu .btn{font-size:15px;padding:10px}
+.set-sec{margin:0 0 14px}.set-sec h4{margin:0 0 6px}.gfx-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.gfx-o{display:flex;flex-direction:column;gap:4px;text-align:left;padding:10px;border:1px solid var(--line);border-radius:6px;background:rgba(255,255,255,.04);color:inherit;font:inherit;cursor:pointer}.gfx-o.on{border-color:#d6b25e;background:rgba(214,178,94,.16)}.gfx-o b{font-size:14px}
 </style>
 </head>
 <body>
@@ -314,7 +326,7 @@ body.spectating #bTech,body.spectating #bEco,body.spectating #bMil,body.spectati
 <div id="hud" class="hide">
  <div id="topbar"><div id="tb"></div>
   <div id="menu">
-   <button class="mb" id="bTech" title="Technology (T)">🔬<span class="lbl"> Tech</span></button><button class="mb" id="bEco" title="Economy (E)">💰<span class="lbl"> Economy</span></button><button class="mb" id="bMil" title="Military (M)">⚔<span class="lbl"> Military</span></button><button class="mb" id="bWar" title="War summary (X)">📊<span class="lbl"> Wars</span></button><button class="mb" id="bTrade" title="Trade (R)">🚢<span class="lbl"> Trade</span></button><button class="mb" id="bDip" title="Diplomacy (G)">🕊<span class="lbl"> Diplomacy</span></button><button class="mb" id="bUnion" title="Factions (U)">🤝<span class="lbl"> Factions</span></button><button class="mb" id="bRank" title="World rankings (K)">🏆<span class="lbl"> Rankings</span></button><button class="mb" id="bLog" title="Chronicle">📜<span class="lbl"> Chronicle</span></button>
+   <button class="mb" id="bTech" title="Technology (T)">🔬<span class="lbl"> Tech</span></button><button class="mb" id="bEco" title="Economy &amp; trade (E / R)">💰<span class="lbl"> Economy</span></button><button class="mb" id="bPol" title="Politics &amp; laws (P)">🏛<span class="lbl"> Politics</span></button><button class="mb" id="bMil" title="Military &amp; war summary (M / X)">⚔<span class="lbl"> Military</span></button><button class="mb" id="bDip" title="Diplomacy, factions &amp; world rankings (G / U / K)">🕊<span class="lbl"> Diplomacy</span></button><button class="mb" id="bLog" title="Chronicle">📜<span class="lbl"> Chronicle</span></button>
    <label class="mm">Map<select id="mapMode" title="Map mode"><option value="0">Political</option><option value="1">Terrain</option><option value="2">Unrest</option><option value="3">Economy</option></select></label>
    <div class="mb-grid"><button class="mb" id="bCap" title="Go to capital (C)">★</button><button class="mb" id="bSnd" title="Sound &amp; music">🔊</button><button class="mb" id="bSave" title="Save &amp; load">💾</button><button class="mb" id="bHelp" title="Help">?</button></div><button class="mb hide" id="bDbg" title="Developer debug mode (Ctrl+Shift+D)">🐞</button>
   </div></div>
@@ -2164,6 +2176,7 @@ const BUILDINGS = {
  dock:{n:'Dockyard',c:100,m:3,t:6,ic:'⚓',special:1},
  airport:{n:'Airport',c:120,m:3,t:5,ic:'🛫',special:1,req:'a_aviation'},
  radar:{n:'Radar Station',c:90,m:2,t:4,ic:'📡',special:1,req:'a_radar'},
+ univ:{n:'University',c:150,m:3,t:6,ic:'🎓',special:1},
 };
 const GOODS = {grain:{n:'Grain',p:0.45},timber:{n:'Timber Goods',p:0.65},ore:{n:'Iron & Coal',p:0.9},supplies:{n:'Military Supplies',p:1.2}};
 
@@ -2424,7 +2437,7 @@ const EVENTS = [
  {y:1861,m:3,type:'merge',name:'Unification of Italy',into:'Kingdom of Sardinia',rename:'Italy',col:'#4c9a5a',from:['Two Sicilies','Tuscany','Parma','Modena','Papal States'],reg:[6.5,18.6,36.5,47],regFrom:['Austrian Empire','France'],txt:'The Kingdom of Italy is proclaimed.'},
  {y:1867,m:3,type:'rename',name:'Ausgleich',from:'Austrian Empire',to:'Austria-Hungary'},
  {y:1867,m:3,type:'transfer',name:'Alaska Purchase',from:['Russian Empire'],to:'United States of America',reg:[-180,-130,51,78]},
- {y:1868,m:1,type:'techboost',name:'Meiji Restoration',who:['Japan'],years:45,rename:'Empire of Japan',txt:'Japan modernises at breakneck speed.'},
+ {y:1868,m:1,type:'techboost',name:'Meiji Restoration',who:['Japan'],years:45,rename:'Empire of Japan',music:'battotai',musicWho:['Empire of Japan'],txt:'Japan modernises at breakneck speed.'},
  {y:1871,m:1,type:'merge',name:'Unification of Germany',music:'deutschlandlied',cond:['noscen:nounify'],wait:24,into:'Prussia',rename:'Germany',from:['Saxony','Bavaria','Württemberg','Baden','Hanover','Brunswick','Oldenburg','Mecklenburg-Schwerin','Mecklenburg-Strelitz','Anhalt','Thuringia','Lippe-Detmold','Schaumburg-Lippe','Waldeck','Hamburg','Bremen','Lübeck','Swabia','Hohenzollern','Hesse','Nassau','Luxembourg'],reg:[5.8,11.5,47.4,55.3],regFrom:['France','Denmark–Norway','Denmark','Austrian Empire'],txt:'The German Empire is proclaimed at Versailles.'},
  {y:1878,m:7,type:'split',name:'Congress of Berlin: Romania',from:['Ottoman Empire'],nw:'Romania',col:'#e0c050',reg:[22,30,43.6,48.3]},
  {y:1878,m:7,type:'split',name:'Congress of Berlin: Serbia',from:['Ottoman Empire'],nw:'Serbia',col:'#b06060',reg:[19,22.8,42.3,45]},
@@ -3200,6 +3213,59 @@ function histEntry(table, key, c) {
  return best ? best[1] : L[0][0] > yr ? L[0][1] : null;
 }
 
+// ===================== v27: CITY RENAMES =====================
+// [original names, new name, owner keys (null = any owner), from year, until year]; the last matching rule wins.
+// Owner-based rules follow events: Edo becomes Tokyo with the Meiji Restoration, Seoul becomes Keijō under Japanese rule, and so on.
+const CITY_RENAMES = [
+ [['Edo'], 'Tokyo', ['Empire of Japan'], 1868],
+ [['St. Petersburg'], 'Petrograd', ['Russian Empire', 'Soviet Union', 'White Russia'], 1914.65],
+ [['St. Petersburg'], 'Leningrad', ['Soviet Union'], 1924.1],
+ [['Hanseong', 'Seoul'], 'Keijō', ['Empire of Japan', 'Japan'], 1868],
+ [['Hanseong'], 'Seoul', ['Korea', 'South Korea', 'North Korea'], 1945.6],
+ [['Pyongyang'], 'Heijō', ['Empire of Japan', 'Japan'], 1868],
+ [['Constantinople'], 'Istanbul', ['Turkey'], 1930.2],
+ [['Smyrna'], 'İzmir', ['Turkey'], 1922.7],
+ [['Königsberg'], 'Kaliningrad', ['Soviet Union'], 1946.5],
+ [['Danzig'], 'Gdańsk', ['Poland'], 1918],
+ [['Breslau'], 'Wrocław', ['Poland'], 1918],
+ [['Lemberg'], 'Lwów', ['Poland'], 1918],
+ [['Lemberg'], 'Lvov', ['Soviet Union'], 1939],
+ [['Yekaterinburg'], 'Sverdlovsk', ['Soviet Union'], 1924.8],
+ [['Nizhny Novgorod'], 'Gorky', ['Soviet Union'], 1932.8],
+ [['Samara'], 'Kuybyshev', ['Soviet Union'], 1935.1],
+ [['Tiflis'], 'Tbilisi', ['Soviet Union'], 1936],
+ [['Beijing'], 'Peiping', ['Republic of China'], 1928.5, 1949.7],
+ [['Batavia'], 'Jakarta', ['Indonesia', 'Empire of Japan'], 1942],
+ [['Saigon'], 'Ho Chi Minh City', ['North Vietnam'], 1976.4],
+ [['Mukden'], 'Fengtian', ['Manchukuo'], 1932],
+];
+const CITY_RN_BY = {}; for (const r of CITY_RENAMES) for (const n of r[0]) (CITY_RN_BY[n] = CITY_RN_BY[n] || []).push(r);
+function cityNameFor(orig, ownerKey) {
+ const L = CITY_RN_BY[orig]; if (!L) return orig;
+ const yr = G.y + (G.m || 0) / 12; let nm = orig;
+ for (const r of L) if (yr >= r[3] && !(r[4] && yr >= r[4]) && (!r[2] || r[2].includes(ownerKey))) nm = r[1];
+ return nm;
+}
+// rename cities (and the sectors named after them) to fit their current ruler and the date
+function refreshCityNames(silent) {
+ if (typeof G === 'undefined' || !G || !G.sectors) return false;
+ let changed = false;
+ for (const s of G.sectors) {
+  if (!s || s.w) continue;
+  const ok = (G.countries[s.o] || {}).key;
+  for (const ct of s.cities || []) {
+   const orig = ct.k || ct.name; if (!CITY_RN_BY[orig]) continue;
+   const nm = cityNameFor(orig, ok);
+   if (nm !== ct.name) { const old = ct.name; ct.k = orig; ct.name = nm; changed = true;
+    if (!silent && G.player >= 0 && typeof logMsg === 'function' && (s.o === G.player || (typeof isVisibleCountry === 'function' && isVisibleCountry(s.o)))) logMsg(`${old} is renamed ${nm}.`, s.o === G.player ? 'event' : ''); }
+  }
+  const so = s.k || s.name;
+  if (CITY_RN_BY[so]) { const nm = cityNameFor(so, ok); if (nm !== s.name) { s.k = so; s.name = nm; changed = true; } }
+ }
+ if (changed) G.dirtyLabels = true;
+ return changed;
+}
+
 // ===================== FLAG RENDERER =====================
 // Flags are drawn as SVG in a 30×20 box (3:2). Spec = base;mark;mark…  (see data_flags.js for the table)
 // bases: '#rgb' · 'h:c1,c2|w1,w2' · 'v:…' · 'n:bg,cross[,inner]' Nordic · 'x:bg,cross' centred cross · 'uk:1800|1801' · 'us' (stars & stripes by year)
@@ -3397,14 +3463,14 @@ const SPIRITS = {
  csa_great: {n: 'Great Confederacy', ic: '⭐', k: ['Confederate States'], y0: 1861, y1: 1866, d: 'Fierce defenders of their soil, but strangled by the Union blockade.', e: {def: 25, atk: 10, trade: -50, tax: -10}},
  // ---------------- Japan ----------------
  jp_toku: {n: 'Tokugawa Shogunate', ic: '🏯', k: ['Japan'], y0: 1603, y1: 1868, d: 'Two centuries of Edo peace under the shogun: stable but rigid, the domains keep much of the revenue.', e: {unrest: -1, research: -15, tax: -10}},
- jp_sakoku: {n: 'Sakoku', ic: '🚪', k: ['Japan'], y0: 1639, y1: 1854.3, abolish: {t: 'End the seclusion', cost: 0, unrest: 8, d: 'Open Japanese ports to foreign ships.'}, d: 'The "closed country": foreign trade is forbidden except through Dejima.', e: {noTrade: 1, def: 10}},
+ jp_sakoku: {n: 'Sakoku', ic: '🚪', k: ['Japan'], y0: 1639, y1: 1854.3, cond: c => !c.laws || c.laws.econ === 'closedmkt', d: 'The "closed country": the shogunate seals Japan off (see the Closed Market law under Politics). Ends when the market is opened.', e: {def: 5}},
  jp_meiji: {n: 'Beautiful Restoration', ic: '🌸', k: ['Empire of Japan'], y0: 1868, y1: 1890, d: 'The Meiji Restoration: the Emperor restored, the samurai abolished, factories, railways and schools built at breakneck speed.', e: {research: 25, build: 20, gdp: 5, unrest: 0.5}},
  jp_fukoku: {n: 'Fukoku Kyōhei', ic: '⛩️', k: ['Empire of Japan'], y0: 1871, y1: 1912, d: '"Rich country, strong army": industry serves the military.', e: {atk: 10, supply: 15}},
  jp_taisho: {n: 'Taishō Democracy', ic: '🗳️', k: ['Empire of Japan'], y0: 1912.6, y1: 1926.9, d: 'Party politics and a free press flourish for a time.', e: {unrest: -0.5, research: 5}},
  jp_mobil: {n: 'National Mobilisation Law', ic: '🏭', k: ['Empire of Japan'], y0: 1938.3, y1: 1945.7, cond: c => enemiesOf(c.id).size > 0, d: 'The state takes control of industry, labour and prices: the whole economy serves the war.', e: {supply: 40, build: 10, unrest: -0.3}},
  jp_yamato: {n: 'Yamato Spirit', ic: '🗡️', k: ['Empire of Japan'], y0: 1931.7, y1: 1945.7, d: 'Yamato-damashii: militarists rule, and soldiers are taught never to surrender.', e: {atk: 15, def: 15, unrest: -1, research: -5, infamy: 0.05}},
  // ---------------- Korea ----------------
- kr_hermit: {n: 'Hermit Kingdom', ic: '🏔️', k: ['Korea'], y0: 1637, y1: 1876.1, abolish: {t: 'Open the country', cost: 0, unrest: 10, d: 'Sign treaties and open the ports to foreign trade.'}, d: 'Joseon shuts itself off from the world: no foreign trade, little foreign knowledge.', e: {noTrade: 1, def: 10, research: -15}},
+ kr_hermit: {n: 'Hermit Kingdom', ic: '🏔️', k: ['Korea'], y0: 1637, y1: 1876.1, cond: c => !c.laws || c.laws.econ === 'closedmkt', d: 'Joseon shuts itself off from the world (see the Closed Market law under Politics): little foreign knowledge reaches it. Ends when the market is opened.', e: {def: 5, research: -10}},
  kr_andong: {n: 'Andong Kim Dominance', ic: '🎎', k: ['Korea'], y0: 1800.5, y1: 1863.9, abolish: {t: 'Purge the Andong Kim clan', cost: 150, unrest: 12, d: 'Break the in-laws’ grip on the court.'}, d: 'The Andong Kim in-law clan controls the court (sedo politics): office-selling, corruption and peasant revolts.', e: {tax: -20, gdp: -5, unrest: 1}},
  kr_daewongun: {n: 'Regency of the Heungseon Daewongun', ic: '🏛️', k: ['Korea'], y0: 1864, y1: 1873.9, d: 'The regent reasserts royal power, rebuilds Gyeongbokgung and fights off French and American raids.', e: {unrest: -0.5, def: 15, tax: 10}},
  kr_gwangmu: {n: 'Gwangmu Reform', ic: '📜', k: ['Korea'], y0: 1897.8, y1: 1905.9, d: 'Emperor Gojong modernises the Korean Empire: land surveys, schools, railways and electric trams.', e: {research: 15, build: 10}},
@@ -3705,7 +3771,7 @@ function setCapital(c) {
  if (!secs.length) { c.cap = 0; return; }
  let cap = null;
  if (c.capSet && G.sectors[c.capSet] && G.sectors[c.capSet].o === c.id) { c.cap = c.capSet; return; } // a capital moved by decree
- if (c.meta.cap) for (const s of secs) if (s.cities.some(ct => ct.name === c.meta.cap)) cap = s;
+ if (c.meta.cap) for (const s of secs) if (s.cities.some(ct => (ct.k || ct.name) === c.meta.cap)) cap = s;
  if (!cap) cap = secs.reduce((a, b) => (b.pop > a.pop ? b : a));
  c.cap = cap.id;
 }
@@ -3787,12 +3853,12 @@ function adjective(n) {
 
 // ---------- tech effects ----------
 function bonus(c, key) {
- const sig = G.turn + ':' + (c.techs ? c.techs.size : 0) + ':' + (c.spirits ? c.spirits.length : 0);
+ const sig = G.turn + ':' + (c.techs ? c.techs.size : 0) + ':' + (c.spirits ? c.spirits.length : 0) + ':' + (c._lawV || 0);
  if (c._bonSig !== sig) { c._bonSig = sig; c._bon = {}; }
  const hit = c._bon[key]; if (hit !== undefined) return hit;
  return (c._bon[key] = bonusRaw(c, key));
 }
-function bonusRaw(c, key) { let v = 0; for (const id of c.techs) { const e = TECH[id].e[key]; if (e) v += e; } if (c.spirits) for (const sp of c.spirits) { const S = SPIRITS[sp.id]; if (S && S.e[key]) v += S.e[key]; } return v; }
+function bonusRaw(c, key) { let v = 0; for (const id of c.techs) { const e = TECH[id].e[key]; if (e) v += e; } if (c.spirits) for (const sp of c.spirits) { const S = SPIRITS[sp.id]; if (S && S.e[key]) v += S.e[key]; } if (typeof lawVal === 'function' && key !== 'unrest') v += lawVal(c, key); return v; }
 function gdpMult(c) { return 1 + bonus(c, 'gdp') / 100; }
 // the unit types a nation can field, cached until its technology changes (callers get fresh copies they may sort)
 function unitSetOf(c) {
@@ -3805,6 +3871,8 @@ function availUnits(c) { unitSetOf(c); if (!c._uav) c._uav = Object.keys(UNITS).
 function availShips(c) { unitSetOf(c); if (!c._ush) c._ush = Object.keys(SHIPS).filter(u => c._uset.has(u)); return c._ush.slice(); }
 function availLand(c) { return availUnits(c).filter(u => !UNITS[u].naval); }
 function navalPower(c) { let p = 0; for (const k in (c.navy || {})) p += SHIPS[k].p * c.navy[k]; for (const u of tiUnits(c.id)) if (UNITS[u.t].naval) p += UNITS[u.t].p * u.hp / 100; return p * (1 + bonus(c, 'naval') / 100); }
+function univBonus(n) { return Math.min(0.75, n * 0.06); }
+function techAhead(t) { return t.y > G.y + G.m / 12; }
 function techCost(c, t) {
  const base = 160 + (t.y - 1700) * 6;
  const yr = G.y + G.m / 12;
@@ -3812,7 +3880,8 @@ function techCost(c, t) {
  let known = 0, tot = 0;
  for (const o of G.countries) { if (!o.alive || o.unclaimed) continue; const w = Math.sqrt(o.gdpCache || 1); tot += w; if (o.techs.has(t.id)) known += w; }
  const spread = tot ? known / tot : 0;
- return Math.round(base * (1 + ahead / 20) * (1 - 0.5 * spread));
+ // v25: researching ahead of its time halves the speed (the cost doubles)
+ return Math.round(base * (ahead > 0 ? 2 : 1) * (1 - 0.5 * spread));
 }
 function canResearch(c, t) { return !c.techs.has(t.id) && t.r.every(r => c.techs.has(r)); }
 
@@ -3838,7 +3907,7 @@ function countryGdp(c) { let g = 0; for (const s of G.sectors) if (s && s.ctrl =
 function countryPop(c) { let p = 0; for (const s of G.sectors) if (s && s.o === c.id) p += s.pop; return p; }
 function taxEff(c) { return 0.14 * (1 + bonus(c, 'tax') / 100); }
 // ---- war damage to buildings: s.dmg[k] = {n: damaged copies, t: turns of repair left} ----
-const SPECIAL_B = ['base', 'dock', 'airport', 'radar'];
+const SPECIAL_B = ['base', 'dock', 'airport', 'radar', 'univ'];
 function damageBuildings(s, chance, turns) {
  if (!s || s.w) return [];
  const hit = [];
@@ -3889,7 +3958,7 @@ function economy(c) {
    if (B.good) r.prod[B.good] += buildingOut(c, s, b);
    if (b === 'factory') r.factories += s.b[b];
   }
-  for (const k of ['base', 'dock', 'airport', 'radar']) if (s[k]) r.maint += BUILDINGS[k].m;
+  for (const k of SPECIAL_B) if (s[k]) { r.maint += BUILDINGS[k].m; if (k === 'univ' && !(s.dmg && s.dmg.univ)) r.univ = (r.univ || 0) + 1; }
  }
  // artisan supply production from population
  r.prod.supplies += r.pop / 1000 * 0.45 * (1 + bonus(c, 'supply') / 200);
@@ -3905,7 +3974,7 @@ function economy(c) {
  if (c.short && c.short.ore) r.tax *= 1 - 0.08 * c.short.ore.sev;                // industry stands still
  if (c.short && c.short.grain) r.tax *= 1 - 0.06 * c.short.grain.sev;            // hungry workers
  if (c.cap && G.sectors[c.cap].ctrl !== c.id) r.tax *= 0.5;
- r.research = r.tax * c.resShare * 1.8 * (1 + bonus(c, 'research') / 100);
+ r.research = r.tax * c.resShare * 1.8 * Math.max(0.1, 1 + bonus(c, 'research') / 100) * (1 + univBonus(r.univ || 0)); // each university adds research
  r.trade = c.lastTrade || 0;
  r.tribute = 0;
  if (c.id === G.player) { if (isPuppet(c.id)) r.tribute -= r.tax * 0.2; for (const pid of puppetsOf(c.id)) r.tribute += tributeOf(pid); }
@@ -3913,7 +3982,7 @@ function economy(c) {
  r.net = r.tax + r.trade + r.tribute - r.expenses;
  return r;
 }
-function tradePartners(c) { if (spiritVal(c, 'noTrade')) return []; return [...c.trade].map(i => G.countries[i]).filter(o => o.alive && !atWar(c.id, o.id) && !spiritVal(o, 'noTrade')); }
+function tradePartners(c) { if (noTradeOf(c)) return []; return [...c.trade].map(i => G.countries[i]).filter(o => o.alive && !atWar(c.id, o.id) && !noTradeOf(o)); }
 function marketCap(c) { let cap = 0; for (const p of tradePartners(c)) cap += Math.sqrt(p.gdpCache || 100) * 0.6; return cap; }
 function priceFor(c, good, sell) {
  const P = tradePartners(c); if (!P.length) return 0;
@@ -4898,7 +4967,7 @@ const OBJECTIVES = [
 function objectiveSector(att, def) {
  const yr = G.y + G.m / 12, a = G.countries[att], d = G.countries[def]; if (!a || !d) return null;
  const o = OBJECTIVES.find(o => yr >= o.y0 && yr < o.y1 && o.a.includes(a.key) && o.d.includes(d.key)); if (!o) return null;
- for (const n of o.cities) { const s = G.sectors.find(t => t && !t.w && t.cities && t.cities.some(ct => ct.name === n)); if (s && s.ctrl === def) return s; }
+ for (const n of o.cities) { const s = G.sectors.find(t => t && !t.w && t.cities && t.cities.some(ct => (ct.k || ct.name) === n)); if (s && s.ctrl === def) return s; }
  return null;
 }
 function offMult(att, def) {
@@ -5029,7 +5098,7 @@ function initPlayer(cid) {
  c.research = {C: null, M: null, N: null, S: null};
  c.progress = {};
  c.goods = {grain: 20, timber: 10, ore: 5, supplies: 0};
- c.exp = {grain: true, timber: true, ore: true, supplies: false};
+ c.exp = {grain: true, timber: true, ore: true, supplies: true};
  c.imp = {grain: true, timber: true, ore: true, supplies: true};
  c.trade = new Set();
  c.lastTrade = 0;
@@ -5070,7 +5139,7 @@ function initPlayer(cid) {
  // historical wars ongoing at start
  checkHistory(true);
  spiritsTurn(true);
- if (noTradeSpirit(c)) c.trade.clear();
+ if (noTradeOf(c)) c.trade.clear();
  updateVisibility();
 }
 function updateKnown(initial) {
@@ -5181,6 +5250,7 @@ function canRecruit(c, s, t) {
  const U = UNITS[t];
  if (s.ctrl !== c.id) return 'Not under our control';
  if (!hasUnit(c, t)) return 'Technology missing';
+ if (!U.naval && !U.air && c.id === G.player) { const lim = armyLimit(c); if (G.units.filter(u => u.o === c.id && !UNITS[u.t].naval && !UNITS[u.t].air).length >= lim) return `Our conscription law (${LAW_OPT[lawsOf(c).consc].n}) limits the army to ${lim} land units — change it under Politics`; }
  if (U.naval && G.units.filter(u => u.o === c.id && isNaval(u)).length + (s.sq || []).length >= treatyNavy(c)) return `Peace treaty: our navy is limited to ${treatyNavy(c)} ships until ${c.armyCap.until}`;
  if (U.naval) { if (!s.dock) return 'Warships are built at a Dockyard'; if (bDamaged(s, 'dock')) return `The dockyard is damaged — repairs take ${s.dmg.dock.t} more turn(s)`; if ((s.sq || []).length >= 5) return 'Dockyard queue is full (5)'; if (c.money < U.c) return 'Not enough money'; return null; }
  if (U.air) { if (!s.airport) return 'Aircraft are deployed from an Airport'; if (bDamaged(s, 'airport')) return `The airport is damaged — repairs take ${s.dmg.airport.t} more turn(s)`; if (airIn(s.id, c.id) >= 4) return 'Airport full (4 squadrons)'; if (c.money < U.c) return 'Not enough money'; return null; }
@@ -5234,7 +5304,10 @@ function warScore(P, e) {
  const battles = w ? (w.a.includes(P) ? w.score : -w.score) : 0;
  return clamp(Math.round(mine / Math.max(eTot, 1) * 100 - theirs / Math.max(pTot, 1) * 100 + battles), -100, 100);
 }
+// v25: a white peace can only be sought once a war has run three turns, whoever started it
+function whitePeaceWait(e) { const P = G.player, w = G.wars.find(w => (w.a.includes(P) && w.b.includes(e)) || (w.b.includes(P) && w.a.includes(e))); if (!w) return 0; return Math.max(0, 3 - Math.floor((G.y * 12 + G.m - w.start) / 3)); }
 function proposePeace(e, mode) {
+ if (mode === 'white' && whitePeaceWait(e) > 0) return false;
  const P = G.player; const ws = warScore(P, e); const ec = G.countries[e];
  if (mode === 'puppet') {
   const capHeld0 = G.sectors[ec.cap] && G.sectors[ec.cap].ctrl === P;
@@ -5306,8 +5379,8 @@ function tradeUsed() { return G.tradeTurn === G.turn; }
 function proposeTrade(tid) {
  const c = G.countries[G.player], o = G.countries[tid];
  if (atWar(c.id, tid)) return 'At war';
- const own = noTradeSpirit(c); if (own) return `Our national spirit "${own}" forbids foreign trade.`;
- const their = noTradeSpirit(o); if (their) return `${o.name} refuses all foreign trade ("${their}").`;
+ const own = noTradeOf(c); if (own) return own === 'Closed Market' ? 'Our Closed Market law forbids foreign trade — change the economy law under Politics.' : `Our national spirit "${own}" forbids foreign trade.`;
+ const their = noTradeOf(o); if (their) return `${o.name} refuses all foreign trade ("${their}").`;
  if (tradeUsed()) return 'Only one trade proposal per turn — try again next turn.';
  G.tradeTurn = G.turn;
  const rel = c.rel[tid] || 0;
@@ -5393,6 +5466,15 @@ function moveUnitsCore(units, target) {
  return moved ? {moved} : null;
 }
 function nukeCost(c) { return c.techs.has('m_icbm') ? 250 : c.techs.has('m_hbomb') ? 350 : 500; }
+// v25: atomic bombs are built one at a time and stockpiled; better technology builds them faster and stores more
+function nukeCap(c) { if (!c.techs.has('m_atomic')) return 0; return 1 + (c.techs.has('c_nuclearpow') ? 2 : 0) + (c.techs.has('m_hbomb') ? 3 : 0) + (c.techs.has('m_icbm') ? 3 : 0) + (c.techs.has('n_ssbn') ? 3 : 0); }
+function nukeBuildTurns(c) { return c.techs.has('m_icbm') ? 1 : c.techs.has('m_hbomb') ? 2 : c.techs.has('c_nuclearpow') ? 3 : 4; }
+function nukeTurn(c) {
+ const cap = nukeCap(c); c.nukes = Math.min(c.nukes || 0, cap); if (!cap || c.nukeOff || c.nukes >= cap) return;
+ const n = nukeBuildTurns(c), pay = nukeCost(c) / n; if (c.money < pay) return; // the programme stalls without funds
+ c.money -= pay; c.nukeProg = (c.nukeProg || 0) + 1;
+ if (c.nukeProg >= n) { c.nukeProg = 0; c.nukes = (c.nukes || 0) + 1; logMsg(`☢ A new atomic bomb is ready (${c.nukes}/${cap} in the arsenal).`, 'build'); }
+}
 // an atomic bomb must be delivered: by a bomber squadron with the range (and moves left) to reach the target,
 // or — once ICBMs are researched — by missile from home soil
 function nukeDelivery(sid) {
@@ -5420,11 +5502,11 @@ function nukeIntercept(sid, dl) {
 function nuke(sid) {
  const P = G.player; const s = G.sectors[sid]; const c = G.countries[P];
  if (!c.techs.has('m_atomic')) return 'Atomic Bomb not researched';
- const cost = nukeCost(c); if (c.money < cost) return `An atomic strike costs ${cost}M`;
+ if (!(c.nukes > 0)) return 'Our arsenal is empty — the next bomb is still being built';
  if (!hostile(P, s.ctrl)) return 'Target must be an enemy at war';
  const dl = nukeDelivery(sid);
  if (!dl) return 'No bomber can reach this sector — base a bomber squadron (with moves left) within range first';
- c.money -= cost;
+ c.nukes--;
  const from = dl.u ? [dl.u.s] : [c.cap];
  if (dl.u) dl.u.mv = 0;
  if (rnd() < nukeIntercept(sid, dl)) { // the bomber is shot down before it reaches the target
@@ -5469,7 +5551,7 @@ function aiNukes() {
  const home = G.sectors.filter(t => t && !t.w && t.ctrl === jp.id && t.o === jp.id && t.lon > 129 && t.lon < 146 && t.lat > 30 && t.lat < 46 && !t.nuked);
  if (!home.length) return;
  const pref = ['Hiroshima', 'Nagasaki', 'Kokura', 'Niigata', 'Kyoto'];
- home.sort((a, b) => { const ia = pref.findIndex(n => a.name === n || (a.cities || []).some(ct => ct.name === n)), ib = pref.findIndex(n => b.name === n || (b.cities || []).some(ct => ct.name === n)); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib) || b.pop - a.pop; });
+ home.sort((a, b) => { const ia = pref.findIndex(n => (a.k || a.name) === n || (a.cities || []).some(ct => (ct.k || ct.name) === n)), ib = pref.findIndex(n => (b.k || b.name) === n || (b.cities || []).some(ct => (ct.k || ct.name) === n)); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib) || b.pop - a.pop; });
  aiNuke(us, home[0].id); G.lastAiNuke = G.turn;
  G.flags = G.flags || {}; G.flags.japan_nuked = (G.flags.japan_nuked || 0) + 1;
 }
@@ -5534,6 +5616,7 @@ function endTurn() {
    for (const k in up) { const m = `Refitted ${up[k]}× ${k}.`; report.upgrades.push(m); logMsg(m, 'tech'); }
   }
  } else c.money += e.tax * c.resShare;
+ nukeTurn(c);
  // goods & trade
  let tradeIncome = 0;
  const partners = tradePartners(c);
@@ -5613,11 +5696,11 @@ function endTurn() {
  G.units = G.units.filter(u => u.hp > 0);
  // ---- unrest & rebellion ----
  const capS = G.sectors[c.cap];
- const spUnrest = spiritVal(c, 'unrest'); const spInf = spiritVal(c, 'infamy'); if (spInf) addInfamy(spInf);
+ const spUnrest = spiritVal(c, 'unrest') + lawVal(c, 'unrest'), lawNc = lawVal(c, 'ncUnrest'); const spInf = spiritVal(c, 'infamy') + lawVal(c, 'infamy'); if (spInf) addInfamy(spInf);
  for (const s of G.sectors) {
   if (!s || s.w || s.o !== P) continue;
   let d = (c.tax - 0.12) * 60;
-  const nonCore = s.core !== P; if (nonCore) d += 1.5 + Math.max(0, c.tax - 0.08) * 40;
+  const nonCore = s.core !== P; if (nonCore) d += 1.5 + Math.max(0, c.tax - 0.08) * 40 + lawNc;
   if (s.t === 'mountains' || s.t === 'jungle') d *= 1.3;
   const dist = capS ? Math.hypot(s.lon - capS.lon, s.lat - capS.lat) : 0; d += Math.min(2, dist / 30) * Math.max(0, c.tax - 0.1) * 10;
   if (c.short.grain) { const f = c.short.grain; d += (2 + 6 * f.sev) * shortMult(f) + (s.pop > 3000 ? 2 * f.sev : 0); }
@@ -5756,7 +5839,7 @@ function aiTurnBody() {
  }
  if (G.m === 0) { aiTradeYear(); liberationYear(); }
  aiNukes();
- capitulationsTurn(); capitalTurn(); defeatedWithdrawTurn(); menTurn(); warStatsTurn();
+ capitulationsTurn(); capitalTurn(); defeatedWithdrawTurn(); menTurn(); warStatsTurn(); aiLawsTurn(); if (P >= 0) warLawsLapse(G.countries[P]);
  for (const w of G.wars.slice()) {
   const nonP = w.a.filter(x => x !== P).length && w.b.filter(x => x !== P).length;
   if (!nonP) continue;
@@ -6070,7 +6153,7 @@ function newCountry(name, col, cap, like, secs) {
 function applyEvent(E) {
  const r = applyEvent0(E);
  if (E.music && typeof SND !== 'undefined' && !UI.ffwd && G.player >= 0) { // a historic melody, if the event concerns us or nations we can see
-  const names = [].concat(E.who || [], E.into || [], E.from || [], E.to || [], E.over || [], E.sub || [], E.leader || [], E.members || [], E.a || [], E.b || [], E.nw || []);
+  const names = [].concat(E.musicWho || [], E.who || [], E.into || [], E.from || [], E.to || [], E.over || [], E.sub || [], E.leader || [], E.members || [], E.a || [], E.b || [], E.nw || []);
   const ids = names.map(n => n === 'ALL' ? G.player : (byName(n) || {}).id).filter(x => x !== undefined);
   if (ids.some(id => id === G.player || isVisibleCountry(id))) { const T = SND.anthem(E.music); if (T && typeof toast === 'function') toast(`♪ ${E.musicTitle || T.t} — ${T.by}`); }
  }
@@ -7173,7 +7256,7 @@ function aiDevTurn(c) {
  let busy = secs.filter(s => s.q.length).length;
  if (!war && G.turn % 4 === c.id % 4) busy += aiConvertSurplus(c, secs, maxQ - busy);
  if (busy >= maxQ) { spillDev(c); return; }
- let pop = 0; const have = {farm: 0, wood: 0, mine: 0, factory: 0, base: 0, dock: 0, airport: 0, radar: 0};
+ let pop = 0; const have = {farm: 0, wood: 0, mine: 0, factory: 0, base: 0, dock: 0, airport: 0, radar: 0, univ: 0};
  for (const s of secs) { pop += s.pop; for (const k in s.b) have[k] = (have[k] || 0) + s.b[k]; for (const k of SPECIAL_B) if (s[k]) have[k]++; for (const q of s.q) have[q.b] = (have[q.b] || 0) + 1; }
  const M = pop / 1000;
  // what the nation is short of: food first, then industry with the mines to feed it, timber, and the military infrastructure it needs
@@ -7201,6 +7284,7 @@ function aiDevTurn(c) {
  sp('base', border.length ? border : secs, war ? 4 : 7);
  if ((c.meta.navy || 0) > 0 || coastal.length > 3) sp('dock', coastal, 6);
  sp('airport', [G.sectors[c.cap], ...border].filter(s => s && s.o === c.id), 8);
+ if (!war) sp('univ', secs.slice().sort((x, y) => y.pop - x.pop).slice(0, 12), 8);
  if (war || c.gp) sp('radar', border.length ? border : [G.sectors[c.cap]].filter(Boolean), 10);
  if (!cand.length) return;
  cand.sort((a, b) => b.v - a.v);
@@ -7241,7 +7325,7 @@ function spillDev(c) {
 }
 // once a year AI nations with open markets sign (or drop) trade agreements with each other
 function aiTradeYear() {
- const P = G.player, ok = c => c && c.alive && !c.unclaimed && !spiritVal(c, 'noTrade');
+ const P = G.player, ok = c => c && c.alive && !c.unclaimed && !noTradeOf(c);
  const live = G.countries.filter(c => ok(c) && c.id !== P && G.sectors.some(s => s && s.o === c.id));
  for (const c of live) { c.aiTrade = c.aiTrade || []; c.aiTrade = c.aiTrade.filter(id => ok(G.countries[id]) && !atWar(c.id, id)); }
  const slots = c => clamp(2 + Math.floor(Math.log2(Math.max(1, (c.gdpCache || 100) / 400))), 1, 7);
@@ -7273,6 +7357,7 @@ function refreshNames(silent) {
   }
  }
  if (changed) { G.dirtyLabels = true; if (typeof FLAG_CACHE !== 'undefined') {} }
+ if (typeof refreshCityNames === 'function' && refreshCityNames(silent)) changed = true;
  return changed;
 }
 
@@ -7464,6 +7549,370 @@ function warStatsTurn() {
  for (const c of G.countries) c._warSpend = 0;
  const now = G.y * 12 + G.m;
  G.warStats.forEach((r, i) => { if (r.end === null && !live.has(i)) { r.end = now; for (const x of [...r.a, ...r.b]) { const c = G.countries[x]; if (c) r.res[x] = warResult(r.name, c.key); } } });
+}
+
+// ===================== v26: HISTORICAL LAWS =====================
+// Per country key: [from year, 'gov consc border edu race econ press', optional condition(c)].
+// Entries apply in order (a '.' keeps the previous value); conditions follow the alternate-history flags used for names.
+// gov: am absolute monarchy · cm constitutional monarchy · rp republic · mj military junta / dictatorship · fa fascist · so socialist · tu trade-union · th religious · an anarchist
+// consc: un unarmed · li light-armed · vo volunteer · ma mandatory · la last man standing
+// border: cl closed · re restricted · op open      edu: no none · rl religious · pv private · pu public · hi higher
+// race: eq equal · ca caste/estates/slavery · sg segregation · sp supremacy      econ: lf laissez-faire · mx mixed · pl planned · wa war · cl closed market
+// press: fr free · ce censorship · pr propaganda
+const HL_AXIS = () => typeof G !== 'undefined' && G && (G.scen === 'axis' || axisWin());
+const HL_NOAXIS = () => !HL_AXIS();
+const HL_LOSTPW = () => typeof warResult === 'function' && warResult('Pacific War', 'Empire of Japan') === -1;
+const HL_NAZI = () => nazi();
+const HL_NOGW = () => !lostGW();
+const HIST_LAWS = {
+ // ---------- Western Europe ----------
+ 'United Kingdom': [[1800, 'cm vo re pv ca mx fr'], [1834, '. . . . eq . .'], [1846.5, '. . . . . lf .'], [1870.6, '. . . pu . . .'], [1914.6, '. . . . . wa .'], [1916.1, '. ma . . . . .'], [1919, '. vo . . . mx .'], [1939.7, '. ma . . . wa .'], [1945.7, '. . . . . mx .'], [1960.9, '. vo . . . . .'], [1963.8, '. . . hi . . .']],
+ 'France': [[1800, 'mj ma re pv eq mx ce'], [1802.4, '. . . . ca . .'], [1804.4, 'am . . . . . .'], [1814.3, 'cm vo . . . . .'], [1830.6, '. . . . . . fr'], [1833.5, '. . . pu . . .'], [1848.2, 'rp . . . eq . .'], [1852.9, 'am . . . . . ce'], [1868, 'cm ma . . . . fr'], [1870.7, 'rp . . . . . .'], [1914.6, '. . . . . wa .'], [1919, '. . . . . mx .'], [1939.7, '. . . . . wa .'], [1945.7, '. . . . . mx .'], [1968.5, '. . . hi . . .']],
+ 'Vichy France': [[1940, 'fa vo re pu sg mx pr']],
+ 'Spain': [[1800, 'am ma re rl ca mx ce'], [1812.2, 'cm . . . . . fr'], [1814.4, 'am . . . . . ce'], [1820.2, 'cm . . . . . fr'], [1823.8, 'am . . . . . ce'], [1834.3, 'cm . . . . . .'], [1857.8, '. . . pu . . .'], [1873.1, 'rp . . . . . fr'], [1874.9, 'cm . . . . . .'], [1886.8, '. . . . eq . .'], [1923.7, 'mj . . . . . ce'], [1930.1, 'cm . . . . . .'], [1931.3, 'rp . . . . . fr'], [1936.6, '. . . . . wa .'], [1939.3, 'fa . cl . . mx pr'], [1945.7, 'mj . re . . . ce'], [1975.9, 'cm . . . . . .'], [1977.5, '. . . . . . fr']],
+ 'Nationalist Spain': [[1936, 'fa ma re rl eq wa pr']],
+ 'Portugal': [[1800, 'am vo re rl ca mx ce'], [1822.7, 'cm . . . . . fr'], [1828.5, 'am . . . . . ce'], [1834.4, 'cm . . . . . fr'], [1869.2, '. . . . eq . .'], [1910.8, 'rp ma . pu . . .'], [1926.4, 'mj . . . . . ce'], [1933.2, 'fa . . . . . pr'], [1974.3, 'rp . . . . . fr']],
+ 'Netherlands': [[1800, 'rp ma re pv ca mx ce'], [1806.4, 'am . . . . . .'], [1815.2, 'cm . . . . . .'], [1848.8, '. . . . . . fr'], [1857.7, '. . . pu . lf .'], [1863.5, '. . . . eq . .'], [1914.6, '. . . . . mx .']],
+ 'Belgium': [[1830, 'cm ma re pv eq lf fr'], [1914.5, '. . . pu . mx .']],
+ 'Luxembourg': [[1815, 'cm li re pu eq mx fr'], [1867.4, '. un . . . . .'], [1945, '. li . . . . .']],
+ 'Switzerland': [[1815, 'rp ma re pu eq mx fr']],
+ 'Helvetic Republic': [[1798, 'rp ma re pv eq mx ce'], [1803.2, '. . . pu . . fr']],
+ 'Ireland': [[1922, 'cm vo re pu eq mx ce'], [1949.3, 'rp . . . . . .'], [1967, '. . . . . . fr']],
+ // ---------- Germany ----------
+ 'Prussia': [[1800, 'am ma re pu ca mx ce'], [1807.8, '. . . . eq . .'], [1848.9, 'cm . . . . . .']],
+ 'Germany': [[1871, 'cm ma re pu eq mx ce'], [1874.3, '. . . . . . fr'], [1914.6, '. . . . . wa .'], [1918.9, 'rp li . . . mx .', () => lostGW()], [1919, '. . . . . mx .', HL_NOGW],
+  [1933.1, 'fa vo . . sp pl pr', HL_NAZI], [1935.2, '. ma . . . . .', HL_NAZI], [1939.7, '. . . . . wa .', HL_NAZI], [1944.8, '. la . . . . .', () => nazi() && !HL_AXIS()], [1945.7, '. ma . . . pl .', () => nazi() && HL_AXIS()],
+  [1945.4, 'mj un . . eq mx ce', () => lostWW2()], [1949.4, 'rp . . . . . fr', () => lostWW2()], [1956.3, '. ma . . . . .', () => lostWW2()], [1965, '. . . hi . . .', () => lostWW2()]],
+ 'East Germany': [[1949, 'so vo cl pu eq pl pr'], [1962.1, '. ma . . . . .']],
+ 'Bavaria': [[1800, 'am vo re pu eq mx ce'], [1818.5, 'cm ma . . . . .']],
+ 'Saxony': [[1800, 'am vo re pu eq mx ce'], [1831.8, 'cm ma . . . . .']],
+ 'Württemberg': [[1800, 'am vo re pu eq mx ce'], [1819.8, 'cm ma . . . . .']],
+ 'Baden': [[1800, 'am vo re pu eq mx ce'], [1818.7, 'cm ma . . . . .']],
+ 'Hanover': [[1800, 'am vo re pu eq mx ce'], [1833.8, 'cm ma . . . . .']],
+ 'Mecklenburg-Schwerin': [[1800, 'am vo re pv ca mx ce'], [1820, '. . . . eq . .']],
+ 'Mecklenburg-Strelitz': [[1800, 'am vo re pv ca mx ce'], [1820, '. . . . eq . .']],
+ 'Hesse': [[1800, 'am vo re pu eq mx ce'], [1820.9, 'cm ma . . . . .']],
+ 'Oldenburg': [[1800, 'am vo re pu eq mx ce'], [1849.2, 'cm . . . . . .']],
+ 'Hamburg': [[1800, 'rp li re pv eq lf fr']], 'Bremen': [[1800, 'rp li re pv eq lf fr']], 'Lübeck': [[1800, 'rp li re pv eq lf fr']],
+ 'Brunswick': [[1800, 'am vo re pu eq mx ce'], [1832.6, 'cm . . . . . .']],
+ 'Thuringia': [[1800, 'am vo re pu eq mx ce'], [1816, 'cm . . . . . .']],
+ 'Nassau': [[1800, 'am vo re pu eq mx ce'], [1814.7, 'cm . . . . . .']],
+ 'Anhalt': [[1800, 'am vo re pu eq mx ce']], 'Lippe-Detmold': [[1800, 'am vo re pu eq mx ce'], [1836, 'cm . . . . . .']], 'Swabia': [[1800, 'am vo re pu eq mx ce']],
+ // ---------- Italy ----------
+ 'Kingdom of Sardinia': [[1800, 'am ma re rl eq mx ce'], [1848.2, 'cm . . . . . fr'], [1859.9, '. . . pu . . .']],
+ 'Italy': [[1861, 'cm ma re pu eq mx fr'], [1915.4, '. . . . . wa .'], [1919, '. . . . . mx .'], [1922.8, 'fa . . . . . .'], [1925.1, '. . . . . . pr'], [1935.8, '. . . . . wa .'], [1937, '. . . . . mx .'], [1938.8, '. . . . sg . .'], [1940.5, '. . . . . wa .'],
+  [1943.6, 'cm . . . eq . ce', HL_NOAXIS], [1945.5, '. . . . . mx fr', HL_NOAXIS], [1946.5, 'rp . . . . . .', HL_NOAXIS]],
+ 'Two Sicilies': [[1800, 'am vo re rl eq mx ce']],
+ 'Papal States': [[1800, 'th vo re rl sg mx ce']],
+ 'Tuscany': [[1800, 'am vo re rl eq mx ce']], 'Parma': [[1800, 'am vo re rl eq mx ce']], 'Modena': [[1800, 'am vo re rl eq mx ce']],
+ // ---------- Scandinavia ----------
+ 'Denmark–Norway': [[1800, 'am ma re pv eq mx ce'], [1814, '. . . pu . . .']],
+ 'Denmark': [[1814, 'am ma re pu ca mx ce'], [1848.8, '. . . . eq . .'], [1849.4, 'cm . . . . . fr']],
+ 'Sweden': [[1800, 'am vo re pv eq mx ce'], [1809.5, 'cm . . . . . .'], [1812, '. ma . . . . .'], [1842, '. . . pu . . .'], [1866, '. . . . . . fr']],
+ 'Sweden–Norway': [[1814, 'cm ma re pu eq mx fr']],
+ 'Norway': [[1905, 'cm ma re pu eq mx fr']],
+ 'Finland': [[1917, 'rp ma re pu eq mx fr'], [1939.9, '. . . . . wa .'], [1944.7, '. . . . . mx .']],
+ // ---------- Central & Eastern Europe ----------
+ 'Austrian Empire': [[1800, 'am ma re pu ca mx ce'], [1848.7, '. . . . eq . .'], [1861.2, 'cm . . . . . .']],
+ 'Austria-Hungary': [[1867, 'cm ma re pu eq mx fr'], [1914.6, '. . . . . wa ce']],
+ 'Austria': [[1918.9, 'rp li re pu eq mx fr'], [1934.2, 'fa . . . . . pr'], [1945.4, 'rp un . . . . fr'], [1955.5, '. ma . . . . .']],
+ 'Hungary': [[1918, 'cm li re pu eq mx ce'], [1938.4, '. ma . . sg . .'], [1941.5, '. . . . . wa .'], [1944.8, 'fa la . . sp . pr'], [1945.3, 'cm ma . . eq mx .'], [1949.6, 'so . cl . . pl .']],
+ 'Poland': [[1918, 'rp ma re pu eq mx fr'], [1918.5, 'cm . . . . . ce', kaiserW], [1926.4, 'mj . . . . . ce', () => !kaiserW()], [1939.7, '. la . . . wa .'], [1945.5, 'so ma cl . . pl pr']],
+ 'Ukraine': [[1918, 'mj vo re pu eq mx ce']],
+ 'Baltic States': [[1918, 'rp vo re pu eq mx fr'], [1918.5, 'cm . . . . . ce', kaiserW], [1934.3, 'mj ma . . . . ce']],
+ 'Czechoslovakia': [[1918, 'rp ma re pu eq mx fr'], [1948.2, 'so . cl . . pl pr']],
+ 'Yugoslavia': [[1918, 'cm ma re pu eq mx fr'], [1929.1, 'am . . . . . ce'], [1931.7, 'cm . . . . . .'], [1945.9, 'so . cl . . pl pr'], [1965.6, '. . re . . mx .']],
+ 'Romania': [[1878, 'cm ma re pv sg mx fr'], [1893, '. . . pu . . .'], [1923.3, '. . . . eq . .'], [1938.1, 'am . . . sg . ce'], [1940.7, 'fa . . . . wa pr'], [1944.7, 'cm . . . eq mx ce'], [1947.9, 'so . cl . . pl pr']],
+ 'Bulgaria': [[1878, 'cm ma re pu eq mx fr'], [1934.4, 'mj . . . . . ce'], [1935.3, 'am . . . . . .'], [1941.1, '. . . . sg . .'], [1944.7, 'cm . . . eq . .'], [1946.7, 'so . cl . . pl pr']],
+ 'Serbia': [[1878, 'cm ma re pu eq mx fr'], [1912.8, '. . . . . wa .'], [1914, '. . . . . . ce']],
+ 'Montenegro': [[1852, 'am ma re rl eq mx ce'], [1905.9, 'cm . . . . . .']],
+ 'Greece': [[1822, 'rp ma re rl eq mx fr'], [1832, 'am . . . . . ce'], [1844.2, 'cm . . . . . fr'], [1895, '. . . pu . . .'], [1924.3, 'rp . . . . . .'], [1935.9, 'cm . . . . . .'], [1936.6, 'mj . . . . . pr'], [1944.8, 'cm . . . . . ce'], [1967.3, 'mj . . . . . pr'], [1974.6, 'rp . . . . . fr']],
+ 'Albania': [[1912, 'cm vo re rl eq mx ce'], [1925, 'rp . . . . . .'], [1928.7, 'am ma . . . . .'], [1944.9, 'so . cl pu . pl pr']],
+ // ---------- Russia ----------
+ 'Russian Empire': [[1800, 'am ma re rl ca mx ce'], [1861.2, '. . . . sg . .'], [1864, '. . . pv . . .'], [1905.8, 'cm . . . . . fr'], [1907.4, '. . . . . . ce'], [1914.6, '. . . . . wa .'], [1917.2, 'rp . . . eq . fr']],
+ 'Soviet Union': [[1917.8, 'so ma cl pu eq wa pr'], [1921.2, '. . . . . mx .'], [1928.8, '. . . . . pl .'], [1941.5, '. . . . . wa .'], [1945.7, '. . . . . pl .'], [1958, '. . . hi . . .']],
+ 'White Russia': [[1918, 'mj ma re rl eq wa ce']],
+ 'Reichskommissariat Ostland': [[1941, 'fa ma cl pu sp pl pr']], 'Reichskommissariat Ukraine': [[1941, 'fa ma cl pu sp pl pr']],
+ 'Reichskommissariat Moskowien': [[1941, 'fa ma cl pu sp pl pr']], 'Reichskommissariat Kaukasus': [[1941, 'fa ma cl pu sp pl pr']],
+ // ---------- Ottoman world, Middle East & North Africa ----------
+ 'Ottoman Empire': [[1800, 'am vo re rl ca mx ce'], [1843.9, '. ma . . . . .'], [1856.1, '. . . . eq . .'], [1869, '. . . pv . . .'], [1876.9, 'cm . . . . . fr'], [1878.1, 'am . . . . . ce'], [1908.5, 'cm . . . . . fr'], [1913.1, 'mj . . . . . ce'], [1914.8, '. . . . . wa .']],
+ 'Turkey': [[1922, 'rp ma re pu eq mx ce'], [1950.4, '. . . . . . fr'], [1960.4, 'mj . . . . . ce'], [1961.8, 'rp . . . . . fr'], [1980.7, 'mj . . . . . ce'], [1983.9, 'rp . . . . . .']],
+ 'Persia': [[1800, 'am vo re rl eq mx ce'], [1906.6, 'cm . . . . . fr'], [1911.9, '. . . . . . ce'], [1925.9, 'am ma . pv . . .'], [1941.7, 'cm . . . . . fr'], [1943, '. . . pu . . .'], [1953.6, 'am . . . . . ce'], [1979.1, 'th . . . . . pr']],
+ 'Afghanistan': [[1800, 'am vo re rl eq mx ce'], [1964.8, 'cm . . . . . .'], [1973.5, 'mj . . . . . .'], [1978.3, 'so ma cl pu . pl pr']],
+ 'Egypt': [[1805, 'am vo re rl eq mx ce'], [1822, '. ma . . . pl .'], [1849, '. . . . . mx .'], [1923.3, 'cm . . pv . . fr'], [1952.5, 'mj . . . . . ce'], [1956, '. . . pu . . pr'], [1961.5, '. . . . . pl .']],
+ 'Tunisia': [[1800, 'am vo re rl eq mx ce']],
+ 'Morocco': [[1800, 'am vo re rl ca mx ce'], [1912.3, '. . . . eq . .'], [1956.2, 'cm . . pv . . .']],
+ 'Yemen': [[1800, 'th vo re rl ca mx ce'], [1962.7, 'mj . . . eq . .']],
+ 'Oman': [[1800, 'am vo re rl ca mx ce'], [1970.5, '. . . pv eq . .']],
+ 'Nejd': [[1800, 'th vo re rl ca mx ce']],
+ 'Arabia': [[1902, 'th vo re rl ca mx ce'], [1932.7, 'am . . . . . .'], [1962.9, '. . . pv eq . .']],
+ 'Qatar': [[1800, 'am vo re rl ca mx ce'], [1952, '. . . . eq . .']],
+ 'Israel': [[1948, 'rp ma op pu eq mx fr'], [1948.4, '. . . . . wa .'], [1949.6, '. . . . . mx .']],
+ // ---------- Africa ----------
+ 'Ethiopia': [[1800, 'am vo re rl ca mx ce'], [1931.5, 'cm . . . . . .'], [1942.6, '. . . . eq . .'], [1974.7, 'mj ma . pu . pl pr']],
+ 'Zanzibar': [[1856, 'am vo re rl ca mx ce'], [1897.3, '. . . . eq . .']],
+ 'Liberia': [[1847, 'rp vo re pv ca lf fr']],
+ 'Sokoto Caliphate': [[1804, 'th vo re rl ca mx ce']],
+ 'Hausa States': [[1800, 'am vo re rl ca mx ce']],
+ 'Madagascar': [[1800, 'am vo re rl ca mx ce'], [1820, '. ma . . . . .']],
+ 'Merina Kingdom': [[1800, 'am ma re rl ca mx ce']],
+ 'Asante': [[1800, 'am vo re rl ca mx ce']],
+ 'Zulu': [[1816, 'am ma re no eq mx ce']],
+ 'South African Republic': [[1852, 'rp ma re pv sg mx fr']],
+ 'Orange Free State': [[1854, 'rp ma re pv sg mx fr']],
+ 'South Africa': [[1910, 'cm vo re pu sg mx fr'], [1948.4, '. . . . sp . .'], [1961.4, 'rp . . . . . ce'], [1967, '. ma . . . . .'], [1991.4, '. . . . eq . fr']],
+ // ---------- Americas ----------
+ 'United States of America': [[1800, 'rp li op pv ca mx fr'], [1852.4, '. . . pu . . .'], [1861.3, '. . . . . wa .'], [1863, '. ma . . . . .'], [1865.3, '. vo . . sg lf .'], [1917.3, '. ma . . . wa .'], [1919, '. vo . . . lf .'], [1921.4, '. . re . . . .'], [1933.2, '. . . . . mx .'], [1940.7, '. ma . . . . .'], [1941.95, '. . . . . wa .'], [1945.7, '. . . hi . mx .'], [1964.5, '. . . . eq . .'], [1973.1, '. vo . . . . .']],
+ 'Confederate States': [[1861, 'rp vo re pv sp wa fr'], [1862.3, '. ma . . . . .']],
+ 'Texas': [[1836, 'rp li op pv ca lf fr']],
+ 'Canada': [[1867, 'cm vo op pu eq mx fr'], [1914.6, '. . . . . wa .'], [1917.6, '. ma . . . . .'], [1919, '. vo . . . mx .'], [1923.6, '. . re . . . .'], [1939.7, '. . . . . wa .'], [1945.7, '. . . . . mx .']],
+ 'Mexico': [[1821, 'am vo re rl eq mx ce'], [1823.3, 'rp . . . . . fr'], [1863.5, 'cm . . . . . ce'], [1867.4, 'rp . . . . . fr'], [1876.9, 'mj . . . . . ce'], [1911.4, 'rp . . . . . fr'], [1917.1, '. . . pu . . .'], [1929.2, '. . . . . . ce'], [1942, '. ma . . . . .']],
+ 'Central America': [[1823, 'rp vo re rl eq mx fr']],
+ 'Guatemala': [[1838, 'rp vo re rl eq mx fr'], [1839.3, 'mj . . . . . ce'], [1871.6, 'rp . . . . . .'], [1931.2, 'mj . . . . . .'], [1944.9, 'rp . . . . . fr'], [1954.6, 'mj . . . . . ce']],
+ 'Honduras': [[1838, 'rp vo re rl eq mx fr'], [1933, 'mj . . . . . ce'], [1949, 'rp . . . . . fr'], [1963.8, 'mj . . . . . ce']],
+ 'Nicaragua': [[1838, 'rp vo re rl eq mx fr'], [1936.4, 'mj . . . . . ce'], [1979.5, 'so ma . pu . pl pr']],
+ 'El Salvador': [[1841, 'rp vo re rl eq mx fr'], [1931.9, 'mj . . . . . ce']],
+ 'Costa Rica': [[1838, 'rp vo re rl eq mx fr'], [1869, '. . . pu . . .'], [1948.9, '. un . . . . .']],
+ 'Haiti': [[1804, 'am ma re no eq mx ce'], [1806.8, 'rp . . . . . .'], [1957.8, 'mj . . . . . pr']],
+ 'Dominican Republic': [[1844, 'rp vo re rl eq mx fr'], [1930.6, 'mj ma . . . . pr'], [1961.4, 'rp vo . . . . fr']],
+ 'Cuba': [[1898, 'rp vo re pu eq mx fr'], [1952.2, 'mj . . . . . ce'], [1959, 'so ma cl . . pl pr']],
+ 'Gran Colombia': [[1819, 'rp ma re rl ca mx fr']],
+ 'Colombia': [[1831, 'rp vo re rl ca mx fr'], [1851.4, '. . . . eq . .'], [1953.5, 'mj . . . . . ce'], [1957.4, 'rp . . . . . fr']],
+ 'Venezuela': [[1830, 'rp vo re rl ca mx fr'], [1854.2, '. . . . eq . .'], [1870, '. . . pu . . .'], [1908.9, 'mj . . . . . ce'], [1935.9, 'rp . . . . . fr'], [1948.9, 'mj . . . . . ce'], [1958.1, 'rp . . . . . fr']],
+ 'Ecuador': [[1830, 'rp vo re rl ca mx fr'], [1851.7, '. . . . eq . .']],
+ 'Peru': [[1821, 'rp vo re rl ca mx fr'], [1854.9, '. . . . eq . .'], [1968.8, 'mj . . . . . ce'], [1980.5, 'rp . . . . . fr']],
+ 'Bolivia': [[1825, 'rp vo re rl ca mx fr'], [1952.3, '. . . pu eq . .']],
+ 'Chile': [[1818, 'rp vo re rl eq mx fr'], [1860, '. . . pv . . .'], [1900.8, '. ma . . . . .'], [1920.7, '. . . pu . . .'], [1973.7, 'mj . . . . lf pr'], [1990.2, 'rp . . . . . fr']],
+ 'Argentina': [[1816, 'rp vo op rl ca mx fr'], [1829.9, 'mj . . . . . ce'], [1852.1, 'rp . . . . . fr'], [1853.4, '. . . . eq . .'], [1884.5, '. . . pu . . .'], [1901.9, '. ma . . . . .'], [1930.7, 'mj . re . . . ce'], [1932.1, 'rp . . . . . fr'], [1943.4, 'mj . . . . . ce'], [1946.4, 'rp . . . . . pr'], [1955.7, 'mj . . . . . ce'], [1958.4, 'rp . . . . . fr'], [1966.5, 'mj . . . . . ce'], [1973.4, 'rp . . . . . fr'], [1976.2, 'mj . . . . . pr'], [1983.9, 'rp . . . . . fr']],
+ 'Uruguay': [[1828, 'rp vo op rl eq mx fr'], [1877.7, '. . . pu . . .'], [1973.5, 'mj . . . . . ce'], [1985.2, 'rp . . . . . fr']],
+ 'Paraguay': [[1811, 'rp vo re rl ca mx fr'], [1814.8, 'mj . cl . . cl ce'], [1840.8, '. . re . . mx .'], [1869, '. . . . eq . .'], [1870.9, 'rp . . . . . fr'], [1954.6, 'mj . . . . . ce'], [1989.1, 'rp . . . . . fr']],
+ 'Brazil': [[1822, 'cm vo op rl ca mx fr'], [1888.4, '. . . . eq . .'], [1889.9, 'rp . . . . . .'], [1908, '. ma . . . . .'], [1934, '. . re pu . . .'], [1937.9, 'mj . . . . . pr'], [1945.8, 'rp . . . . . fr'], [1964.3, 'mj . . . . . ce'], [1985.2, 'rp . . . . . fr']],
+ 'Japanese States of America': [[1945, 'mj ma re pu sg mx pr']],
+ // ---------- South Asia ----------
+ 'Maratha Confederacy': [[1800, 'am vo re rl ca mx ce']],
+ 'Mysore': [[1800, 'am vo re rl ca mx ce']],
+ 'Hyderabad': [[1800, 'am vo re rl ca mx ce']],
+ 'Sikhs': [[1799, 'am vo re rl eq mx ce']],
+ 'Oudh': [[1800, 'am vo re rl ca mx ce']],
+ 'Travancore': [[1800, 'am vo re rl ca mx ce'], [1817, '. . . pu . . .'], [1936.9, '. . . . eq . .']],
+ 'Cochin': [[1800, 'am vo re rl ca mx ce'], [1947, '. . . . eq . .']],
+ 'Rajputs': [[1800, 'am vo re rl ca mx ce']],
+ 'Nepal': [[1800, 'am vo cl rl ca mx ce'], [1846.8, 'mj . . . . . .'], [1951.1, 'cm . re . . . .'], [1960.9, 'am . . . . . .'], [1963.5, '. . . . eq . .']],
+ 'Bhutan': [[1800, 'th vo cl rl eq cl ce'], [1907.9, 'am . . . . . .'], [1961, '. . . pv . mx .']],
+ 'Central Asian Khanates': [[1800, 'am vo re rl ca mx ce']],
+ 'Kandy': [[1800, 'am vo re rl ca mx ce']],
+ 'Ceylon': [[1948, 'cm vo re pu eq mx fr'], [1972.4, 'rp . . . . . .']],
+ 'India': [[1947, 'cm vo re pu eq mx fr'], [1950.1, 'rp . . . . . .'], [1975.5, '. . . . . . ce'], [1977.2, '. . . . . . fr']],
+ 'Pakistan': [[1947, 'cm vo re pv eq mx fr'], [1956.2, 'rp . . . . . .'], [1958.8, 'mj . . . . . ce'], [1971.9, 'rp . . . . . .'], [1977.5, 'mj . . . . . .'], [1988.9, 'rp . . . . . fr']],
+ // ---------- East Asia ----------
+ 'Qing Empire': [[1800, 'am vo cl pv ca mx ce'], [1842.6, '. . re . . . .'], [1905.7, '. . . pu . . .'], [1911.9, '. . . . eq . .']],
+ 'Republic of China': [[1912, 'rp vo re pv eq mx fr'], [1913.8, 'mj . . . . . ce'], [1928.5, '. . . pu . . pr'], [1933, '. ma . . . . .'], [1937.5, '. . . . . wa .'], [1945.7, '. . . . . mx .']],
+ 'Nationalist China': [[1949, 'mj ma cl pu eq mx ce'], [1987.5, 'rp . re . . . fr']],
+ 'Chinese Communists': [[1946, 'so ma cl pu eq wa pr']],
+ "People's Republic of China": [[1949, 'so ma cl pu eq mx pr'], [1953, '. . . . . pl .'], [1966.4, '. . . no . . .'], [1977, '. . . pu . . .'], [1978.95, '. . re . . mx .']],
+ 'Manchukuo': [[1932, 'mj vo re pu sg mx pr']],
+ 'Mongolia': [[1911, 'th vo cl rl eq mx ce'], [1924.9, 'so ma . pu . pl pr']],
+ 'Japan': [[1800, 'mj vo cl pv ca cl ce'], [1854.2, '. . re . . mx .']],
+ 'Empire of Japan': [[1868, 'am vo re pv ca mx ce'], [1871.6, '. . . . eq . .'], [1872.6, '. . . pu . . .'], [1873.1, '. ma . . . . .'], [1889.1, 'cm . . . . . .'], [1904.1, '. . . . . wa .'], [1905.7, '. . . . . mx .'], [1912.6, '. . . . . . fr'], [1925.3, '. . . . . . ce'], [1932.4, 'mj . . . . . .'], [1937.5, '. . . . . wa pr'], [1945.3, '. la . . . . .', () => !HL_AXIS()],
+  [1945.7, 'cm un . . . mx fr', HL_LOSTPW], [1945.7, '. ma . . . mx .', HL_AXIS]],
+ 'Korea': [[1800, 'am li cl pv ca cl ce'], [1876.1, '. . re . . mx .'], [1894.6, '. . . . eq . .'], [1895, '. . . pu . . .'], [1945.6, 'mj un . . . . ce']],
+ 'South Korea': [[1948, 'rp ma re pu eq mx ce'], [1950.5, '. . . . . wa .'], [1953.6, '. . . . . mx .'], [1961.4, 'mj . . . . . .'], [1987.8, 'rp . . . . . fr']],
+ 'North Korea': [[1948, 'so ma cl pu eq pl pr'], [1950.5, '. . . . . wa .'], [1953.6, '. . . . . pl .']],
+ // ---------- Southeast Asia & Pacific ----------
+ 'Siam': [[1800, 'am vo re rl ca mx ce'], [1905.2, '. ma . . eq . .'], [1921.7, '. . . pu . . .'], [1932.5, 'cm . . . . . .'], [1938.9, 'mj . . . . . pr'], [1944.6, 'cm . . . . . ce'], [1947.9, 'mj . . . . . .'], [1973.8, 'cm . . . . . fr']],
+ 'Đại Việt': [[1800, 'am vo re rl eq mx ce']],
+ 'North Vietnam': [[1945, 'so ma cl pu eq wa pr'], [1954.5, '. . . . . pl .'], [1964.6, '. . . . . wa .'], [1975.3, '. . . . . pl .'], [1986.95, '. . . . . mx .']],
+ 'South Vietnam': [[1949, 'cm ma re pu eq mx ce'], [1955.8, 'rp . . . . . .'], [1963.8, 'mj . . . . . .'], [1964.6, '. . . . . wa .']],
+ 'Burma': [[1800, 'am vo re rl eq mx ce'], [1948, 'rp ma . pu . . fr'], [1962.2, 'mj . cl . . pl pr']],
+ 'Cambodia': [[1953, 'cm vo re pu eq mx ce'], [1970.2, 'mj . . . . wa .'], [1975.3, 'so la cl no . pl pr'], [1979, '. ma . pu . . .']],
+ 'Brunei': [[1800, 'am vo re rl eq mx ce']],
+ 'Malaya': [[1957, 'cm vo re pu eq mx fr']],
+ 'Philippines': [[1946, 'rp vo re pu eq mx fr'], [1972.7, 'mj . . . . . ce'], [1986.1, 'rp . . . . . fr']],
+ 'Indonesia': [[1949, 'rp vo re pu eq mx fr'], [1959.5, 'mj . . . . . ce'], [1966.2, '. . . . . . pr']],
+ 'Australia': [[1901, 'cm vo re pu sg mx fr'], [1911, '. ma . . . . .'], [1929.9, '. vo . . . . .'], [1939.7, '. . . . . wa .'], [1945.7, '. . . . . mx .'], [1967.4, '. . . . eq . .']],
+ 'New Zealand': [[1907, 'cm vo re pu eq mx fr'], [1939.7, '. ma . . . wa .'], [1945.7, '. vo . . . mx .']],
+ 'Tuʻi Tonga Empire': [[1800, 'am vo re rl ca mx ce']],
+};
+// smaller states: one fixed set of laws each, by kind
+const HL_GENERIC = {
+ 'am vo re no ca mx ce': ['Segu', 'Kaarta', 'Kong Empire', 'Mossi States', 'Borgu States', 'Oyo', 'Congo', 'Luba', 'Lunda', 'Kuba', 'Teke', 'Yaka', 'Lozi', 'Barotse', 'Buganda', 'Bunyoro', 'Ovimbundu', 'Mbailundu', 'Yeke', 'Mirambo Unyanyembe Ukimbu', 'Sultanate of Utetera', 'Rwanda', 'Burundi', 'Ambur'],
+ 'am ma re no ca mx ce': ['Dahomey', 'Ndebele'],
+ 'am vo re no eq mx ce': ['Xhosa', 'Sotho', 'Ngwato', 'Nguni', 'Shona', 'Rozwi'],
+ 'am vo re rl ca mx ce': ['Funj', 'Air', 'Kanem-Bornu', 'Darfur', 'Wadai', 'Bagirmi', 'Songhai', 'Awsa', 'Bundelkhand', 'Carnatic', 'Arakan'],
+ 'am vo re rl eq mx ce': ['Sindh', 'Bahawalpur'],
+ 'th vo re rl ca mx ce': ['Tukular Caliphate', 'Futa Toro', 'Futa Jalon'],
+ 'mj ma re rl ca mx ce': ['First Samori Empire', 'Second Samori Empire', 'Ibadan'],
+ 'rp li re no eq mx fr': ['Oromo'],
+ 'fa ma re pu sg mx pr': ['Slovakia'],
+};
+for (const spec in HL_GENERIC) for (const k of HL_GENERIC[spec]) if (!HIST_LAWS[k]) HIST_LAWS[k] = [[1700, spec]];
+const HL_CODE = [
+ {am: 'abs_mon', cm: 'const_mon', rp: 'republic', mj: 'junta', fa: 'fascist', so: 'socialist', tu: 'syndicate', th: 'theocracy', an: 'anarchy'},
+ {un: 'unarmed', li: 'light', vo: 'volunteer', ma: 'mandatory', la: 'last'},
+ {cl: 'closed', re: 'restricted', op: 'open'},
+ {no: 'none', rl: 'religious', pv: 'private', pu: 'public', hi: 'higher'},
+ {eq: 'equal', ca: 'caste', sg: 'segregation', sp: 'supremacy'},
+ {lf: 'laissez', mx: 'mixed', pl: 'planned', wa: 'war', cl: 'closedmkt'},
+ {fr: 'free', ce: 'censor', pr: 'propaganda'},
+];
+const HL_CAT = ['gov', 'consc', 'border', 'edu', 'race', 'econ', 'press'];
+// the laws history gives this nation now (null if the nation has no timeline)
+function histLaws(c) {
+ const L = HIST_LAWS[c.key]; if (!L) return null;
+ const yr = G.y + (G.m || 0) / 12, out = {};
+ const apply = spec => spec.split(' ').forEach((t, i) => { if (t !== '.' && HL_CODE[i][t]) out[HL_CAT[i]] = HL_CODE[i][t]; });
+ apply(L[0][1]);
+ for (const e of L) if (e[0] <= yr + 0.01 && (!e[2] || e[2](c))) apply(e[1]);
+ // wartime laws only hold while the nation is actually at war
+ const war = enemiesOf(c.id).size > 0;
+ if (out.econ === 'war' && !war) out.econ = out.gov === 'socialist' ? 'planned' : 'mixed';
+ if (out.consc === 'last' && !war) out.consc = 'mandatory';
+ return out;
+}
+
+// ---------- v25: national laws (Politics) ----------
+// each law option carries effects that feed bonus() (gdp, tax, research, fert, atk, def, build, supply, upkeep)
+// plus unrest (per sector per turn), ncUnrest (extra in non-core sectors), infamy (per turn) and cap (army limit per million people)
+const LAWS = [
+ {id: 'gov', n: 'Government', ic: '👑', cd: 4, k: 2, sp: 10, opts: [
+  {id: 'abs_mon', n: 'Absolute Monarchy', e: {tax: 10, research: -10, unrest: 0.3}, d: 'The crown rules unchecked: taxes flow, ideas do not.'},
+  {id: 'const_mon', n: 'Constitutional Monarchy', e: {gdp: 4, research: 4}, d: 'A sovereign who reigns, a parliament that governs.'},
+  {id: 'republic', n: 'Democratic Republic', e: {gdp: 6, research: 8, unrest: -0.3, atk: -3}, d: 'Elected government: prosperous and inventive, reluctant at war.'},
+  {id: 'junta', n: 'Military Junta', e: {atk: 10, def: 5, gdp: -6, research: -8, unrest: 0.4}, d: 'The generals hold power.'},
+  {id: 'fascist', n: 'Fascist State', e: {atk: 8, build: 15, supply: 10, research: -5, unrest: -0.2, infamy: 0.02}, d: 'One party, one leader, a nation mobilised for struggle.'},
+  {id: 'socialist', n: 'Socialist State', e: {build: 15, supply: 10, tax: 10, gdp: -6, research: 5}, d: 'The party directs the economy in the name of the workers.'},
+  {id: 'syndicate', n: 'Trade Union Syndicate', e: {gdp: 4, build: 5, tax: -10, unrest: -0.5}, d: 'The unions run the factories and the state.'},
+  {id: 'theocracy', n: 'Religious Dictatorship', e: {unrest: -0.7, fert: 0.1, research: -20, gdp: -4}, d: 'The clergy rule by divine law.'},
+  {id: 'anarchy', n: 'Anarchist Commune', e: {def: 10, unrest: -0.3, tax: -40, gdp: -10, research: -5}, d: 'No state, only free communes and militias.'},
+ ]},
+ {id: 'consc', n: 'Conscription', ic: '🪖', cd: 2, k: 0.6, sp: 3, opts: [
+  {id: 'unarmed', n: 'Unarmed Nation', e: {gdp: 6, research: 3, def: -15, upkeep: -10, cap: 0.3}, d: 'Only a token force: money and minds go elsewhere.'},
+  {id: 'light', n: 'Light-Armed Militia', e: {gdp: 3, def: -5, cap: 0.8}, d: 'A small standing force backed by local militias.'},
+  {id: 'volunteer', n: 'Volunteer Army', e: {cap: 1.6}, d: 'A professional army of volunteers.'},
+  {id: 'mandatory', n: 'Mandatory Conscription', e: {atk: 3, def: 5, gdp: -3, unrest: 0.2, cap: 4}, d: 'Every young man serves.'},
+  {id: 'last', n: 'Last Man Standing', e: {atk: 5, def: 15, gdp: -15, research: -10, fert: -0.15, unrest: 0.8, cap: 10}, d: 'Everyone who can hold a rifle is called up. Only in wartime.', war: 1},
+ ]},
+ {id: 'border', n: 'Borders', ic: '🗺', cd: 2, k: 0.4, sp: 2, opts: [
+  {id: 'closed', n: 'Closed Borders', e: {fert: -0.1, gdp: -5, research: -5, unrest: -0.3}, d: 'No one enters, no one leaves.'},
+  {id: 'restricted', n: 'Restricted Borders', e: {}, d: 'Visas, quotas and inspections.'},
+  {id: 'open', n: 'Open Borders', e: {fert: 0.15, gdp: 5, research: 4, unrest: 0.3}, d: 'Immigrants and ideas flow freely.'},
+ ]},
+ {id: 'edu', n: 'Education', ic: '📚', cd: 2, k: 0.5, sp: 2, opts: [
+  {id: 'none', n: 'No Education', e: {research: -40, gdp: -8, tax: 5}, d: 'Schooling is a luxury few can afford.'},
+  {id: 'religious', n: 'Religious Schooling', e: {research: -15, unrest: -0.3}, d: 'Churches and temples teach the young.'},
+  {id: 'private', n: 'Private Education', e: {research: -5, gdp: 2}, d: 'Those who can pay, learn.'},
+  {id: 'public', n: 'Public Education', e: {research: 12, gdp: 3, tax: -5}, d: 'Free schools for every child, paid by the state.'},
+  {id: 'higher', n: 'Universal Higher Education', e: {research: 25, gdp: 6, tax: -10}, d: 'Universities open to all. From 1945.', y: 1945},
+ ]},
+ {id: 'race', n: 'Racial Law', ic: '⚖', cd: 2, k: 0.5, sp: 3, opts: [
+  {id: 'equal', n: 'Equal Protection', e: {research: 5, ncUnrest: -1}, d: 'All citizens equal before the law.'},
+  {id: 'caste', n: 'Caste System', e: {tax: 5, research: -8, unrest: 0.2, ncUnrest: 0.5}, d: 'Birth decides rank and trade.'},
+  {id: 'segregation', n: 'Strict Segregation', e: {research: -10, gdp: -4, unrest: 0.3, ncUnrest: 1.5}, d: 'Separate and unequal: minorities shut out of public life.'},
+  {id: 'supremacy', n: 'Racial Supremacy Doctrine', e: {atk: 5, research: -10, ncUnrest: 2, unrest: -1}, d: 'The state exalts one people and persecutes those it deems inferior: the core rallies, the conquered seethe.'},
+ ]},
+ {id: 'econ', n: 'Economy', ic: '🏭', cd: 2, k: 0.6, sp: 3, opts: [
+  {id: 'laissez', n: 'Laissez-Faire', e: {gdp: 8, tax: -10, unrest: 0.3}, d: 'Markets free of the state.'},
+  {id: 'mixed', n: 'Mixed Economy', e: {}, d: 'Private enterprise, public regulation.'},
+  {id: 'planned', n: 'Planned Economy', e: {build: 20, supply: 15, gdp: -6, research: 3}, d: 'Five-year plans set every quota.'},
+  {id: 'war', n: 'War Economy', e: {supply: 30, build: 25, gdp: -10, unrest: 0.5}, d: 'Every factory serves the front. Only in wartime.', war: 1},
+  {id: 'closedmkt', n: 'Closed Market', e: {noTrade: 1, gdp: -5, research: -5, def: 10, unrest: -0.3}, d: 'The country is sealed off: all foreign trade is forbidden.'},
+ ]},
+ {id: 'press', n: 'Press', ic: '📰', cd: 2, k: 0.3, sp: 2, opts: [
+  {id: 'free', n: 'Free Press', e: {research: 5, unrest: 0.2}, d: 'Newspapers print what they like.'},
+  {id: 'censor', n: 'Censorship', e: {research: -3, unrest: -0.3}, d: 'The censor reads every page first.'},
+  {id: 'propaganda', n: 'State Propaganda', e: {research: -8, unrest: -0.6, atk: 3}, d: 'The press speaks with the voice of the state.'},
+ ]},
+];
+const LAW_OPT = {}; for (const L of LAWS) for (const o of L.opts) LAW_OPT[o.id] = Object.assign(o, {cat: L.id});
+const LAW_FX = {gdp: ['GDP', '%'], tax: ['Tax income', '%'], research: ['Research', '%'], fert: ['Pop. growth', '%/yr'], atk: ['Attack', '%'], def: ['Defence', '%'], build: ['Build speed', '%'], supply: ['Supplies', '%'], upkeep: ['Upkeep', '%', 1], unrest: ['Unrest', '/turn', 1], ncUnrest: ['Unrest in occupied land', '/turn', 1], infamy: ['Infamy', '/turn', 1]};
+function lawFxChips(e) {
+ return (e.noTrade ? '<span class="lfx neg">No foreign trade</span>' : '') + Object.entries(e).filter(([k]) => LAW_FX[k]).map(([k, v]) => { const [n, u, inv] = LAW_FX[k]; const good = inv ? v < 0 : v > 0; return `<span class="lfx ${good ? 'pos' : 'neg'}">${v > 0 ? '+' : ''}${v}${u} ${n}</span>`; }).join('')
+  + (e.cap ? `<span class="lfx muted">army ${e.cap}/M people</span>` : '');
+}
+// the historical starting laws of a nation
+function defaultLaws(c) {
+ const hl = typeof histLaws === 'function' && histLaws(c); if (hl) return Object.assign(heuristicLaws(c), hl);
+ return heuristicLaws(c);
+}
+function heuristicLaws(c) {
+ const y = G.y, nm = (c.name || '') + ' ' + (c.key || ''), has = re => re.test(nm);
+ const nazi = (typeof hasSpirit === 'function' && hasSpirit(c, 'de_nazi')) || (c.key === 'Germany' && c.hadNazi && y < 1946) || has(/Reich\b|Reichskommissariat/);
+ const red = has(/Soviet|Socialist|People's Republic|People’s Republic|Democratic Republic|Democratic People|Commune/);
+ const war = enemiesOf(c.id).size > 0;
+ let gov;
+ if (red) gov = 'socialist';
+ else if (nazi || (c.key === 'Italy' && y >= 1922 && y < 1944) || has(/Vichy|Slovak Republic|Croatia/)) gov = 'fascist';
+ else if (has(/Junta|Military Government|Manchukuo/)) gov = 'junta';
+ else if (has(/Vatican|Papal|Tibet|Islamic|Caliphate|Mahdist|Emirate of Afghanistan/)) gov = 'theocracy';
+ else if (has(/Republic|States|Confedera|Federation|Commonwealth/) && !has(/Empire/)) gov = 'republic';
+ else if (has(/Empire|Kingdom|Tsardom|Sultanate|Emirate|Khanate|Shah|Principality|Duchy|Qing|Persia|Siam|Korea|Ethiopia|Afghanistan|Nepal|Oman|Morocco|Hawaii|Tonga|Japan|Germany|Austria|United Kingdom|Spain|Portugal|Netherlands|Belgium|Sweden|Norway|Denmark|Italy|Romania|Greece|Serbia|Bulgaria|Yugoslavia|Egypt|Iraq|Jordan|Libya|Iran|Saudi|Hejaz|Albania|Montenegro|Thailand/)
+  && !(c.key === 'Germany' && y >= 1918.9) && !(has(/Brazil/) && y >= 1889.9) && !(has(/Portugal/) && y >= 1910.8) && !(has(/Spain/) && y >= 1931.3 && y < 1975.9) && !(has(/Italy/) && y >= 1946.4) && !(has(/Greece/) && y >= 1924.3 && y < 1935.9))
+  gov = (y < 1850 || (has(/Ottoman|Qing|Russian|Persia|Siam|Ethiopia|Korea|Afghanistan|Nepal|Morocco|Oman|Saudi|Hejaz|Bukhara|Khiva|Tibet/) && y < 1910)) ? 'abs_mon' : 'const_mon';
+ else if (has(/Spain/) && y >= 1939) gov = 'junta';
+ else gov = 'republic';
+ const big = /Germany|France|Russian|Austria|Prussia|Italy|Japan|Ottoman/.test(c.key || '') || red;
+ const consc = (big && y >= 1860) || c.key === 'France' || (war && y >= 1914) || nazi ? 'mandatory' : 'volunteer';
+ const border = red || has(/Tibet/) || (has(/Qing|Korea|Japan/) && y < 1870) ? 'closed' : (has(/United States/) && y < 1921) || (has(/Argentina|Brazil|Canada|Australia/) && y < 1930) ? 'open' : 'restricted';
+ const cap = G.sectors[c.cap], west = cap && cap.lon > -12 && cap.lon < 45 && cap.lat > 35;
+ const edu = y < 1870 ? (c.gp || west ? 'private' : 'religious') : (c.gp || west || red || has(/United States|Canada|Japan|Australia|New Zealand|Argentina|Chile|Uruguay/)) ? 'public' : 'private';
+ const race = nazi ? 'supremacy' : (has(/United States/) && y < 1964.5) || (has(/South Africa/) && y >= 1948.4 && y < 1991.5) ? 'segregation' : 'equal';
+ const econ = red ? 'planned' : (war && (nazi || (y >= 1914.5 && y < 1919) || (y >= 1939.6 && y < 1946)) && c.gp) ? 'war' : nazi ? 'planned' : (has(/United States|United Kingdom/) && y < 1929.8) ? 'laissez' : 'mixed';
+ const press = red || gov === 'fascist' ? 'propaganda' : gov === 'abs_mon' || gov === 'junta' || gov === 'theocracy' ? 'censor' : 'free';
+ return {gov, consc, border, edu, race, econ, press};
+}
+function lawsOf(c) {
+ if (!c.laws) { if (!c.name) return defaultLaws(c); c.laws = defaultLaws(c); c._lawV = (c._lawV || 0) + 1; } // names are set once the world is built
+ return c.laws;
+}
+function lawVal(c, key) { if (!c || typeof G === 'undefined' || !G.sectors) return 0; const L = lawsOf(c); let v = 0; for (const k in L) { const o = LAW_OPT[L[k]]; if (o && o.e[key]) v += o.e[key]; } return v; }
+function armyLimit(c) { const pop = economy(c).pop; return Math.max(3, Math.round(3 + lawVal(c, 'cap') * pop / 1000)); }
+function lawCost(c, cat) { const L = LAWS.find(l => l.id === cat); return Math.max(20, Math.round(economy(c).tax * L.k)); }
+// v26: after any reform, no law can change for two turns
+const LAW_CD = 2;
+function lawCooldown(c) { return c.lawAny === undefined ? 0 : Math.max(0, c.lawAny + LAW_CD - G.turn); }
+function canEnact(c, id) {
+ const o = LAW_OPT[id]; if (!o) return 'Unknown law';
+ if (lawsOf(c)[o.cat] === id) return 'Already in force';
+ const cd = lawCooldown(c); if (cd) return `A law was changed recently — no reform for ${cd} more turn${cd > 1 ? 's' : ''}`;
+ if (o.war && !enemiesOf(c.id).size) return 'Only in wartime';
+ if (o.y && G.y < o.y) return 'Available from ' + o.y;
+ if (c.money < lawCost(c, o.cat)) return `Costs ${lawCost(c, o.cat)}M`;
+ return null;
+}
+function enactLaw(id) {
+ const c = G.countries[G.player], o = LAW_OPT[id], err = canEnact(c, id); if (err) return err;
+ const L = LAWS.find(l => l.id === o.cat);
+ c.money -= lawCost(c, o.cat); lawsOf(c)[o.cat] = id; c.lawAny = G.turn; if (o.cat === 'econ') { if (o.id === 'closedmkt') c.trade.clear(); } c._lawV = (c._lawV || 0) + 1; c._bonSig = null;
+ for (const s of G.sectors) if (s && !s.w && s.o === c.id) s.unrest = Math.min(100, s.unrest + L.sp); // reform upsets the settled order
+ if (o.cat === 'consc' && armyLimit(c) < G.units.filter(u => u.o === c.id && isLand(u) && !UNITS[u.t].air).length) logMsg(`Our army now exceeds the new conscription limit — no new land units can be raised until it shrinks.`, 'bad');
+ logMsg(`New law: ${o.n}.`, 'event');
+ return null;
+}
+// AI nations follow history: their laws are re-read every two turns
+function aiLawsTurn() {
+ if (G.turn % 2) return;
+ for (const c of G.countries) if (c.alive && c.id !== G.player && !c.unclaimed) { c.laws = defaultLaws(c); c._lawV = (c._lawV || 0) + 1; }
+}
+// wartime-only laws lapse when peace returns
+function warLawsLapse(c) {
+ if (!c || !c.laws || enemiesOf(c.id).size) return;
+ for (const k in c.laws) { const o = LAW_OPT[c.laws[k]]; if (o && o.war) { c.laws[k] = k === 'consc' ? 'mandatory' : 'mixed'; c._lawV = (c._lawV || 0) + 1; logMsg(`Peace: ${o.n} lapses and ${LAW_OPT[c.laws[k]].n} returns.`, 'event'); } }
+}
+// v26: a closed market (law) or a seclusion spirit bans foreign trade
+function noTradeOf(c) { if (!c) return null; const sp = noTradeSpirit(c); if (sp) return sp; if (c.laws && c.laws.econ === 'closedmkt') return 'Closed Market'; return null; }
+const LAW_GLYPH = {gov: 'crown', consc: 'helmet', border: 'gate', edu: 'book', race: 'scales', econ: 'factory', press: 'scroll',
+ abs_mon: 'crown', const_mon: 'crown+scroll', republic: 'ballot', junta: 'helmet+star', fascist: 'fasces', socialist: 'redstar+gear', syndicate: 'fist+gear', theocracy: 'temple+candle', anarchy: 'fist+blast',
+ unarmed: 'dove', light: 'rifle', volunteer: 'helmet+hands', mandatory: 'people+rifle', last: 'people+blast',
+ closed: 'gate+lock', restricted: 'gate+eye', open: 'gate+globe',
+ none: 'book+lock', religious: 'book+candle', private: 'book+coins', public: 'book+people', higher: 'cap+star',
+ equal: 'scales+hands', caste: 'people+chain', segregation: 'people+gate', supremacy: 'mask+warn',
+ laissez: 'coins+chart', mixed: 'scales+coins', planned: 'chart+gear', war: 'factory+swords', closedmkt: 'chest+lock',
+ free: 'scroll+dove', censor: 'scroll+lock', propaganda: 'radio+redstar'};
+function lawIcon(id) { return typeof techIconSVG === 'function' ? techIconSVG(LAW_GLYPH[id] || 'scales') : ''; }
+// a foreign nation's form of government and laws, for the side panel
+function govLine(o) {
+ const L = lawsOf(o), g = LAW_OPT[L.gov];
+ return `<div class="gov-line" title="${esc(g.d)}"><span class="gov-ic">${lawIcon(g.id)}</span><div><small class="muted">Government</small><b>${esc(g.n)}</b></div><div class="gov-laws">${LAWS.filter(l => l.id !== 'gov').map(l => { const x = LAW_OPT[L[l.id]]; return x ? `<span title="${esc(l.n)}: ${esc(x.n)}">${lawIcon(x.id)}</span>` : ''; }).join('')}</div></div>`;
 }
 
 // ===================== EMPEROR'S TABLE — PROCEDURAL MUSIC & SOUND =====================
@@ -8155,7 +8604,7 @@ function rebuildTrees() {
  const DENS = {forest: 70, jungle: 80, tundra: 14, hills: 14, plains: 8, mountains: 8, desert: 0};
  for (const s of G.sectors) {
   if (!s || s.w || !G.vis || !G.vis[s.id]) continue;
-  let n = Math.round(DENS[s.t] * clamp(s.a / 300, 0.25, 3));
+  let n = Math.round(DENS[s.t] * clamp(s.a / 300, 0.25, 3) * [1, 0.65, 0.35][R.quality || 0]);
   const kind = s.t === 'jungle' ? 'j' : (s.t === 'tundra' || s.lat > 56) ? 't' : 'f';
   const rf = seeded(s.id * 7919 + 17);
   for (let i = 0; i < n; i++) {
@@ -8229,11 +8678,74 @@ function updateRadarRings() {
   const fill = new R.T.Mesh(new R.T.CircleGeometry(Rr, 96).rotateX(-Math.PI / 2), R.radarFill); fill.position.set(wx(s.lon), 0.29, wz(s.lat)); fill.renderOrder = 4; R.gRadar.add(fill);
  }
 }
+// ---------- v27: building models ----------
+// every building type is one merged, vertex-coloured model drawn as a single instanced mesh
+function buildingModels() {
+ if (R.BG) return R.BG;
+ const T = R.T, B = {};
+ const sh = new T.Shape(); sh.moveTo(-0.5, 0); sh.lineTo(0.5, 0); sh.lineTo(0, 0.5); sh.closePath();
+ const prism = new T.ExtrudeGeometry(sh, {depth: 1, bevelEnabled: false}); prism.translate(0, 0, -0.5);
+ const box = new T.BoxGeometry(1, 1, 1).translate(0, 0.5, 0), cyl = new T.CylinderGeometry(0.5, 0.5, 1, 12).translate(0, 0.5, 0), cyl6 = new T.CylinderGeometry(0.5, 0.5, 1, 6).translate(0, 0.5, 0);
+ const cone = new T.ConeGeometry(0.5, 1, 8).translate(0, 0.5, 0), dome = new T.SphereGeometry(0.5, 14, 8, 0, Math.PI * 2, 0, Math.PI / 2), sph = new T.SphereGeometry(0.5, 10, 8);
+ const half = new T.CylinderGeometry(0.5, 0.5, 1, 12, 1, false, -Math.PI / 2, Math.PI).rotateX(Math.PI / 2).rotateY(Math.PI / 2); // a vaulted roof, axis along x
+ const oct = new T.CylinderGeometry(0.5, 0.56, 1, 8).translate(0, 0.5, 0), tor = new T.TorusGeometry(0.5, 0.12, 6, 14), taper = new T.CylinderGeometry(0.12, 0.5, 1, 4).translate(0, 0.5, 0);
+ const C = {cream: 0xe6dcc2, white: 0xf2eee4, red: 0x9c3b2a, roofR: 0x6e2a20, slate: 0x4c4e58, brick: 0x8e4a32, brickD: 0x6e3624, stone: 0xb0a998, stoneD: 0x8a8476, conc: 0xa3a39d, wood: 0x7a5530, woodD: 0x4a3420, metal: 0x6a6e74, steel: 0x8a9098, dark: 0x2e2c2a, coal: 0x262424, gold: 0xd8b54a, copper: 0x6aa58e, glass: 0x7fb8c8, green: 0x2f5a2c, hay: 0xd9b84a, tar: 0x2a2a2c, line: 0xf0f0e0, rust: 0x8a4a2a};
+ const model = parts => {
+  const meshes = parts.map(([g, c, p, sc, r]) => { const gg = g.clone(); const n = gg.attributes.position.count, col = new T.Color(C[c] !== undefined ? C[c] : c), a = new Float32Array(n * 3); for (let k = 0; k < n; k++) { a[k * 3] = col.r; a[k * 3 + 1] = col.g; a[k * 3 + 2] = col.b; } gg.setAttribute('color', new T.BufferAttribute(a, 3)); if (gg.attributes.uv) gg.deleteAttribute('uv');
+   const m = new T.Mesh(gg); m.position.set(...p); m.scale.set(...sc); if (r) m.rotation.set(...r); return m; });
+  return mergeGeos(meshes);
+ };
+ const lite = (R.quality || 0) >= 2, LP = new Map([[cyl, cyl6], [dome, new T.SphereGeometry(0.5, 6, 3, 0, Math.PI * 2, 0, Math.PI / 2)], [tor, new T.TorusGeometry(0.5, 0.12, 3, 8)], [sph, new T.SphereGeometry(0.5, 6, 4)]]);
+ const model0 = model;
+ const modelQ = parts => model0(lite ? parts.filter(p => Math.max(...p[3]) >= 0.03).map(p => [LP.get(p[0]) || p[0], ...p.slice(1)]) : parts);
+ const gable = (x, y, z, w, h, d, wall, roof, ry) => [[box, wall, [x, y, z], [w, h, d], [0, ry || 0, 0]], [prism, roof, [x, y + h, z], [w * 1.12, h * 1.1, d * 1.1], [0, (ry || 0) + Math.PI / 2, 0]]];
+ const tree = (x, z, h) => [[cyl6, 'woodD', [x, 0, z], [0.006, h * 0.3, 0.006]], [cone, 'green', [x, h * 0.25, z], [h * 0.45, h * 0.8, h * 0.45]]];
+ // farmstead: house, red barn, silo and haystacks (the fields are drawn separately)
+ B.farm = modelQ([...gable(-0.03, 0, -0.01, 0.045, 0.03, 0.035, 'cream', 'roofR'), ...gable(0.035, 0, 0.02, 0.06, 0.04, 0.04, 'red', 'slate'),
+  [cyl, 'stone', [0.075, 0, -0.03], [0.022, 0.075, 0.022]], [dome, 'metal', [0.075, 0.075, -0.03], [0.022, 0.022, 0.022]], [cone, 'hay', [-0.04, 0, 0.045], [0.022, 0.022, 0.022]], [cone, 'hay', [-0.01, 0, 0.055], [0.018, 0.018, 0.018]]]);
+ // woodworks: log cabin, open sawmill shed, a log pile and pines
+ B.wood = modelQ([...gable(-0.03, 0, 0, 0.05, 0.032, 0.04, 'wood', 'woodD'), [box, 'woodD', [0.035, 0.035, 0], [0.06, 0.006, 0.045]], ...[[0.01, -0.018], [0.06, -0.018], [0.01, 0.018], [0.06, 0.018]].map(([x, z]) => [box, 'wood', [x, 0, z], [0.005, 0.035, 0.005]]),
+  [cyl6, 'wood', [0.035, 0.008, 0], [0.012, 0.045, 0.012], [0, 0, Math.PI / 2]], ...[0, 1, 2].map(k => [cyl6, 'wood', [-0.005 + k * 0.015, 0.006 + (k === 1 ? 0.011 : 0), 0.05], [0.012, 0.06, 0.012], [Math.PI / 2, 0, 0]]), ...tree(-0.07, 0.04, 0.09), ...tree(0.08, -0.04, 0.08)]);
+ // mine: spoil heap, pithead frame with winding wheel, engine house
+ B.mine = modelQ([[cone, 'coal', [-0.035, 0, 0.01], [0.09, 0.055, 0.08]], [box, 'woodD', [0.035, 0, -0.024], [0.006, 0.112, 0.006], [0.17, 0, 0]], [box, 'woodD', [0.035, 0, 0.024], [0.006, 0.112, 0.006], [-0.17, 0, 0]], [box, 'woodD', [0.072, 0, 0], [0.006, 0.105, 0.006], [0, 0, 0.33]], [box, 'woodD', [0.035, 0.05, 0], [0.006, 0.006, 0.032]],
+  [tor, 'steel', [0.035, 0.105, 0], [0.022, 0.022, 0.022]], [box, 'woodD', [0.035, 0.1, 0], [0.006, 0.006, 0.03]], ...gable(0.08, 0, 0.035, 0.04, 0.03, 0.03, 'brick', 'slate'), [box, 'rust', [0.0, 0, 0.05], [0.025, 0.012, 0.014]]]);
+ // factory: brick hall with a saw-tooth roof, a second wing, two banded chimneys and a water tank
+ B.factory = modelQ([[box, 'brick', [0, 0, 0], [0.14, 0.045, 0.075]], ...[-0.05, -0.017, 0.016, 0.049].map(x => [prism, 'slate', [x, 0.045, 0], [0.033, 0.05, 0.075]]), [box, 'glass', [0, 0.045, 0.0375], [0.13, 0.008, 0.002]],
+  [box, 'brickD', [-0.03, 0, 0.065], [0.07, 0.03, 0.05]], [cyl, 'brickD', [0.045, 0, -0.025], [0.02, 0.19, 0.02]], [cyl, 'white', [0.045, 0.16, -0.025], [0.022, 0.008, 0.022]], [cyl, 'brickD', [0.075, 0, 0.0], [0.016, 0.15, 0.016]],
+  [cyl, 'steel', [-0.075, 0.045, -0.03], [0.022, 0.022, 0.022]], [cone, 'steel', [-0.075, 0.067, -0.03], [0.024, 0.01, 0.024]]]);
+ B.factorySmoke = [[0.045, 0.19, -0.025], [0.075, 0.15, 0]];
+ // military base: an octagonal bastion with corner towers, barracks and a central keep (the flag is added separately)
+ B.base = modelQ([[oct, 'stoneD', [0, 0, 0], [0.17, 0.03, 0.17]], [oct, 'stone', [0, 0.03, 0], [0.15, 0.004, 0.15]], ...[0, 1, 2, 3].map(k => { const a = Math.PI / 4 + k * Math.PI / 2; return [cyl, 'stone', [Math.cos(a) * 0.075, 0, Math.sin(a) * 0.075], [0.03, 0.05, 0.03]]; }),
+  ...[0, 1, 2, 3].map(k => { const a = Math.PI / 4 + k * Math.PI / 2; return [cone, 'slate', [Math.cos(a) * 0.075, 0.05, Math.sin(a) * 0.075], [0.034, 0.025, 0.034]]; }), ...gable(-0.025, 0.03, 0.025, 0.06, 0.02, 0.025, 'cream', 'roofR'), [box, 'stone', [0.025, 0.03, -0.015], [0.035, 0.04, 0.035]], [box, 'stoneD', [0.025, 0.07, -0.015], [0.04, 0.006, 0.04]]]);
+ // airfield: runway with markings, vaulted hangar, control tower and a parked aeroplane
+ B.airport = modelQ([[box, 'tar', [0, 0, 0], [0.42, 0.004, 0.06]], ...[-0.15, -0.09, -0.03, 0.03, 0.09, 0.15].map(x => [box, 'line', [x, 0.004, 0], [0.03, 0.001, 0.004]]), [box, 'conc', [0.05, 0, 0.075], [0.2, 0.003, 0.05]],
+  [box, 'metal', [0.0, 0, 0.1], [0.09, 0.012, 0.055]], [half, 'steel', [0.0, 0.012, 0.1], [0.09, 0.07, 0.055]], [cyl, 'cream', [0.1, 0, 0.1], [0.025, 0.07, 0.025]], [cyl, 'glass', [0.1, 0.07, 0.1], [0.035, 0.016, 0.035]], [cone, 'slate', [0.1, 0.086, 0.1], [0.04, 0.012, 0.04]],
+  [box, 'white', [0.07, 0.006, 0.07], [0.04, 0.007, 0.007]], [box, 'white', [0.07, 0.006, 0.07], [0.008, 0.004, 0.045]], [box, 'white', [0.052, 0.008, 0.07], [0.006, 0.01, 0.016]]]);
+ // dockyard: stone quay, slipway with a ship's hull under construction, gantry crane and warehouse (faces the sea along +x)
+ B.dock = modelQ([[box, 'stone', [0, -0.012, 0], [0.24, 0.025, 0.12]], [box, 'wood', [0.06, 0.008, -0.025], [0.13, 0.006, 0.035]], [box, 'steel', [0.06, 0.014, -0.025], [0.1, 0.018, 0.02]], [prism, 'steel', [0.115, 0.014, -0.025], [0.02, 0.036, 0.02], [0, 0, 0]],
+  [box, 'rust', [0.02, 0.013, -0.05], [0.006, 0.09, 0.006]], [box, 'rust', [0.02, 0.013, 0.0], [0.006, 0.09, 0.006]], [box, 'rust', [0.04, 0.1, -0.025], [0.11, 0.008, 0.012]], [box, 'dark', [0.08, 0.06, -0.025], [0.002, 0.04, 0.002]],
+  ...gable(-0.06, 0.013, 0.025, 0.08, 0.035, 0.04, 'brick', 'slate'), ...[-0.1, -0.05, 0, 0.05, 0.1].map(x => [cyl6, 'dark', [x, 0.013, 0.058], [0.006, 0.01, 0.006]])]);
+ // university: a domed hall with a portico of columns on steps, and two wings
+ B.univ = modelQ([[box, 'stone', [0, 0, 0], [0.16, 0.012, 0.1]], [box, 'stoneD', [0, 0, 0.055], [0.1, 0.006, 0.02]], [box, 'cream', [0, 0.012, -0.01], [0.09, 0.05, 0.06]], ...[-0.04, -0.024, -0.008, 0.008, 0.024, 0.04].map(x => [cyl6, 'white', [x, 0.012, 0.03], [0.007, 0.045, 0.007]]),
+  [box, 'white', [0, 0.057, 0.03], [0.095, 0.006, 0.016]], [prism, 'white', [0, 0.063, 0.02], [0.1, 0.035, 0.035], [0, 0, 0]], [cyl, 'cream', [0, 0.062, -0.012], [0.04, 0.02, 0.04]], [dome, 'copper', [0, 0.082, -0.012], [0.042, 0.042, 0.042]], [cyl6, 'gold', [0, 0.1, -0.012], [0.004, 0.015, 0.004]],
+  ...gable(-0.065, 0.012, -0.01, 0.04, 0.035, 0.05, 'cream', 'slate'), ...gable(0.065, 0.012, -0.01, 0.04, 0.035, 0.05, 'cream', 'slate')]);
+ // radar station: tapering lattice tower, tilted dish, operations hut
+ B.radar = modelQ([[taper, 'steel', [0, 0, 0], [0.04, 0.19, 0.04], [0, Math.PI / 4, 0]], [box, 'steel', [0, 0.19, 0], [0.012, 0.012, 0.012]], [dome, 'white', [0, 0.2, 0.006], [0.07, 0.025, 0.07], [Math.PI / 2.4, 0, 0]], [cyl6, 'dark', [0, 0.2, 0.02], [0.003, 0.025, 0.003], [Math.PI / 2, 0, 0]],
+  [box, 'conc', [0.05, 0, 0.04], [0.045, 0.025, 0.03]], [box, 'slate', [0.05, 0.025, 0.04], [0.05, 0.004, 0.035]]]);
+ // construction site: scaffolding around an unfinished shell and a small crane
+ B.site = modelQ([[box, 'stone', [0, 0, 0], [0.06, 0.02, 0.04]], ...[[-0.035, -0.025], [0.035, -0.025], [-0.035, 0.025], [0.035, 0.025]].map(([x, z]) => [box, 'wood', [x, 0, z], [0.004, 0.05, 0.004]]), [box, 'wood', [0, 0.025, 0.025], [0.074, 0.003, 0.006]], [box, 'wood', [0, 0.05, 0.025], [0.074, 0.003, 0.006]],
+  [box, 'gold', [0.06, 0, -0.02], [0.006, 0.1, 0.006]], [box, 'gold', [0.04, 0.1, -0.02], [0.07, 0.005, 0.005]], [box, 'stone', [0.07, 0.0, 0.03], [0.02, 0.012, 0.015]]]);
+ B.rubble = modelQ([[cone, 'stoneD', [0, 0, 0], [0.07, 0.03, 0.07]], [cone, 'dark', [0.03, 0, -0.02], [0.05, 0.022, 0.05]], [box, 'woodD', [-0.02, 0.01, 0.02], [0.05, 0.004, 0.005], [0, 0.6, 0.3]], [box, 'stoneD', [0.0, 0.0, 0.03], [0.02, 0.012, 0.015]]]);
+ R.M.bvc = new T.MeshLambertMaterial({vertexColors: true});
+ return R.BG = B;
+}
 function rebuildBuildings() {
  clearGroup(R.gBuild);
- const fields = [], barns = [], huts = [], logs = [], heaps = [], frames = [], facs = [], chims = [], forts = [], fpoles = [], fflags = [], runways = [], hangars = [], docks = [], cranes = [], booms = [], masts = [], dishes = [];
+ const BG = buildingModels();
+ const fields = [], L = {farm: [], wood: [], mine: [], factory: [], base: [], airport: [], dock: [], univ: [], radar: [], site: [], rubble: []}, fflags = [];
  R.smokes = [];
  const T = R.T;
+ const rot = (x, z, a, ox, oz) => [x + ox * Math.cos(a) + oz * Math.sin(a), z - ox * Math.sin(a) + oz * Math.cos(a)];
  for (const s of G.sectors) {
   if (!s || s.w || !G.vis || G.vis[s.id] !== 1) continue;
   const r = seeded(s.id * 97 + 13);
@@ -8247,66 +8759,31 @@ function rebuildBuildings() {
    }
    k++; return [lon0 + (r() - 0.5) * 0.3, lat0 + (r() - 0.5) * 0.3];
   };
-  for (let i = 0; i < (s.b.farm || 0); i++) {
-   const [lon, lat] = spot(); const y = landHeight(lon, lat);
-   for (let f = 0; f < 4; f++) fields.push([wx(lon) + (f % 2) * 0.11 - 0.05, y + 0.006, wz(lat) + Math.floor(f / 2) * 0.11 - 0.05, 0.1, 1, 0.1, 0, r()]);
-   barns.push([wx(lon) + 0.12, y, wz(lat) + 0.12, 0.05, 0.04, 0.035, 0.3]);
-  }
-  for (let i = 0; i < (s.b.wood || 0); i++) {
-   const [lon, lat] = spot(); const y = landHeight(lon, lat);
-   huts.push([wx(lon), y, wz(lat), 0.07, 0.05, 0.05, 0.2]);
-   for (let l = 0; l < 3; l++) logs.push([wx(lon) + 0.07, y + 0.012 + l * 0.018, wz(lat) - 0.03 + l * 0.0, 0.012, 0.09, 0.012, 0]);
-  }
-  for (let i = 0; i < (s.b.mine || 0); i++) {
-   const [lon, lat] = spot(); const y = landHeight(lon, lat);
-   heaps.push([wx(lon), y, wz(lat), 0.09, 0.07, 0.09]);
-   frames.push([wx(lon) + 0.08, y, wz(lat), 0.02, 0.12, 0.02]);
-  }
-  for (let i = 0; i < (s.b.factory || 0); i++) {
-   const [lon, lat] = spot(); const y = landHeight(lon, lat);
-   facs.push([wx(lon), y, wz(lat), 0.13, 0.06, 0.08, 0.1]);
-   chims.push([wx(lon) + 0.05, y, wz(lat) + 0.02, 0.022, 0.2, 0.022]);
-   R.smokes.push({x: wx(lon) + 0.05, y: y + 0.2, z: wz(lat) + 0.02, t: r() * 3});
-  }
-  if (s.base) {
-   const [lon, lat] = spot(); const y = landHeight(lon, lat);
-   forts.push([wx(lon), y, wz(lat), 0.16, 0.035, 0.16]);
-   fpoles.push([wx(lon), y, wz(lat), 0.006, 0.17, 0.006]);
-   fflags.push({x: wx(lon), y: y + 0.16, z: wz(lat), c: G.countries[s.o]});
-  }
-  if (s.airport) {
-   const [lon, lat] = spot(); const y = landHeight(lon, lat);
-   runways.push([wx(lon), y + 0.002, wz(lat), 0.42, 0.006, 0.07, 0.6]); hangars.push([wx(lon) + 0.08, y, wz(lat) + 0.1, 0.12, 0.05, 0.07, 0.6]);
-  }
-  if (s.radar) { // lattice mast with a rotating-dish silhouette
-   const [lon, lat] = spot(); const y = landHeight(lon, lat);
-   masts.push([wx(lon), y, wz(lat), 0.014, 0.2, 0.014]); dishes.push([wx(lon), y + 0.2, wz(lat), 0.09, 0.028, 0.05]);
-   hangars.push([wx(lon) + 0.05, y, wz(lat) + 0.03, 0.05, 0.03, 0.04, 0.3]);
-  }
-  if (s.dock) { // place the dockyard on the coast facing the sea
-   let best = null; const z = (s.z || []).map(i => G.sectors[i])[0];
-   if (z) { for (let t = 0; t < 30; t++) { const p = randPx(s.id, r); if (!p) break; const lo = pxToLon(p[0]), la = pxToLat(p[1]); const d = (lo - z.lon) ** 2 + (la - z.lat) ** 2; if (!best || d < best[2]) best = [lo, la, d]; } }
-   const [lon, lat] = best || spot(); const y = landHeight(lon, lat);
-   docks.push([wx(lon), y - 0.01, wz(lat), 0.22, 0.03, 0.09, 0.3]); cranes.push([wx(lon) + 0.07, y, wz(lat), 0.012, 0.22, 0.012]); booms.push([wx(lon) + 0.02, y + 0.21, wz(lat), 0.14, 0.012, 0.012, 0.3]);
-   if ((s.sq || []).length) frames.push([wx(lon) - 0.04, y + 0.02, wz(lat), 0.12, 0.04, 0.04, 0.3]);
+  const put = (type, extra) => { const [lon, lat] = spot(); const y = landHeight(lon, lat), a = r() * Math.PI * 2, sc = 1.15 + r() * 0.2; L[type].push([wx(lon), y, wz(lat), sc, sc, sc, a]); if (extra) extra(wx(lon), y, wz(lat), a, sc); };
+  for (let i = 0; i < (s.b.farm || 0); i++) put('farm', (x, y, z, a) => { for (let f = 0; f < 4; f++) { const [fx, fz] = rot(x, z, a, (f % 2) * 0.11 - 0.06, Math.floor(f / 2) * 0.11 + 0.06); fields.push([fx, y + 0.004, fz, 0.1, 1, 0.1, a, r()]); } });
+  for (let i = 0; i < (s.b.wood || 0); i++) put('wood');
+  for (let i = 0; i < (s.b.mine || 0); i++) put('mine');
+  for (let i = 0; i < (s.b.factory || 0); i++) put('factory', (x, y, z, a, sc) => { for (const [ox, oy, oz] of BG.factorySmoke) { const [px, pz] = rot(x, z, a, ox * sc, oz * sc); R.smokes.push({x: px, y: y + oy * sc, z: pz, t: r() * 3}); } });
+  if (s.base) put('base', (x, y, z) => fflags.push({x, y: y + 0.03, z, c: G.countries[s.o]}));
+  if (s.airport) put('airport');
+  if (s.univ) put('univ');
+  if (s.radar) put('radar');
+  if (s.dock) { // place the dockyard on the coast, facing the sea
+   let best = null; const zs = (s.z || []).map(i => G.sectors[i])[0];
+   if (zs) { for (let t = 0; t < 30; t++) { const p = randPx(s.id, r); if (!p) break; const lo = pxToLon(p[0]), la = pxToLat(p[1]); const d = (lo - zs.lon) ** 2 + (la - zs.lat) ** 2; if (!best || d < best[2]) best = [lo, la, d]; } }
+   const [lon, lat] = best || spot(); const y = landHeight(lon, lat), x = wx(lon), z = wz(lat);
+   const a = zs ? Math.atan2(-(wz(zs.lat) - z), wx(zs.lon) - x) : r() * Math.PI * 2;
+   L.dock.push([x, y, z, 1.25, 1.25, 1.25, a]);
   }
   if (s.dmg) { // war damage: rubble and smoke columns until repaired
    const nd = Math.min(4, Object.values(s.dmg).reduce((a, d) => a + d.n, 0));
-   for (let i = 0; i < nd; i++) { const [lon, lat] = spot(); const y = landHeight(lon, lat);
-    heaps.push([wx(lon), y, wz(lat), 0.07, 0.035, 0.07]); heaps.push([wx(lon) + 0.04, y, wz(lat) - 0.03, 0.05, 0.025, 0.05]);
-    R.smokes.push({x: wx(lon), y: y + 0.04, z: wz(lat), t: r() * 3, dmg: true}); }
+   for (let i = 0; i < nd; i++) put('rubble', (x, y, z) => R.smokes.push({x, y: y + 0.03, z, t: r() * 3, dmg: true}));
   }
-  for (const q of s.q) { // construction site
-   const [lon, lat] = spot(); const y = landHeight(lon, lat);
-   frames.push([wx(lon), y, wz(lat), 0.012, 0.07, 0.012]); frames.push([wx(lon) + 0.05, y, wz(lat), 0.012, 0.07, 0.012]);
-  }
+  for (const q of s.q) put('site');
  }
  const fieldCols = [0xc9b04a, 0x9ab04a, 0xb8a040, 0x7a9a3a];
- [inst(R.S.plane, R.M.field, fields, (p, c) => c.setHex(fieldCols[Math.floor(p[7] * 4)])), inst(R.S.box, R.M.wood, barns), inst(R.S.box, R.M.wood, huts),
-  inst(R.S.cyl, R.M.trunk, logs), inst(new R.T.ConeGeometry(0.5, 1, 7).translate(0, 0.5, 0), R.M.dark, heaps), inst(R.S.box, R.M.wood, frames),
-  inst(R.S.box, R.M.metal, facs), inst(R.S.cyl, R.M.dark, chims), inst(R.S.oct, R.M.stone, forts), inst(R.S.cyl, R.M.stone, fpoles),
-  inst(R.S.box, R.M.dark, runways), inst(R.S.box, R.M.grey, hangars), inst(R.S.box, R.M.stone, docks), inst(R.S.cyl, R.M.wood, cranes), inst(R.S.box, R.M.wood, booms), inst(R.S.cyl, R.M.metal, masts), inst(R.S.sphere, R.M.grey, dishes)].forEach(m => m && R.gBuild.add(m));
- for (const f of fflags) { const m = new T.Mesh(R.S.flag, flagMat(f.c)); m.position.set(f.x, f.y, f.z); m.scale.set(0.09, 0.09, 0.09); R.gBuild.add(m); }
+ [inst(R.S.plane, R.M.field, fields, (p, c) => c.setHex(fieldCols[Math.floor(p[7] * 4)])), ...Object.keys(L).map(t => inst(BG[t], R.M.bvc, L[t]))].forEach(m => m && R.gBuild.add(m));
+ for (const f of fflags) { const pole = new T.Mesh(R.S.cyl, R.M.metal); pole.position.set(f.x, f.y, f.z); pole.scale.set(0.004, 0.13, 0.004); R.gBuild.add(pole); const m = new T.Mesh(R.S.flag, flagMat(f.c)); m.position.set(f.x, f.y + 0.12, f.z); m.scale.set(0.08, 0.08, 0.08); R.gBuild.add(m); }
  if (!R.M.smokeDark) R.M.smokeDark = new T.MeshBasicMaterial({color: 0x2a2622, transparent: true, opacity: 0.7, depthWrite: false});
  // smoke puffs: one instanced mesh per colour instead of three meshes per chimney
  R.smokeMeshes = null; R.smokeInst = [];
@@ -9155,6 +9632,9 @@ function setQuality(q) {
  R.prBase = [Math.min(window.devicePixelRatio, 1.5), 1, 0.7][q]; R.prScale = 1; R.renderer.setPixelRatio(R.prBase);
  R.mapMat.defines.LITE = q >= 1 ? 1 : 0; R.mapMat.needsUpdate = true;
  R.frameTimes = [];
+ // simpler scenery on lower settings
+ R.BG = null; if (R.tableSprites) R.tableSprites.forEach(sp => sp.visible = q < 2);
+ if (typeof G !== 'undefined' && G && G.sectors && G.vis) { try { rebuildBuildings(); rebuildTrees(); } catch (e) {} }
 }
 function renderFrame() {
  const dt = R.clock.getDelta(), t = R.clock.elapsedTime;
@@ -9272,7 +9752,7 @@ const EMOJI_ICON = (() => {
  const m = {};
  const add = (icon, list) => { for (const e of [...list]) if (e !== '️') m[e] = icon; };
  add('swords', '⚔🗡🔪🥷🏹🔫'); add('shield', '🛡'); add('chain', '⛓🔗'); add('hands', '🤝✊✌'); add('anchor', '⚓');
- add('ship', '🚢🛳⛴🛥⛵🚤🛶'); add('sub', '🐋'); add('scroll', '📜📰🗞📋🗒📝📅🗓'); add('book', '📖📚');
+ add('ship', '🚢🛳⛴🛥⛵🚤🛶'); add('sub', '🐋'); add('scroll', '📜📰🗞📋🗒📝📅🗓'); add('book', '📖📚🎓');
  add('radar', '📡🛰📶📟📻📺🖥💻📞☎'); add('nuke', '☢⚛☣'); add('bomb', '💣🧨'); add('blast', '💥🔥🎇🎆🌋✨⚡🌩');
  add('eagle', '🦅'); add('lion', '🦁🐅🐆🐘🐒🐍🐖'); add('horse', '🐎🏇🐴'); add('dove', '🕊🌸🌹🥀🎗');
  add('temple', '🏛🏦🏢🏙⛪🗽🏚'); add('castle', '🏰🏯⛩🎎🏮'); add('warn', '⚠🚫❌⛔'); add('wheat', '🌾🌽🥔☕🌶');
@@ -9527,6 +10007,7 @@ async function boot() {
  bindInput();
  document.addEventListener('pointerdown', () => SND.init(), true);
  document.addEventListener('click', e => { const b = e.target.closest('button'); if (b && b.id !== 'endTurn' && !b.disabled) SND.play('click'); }, true);
+ try { const q = localStorage.getItem('ec_gfx'); if (q !== null && q !== '') { setQuality(+q); R.qDone = true; R.userQ = true; } } catch (e) {}
  animate();
  $('#loading').classList.add('hide');
  showTitle();
@@ -9547,7 +10028,7 @@ function animate() {
 }
 
 // ---------------- title / campaign ----------------
-const GAME_VERSION = 'v0.3 WEBSITE VER', CONTACT_EMAIL = 'blockmasterstudio@gmail.com';
+const GAME_VERSION = 'v0.4 WEBSITE VER', CONTACT_EMAIL = 'blockmasterstudio@gmail.com';
 function showTitle() {
  UI.screen = 'title'; SND.setMood('title');
  const ov = $('#screen'); ov.className = 'screen title fadein'; ov.innerHTML = `
@@ -9846,11 +10327,11 @@ function renderSectorPanel() {
  if (mine && o.cap !== s.id) { const e2 = canMoveCapital(o, s); h += `<button class="act" id="capBtn" ${e2 && !/costs/.test(e2) ? `disabled title="${esc(e2)}"` : ''}>★ Move the capital here (${capMoveCost(o)}M)</button>`; }
  if (s.cities.length) h += `<div class="sp-cities">${s.cities.map(ct => `<span>🏛 ${esc(ct.name)} <small>${fmtPop(ct.pop)}</small></span>`).join('')}</div>`;
  if (s.o === P || (vis === 1 && s.o !== 0)) {
-  const bl = Object.entries(s.b).map(([b, n]) => `<span class="chip">${BUILDINGS[b].ic} ${BUILDINGS[b].n}${n > 1 ? ' ×' + n : ''}${mine ? ` <button class="mini" data-dem="${b}" title="Demolish">✕</button>` : ''}</span>`).join('') + ['base', 'dock', 'airport', 'radar'].filter(k => s[k]).map(k => `<span class="chip">${BUILDINGS[k].ic} ${BUILDINGS[k].n}${mine ? ` <button class="mini" data-dem="${k}" title="Demolish">✕</button>` : ''}</span>`).join('');
+  const bl = Object.entries(s.b).map(([b, n]) => `<span class="chip">${BUILDINGS[b].ic} ${BUILDINGS[b].n}${n > 1 ? ' ×' + n : ''}${mine ? ` <button class="mini" data-dem="${b}" title="Demolish">✕</button>` : ''}</span>`).join('') + SPECIAL_B.filter(k => s[k]).map(k => `<span class="chip">${BUILDINGS[k].ic} ${BUILDINGS[k].n}${mine ? ` <button class="mini" data-dem="${k}" title="Demolish">✕</button>` : ''}</span>`).join('');
   h += `<div class="sp-sec">Buildings <small>${bUsed}/${slotsOf(s)} slots</small></div><div class="chips">${bl || '<span class="muted">None</span>'}</div>`;
   if (s.q.length) h += `<div class="chips">${s.q.map(q => `<span class="chip q">🚧 ${BUILDINGS[q.b].n} · ${q.t} turn${q.t > 1 ? 's' : ''}</span>`).join('')}</div>`;
  }
- if (mine) h += `<div class="build-grid">${Object.keys(BUILDINGS).map(b => { const B = BUILDINGS[b]; const err = canBuild(c, s, b); const out = B.good ? `+${(B.out * (1 + bonus(c, {grain: 'farm', timber: 'wood', ore: 'mine', supplies: 'supply'}[B.good]) / 100)).toFixed(0)} ${GOODS[B.good].n}` : 'Recruit units here'; return `<button class="bld" data-b="${b}" ${err ? 'disabled' : ''} title="${esc(err || out + ' · upkeep ' + B.m + 'M/turn')}"><span class="bi">${B.ic}</span><span class="bn">${B.n}</span><span class="bc">${B.c}M · ${buildTurns(c, b)}t</span></button>`; }).join('')}</div>`;
+ if (mine) h += `<div class="build-grid">${Object.keys(BUILDINGS).map(b => { const B = BUILDINGS[b]; const err = canBuild(c, s, b); const out = B.good ? `+${(B.out * (1 + bonus(c, {grain: 'farm', timber: 'wood', ore: 'mine', supplies: 'supply'}[B.good]) / 100)).toFixed(0)} ${GOODS[B.good].n}` : b === 'univ' ? '+6% research (max +75%)' : b === 'radar' ? 'Early warning' : b === 'dock' ? 'Builds warships' : b === 'airport' ? 'Deploys aircraft' : 'Recruit units here'; return `<button class="bld" data-b="${b}" ${err ? 'disabled' : ''} title="${esc(err || out + ' · upkeep ' + B.m + 'M/turn')}"><span class="bi">${B.ic}</span><span class="bn">${B.n}</span><span class="bc">${B.c}M · ${buildTurns(c, b)}t</span></button>`; }).join('')}</div>`;
  const here = G.units.filter(u => u.s === s.id);
  const myU = here.filter(u => u.o === P), othU = here.filter(u => u.o !== P && unitSeen(s.id));
  if (myU.length) h += `<div class="sp-sec">Your forces <small>click a unit (shift = add)</small></div><div class="ulist">${unitRows(myU, true)}</div><button class="act" id="selAll">Select all ${myU.length} units here</button>`;
@@ -9875,6 +10356,7 @@ function renderSectorPanel() {
   const war = atWar(P, s.o), tr = c.trade.has(s.o);
   const rv = c.rel[s.o] || 0, [rl, rc] = relLabel(rv), risk = hostileRisk(s.o);
   if (o.id !== P) { const proj = G.sectors.filter(t => t && t.o === o.id && t.q && t.q.length).length; const tp = (o.aiTrade || []).length; h += `<p class="muted small">🏗 ${proj} building project${proj === 1 ? '' : 's'} under way · 🤝 trades with ${tp} nation${tp === 1 ? '' : 's'}${tp ? ': ' + o.aiTrade.slice(0, 4).map(id => esc(cname(id))).join(', ') + (tp > 4 ? '…' : '') : ''}${spiritVal(o, 'noTrade') ? ' · market closed' : ''}</p>`; }
+  h += govLine(o);
   h += `<div class="sp-sec">Diplomacy with ${esc(o.name)}</div><div class="dip-row">Relations: <b class="${rc}">${Math.round(rv)} ${rl}</b> · ${war ? '<span class="neg">At war</span>' : G.truce && G.truce[s.o] > G.turn ? 'Truce' : tr ? '<span class="pos">Trading</span>' : 'At peace'}${risk && !war ? ' · <span class="neg">⚠ may attack us</span>' : ''}</div>${(o.spirits || []).length ? `<div class="dip-row sp-row">${o.spirits.map(x => spiritTile(o, x)).join('')}</div>` : ''}${overlordOf(s.o) !== null ? `<div class="dip-row">⛓ Puppet of <b>${esc(cname(overlordOf(s.o)))}</b></div>` : ''}${puppetsOf(s.o).length ? `<div class="dip-row">⛓ Overlord of ${puppetsOf(s.o).map(x => esc(cname(x))).join(', ')}</div>` : ''}${unionOf(s.o) ? `<div class="dip-row">🤝 ${esc(unionOf(s.o).name)}${unionOf(s.o).leader === s.o ? ' (leader)' : ''}</div>` : ''}${G.shipSeen && G.shipSeen.has(s.o) ? '<div class="sighted">⚓ Sighted by our ships — they will fade back into the fog when our fleet leaves, unless we trade or exchange gifts.</div>' : ''}<div class="acts">
    ${!war ? `<button class="act" data-gift="${s.o}">🎁 Send gifts (${giftCost(s.o)}M)</button>` : ''}
    ${!war && overlordOf(s.o) === null && !isPuppet(P) && powerOf(o) < powerOf(c) ? `<button class="act" data-puppet="${s.o}" title="Chance ≈${Math.round(puppetChance(s.o) * 100)}%">⛓ Demand puppet status</button>` : ''}
@@ -9886,8 +10368,10 @@ function renderSectorPanel() {
  }
  if (s.ctrl !== P && hostile(P, s.ctrl) && s.ctrl !== -1 && c.techs.has('m_atomic') && !G.spectate) {
   const dl = nukeDelivery(s.id);
-  h += dl ? `<button class="act red" id="nukeBtn">☢ Atomic strike (${nukeCost(c)}M)</button><p class="muted small">Delivery: ${esc(dl.label)}${dl.missile ? '' : ` · ≈${Math.round(nukeIntercept(s.id, dl) * 100)}% risk of interception`}</p>`
-   : `<button class="act red" disabled title="Needs a bomber in range">☢ Atomic strike (${nukeCost(c)}M)</button><p class="muted small">No bomber can reach ${esc(s.name)}. Base a bomber squadron with moves left within its range (an airport or a carrier) to deliver the bomb.</p>`;
+  const nk = c.nukes || 0, ncap = nukeCap(c);
+  if (!nk) h += `<button class="act red" disabled title="The arsenal is empty">☢ Atomic strike (0/${ncap} bombs)</button><p class="muted small">${c.nukeOff ? 'Bomb production is halted (Military → Atomic arsenal).' : `Next bomb in ${Math.max(1, nukeBuildTurns(c) - (c.nukeProg || 0))} turn(s).`}</p>`; else
+  h += dl ? `<button class="act red" id="nukeBtn">☢ Atomic strike (${nk}/${ncap} bombs)</button><p class="muted small">Delivery: ${esc(dl.label)}${dl.missile ? '' : ` · ≈${Math.round(nukeIntercept(s.id, dl) * 100)}% risk of interception`}</p>`
+   : `<button class="act red" disabled title="Needs a bomber in range">☢ Atomic strike (${nk}/${ncap} bombs)</button><p class="muted small">No bomber can reach ${esc(s.name)}. Base a bomber squadron with moves left within its range (an airport or a carrier) to deliver the bomb.</p>`;
  }
  p.innerHTML = h;
  bindPanel(p, s);
@@ -9958,7 +10442,7 @@ function peaceDialog(eid) {
  showModal('Peace with ' + e.name, `<p>War score: <b class="${ws >= 0 ? 'pos' : 'neg'}">${ws > 0 ? '+' : ''}${ws}</b></p><p class="muted">White peace returns all occupied land. Demanding occupied land needs a strong war score (≈25+) or their capital in your hands.</p>`,
   [{t: 'Demand occupied lands', c: 'gold', f: () => confirmP('Demand their lands?', `<p>Demand that ${esc(e.name)} cede every sector we occupy?</p>`, 'demand', e.name + ' refuses your demands.')},
    ...(isPuppet(G.player) ? [] : [{t: 'Demand puppet status', c: 'gold', f: () => confirmP('Make them our puppet?', `<p>Demand that ${esc(e.name)} become our puppet? Needs a war score of 40+ or their capital in our hands. Occupied land is returned, but they will pay us tribute and follow our wars.</p>`, 'puppet', e.name + ' refuses to submit.')}]),
-   {t: 'Offer white peace', f: () => confirmP('Offer white peace?', '<p>Both sides return all occupied land and the war ends.</p>', 'white', e.name + ' refuses white peace.')},
+   (() => { const wt = whitePeaceWait(eid); return wt > 0 ? {t: `White peace (in ${wt} turn${wt > 1 ? 's' : ''})`, f: () => { toast(`A white peace can only be sought after 3 turns of war — ${wt} more turn${wt > 1 ? 's' : ''}.`); setTimeout(() => peaceDialog(eid), 200); }} : {t: 'Offer white peace', f: () => confirmP('Offer white peace?', '<p>Both sides return all occupied land and the war ends.</p>', 'white', e.name + ' refuses white peace.')}; })(),
    {t: 'Cede what they occupy', c: 'red', f: () => confirmBox('Surrender territory?', `<p>End the war by giving ${esc(e.name)} every sector of ours they occupy. This cannot be undone.</p>`, 'Cede lands', 'red', () => { proposePeace(eid, 'surrender'); refreshAll(true); })}, {t: 'Cancel'}]);
 }
 
@@ -10057,7 +10541,7 @@ function showTech(focusId) {
    ${upg.length ? `<div class="td-s">Auto-upgrades</div><div class="td-l"><span class="chip">${esc(upg.join(', '))} → ${esc(un.join(', '))}</span></div>` : ''}
    ${t.r.length ? `<div class="td-s">Requires</div><div class="td-l">${t.r.map(r => `<span class="chip rq ${c.techs.has(r) ? 'ok' : 'no'}" data-go="${r}" style="border-color:${TREE_COL[TECH[r].t]}">${TECH_ICON[r]} ${esc(TECH[r].n)}</span>`).join('')}</div>` : ''}
    ${reqBy.length ? `<div class="td-s">Leads to</div><div class="td-l">${reqBy.map(r => `<span class="chip" data-go="${r.id}" style="border-color:${TREE_COL[r.t]}">${TECH_ICON[r.id]} ${esc(r.n)}</span>`).join('')}</div>` : ''}
-   <div class="td-f">${st === 'known' ? '<b class="pos">✓ Researched</b>' : st === 'lock' ? '<span class="muted">Research the missing prerequisites first.</span>' : `<div class="kv"><span>Cost</span><b>${cost} pts</b></div><div class="kv"><span>Progress</span><b>${Math.round(prog)} (${Math.round(prog / cost * 100)}%)</b></div><div class="kv"><span>Estimated</span><b>~${eta(t)} turns</b></div>
+   <div class="td-f">${st === 'known' ? '<b class="pos">✓ Researched</b>' : st === 'lock' ? '<span class="muted">Research the missing prerequisites first.</span>' : `<div class="kv"><span>Cost</span><b>${cost} pts</b></div><div class="kv"><span>Progress</span><b>${Math.round(prog)} (${Math.round(prog / cost * 100)}%)</b></div><div class="kv"><span>Estimated</span><b>~${eta(t)} turns</b></div>${techAhead(t) ? `<div class="kv" title="Researching technology before its time is slow"><span>Ahead of its time</span><b class="neg">−50% speed until ${t.y}</b></div>` : ''}
     <button class="btn ${st === 'cur' ? '' : 'gold'} wide" id="tdGo">${st === 'cur' ? 'Pause research' : c.research[t.t] ? 'Switch ' + TREES[t.t] + ' research to this' : 'Research'}</button>`}</div>`;
   box.querySelector('#tdX').onclick = () => { box.querySelector('#ttDetail').innerHTML = ''; hlChain(null); box.querySelectorAll('.tn.sel').forEach(n => n.classList.remove('sel')); };
   box.querySelectorAll('#ttDetail [data-go]').forEach(g => g.onclick = () => { jump(g.dataset.go); detail(g.dataset.go); });
@@ -10125,6 +10609,7 @@ function showEconomy() {
    </div></div>`;
  };
  const box = showModal('Economy', render(), [{t: 'Close'}], () => refreshAll(), true);
+ addTabs(box, 'eco', 'eco');
  const bind = () => {
   box.querySelector('#taxR').oninput = ev => { c.tax = ev.target.value / 100; box.querySelector('.m-b').innerHTML = render(); bind(); updateTopBar(); };
   box.querySelector('#resR').oninput = ev => { c.resShare = ev.target.value / 100; box.querySelector('.m-b').innerHTML = render(); bind(); updateTopBar(); };
@@ -10160,10 +10645,14 @@ function showMilitary() {
    <div class="kv"><span>Upkeep / turn</span><b class="neg">−${e.cons.supplies.toFixed(1)}</b></div>
    <div class="kv"><span>Factories</span><b>${e.factories}</b></div>
    <p class="muted">Units heal ${Math.round(20 * (1 + bonus(c, 'heal') / 100))}% per turn when supplies cover upkeep (ships heal fully only next to our own coast). Researching a newer model refits existing units automatically.</p>
+   ${nukeCap(c) ? `<h4>☢ Atomic arsenal</h4><div class="kv"><span>Bombs in stock</span><b>${c.nukes || 0} / ${nukeCap(c)}</b></div><div class="kv"><span>Production</span><b>${c.nukeOff ? '<span class="muted">halted</span>' : (c.nukes || 0) >= nukeCap(c) ? '<span class="muted">arsenal full</span>' : `${c.nukeProg || 0}/${nukeBuildTurns(c)} turns · ${Math.round(nukeCost(c) / nukeBuildTurns(c))}M per turn`}</b></div><button class="mini" id="nukeTg">${c.nukeOff ? 'Resume bomb production' : 'Halt bomb production'}</button><p class="muted">Better nuclear technology builds bombs faster and stores more (up to 12).</p>` : ''}
+   <div class="kv"><span>Army limit (conscription law)</span><b>${G.units.filter(u => u.o === c.id && isLand(u) && !UNITS[u.t].air).length} / ${armyLimit(c)}</b></div>
    <h4>Combat modifiers</h4>
    <div class="kv"><span>Attack</span><b>+${bonus(c, 'atk')}%</b></div><div class="kv"><span>Defence</span><b>+${bonus(c, 'def')}%</b></div>
   </div></div>`, [{t: 'Close'}], () => refreshAll(), true);
  box.querySelectorAll('[data-go]').forEach(d => d.onclick = () => { const s = G.sectors[+d.dataset.go]; closeModals(); focusOn(s.lon, s.lat, 30); selectSector(s.id); selectUnits(unitsIn(s.id, G.player).map(u => u.id)); });
+ const nt = box.querySelector('#nukeTg'); if (nt) nt.onclick = () => { c.nukeOff = !c.nukeOff; const bg = box.closest('.modal-bg'); if (bg) bg.remove(); showMilitary(); };
+ addTabs(box, 'mil', 'forces');
 }
 
 // ---------------- trade ----------------
@@ -10187,6 +10676,7 @@ function showTrade() {
   </div></div>`;
  };
  const box = showModal('Trade', render(), [{t: 'Close'}], () => refreshAll(), true);
+ addTabs(box, 'eco', 'trade');
  const bind = () => {
   box.querySelectorAll('[data-exp]').forEach(i => i.onchange = () => { c.exp[i.dataset.exp] = i.checked; });
   box.querySelectorAll('[data-imp]').forEach(i => i.onchange = () => { c.imp[i.dataset.imp] = i.checked; });
@@ -10216,6 +10706,7 @@ function showDiplomacy() {
    <h4>World news</h4><div class="scroll" style="max-height:300px">${G.log.filter(l => l.k === 'war' || l.k === 'event').slice(0, 30).map(l => `<div class="news"><small>${l.d}</small> ${esc(l.t)}</div>`).join('')}</div></div></div>`;
  };
  const box = showModal('Diplomacy', render(), [{t: 'Close'}], () => refreshAll(true), true);
+ addTabs(box, 'dip', 'dip');
  const bind = () => {
   box.querySelectorAll('[data-war]').forEach(b => b.onclick = () => { closeModals(); confirmWar(+b.dataset.war); });
   box.querySelectorAll('[data-peace]').forEach(b => b.onclick = () => { closeModals(); peaceDialog(+b.dataset.peace); });
@@ -10700,16 +11191,16 @@ function bindInput() {
   if (k === 'w' || k === 'arrowup') off.add(fwd.multiplyScalar(pan)); if (k === 's' || k === 'arrowdown') off.add(fwd.multiplyScalar(-pan));
   if (k === 'a' || k === 'arrowleft') off.add(right.clone().multiplyScalar(-pan)); if (k === 'd' || k === 'arrowright') off.add(right.multiplyScalar(pan));
   if (off.lengthSq()) { c.target.add(off); R.camera.position.add(off); }
-  if (k === 'enter') doEndTurn(); if (k === 'escape') { if (G.selUnits.length) selectUnits([]); else selectSector(null); }
-  if (k === 't') showTech(); if (k === 'e') showEconomy(); if (k === 'm') showMilitary(); if (k === 'r') showTrade(); if (k === 'g') showDiplomacy(); if (k === 'u') showUnions(); if (k === 'k') showRankings(); if (k === 'x') showWars();
+  if (k === 'enter') doEndTurn(); if (k === 'escape') { if (G.selUnits.length) selectUnits([]); else if (G.sel !== null && G.sel !== undefined) selectSector(null); else showPauseMenu(); }
+  if (k === 't') showTech(); if (k === 'e') showEconomy(); if (k === 'm') showMilitary(); if (k === 'r') showTrade(); if (k === 'g') showDiplomacy(); if (k === 'u') showUnions(); if (k === 'k') showRankings(); if (k === 'x') showWars(); if (k === 'p') showPolitics();
   if (k === 'c') { const s = G.sectors[G.countries[G.player].cap]; if (s) focusOn(s.lon, s.lat); }
   if (k === 'n') { // next unit with moves
    const ready = G.units.filter(u => u.o === G.player && u.mv > 0 && u.id !== G.selUnits[0]);
    if (ready.length) { UI.cyc = ((UI.cyc || 0) + 1) % ready.length; const u = ready[UI.cyc]; const s = G.sectors[u.s]; focusOn(s.lon, s.lat); selectUnits([u.id]); }
   }
  });
- $('#bTech').onclick = () => showTech(); $('#bEco').onclick = showEconomy; $('#bMil').onclick = showMilitary; $('#bTrade').onclick = showTrade; $('#bDip').onclick = showDiplomacy; $('#bLog').onclick = () => showLog();
- $('#bUnion').onclick = showUnions; $('#bRank').onclick = showRankings; $('#bWar').onclick = showWars;
+ $('#bTech').onclick = () => showTech(); $('#bEco').onclick = showEconomy; $('#bMil').onclick = showMilitary; $('#bDip').onclick = showDiplomacy; $('#bLog').onclick = () => showLog();
+ $('#bPol').onclick = showPolitics;
  $('#bHelp').onclick = showHelp; $('#bSnd').onclick = showSound; $('#bSave').onclick = () => showSaves(); $('#endTurn').onclick = () => doEndTurn();
  $('#bCap').onclick = () => { const s = G.sectors[G.countries[G.player].cap]; if (s) focusOn(s.lon, s.lat, 40); };
  $('#mapMode').onchange = e => { R.mode = +e.target.value; updateSectorTex(false); };
@@ -10927,6 +11418,7 @@ function showUnions() {
   return h;
  };
  const box = showModal('Factions', render(), [{t: 'Close'}], () => refreshAll(true), true);
+ addTabs(box, 'dip', 'union');
  const again = () => { box.querySelector('.m-b').innerHTML = render(); bind(); };
  const bind = () => {
   const f = box.querySelector('#uFound'); if (f) f.onclick = () => { const nm = box.querySelector('#uName').value || box.querySelector('#uName').placeholder; confirmBox('Found a union?', `<p>Found the <b>${esc(nm)}</b> for 50M? You become its leader.</p>`, 'Found', 'gold', () => { const e = foundUnion(nm); if (e) toast(e); else { SND.play('fanfare'); toast(`The ${nm} is founded.`); } again(); }); };
@@ -10962,6 +11454,7 @@ function showRankings() {
    <p class="muted">Nations hidden by the fog of war keep their place in the ranking, but their names and figures stay secret. Power combines economic weight with military technology.</p>`;
  };
  const box = showModal('World rankings', render(), [{t: 'Close'}], null, true);
+ addTabs(box, 'dip', 'rank');
  const bind = () => {
   box.querySelectorAll('[data-rk]').forEach(b => b.onclick = () => { UI.rankBy = b.dataset.rk; box.querySelector('.m-b').innerHTML = render(); bind(); });
   box.querySelectorAll('[data-go]').forEach(b => b.onclick = () => { const o = G.countries[+b.dataset.go]; const s = G.sectors[o.cap]; closeModals(); if (s) { focusOn(s.lon, s.lat); selectSector(s.id); } });
@@ -11031,6 +11524,7 @@ function showWars() {
    <p class="muted">Every unit is 1,000 men drawn from the population; casualties are lost for good and reinforcing a battered unit takes fresh recruits. Nations hidden by the fog of war show only ???.</p>`;
  };
  const box = showModal('War summary', render(), [{t: 'Close'}], null, true);
+ addTabs(box, 'mil', 'wars');
  const bind = () => {
   box.querySelectorAll('[data-wt]').forEach(b => b.onclick = () => { UI.warTab = b.dataset.wt; box.querySelector('.m-b').innerHTML = render(); bind(); });
   box.querySelectorAll('[data-wall]').forEach(b => b.onclick = () => { UI.warAll = true; box.querySelector('.m-b').innerHTML = render(); bind(); });
@@ -11116,6 +11610,76 @@ function showSpirits() {
  bind();
 }
 
+// ---------------- v25: tabbed windows (Diplomacy · Factions · Rankings, Military · War summary) ----------------
+const TAB_GROUPS = {
+ dip: [['dip', '🤝 Diplomacy', () => showDiplomacy()], ['union', '🛡 Factions', () => showUnions()], ['rank', '🏆 World Rankings', () => showRankings()]],
+ eco: [['eco', '💰 Economy', () => showEconomy()], ['trade', '🚢 Trade', () => showTrade()]],
+ mil: [['forces', '⚔ Forces', () => showMilitary()], ['wars', '📊 War Summary', () => showWars()]],
+};
+function addTabs(box, grp, cur) {
+ if (!box || !box.querySelector) return; const h = box.querySelector('.m-h'); if (!h || h.querySelector('.m-tabs')) return;
+ const d = el('div', 'm-tabs'); d.innerHTML = TAB_GROUPS[grp].map(([id, n]) => `<button class="m-tab${id === cur ? ' on' : ''}" data-tab="${id}">${n}</button>`).join('');
+ h.insertBefore(d, h.querySelector('.x'));
+ d.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { if (b.dataset.tab === cur) return; const bg = box.closest('.modal-bg'); if (bg) bg.remove(); TAB_GROUPS[grp].find(t => t[0] === b.dataset.tab)[2](); });
+}
+// ---------------- v25: politics ----------------
+function showPolitics() {
+ const c = G.countries[G.player]; lawsOf(c);
+ const render = () => {
+  const L = c.laws, tot = {}, cd = lawCooldown(c);
+  for (const k in L) { const o = LAW_OPT[L[k]]; for (const x in o.e) if (x !== 'cap') tot[x] = Math.round(((tot[x] || 0) + o.e[x]) * 100) / 100; }
+  const gov = LAW_OPT[L.gov];
+  return `<div class="pol-head"><div class="pol-gov"><div class="pol-big">${lawIcon(gov.id)}</div><div><small class="muted">Form of government</small><h3>${esc(gov.n)}</h3><p class="muted">${esc(gov.d)}</p></div></div>
+   <div class="pol-tot"><small class="muted">Combined effect of our laws</small><div class="lfxs">${lawFxChips(tot) || '<span class="muted">none</span>'}</div>
+   <div class="pol-strip">${LAWS.map(l => `<span class="pol-mini" title="${esc(l.n)}: ${esc(LAW_OPT[L[l.id]].n)}">${lawIcon(L[l.id])}<small>${esc(l.n)}</small></span>`).join('')}</div>
+   <small class="${cd ? 'warn' : 'muted'}">${cd ? `⏳ A reform was just enacted — no law can change for ${cd} more turn${cd > 1 ? 's' : ''}.` : 'Changing a law costs money and stirs unrest; afterwards no law can change for 2 turns.'} Army limit: <b>${armyLimit(c)}</b> land units.</small></div></div>
+   <div class="pol-cats">` + LAWS.map(cat => `<div class="pol-cat"><div class="pol-ch"><span class="pol-cic">${lawIcon(cat.id)}</span><b>${cat.n}</b><small class="muted">${esc(LAW_OPT[L[cat.id]].n)} · change: ${lawCost(c, cat.id)}M, +${cat.sp} unrest</small></div><div class="pol-opts">${cat.opts.map(o => { const on = L[cat.id] === o.id, err = on ? null : canEnact(c, o.id);
+     return `<button class="pol-o${on ? ' on' : ''}" data-law="${o.id}" ${on ? '' : err ? `disabled title="${esc(err)}"` : ''}><span class="pol-oi">${lawIcon(o.id)}</span><span class="pol-ob"><b>${esc(o.n)}${on ? ' <small class="gold-t">✓ in force</small>' : ''}</b><small class="muted">${esc(o.d)}</small><span class="lfxs">${lawFxChips(o.e) || '<span class="lfx muted">no effect</span>'}</span></span></button>`; }).join('')}</div></div>`).join('') + '</div>';
+ };
+ const box = showModal('Politics', render(), [{t: 'Close'}], () => refreshAll(true), true);
+ box.classList.add('pol-modal');
+ const bind = () => box.querySelectorAll('[data-law]').forEach(b => b.onclick = () => { const o = LAW_OPT[b.dataset.law]; if (lawsOf(c)[o.cat] === o.id) return; const cat = LAWS.find(l => l.id === o.cat);
+  confirmBox('Enact ' + o.n + '?', `<div class="pol-cf">${lawIcon(o.id)}</div><p>${esc(o.d)}</p><div class="lfxs">${lawFxChips(o.e)}</div><p>Cost: <b>${lawCost(c, o.cat)}M</b> · unrest +${cat.sp} in every sector · afterwards no law can change for ${LAW_CD} turns.</p>`, 'Enact', 'gold', () => { const e = enactLaw(o.id); if (e) toast(e); else { SND.play('fanfare'); toast('Law enacted: ' + o.n); } refreshAll(true); const bg = box.closest('.modal-bg'); if (bg) bg.remove(); showPolitics(); }); });
+ bind();
+}
+
+// ---------------- v27: Escape menu and settings ----------------
+function showPauseMenu() {
+ if (UI.screen !== 'game' || document.querySelector('.modal-bg')) return;
+ const box = showModal('Menu', `<div class="pause-menu">
+  <button class="btn gold wide" id="pmResume">▶ Resume</button>
+  <button class="btn wide" id="pmSettings">⚙ Settings</button>
+  <button class="btn wide" id="pmSave">💾 Save &amp; load</button>
+  <button class="btn wide red" id="pmTitle">🏛 Back to main menu</button></div>`, []);
+ const close = () => { const bg = box.closest('.modal-bg'); if (bg) bg.remove(); };
+ box.querySelector('#pmResume').onclick = close;
+ box.querySelector('#pmSettings').onclick = () => { close(); showSettings(); };
+ box.querySelector('#pmSave').onclick = () => { close(); $('#bSave').click(); };
+ box.querySelector('#pmTitle').onclick = () => { close(); confirmBox('Back to the main menu?', '<p>Unsaved progress in this game will be lost. Save first if you want to continue later.</p>', 'Leave the game', 'red', backToTitle); };
+}
+function backToTitle() {
+ closeModals(); try { selectUnits([]); selectSector(null); } catch (e) {}
+ if (typeof TUT !== 'undefined' && TUT.on && typeof endTutorial === 'function') endTutorial();
+ G.spectate = false; document.body.classList.remove('spectating');
+ $('#hud').classList.add('hide'); showTitle();
+}
+const GFX_NAMES = ['High', 'Medium', 'Low'];
+function showSettings() {
+ const cur = R.quality || 0;
+ const render = () => `<div class="set-sec"><h4>Graphics quality</h4><div class="gfx-opts">${GFX_NAMES.map((n, q) => `<button class="gfx-o${(R.quality || 0) === q ? ' on' : ''}" data-q="${q}"><b>${n}</b><small class="muted">${['Full-detail buildings and units, dense forests, sharpest terrain and full resolution.', 'Lighter terrain shading, fewer trees, slightly lower resolution.', 'Simple building models, sparse forests, coarse terrain and lower resolution — for older computers.'][q]}</small></button>`).join('')}</div>
+   <p class="muted small">${R.userQ ? 'Your choice is remembered on this computer.' : 'Chosen automatically for this computer — pick one to keep it.'}</p></div>
+  <div class="set-sec"><h4>Sound &amp; music</h4><button class="btn" id="setSnd">🔊 Sound settings…</button></div>
+  <div class="set-sec"><h4>Turn replay</h4><label class="quiet"><input type="checkbox" id="setSeq" ${UI.seqOff ? '' : 'checked'}> Show other nations' moves one by one</label><br><label class="quiet"><input type="checkbox" id="setDisp" ${UI.quiet ? '' : 'checked'}> Show dispatches after each turn</label></div>`;
+ const box = showModal('Settings', render(), [{t: 'Close'}]);
+ const bind = () => {
+  box.querySelectorAll('[data-q]').forEach(b => b.onclick = () => { const q = +b.dataset.q; R.userQ = true; R.qDone = true; try { localStorage.setItem('ec_gfx', q); } catch (e) {} setQuality(q); box.querySelector('.m-b').innerHTML = render(); bind(); toast('Graphics: ' + GFX_NAMES[q]); });
+  box.querySelector('#setSnd').onclick = () => { const bg = box.closest('.modal-bg'); if (bg) bg.remove(); showSound(); };
+  box.querySelector('#setSeq').onchange = e => { UI.seqOff = !e.target.checked; try { localStorage.setItem('et_seq', UI.seqOff ? '0' : '1'); } catch (x) {} };
+  box.querySelector('#setDisp').onchange = e => setQuiet(!e.target.checked);
+ };
+ bind();
+}
+
 // ===================== EMPEROR'S TABLE — GUIDED TUTORIAL =====================
 // A scripted lesson as the German Empire in 1900. While it runs, only the action the guide asks for is possible:
 // every other click, key and map order is intercepted and blocked.
@@ -11194,8 +11758,9 @@ function tutSteps() {
  S.push({title: 'Choose a research project', spot: () => '.modal .tn.can', modal: true, allow: () => ['#bTech'], done: () => Object.values(c.research).filter(Boolean).length > TUT.snap.res,
   text: `There are five trees: <b>Civil</b>, <b>Military</b>, <b>Navy</b>, <b>Air Force</b> (unlocked by Powered Flight) and <b>Science</b>. Military and naval inventions depend on civil ones — tanks need the gasoline engine.<br><br>Click any glowing technology, then press <span class="tut-gold">Research</span>. You can run one project per tree at a time.`});
  S.push({title: 'Close the window', spot: () => '.modal .m-f .btn', allow: closeOnly, done: () => !anyModal(), text: `Close the technology tree. When a newer rifle or cannon is researched, your existing regiments are refitted for free — but warships are not.`});
- S.push({title: 'Trade', spot: () => '#bTrade', allow: () => ['#bTrade'], done: () => modalOpen('Trade'), text: `Trade turns surplus goods into money. Click <span class="tut-gold">🚢 Trade</span>.`});
- S.push({title: 'Propose a trade agreement', spot: () => '.modal [data-prop]', allow: () => ['.modal [data-prop]', '#bTrade'], done: () => tradeUsed(), text: `Choose export and import goods here. Each partner opens its market to you. Click <span class="tut-gold">propose</span> next to any nation — you may propose <b>one agreement per turn</b>, and they may say no.`});
+ S.push({title: 'Economy', spot: () => '#bEco', allow: () => ['#bEco'], done: () => modalOpen('Economy') || modalOpen('Trade'), text: `Trade turns surplus goods into money. Click <span class="tut-gold">💰 Economy</span>.`});
+ S.push({title: 'Trade', spot: () => '.modal .m-tab[data-tab="trade"]', allow: () => ['.modal .m-tab[data-tab="trade"]'], done: () => modalOpen('Trade'), text: `The Economy window has a <span class="tut-gold">🚢 Trade</span> tab. Open it.`});
+ S.push({title: 'Propose a trade agreement', spot: () => '.modal [data-prop]', allow: () => ['.modal [data-prop]'], done: () => tradeUsed(), text: `Choose export and import goods here. Each partner opens its market to you. Click <span class="tut-gold">propose</span> next to any nation — you may propose <b>one agreement per turn</b>, and they may say no.`});
  S.push({title: 'Close the window', spot: () => '.modal .m-f .btn', allow: closeOnly, done: () => !anyModal(), text: `Close the Trade window. Trading partners also stay visible through the fog of war.`});
  S.push({title: 'Select an army', mark: () => K.cap, enter: () => { const s = G.sectors[K.cap]; focusOn(s.lon, s.lat, 26); selectUnits([]); }, allow: () => ['#side [data-u]', '#side #selAll'], map: {sector: sid => sid === K.cap, unit: uid => { const u = G.units.find(x => x.id === uid); return u && u.o === P; }}, done: () => (G.selUnits || []).length > 0,
   text: `Click one of your <b>regiments</b> standing in ${sname(K.cap)} (or click the sector and pick a unit in the panel). Shift-click adds more; double-click selects the whole stack.`});
@@ -11214,11 +11779,11 @@ function tutSteps() {
   text: `Press <span class="tut-gold">End Turn</span>. Three months pass: research advances, buildings rise, other nations act and wounded units heal. Read the dispatches, then continue.`});
  S.push({title: 'Diplomacy', spot: () => '#bDip', allow: () => ['#bDip'], done: () => modalOpen('Diplomacy'), text: `Click <span class="tut-gold">🕊 Diplomacy</span>.`});
  S.push({title: 'Friends, rivals and puppets', next: true, spot: () => '.modal table.tt', allow: () => ['#bDip'], text: `Every known nation has <b>relations</b> with you. Refusing demands, attacking others and <b>infamy</b> make enemies; trade and gifts make friends. Hostile, stronger nations may declare war.<br><br><b>⛓ Puppets:</b> you can demand that a weaker nation become your puppet — it pays tribute and fights in your wars. If you are ever a puppet yourself, this window lets you fight for independence.`});
- S.push({title: 'Close the window', spot: () => '.modal .m-f .btn', allow: closeOnly, done: () => !anyModal(), text: `Close Diplomacy.`});
- S.push({title: 'Factions', spot: () => '#bUnion', allow: () => ['#bUnion'], done: () => modalOpen('Factions'), text: `Click <span class="tut-gold">🤝 Factions</span>.`});
- S.push({title: 'Alliances', spot: () => '.modal .m-b', allow: closeOnly, done: () => !anyModal(), text: `A <b>faction</b> is an alliance. Germany already belongs to the <b>Triple Alliance</b>. When a member goes to war, the others are called to arms — they may join, refuse, or even leave. Puppet states automatically join their overlord's faction. You can found your own faction and invite nations, or ask to join another faction (one request per turn). Leagues such as the League of Nations are listed separately.<br><br>Close the window when you have read it.`});
- S.push({title: 'World rankings', spot: () => '#bRank', allow: () => ['#bRank'], done: () => modalOpen('World rankings'), text: `Click <span class="tut-gold">🏆</span> to see how the powers compare.`});
+ S.push({title: 'Factions', spot: () => '.modal .m-tab[data-tab="union"]', allow: () => ['.modal .m-tab[data-tab="union"]'], done: () => modalOpen('Factions'), text: `The Diplomacy window has tabs. Open <span class="tut-gold">🛡 Factions</span>.`});
+ S.push({title: 'Alliances', spot: () => '.modal .m-b', allow: () => ['.modal .m-tab[data-tab="rank"]'], done: () => modalOpen('World rankings'), text: `A <b>faction</b> is an alliance. Germany already belongs to the <b>Triple Alliance</b>. When a member goes to war, the others are called to arms — they may join, refuse, or even leave. Puppet states automatically join their overlord's faction. You can found your own faction and invite nations, or ask to join another faction (one request per turn). Leagues such as the League of Nations are listed separately.<br><br>Close the window when you have read it. Then open the <span class="tut-gold">🏆 World Rankings</span> tab.`});
  S.push({title: 'Rankings', spot: () => '.modal .rank-tabs', allow: () => [...closeOnly(), '.modal [data-rk]'], done: () => !anyModal(), text: `Sort by GDP, power, population, army or size. Nations hidden in the <b>fog of war</b> keep their place, but their names and numbers stay secret. Close the window to continue.`});
+ S.push({title: 'Politics', spot: () => '#bPol', allow: () => ['#bPol'], done: () => modalOpen('Politics'), text: `Click <span class="tut-gold">🏛 Politics</span>.`});
+ S.push({title: 'Laws', spot: () => '.modal .m-b', allow: closeOnly, done: () => !anyModal(), text: `Your <b>laws</b> — government, conscription, borders, education, racial law, economy and press — shape research, the economy, unrest and population growth. Conscription also caps the size of the army. Changing a law costs money and stirs unrest, and each law can only change every few turns. Close the window to continue.`});
  S.push({title: 'A tempting target', mark: () => K.luxCap, enter: () => { const s = G.sectors[K.luxCap]; if (s) focusOn(s.lon, s.lat, 28); selectUnits([]); }, map: {sector: sid => G.sectors[sid] && G.sectors[sid].o === K.lux}, done: () => G.sel && G.sectors[G.sel].o === K.lux,
   text: `Tiny <b>Luxembourg</b> lies on our western border. Click it on the map.`});
  S.push({title: 'Declare war', spot: () => '#side [data-war]', allow: () => ['#side [data-war]'], modal: true, map: {sector: sid => G.sectors[sid] && G.sectors[sid].o === K.lux}, done: () => atWar(P, K.lux),
