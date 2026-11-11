@@ -275,7 +275,7 @@ table.rank td,table.rank th{padding:4px 8px}
 .dbg-row select{flex:1;min-width:0;background:#1a1d24;color:#ddd;border:1px solid #3a3f4a;border-radius:5px;font-size:11.5px}
 .dbg-info{background:#0b0d12;border-radius:6px;padding:6px 8px;line-height:1.5;font-family:ui-monospace,monospace;font-size:11px}
 .dbg-toggle{margin-top:10px;border-top:1px solid rgba(255,255,255,.08);padding-top:8px}
-#tut{position:fixed;left:14px;top:96px;width:350px;max-height:calc(100vh - 90px);overflow:auto;z-index:55;background:linear-gradient(180deg,rgba(28,24,16,.97),rgba(18,16,12,.97));border:1px solid #b8963e;border-radius:12px;box-shadow:0 10px 34px rgba(0,0,0,.6),0 0 0 1px rgba(214,178,94,.15) inset;padding:12px 14px;color:#e8e0cc;font-size:13.5px;line-height:1.5;opacity:0;transform:translateX(-12px);transition:opacity .3s,transform .3s,left .35s,top .35s}
+#tut{position:fixed;left:14px;top:96px;width:350px;max-height:calc(100vh - 90px);overflow:auto;z-index:55;background:linear-gradient(180deg,rgba(28,24,16,.97),rgba(18,16,12,.97));border:1px solid #b8963e;border-radius:12px;box-shadow:0 10px 34px rgba(0,0,0,.6),0 0 0 1px rgba(214,178,94,.15) inset;padding:12px 14px;color:#e8e0cc;font-size:13.5px;line-height:1.5;opacity:0;transform:translateX(-12px);transition:opacity .3s,transform .3s}
 #tut.show{opacity:1;transform:none}#tut.pulse{animation:tutp .4s}#tut.shake{animation:tuts .45s}
 @keyframes tutp{50%{box-shadow:0 0 0 4px rgba(214,178,94,.5),0 10px 34px rgba(0,0,0,.6)}}@keyframes tuts{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
 #tut h3{margin:6px 0 6px;font:600 18px Georgia,serif;color:#f0d68a}#tut .tut-t ul{margin:6px 0;padding-left:18px}#tut .tut-gold{color:#f0d68a;font-weight:600}
@@ -318,6 +318,8 @@ body.spectating #bTech,body.spectating #bEco,body.spectating #bMil,body.spectati
 .gov-line{display:flex;align-items:center;gap:8px;margin:6px 0 2px;padding:6px 8px;border:1px solid rgba(214,178,94,.3);border-radius:6px;background:rgba(214,178,94,.06)}.gov-line .gov-ic .ic{width:34px;height:34px}.gov-line>div{display:flex;flex-direction:column;line-height:1.15}.gov-line small{font-size:10px;text-transform:uppercase;letter-spacing:.06em}.gov-line .gov-laws{flex-direction:row;margin-left:auto;gap:2px}.gov-laws .ic{width:20px;height:20px;opacity:.85}
 .pause-menu{display:flex;flex-direction:column;gap:8px;min-width:280px;padding:4px 10px}.pause-menu .btn{font-size:15px;padding:10px}
 .set-sec{margin:0 0 14px}.set-sec h4{margin:0 0 6px}.gfx-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.gfx-o{display:flex;flex-direction:column;gap:4px;text-align:left;padding:10px;border:1px solid var(--line);border-radius:6px;background:rgba(255,255,255,.04);color:inherit;font:inherit;cursor:pointer}.gfx-o.on{border-color:#d6b25e;background:rgba(214,178,94,.16)}.gfx-o b{font-size:14px}
+body.tut-dock .modal-bg{padding:0 var(--tutR,0px) var(--tutB,0px) 0;box-sizing:border-box}body.tut-dock .modal{max-width:calc(100vw - var(--tutR,0px) - 16px);max-height:calc(100vh - var(--tutB,0px) - 16px)}body.tut-dock .modal.wide{width:min(1280px,calc(100vw - var(--tutR,0px) - 24px));height:min(860px,calc(100vh - var(--tutB,0px) - 24px))}
+.sup{margin:6px 0 8px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:rgba(0,0,0,.22)}.sup-l{display:flex;justify-content:space-between;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#c9b98e}.sup-l b{font-size:15px;color:#f3e3b6}.pol-pup{margin:4px 0 6px;padding:6px 8px;border:1px solid #c0503a;border-radius:6px;background:rgba(192,80,58,.14);color:#ffb7a6;font-size:12.5px}.sup-fx{display:flex;flex-wrap:wrap;gap:3px;align-items:center;margin:2px 0 4px;font-size:11px}.sup-bar{height:9px;border-radius:5px;background:rgba(255,255,255,.08);overflow:hidden;margin:4px 0}.sup-bar i{display:block;height:100%;background:linear-gradient(90deg,#6a8f3a,#d6b25e 60%,#e0703a)}
 </style>
 </head>
 <body>
@@ -2446,7 +2448,7 @@ const EVENTS = [
  {y:1905,m:6,type:'split',name:'Norwegian Independence',from:['Norway'],nw:'Norway',reg:[12.2,31.5,64.8,71.5]},
  {y:1905,m:6,type:'rename',name:'Union dissolved',from:'Sweden–Norway',to:'Sweden'},
  {y:1919,m:3,cond:['noscen:kaiser'],wait:6,type:'news',name:'March First Movement',who:['Empire of Japan'],pop:true,icon:'🇰🇷',txt:'In Seoul the Korean Declaration of Independence is read aloud in Pagoda Park; two million Koreans march for freedom. The Japanese police and army crush the protests, killing thousands.',opts:[{t:'Crush the protests',c:'red',d:'Unrest −5, relations with the United States −10.',fx:{unrest:-5,rel:{'United States of America':-10}}},{t:'Promise a "cultural policy"',c:'gold',d:'Unrest −10 at a cost of 100M.',fx:{unrest:-10,money:-100}}]},
- {y:1910,m:8,type:'merge',name:'Annexation of Korea',into:'Empire of Japan',from:['Korea']},
+ {y:1910,m:8,after:'Russo-Japanese War',loser:'Russian Empire',hostile:true,type:'merge',name:'Annexation of Korea',into:'Empire of Japan',from:['Korea'],txt:'Japan demands the annexation of the Korean Empire.'},
  {y:1912,m:1,type:'rename',name:'Xinhai Revolution',from:'Qing Empire',to:'Republic of China',txt:'The Qing dynasty falls; the Republic of China is proclaimed.'},
  {y:1912,m:3,type:'merge',name:'Treaty of Fez',into:'France',from:['Morocco']},
  {y:1913,m:5,type:'split',name:'Albanian Independence',from:['Ottoman Empire'],nw:'Albania',col:'#c04040',reg:[19,21.1,39.6,42.7]},
@@ -3858,7 +3860,7 @@ function bonus(c, key) {
  const hit = c._bon[key]; if (hit !== undefined) return hit;
  return (c._bon[key] = bonusRaw(c, key));
 }
-function bonusRaw(c, key) { let v = 0; for (const id of c.techs) { const e = TECH[id].e[key]; if (e) v += e; } if (c.spirits) for (const sp of c.spirits) { const S = SPIRITS[sp.id]; if (S && S.e[key]) v += S.e[key]; } if (typeof lawVal === 'function' && key !== 'unrest') v += lawVal(c, key); return v; }
+function bonusRaw(c, key) { let v = 0; for (const id of c.techs) { const e = TECH[id].e[key]; if (e) v += e; } if (c.spirits) for (const sp of c.spirits) { const S = SPIRITS[sp.id]; if (S && S.e[key]) v += S.e[key]; } if (typeof lawVal === 'function' && key !== 'unrest') v += lawVal(c, key); if (key === 'gdp' && typeof supportGdp === 'function') v += supportGdp(c); return v; }
 function gdpMult(c) { return 1 + bonus(c, 'gdp') / 100; }
 // the unit types a nation can field, cached until its technology changes (callers get fresh copies they may sort)
 function unitSetOf(c) {
@@ -4977,6 +4979,12 @@ function offMult(att, def) {
 }
 // abstract fighting between AI nations, front by front. Each nation splits its weight over its fronts
 // (land fronts count fully, fronts across the sea little); allies on the same front help.
+// v30: theatres of historical wars — how much of a belligerent's strength actually reaches the front, and who cannot cross the sea
+// Russo-Japanese War: Russia fought at the far end of the single-track Trans-Siberian railway, and Japan held the sea.
+// allies of the two main belligerents (France, Britain, puppets) hardly took part: only a small share of their strength counts
+const THEATRES = {'Russo-Japanese War': {str: {'Russian Empire': 0.3, 'Empire of Japan': 1, 'Japan': 1}, others: 0.08, noSea: ['Russian Empire']}};
+function theatreF(w, id) { const T = w && THEATRES[w.name], c = G.countries[id]; if (!T || !c) return 1; return T.str[c.key] !== undefined ? T.str[c.key] : (T.others !== undefined ? T.others : 1); }
+function theatreNoSea(w, id) { const T = w && THEATRES[w.name], c = G.countries[id]; return !!(T && c && T.noSea && T.noSea.includes(c.key)); }
 function aiWarStep(w) {
  const A = w.a.filter(x => x !== G.player && G.countries[x].alive), B = w.b.filter(x => x !== G.player && G.countries[x].alive);
  if (!A.length || !B.length) return;
@@ -5007,7 +5015,7 @@ function aiWarStep(w) {
   if (!mid) continue;
   const sea = (me, en) => f.land ? 1 : 0.3 * clamp(Math.sqrt((nav(me) + 30) / (nav(en) + 30)), 0.35, 2.2); // across the sea the stronger navy carries the war
   // whoever pushes uses its attack, whoever holds uses its defence; compute both directions
-  const pow = (c, enemy, friends, mode) => base(c.id) * share(c.id, enemy, f.land) * reachAt(c, mid, friends) * sea(c.id, enemy) * (1 + bonus(c, mode) / 100) * friction(c, enemy, mode) * despair(c.id);
+  const pow = (c, enemy, friends, mode) => theatreF(w, c.id) * base(c.id) * share(c.id, enemy, f.land) * reachAt(c, mid, friends) * sea(c.id, enemy) * (1 + bonus(c, mode) / 100) * friction(c, enemy, mode) * despair(c.id);
   let xAtk = pow(cx, y, A, 'atk') * offMult(x, y), yDef = pow(cy, x, B, 'def'), yAtk = pow(cy, x, B, 'atk') * offMult(y, x), xDef = pow(cx, y, A, 'def');
   for (const z of A) if (z !== x && fronts.has(z + ':' + y)) { const c = G.countries[z]; xAtk += 0.35 * pow(c, y, A, 'atk'); xDef += 0.35 * pow(c, y, A, 'def'); }
   for (const z of B) if (z !== y && fronts.has(x + ':' + z)) { const c = G.countries[z]; yDef += 0.35 * pow(c, x, B, 'def'); yAtk += 0.35 * pow(c, x, B, 'atk'); }
@@ -5026,7 +5034,7 @@ function aiWarStep(w) {
    const winSide = xWins ? A : B;
    // retake our own (or our allies') land first, then advance towards the enemy capital
    let pool = G.sectors.filter(s => s && !s.w && s.ctrl === lose && winSide.includes(s.o) && s.n.some(n => winSide.includes(G.sectors[n].ctrl)));
-   if (!pool.length) pool = G.sectors.filter(s => s && !s.w && s.ctrl === lose && (s.n.some(n => G.sectors[n].ctrl === win) || (!f.land && s.sea.some(([n, d]) => d <= 6 && G.sectors[n].ctrl === win))));
+   if (!pool.length) pool = G.sectors.filter(s => s && !s.w && s.ctrl === lose && (s.n.some(n => G.sectors[n].ctrl === win) || (!f.land && !theatreNoSea(w, win) && s.sea.some(([n, d]) => d <= 6 && G.sectors[n].ctrl === win))));
    if (!pool.length) continue;
    let s = null; const lc = G.sectors[G.countries[lose].cap]; const ob = objectiveSector(win, lose);
    if (ob && rnd() < 0.8) { let bd = Infinity; for (const t of pool) { const d = degDist(t, ob); if (d < bd) { bd = d; s = t; } } }
@@ -5304,10 +5312,12 @@ function warScore(P, e) {
  const battles = w ? (w.a.includes(P) ? w.score : -w.score) : 0;
  return clamp(Math.round(mine / Math.max(eTot, 1) * 100 - theirs / Math.max(pTot, 1) * 100 + battles), -100, 100);
 }
-// v25: a white peace can only be sought once a war has run three turns, whoever started it
-function whitePeaceWait(e) { const P = G.player, w = G.wars.find(w => (w.a.includes(P) && w.b.includes(e)) || (w.b.includes(P) && w.a.includes(e))); if (!w) return 0; return Math.max(0, 3 - Math.floor((G.y * 12 + G.m - w.start) / 3)); }
+// v28: peace of any kind can only be negotiated once a war has run three turns, whoever started it (historical events may end wars sooner)
+function whitePeaceWait(e) { return peaceWait(e); }
+function peaceWait(e) { const P = G.player, w = G.wars.find(w => (w.a.includes(P) && w.b.includes(e)) || (w.b.includes(P) && w.a.includes(e))); if (!w) return 0; return Math.max(0, 3 - Math.floor((G.y * 12 + G.m - w.start) / 3)); }
 function proposePeace(e, mode) {
- if (mode === 'white' && whitePeaceWait(e) > 0) return false;
+ if (peaceWait(e) > 0) return false;
+ { const wn = warNameBetween(G.player, e); if (wn && PROTOCOL_WARS[wn] && mode !== 'white') return false; } // a protocol war ends by its treaty, not by conquest
  const P = G.player; const ws = warScore(P, e); const ec = G.countries[e];
  if (mode === 'puppet') {
   const capHeld0 = G.sectors[ec.cap] && G.sectors[ec.cap].ctrl === P;
@@ -5338,6 +5348,8 @@ function proposePeace(e, mode) {
 function requestSurrender(id, kind) {
  G.pendingSurrender = G.pendingSurrender || [];
  if (G.pendingSurrender.some(r => r.id === id)) return;
+ // too early for talks — unless they have no land left to fight from
+ if (peaceWait(id) > 0 && G.sectors.some(s => s && !s.w && s.o === id && s.ctrl === id)) return;
  G.pendingSurrender.push({id, kind, turn: G.turn});
  logMsg(`${G.countries[id].name} ${kind === 'sue' ? 'sues for peace' : 'asks to surrender'}.`, 'event');
 }
@@ -5696,7 +5708,7 @@ function endTurn() {
  G.units = G.units.filter(u => u.hp > 0);
  // ---- unrest & rebellion ----
  const capS = G.sectors[c.cap];
- const spUnrest = spiritVal(c, 'unrest') + lawVal(c, 'unrest'), lawNc = lawVal(c, 'ncUnrest'); const spInf = spiritVal(c, 'infamy') + lawVal(c, 'infamy'); if (spInf) addInfamy(spInf);
+ const spUnrest = spiritVal(c, 'unrest') + lawVal(c, 'unrest') + supportUnrest(c), lawNc = lawVal(c, 'ncUnrest'); const spInf = spiritVal(c, 'infamy') + lawVal(c, 'infamy'); if (spInf) addInfamy(spInf);
  for (const s of G.sectors) {
   if (!s || s.w || s.o !== P) continue;
   let d = (c.tax - 0.12) * 60;
@@ -5839,8 +5851,9 @@ function aiTurnBody() {
  }
  if (G.m === 0) { aiTradeYear(); liberationYear(); }
  aiNukes();
- capitulationsTurn(); capitalTurn(); defeatedWithdrawTurn(); menTurn(); warStatsTurn(); aiLawsTurn(); if (P >= 0) warLawsLapse(G.countries[P]);
+ capitulationsTurn(); capitalTurn(); defeatedWithdrawTurn(); menTurn(); warStatsTurn(); aiLawsTurn(); puppetLawsTurn(); if (P >= 0) { warLawsLapse(G.countries[P]); supportTurn(G.countries[P]); }
  for (const w of G.wars.slice()) {
+  if (PROTOCOL_WARS[w.name] && G.y * 12 + G.m >= (w.end || Infinity)) { protocolPeace(w); continue; } // ends by treaty on its date, even with the player in it
   const nonP = w.a.filter(x => x !== P).length && w.b.filter(x => x !== P).length;
   if (!nonP) continue;
   aiWarStep(w);
@@ -5856,7 +5869,7 @@ function aiTurnBody() {
   if (fight2 && capitulate(w)) continue;
   if (!fight2 && negotiateAiWar(w)) continue; // occupied lands demanded; a ruined attacker or a fallen capital ends it
   const softEnd = fight2 ? (overdue > 60 && rnd() < 0.06) // a stalemate long after 1945 (nobody can reach the other) finally peters out
-   : overdue >= 0 && (Math.abs(w.score) >= 4 || overdue > 120 || (overdue > 9 && !warHasFront(w))) && rnd() < clamp(0.12 + Math.abs(w.score) * 0.03 + overdue / 120, 0, 0.9);
+   : overdue >= 0 && (Math.abs(w.score) >= 4 || (THEATRES[w.name] && overdue >= 3) || overdue > 120 || (overdue > 9 && !warHasFront(w))) && rnd() < clamp(0.12 + Math.abs(w.score) * 0.03 + overdue / 120, 0, 0.9);
   const early = !w.hist && !fight2 && ((w.end === null && now - w.start > 24 && rnd() < 0.1) || (capFall && now - w.start > 6 && rnd() < 0.15));
   if (softEnd || early) {
    resolveAiPeace(w); endWar(w);
@@ -5898,7 +5911,21 @@ function warHasFront(w) {
  for (const s of G.sectors) { if (!s || s.w || !A.has(s.ctrl)) continue; for (const n of s.n) { const t = G.sectors[n]; if (t && !t.w && B.has(t.ctrl)) return true; } for (const [n, d] of s.sea) if (d <= 6 && B.has(G.sectors[n].ctrl)) return true; }
  return false;
 }
+// v30: punitive expeditions that historically ended in an indemnity, not annexation: all occupied land goes back at the treaty
+const PROTOCOL_WARS = {'Boxer Rebellion': {treaty: 'Boxer Protocol', loser: 'Qing Empire', pay: 4}};
+function protocolPeace(w) {
+ const T = PROTOCOL_WARS[w.name], lc = G.countries.find(c => c.alive && c.key === T.loser);
+ const lose = lc && (w.a.includes(lc.id) ? w.a : w.b.includes(lc.id) ? w.b : null);
+ const win = lose === w.a ? w.b : w.a;
+ for (const s of G.sectors) if (s && !s.w && s.ctrl !== s.o && ((w.a.includes(s.o) && w.b.includes(s.ctrl)) || (w.b.includes(s.o) && w.a.includes(s.ctrl)))) s.ctrl = s.o; // every occupation ends
+ G.units = G.units.filter(u => !(G.sectors[u.s] && !G.sectors[u.s].w && (lose || []).includes(G.sectors[u.s].o) && win.includes(u.o))); // the foreign armies go home
+ let paid = 0; const winners = win.filter(x => G.countries[x] && G.countries[x].alive);
+ if (lc && lose && winners.length) { paid = Math.round(Math.max(0, Math.min(Math.max(lc.money, 0) * 0.6, economy(lc).tax * T.pay))); lc.money -= paid; for (const x of winners) G.countries[x].money += paid / winners.length; recordWarOutcome(w.name, winners, lose); }
+ endWar(w); checkAlive(); G.dirtyLabels = true; G.dirtyColors = true; if (typeof updateVisibility === 'function') updateVisibility();
+ if (G.player >= 0 && [...w.a, ...w.b].some(id => id === G.player || isVisibleCountry(id))) logMsg(`⚖ ${T.treaty}: the ${w.name} ends. Every occupied province is returned${paid ? ` and ${lc.name} pays an indemnity of ${Math.round(paid)}M` : ''}.`, 'war');
+}
 function negotiateAiWar(w) {
+ if (PROTOCOL_WARS[w.name]) return false; // no land changes hands before the treaty
  const P = G.player, now = G.y * 12 + G.m, age = now - w.start;
  if (age < 6) return false;
  const live = ids => ids.filter(x => x !== P && G.countries[x] && G.countries[x].alive);
@@ -5913,7 +5940,7 @@ function negotiateAiWar(w) {
  // the great historical wars keep their own treaties until their date (only a fallen capital ends them earlier);
  // limited wars (Crimea, Franco-Prussian, Russo-Japanese…) can be settled at any time once one side is clearly beaten
  if (w.hist && w.end && now < w.end && !LIMITED_WARS.test(w.name)) return false;
- const eA = sideEcon(allA), eB = sideEcon(allB);
+ const eA = allA.reduce((a, id) => a + econOf(G.countries[id]) * theatreF(w, id), 0), eB = allB.reduce((a, id) => a + econOf(G.countries[id]) * theatreF(w, id), 0); // what each side can bring to bear in this theatre
  // 2. the attacker is out-produced: after a year it gives back what it took and cedes what the defender holds
  const heldByA = allB.reduce((k, b) => k + occupiedBy(b, allA).length, 0), heldByB = allA.reduce((k, a) => k + occupiedBy(a, allB).length, 0);
  if (age >= 9 && eA < eB * 0.85 && w.score <= 2 && heldByA <= heldByB + 2 && !A.some(x => isDiehard(G.countries[x])) && rnd() < clamp(0.18 + (eB / Math.max(eA, 1) - 1.15) * 0.3, 0.18, 0.65)) {
@@ -6417,11 +6444,13 @@ function makePuppet(sub, over, why) {
  if (sub === P) G.countries[P].known.add(over);
  G.dirtyColors = true; G.dirtyLabels = true;
  if (why !== false && G.player >= 0 && (sub === P || over === P || isVisibleCountry(sub) || isVisibleCountry(over))) logMsg(`${s.name} becomes a puppet of ${o.name}${why ? ' (' + why + ')' : ''}.`, 'event');
+ if (typeof puppetLawsTurn === 'function') try { puppetLawsTurn(); } catch (e) {}
  return true;
 }
 function freePuppet(sub, why) {
  const over = overlordOf(sub); if (over === null) return;
  const s = G.countries[sub]; s.overlord = null; s.indep = 0;
+ if (typeof puppetLawsTurn === 'function' && typeof setTimeout === 'function') setTimeout(() => { try { puppetLawsTurn(); if (sub === G.player && typeof flushPending === 'function' && !UI.busy && !document.querySelector('.modal-bg')) flushPending(); } catch (e) {} }, 0);
  // a freed puppet leaves the wars it fought only at its overlord's side
  for (const w of G.wars) { const side = w.a.includes(sub) ? w.a : w.b.includes(sub) ? w.b : null; if (side && side.includes(over) && w.indep !== sub) { if (side === w.a) w.a = w.a.filter(x => x !== sub); else w.b = w.b.filter(x => x !== sub); } }
  G.wars = G.wars.filter(w => w.a.length && w.b.length);
@@ -7350,6 +7379,7 @@ function refreshNames(silent) {
  for (const c of G.countries) {
   if (!c.key) c.key = c.name;
   let nm = (typeof NAMES !== 'undefined' && histEntry(NAMES, c.key, c)) || c.key;
+  if (typeof govName === 'function') nm = govName(c, nm);
   if (c.provisional) nm = 'Provisional Government of ' + c.provisional;
   if (nm !== c.name) {
    const old = c.name; c.name = nm; changed = true;
@@ -7584,22 +7614,30 @@ const HIST_LAWS = {
   [1933.1, 'fa vo . . sp pl pr', HL_NAZI], [1935.2, '. ma . . . . .', HL_NAZI], [1939.7, '. . . . . wa .', HL_NAZI], [1944.8, '. la . . . . .', () => nazi() && !HL_AXIS()], [1945.7, '. ma . . . pl .', () => nazi() && HL_AXIS()],
   [1945.4, 'mj un . . eq mx ce', () => lostWW2()], [1949.4, 'rp . . . . . fr', () => lostWW2()], [1956.3, '. ma . . . . .', () => lostWW2()], [1965, '. . . hi . . .', () => lostWW2()]],
  'East Germany': [[1949, 'so vo cl pu eq pl pr'], [1962.1, '. ma . . . . .']],
- 'Bavaria': [[1800, 'am vo re pu eq mx ce'], [1818.5, 'cm ma . . . . .']],
- 'Saxony': [[1800, 'am vo re pu eq mx ce'], [1831.8, 'cm ma . . . . .']],
- 'Württemberg': [[1800, 'am vo re pu eq mx ce'], [1819.8, 'cm ma . . . . .']],
+ 'Bavaria': [[1800, 'am vo re pu ca mx ce'], [1808.4, '. . . . eq . .'], [1818.5, 'cm ma . . . . .']],
+
+ 'Saxony': [[1800, 'am vo re pu ca mx ce'], [1831.8, 'cm ma . . . . .'], [1832.3, '. . . . eq . .']],
+
+ 'Württemberg': [[1800, 'am vo re pu ca mx ce'], [1817.9, '. . . . eq . .'], [1819.8, 'cm ma . . . . .']],
+
  'Baden': [[1800, 'am vo re pu eq mx ce'], [1818.7, 'cm ma . . . . .']],
- 'Hanover': [[1800, 'am vo re pu eq mx ce'], [1833.8, 'cm ma . . . . .']],
+ 'Hanover': [[1800, 'am vo re pu ca mx ce'], [1831.4, '. . . . eq . .'], [1833.8, 'cm ma . . . . .']],
+
  'Mecklenburg-Schwerin': [[1800, 'am vo re pv ca mx ce'], [1820, '. . . . eq . .']],
  'Mecklenburg-Strelitz': [[1800, 'am vo re pv ca mx ce'], [1820, '. . . . eq . .']],
- 'Hesse': [[1800, 'am vo re pu eq mx ce'], [1820.9, 'cm ma . . . . .']],
+ 'Hesse': [[1800, 'am vo re pu ca mx ce'], [1811.1, '. . . . eq . .'], [1820.9, 'cm ma . . . . .']],
+
  'Oldenburg': [[1800, 'am vo re pu eq mx ce'], [1849.2, 'cm . . . . . .']],
  'Hamburg': [[1800, 'rp li re pv eq lf fr']], 'Bremen': [[1800, 'rp li re pv eq lf fr']], 'Lübeck': [[1800, 'rp li re pv eq lf fr']],
- 'Brunswick': [[1800, 'am vo re pu eq mx ce'], [1832.6, 'cm . . . . . .']],
+ 'Brunswick': [[1800, 'am vo re pu ca mx ce'], [1832.6, 'cm . . . eq . .']],
+
  'Thuringia': [[1800, 'am vo re pu eq mx ce'], [1816, 'cm . . . . . .']],
- 'Nassau': [[1800, 'am vo re pu eq mx ce'], [1814.7, 'cm . . . . . .']],
+ 'Nassau': [[1800, 'am vo re pu ca mx ce'], [1812.1, '. . . . eq . .'], [1814.7, 'cm . . . . . .']],
+
  'Anhalt': [[1800, 'am vo re pu eq mx ce']], 'Lippe-Detmold': [[1800, 'am vo re pu eq mx ce'], [1836, 'cm . . . . . .']], 'Swabia': [[1800, 'am vo re pu eq mx ce']],
  // ---------- Italy ----------
- 'Kingdom of Sardinia': [[1800, 'am ma re rl eq mx ce'], [1848.2, 'cm . . . . . fr'], [1859.9, '. . . pu . . .']],
+ 'Kingdom of Sardinia': [[1800, 'am ma re rl sg mx ce'], [1848.2, 'cm . . . eq . fr'], [1859.9, '. . . pu . . .']],
+
  'Italy': [[1861, 'cm ma re pu eq mx fr'], [1915.4, '. . . . . wa .'], [1919, '. . . . . mx .'], [1922.8, 'fa . . . . . .'], [1925.1, '. . . . . . pr'], [1935.8, '. . . . . wa .'], [1937, '. . . . . mx .'], [1938.8, '. . . . sg . .'], [1940.5, '. . . . . wa .'],
   [1943.6, 'cm . . . eq . ce', HL_NOAXIS], [1945.5, '. . . . . mx fr', HL_NOAXIS], [1946.5, 'rp . . . . . .', HL_NOAXIS]],
  'Two Sicilies': [[1800, 'am vo re rl eq mx ce']],
@@ -7609,6 +7647,7 @@ const HIST_LAWS = {
  'Denmark–Norway': [[1800, 'am ma re pv eq mx ce'], [1814, '. . . pu . . .']],
  'Denmark': [[1814, 'am ma re pu ca mx ce'], [1848.8, '. . . . eq . .'], [1849.4, 'cm . . . . . fr']],
  'Sweden': [[1800, 'am vo re pv eq mx ce'], [1809.5, 'cm . . . . . .'], [1812, '. ma . . . . .'], [1842, '. . . pu . . .'], [1866, '. . . . . . fr']],
+
  'Sweden–Norway': [[1814, 'cm ma re pu eq mx fr']],
  'Norway': [[1905, 'cm ma re pu eq mx fr']],
  'Finland': [[1917, 'rp ma re pu eq mx fr'], [1939.9, '. . . . . wa .'], [1944.7, '. . . . . mx .']],
@@ -7622,7 +7661,8 @@ const HIST_LAWS = {
  'Baltic States': [[1918, 'rp vo re pu eq mx fr'], [1918.5, 'cm . . . . . ce', kaiserW], [1934.3, 'mj ma . . . . ce']],
  'Czechoslovakia': [[1918, 'rp ma re pu eq mx fr'], [1948.2, 'so . cl . . pl pr']],
  'Yugoslavia': [[1918, 'cm ma re pu eq mx fr'], [1929.1, 'am . . . . . ce'], [1931.7, 'cm . . . . . .'], [1945.9, 'so . cl . . pl pr'], [1965.6, '. . re . . mx .']],
- 'Romania': [[1878, 'cm ma re pv sg mx fr'], [1893, '. . . pu . . .'], [1923.3, '. . . . eq . .'], [1938.1, 'am . . . sg . ce'], [1940.7, 'fa . . . . wa pr'], [1944.7, 'cm . . . eq mx ce'], [1947.9, 'so . cl . . pl pr']],
+ 'Romania': [[1878, 'cm ma re pv sg mx fr'], [1893, '. . . pu . . .'], [1923.3, '. . . . eq . .'], [1938.1, 'am . . . sg . ce'], [1940.7, 'fa . . . . wa pr'], [1941.5, '. . . . sp . .'], [1944.7, 'cm . . . eq mx ce'], [1947.9, 'so . cl . . pl pr']],
+
  'Bulgaria': [[1878, 'cm ma re pu eq mx fr'], [1934.4, 'mj . . . . . ce'], [1935.3, 'am . . . . . .'], [1941.1, '. . . . sg . .'], [1944.7, 'cm . . . eq . .'], [1946.7, 'so . cl . . pl pr']],
  'Serbia': [[1878, 'cm ma re pu eq mx fr'], [1912.8, '. . . . . wa .'], [1914, '. . . . . . ce']],
  'Montenegro': [[1852, 'am ma re rl eq mx ce'], [1905.9, 'cm . . . . . .']],
@@ -7637,10 +7677,14 @@ const HIST_LAWS = {
  // ---------- Ottoman world, Middle East & North Africa ----------
  'Ottoman Empire': [[1800, 'am vo re rl ca mx ce'], [1843.9, '. ma . . . . .'], [1856.1, '. . . . eq . .'], [1869, '. . . pv . . .'], [1876.9, 'cm . . . . . fr'], [1878.1, 'am . . . . . ce'], [1908.5, 'cm . . . . . fr'], [1913.1, 'mj . . . . . ce'], [1914.8, '. . . . . wa .']],
  'Turkey': [[1922, 'rp ma re pu eq mx ce'], [1950.4, '. . . . . . fr'], [1960.4, 'mj . . . . . ce'], [1961.8, 'rp . . . . . fr'], [1980.7, 'mj . . . . . ce'], [1983.9, 'rp . . . . . .']],
- 'Persia': [[1800, 'am vo re rl eq mx ce'], [1906.6, 'cm . . . . . fr'], [1911.9, '. . . . . . ce'], [1925.9, 'am ma . pv . . .'], [1941.7, 'cm . . . . . fr'], [1943, '. . . pu . . .'], [1953.6, 'am . . . . . ce'], [1979.1, 'th . . . . . pr']],
- 'Afghanistan': [[1800, 'am vo re rl eq mx ce'], [1964.8, 'cm . . . . . .'], [1973.5, 'mj . . . . . .'], [1978.3, 'so ma cl pu . pl pr']],
- 'Egypt': [[1805, 'am vo re rl eq mx ce'], [1822, '. ma . . . pl .'], [1849, '. . . . . mx .'], [1923.3, 'cm . . pv . . fr'], [1952.5, 'mj . . . . . ce'], [1956, '. . . pu . . pr'], [1961.5, '. . . . . pl .']],
- 'Tunisia': [[1800, 'am vo re rl eq mx ce']],
+ 'Persia': [[1800, 'am vo re rl ca mx ce'], [1906.6, 'cm . . . . . fr'], [1911.9, '. . . . . . ce'], [1925.9, 'am ma . pv . . .'], [1929.2, '. . . . eq . .'], [1941.7, 'cm . . . . . fr'], [1943, '. . . pu . . .'], [1953.6, 'am . . . . . ce'], [1979.1, 'th . . . . . pr']],
+
+ 'Afghanistan': [[1800, 'am vo re rl ca mx ce'], [1923.3, '. . . . eq . .'], [1964.8, 'cm . . . . . .'], [1973.5, 'mj . . . . . .'], [1978.3, 'so ma cl pu . pl pr']],
+
+ 'Egypt': [[1805, 'am vo re rl ca mx ce'], [1822, '. ma . . . pl .'], [1849, '. . . . . mx .'], [1877.6, '. . . . eq . .'], [1923.3, 'cm . . pv . . fr'], [1952.5, 'mj . . . . . ce'], [1956, '. . . pu . . pr'], [1961.5, '. . . . . pl .']],
+
+ 'Tunisia': [[1800, 'am vo re rl ca mx ce'], [1846.1, '. . . . eq . .']],
+
  'Morocco': [[1800, 'am vo re rl ca mx ce'], [1912.3, '. . . . eq . .'], [1956.2, 'cm . . pv . . .']],
  'Yemen': [[1800, 'th vo re rl ca mx ce'], [1962.7, 'mj . . . eq . .']],
  'Oman': [[1800, 'am vo re rl ca mx ce'], [1970.5, '. . . pv eq . .']],
@@ -7687,6 +7731,7 @@ const HIST_LAWS = {
  'Uruguay': [[1828, 'rp vo op rl eq mx fr'], [1877.7, '. . . pu . . .'], [1973.5, 'mj . . . . . ce'], [1985.2, 'rp . . . . . fr']],
  'Paraguay': [[1811, 'rp vo re rl ca mx fr'], [1814.8, 'mj . cl . . cl ce'], [1840.8, '. . re . . mx .'], [1869, '. . . . eq . .'], [1870.9, 'rp . . . . . fr'], [1954.6, 'mj . . . . . ce'], [1989.1, 'rp . . . . . fr']],
  'Brazil': [[1822, 'cm vo op rl ca mx fr'], [1888.4, '. . . . eq . .'], [1889.9, 'rp . . . . . .'], [1908, '. ma . . . . .'], [1934, '. . re pu . . .'], [1937.9, 'mj . . . . . pr'], [1945.8, 'rp . . . . . fr'], [1964.3, 'mj . . . . . ce'], [1985.2, 'rp . . . . . fr']],
+
  'Japanese States of America': [[1945, 'mj ma re pu sg mx pr']],
  // ---------- South Asia ----------
  'Maratha Confederacy': [[1800, 'am vo re rl ca mx ce']],
@@ -7698,7 +7743,8 @@ const HIST_LAWS = {
  'Cochin': [[1800, 'am vo re rl ca mx ce'], [1947, '. . . . eq . .']],
  'Rajputs': [[1800, 'am vo re rl ca mx ce']],
  'Nepal': [[1800, 'am vo cl rl ca mx ce'], [1846.8, 'mj . . . . . .'], [1951.1, 'cm . re . . . .'], [1960.9, 'am . . . . . .'], [1963.5, '. . . . eq . .']],
- 'Bhutan': [[1800, 'th vo cl rl eq cl ce'], [1907.9, 'am . . . . . .'], [1961, '. . . pv . mx .']],
+ 'Bhutan': [[1800, 'th vo cl rl ca cl ce'], [1907.9, 'am . . . . . .'], [1958, '. . . . eq . .'], [1961, '. . . pv . mx .']],
+
  'Central Asian Khanates': [[1800, 'am vo re rl ca mx ce']],
  'Kandy': [[1800, 'am vo re rl ca mx ce']],
  'Ceylon': [[1948, 'cm vo re pu eq mx fr'], [1972.4, 'rp . . . . . .']],
@@ -7711,19 +7757,24 @@ const HIST_LAWS = {
  'Chinese Communists': [[1946, 'so ma cl pu eq wa pr']],
  "People's Republic of China": [[1949, 'so ma cl pu eq mx pr'], [1953, '. . . . . pl .'], [1966.4, '. . . no . . .'], [1977, '. . . pu . . .'], [1978.95, '. . re . . mx .']],
  'Manchukuo': [[1932, 'mj vo re pu sg mx pr']],
- 'Mongolia': [[1911, 'th vo cl rl eq mx ce'], [1924.9, 'so ma . pu . pl pr']],
+ 'Mongolia': [[1911, 'th vo cl rl ca mx ce'], [1924.9, 'so ma . pu eq pl pr']],
+
  'Japan': [[1800, 'mj vo cl pv ca cl ce'], [1854.2, '. . re . . mx .']],
- 'Empire of Japan': [[1868, 'am vo re pv ca mx ce'], [1871.6, '. . . . eq . .'], [1872.6, '. . . pu . . .'], [1873.1, '. ma . . . . .'], [1889.1, 'cm . . . . . .'], [1904.1, '. . . . . wa .'], [1905.7, '. . . . . mx .'], [1912.6, '. . . . . . fr'], [1925.3, '. . . . . . ce'], [1932.4, 'mj . . . . . .'], [1937.5, '. . . . . wa pr'], [1945.3, '. la . . . . .', () => !HL_AXIS()],
-  [1945.7, 'cm un . . . mx fr', HL_LOSTPW], [1945.7, '. ma . . . mx .', HL_AXIS]],
+ 'Empire of Japan': [[1868, 'am vo re pv ca mx ce'], [1871.6, '. . . . eq . .'], [1872.6, '. . . pu . . .'], [1873.1, '. ma . . . . .'], [1889.1, 'cm . . . . . .'], [1904.1, '. . . . . wa .'], [1905.7, '. . . . . mx .'], [1910.6, '. . . . sg . .'], [1912.6, '. . . . . . fr'], [1925.3, '. . . . . . ce'], [1932.4, 'mj . . . . . .'], [1937.5, '. . . . . wa pr'], [1945.3, '. la . . . . .', () => !HL_AXIS()],
+  [1945.7, 'cm un . . eq mx fr', HL_LOSTPW], [1945.7, '. ma . . . mx .', HL_AXIS]],
+
  'Korea': [[1800, 'am li cl pv ca cl ce'], [1876.1, '. . re . . mx .'], [1894.6, '. . . . eq . .'], [1895, '. . . pu . . .'], [1945.6, 'mj un . . . . ce']],
  'South Korea': [[1948, 'rp ma re pu eq mx ce'], [1950.5, '. . . . . wa .'], [1953.6, '. . . . . mx .'], [1961.4, 'mj . . . . . .'], [1987.8, 'rp . . . . . fr']],
  'North Korea': [[1948, 'so ma cl pu eq pl pr'], [1950.5, '. . . . . wa .'], [1953.6, '. . . . . pl .']],
  // ---------- Southeast Asia & Pacific ----------
  'Siam': [[1800, 'am vo re rl ca mx ce'], [1905.2, '. ma . . eq . .'], [1921.7, '. . . pu . . .'], [1932.5, 'cm . . . . . .'], [1938.9, 'mj . . . . . pr'], [1944.6, 'cm . . . . . ce'], [1947.9, 'mj . . . . . .'], [1973.8, 'cm . . . . . fr']],
- 'Đại Việt': [[1800, 'am vo re rl eq mx ce']],
+
+ 'Đại Việt': [[1800, 'am vo re rl ca mx ce']],
+
  'North Vietnam': [[1945, 'so ma cl pu eq wa pr'], [1954.5, '. . . . . pl .'], [1964.6, '. . . . . wa .'], [1975.3, '. . . . . pl .'], [1986.95, '. . . . . mx .']],
  'South Vietnam': [[1949, 'cm ma re pu eq mx ce'], [1955.8, 'rp . . . . . .'], [1963.8, 'mj . . . . . .'], [1964.6, '. . . . . wa .']],
- 'Burma': [[1800, 'am vo re rl eq mx ce'], [1948, 'rp ma . pu . . fr'], [1962.2, 'mj . cl . . pl pr']],
+ 'Burma': [[1800, 'am vo re rl ca mx ce'], [1948, 'rp ma . pu eq . fr'], [1962.2, 'mj . cl . . pl pr']],
+
  'Cambodia': [[1953, 'cm vo re pu eq mx ce'], [1970.2, 'mj . . . . wa .'], [1975.3, 'so la cl no . pl pr'], [1979, '. ma . pu . . .']],
  'Brunei': [[1800, 'am vo re rl eq mx ce']],
  'Malaya': [[1957, 'cm vo re pu eq mx fr']],
@@ -7738,12 +7789,11 @@ const HL_GENERIC = {
  'am vo re no ca mx ce': ['Segu', 'Kaarta', 'Kong Empire', 'Mossi States', 'Borgu States', 'Oyo', 'Congo', 'Luba', 'Lunda', 'Kuba', 'Teke', 'Yaka', 'Lozi', 'Barotse', 'Buganda', 'Bunyoro', 'Ovimbundu', 'Mbailundu', 'Yeke', 'Mirambo Unyanyembe Ukimbu', 'Sultanate of Utetera', 'Rwanda', 'Burundi', 'Ambur'],
  'am ma re no ca mx ce': ['Dahomey', 'Ndebele'],
  'am vo re no eq mx ce': ['Xhosa', 'Sotho', 'Ngwato', 'Nguni', 'Shona', 'Rozwi'],
- 'am vo re rl ca mx ce': ['Funj', 'Air', 'Kanem-Bornu', 'Darfur', 'Wadai', 'Bagirmi', 'Songhai', 'Awsa', 'Bundelkhand', 'Carnatic', 'Arakan'],
- 'am vo re rl eq mx ce': ['Sindh', 'Bahawalpur'],
+ 'am vo re rl ca mx ce': ['Sindh', 'Bahawalpur', 'Funj', 'Air', 'Kanem-Bornu', 'Darfur', 'Wadai', 'Bagirmi', 'Songhai', 'Awsa', 'Bundelkhand', 'Carnatic', 'Arakan'],
  'th vo re rl ca mx ce': ['Tukular Caliphate', 'Futa Toro', 'Futa Jalon'],
  'mj ma re rl ca mx ce': ['First Samori Empire', 'Second Samori Empire', 'Ibadan'],
  'rp li re no eq mx fr': ['Oromo'],
- 'fa ma re pu sg mx pr': ['Slovakia'],
+ 'fa ma re pu sp mx pr': ['Slovakia'],
 };
 for (const spec in HL_GENERIC) for (const k of HL_GENERIC[spec]) if (!HIST_LAWS[k]) HIST_LAWS[k] = [[1700, spec]];
 const HL_CODE = [
@@ -7770,6 +7820,779 @@ function histLaws(c) {
  return out;
 }
 
+// v28: what each nation is called under a form of government other than its historical one (from the user's names doc).
+// A missing entry keeps the historical name. Gov ids: abs_mon const_mon republic junta fascist socialist syndicate theocracy anarchy puppet
+const GOV_NAMES = {
+"Afghanistan": {
+"anarchy": "Terrorist Afghanistan"
+},
+"Air": {
+"anarchy": "Anarchist Region"
+},
+"Albania": {
+"anarchy": "Anarchist Region"
+},
+"Ambur": {
+"anarchy": "Anarchist Region"
+},
+"Anhalt": {
+"anarchy": "Anarchist Region"
+},
+"Arabia": {
+"anarchy": "Anarchist Region"
+},
+"Arakan": {
+"anarchy": "Anarchist Region"
+},
+"Argentina": {
+"abs_mon": "Kingdom of Argentina",
+"const_mon": "Kingdom of Argentina",
+"fascist": "Empire of Argentina",
+"socialist": "People's Republic of Argentina",
+"syndicate": "Argentina",
+"anarchy": "Anarchist Region"
+},
+"Asante": {
+"anarchy": "Anarchist Region"
+},
+"Australia": {
+"abs_mon": "Kingdom of Australia",
+"anarchy": "Anarchist Region"
+},
+"Austria": {
+"abs_mon": "Kingdom of Austria",
+"const_mon": "Kingdom of Austria",
+"junta": "Austrian State",
+"socialist": "People's Republic of Austria",
+"syndicate": "Austrian Union",
+"theocracy": "Holy Austrian Empire",
+"anarchy": "Anarchist Region"
+},
+"Austria-Hungary": {
+"anarchy": "Anarchist Region"
+},
+"Austrian Empire": {
+"anarchy": "Anarchist Region"
+},
+"Awsa": {
+"anarchy": "Anarchist Region"
+},
+"Baden": {
+"anarchy": "Anarchist Region"
+},
+"Bagirmi": {
+"anarchy": "Anarchist Region"
+},
+"Bahawalpur": {
+"anarchy": "Anarchist Region"
+},
+"Baltic States": {
+"abs_mon": "Baltic Kingdom",
+"fascist": "Baltic Empire",
+"socialist": "People's Republic of Baltic States",
+"syndicate": "Baltic Union",
+"theocracy": "Baltic States",
+"anarchy": "Baltic Region"
+},
+"Barotse": {
+"anarchy": "Anarchist Region"
+},
+"Bavaria": {
+"anarchy": "Anarchist Region"
+},
+"Belgium": {
+"anarchy": "Anarchist Region"
+},
+"Bhutan": {
+"anarchy": "Anarchist Region"
+},
+"Bolivia": {
+"anarchy": "Anarchist Region"
+},
+"Borgu States": {
+"anarchy": "Anarchist Region"
+},
+"Brazil": {
+"anarchy": "Anarchist Region"
+},
+"Bremen": {
+"anarchy": "Anarchist Region"
+},
+"Brunei": {
+"anarchy": "Anarchist Region"
+},
+"Brunswick": {
+"anarchy": "Anarchist Region"
+},
+"Buganda": {
+"anarchy": "Anarchist Region"
+},
+"Bulgaria": {
+"anarchy": "Anarchist Region"
+},
+"Bundelkhand": {
+"anarchy": "Anarchist Region"
+},
+"Bunyoro": {
+"anarchy": "Anarchist Region"
+},
+"Burma": {
+"anarchy": "Anarchist Region"
+},
+"Burundi": {
+"anarchy": "Anarchist Region"
+},
+"Cambodia": {
+"anarchy": "Anarchist Region"
+},
+"Canada": {
+"anarchy": "Anarchist Region"
+},
+"Carnatic": {
+"anarchy": "Anarchist Region"
+},
+"Central America": {
+"anarchy": "Anarchist Region"
+},
+"Central Asian Khanates": {
+"anarchy": "Anarchist Region"
+},
+"Ceylon": {
+"anarchy": "Anarchist Region"
+},
+"Chile": {
+"anarchy": "Anarchist Region"
+},
+"Chinese Communists": {
+"anarchy": "Anarchist Region"
+},
+"Cochin": {
+"anarchy": "Anarchist Region"
+},
+"Colombia": {
+"anarchy": "Anarchist Region"
+},
+"Confederate States": {
+"abs_mon": "American Kingdom",
+"const_mon": "American Kingdom",
+"junta": "Confederatocracy",
+"fascist": "Great Confederacy",
+"socialist": "People's Republic of America",
+"syndicate": "Confederate Union",
+"anarchy": "Anarchist Region"
+},
+"Congo": {
+"anarchy": "Anarchist Region"
+},
+"Costa Rica": {
+"anarchy": "Anarchist Region"
+},
+"Cuba": {
+"abs_mon": "Cuban Empire",
+"const_mon": "Cuban Empire",
+"fascist": "Cuban Empire",
+"anarchy": "Anarchist Region"
+},
+"Czechoslovakia": {
+"anarchy": "Anarchist Region"
+},
+"Dahomey": {
+"anarchy": "Anarchist Region"
+},
+"Darfur": {
+"anarchy": "Anarchist Region"
+},
+"Denmark": {
+"anarchy": "Anarchist Region"
+},
+"Denmark–Norway": {
+"anarchy": "Anarchist Region"
+},
+"Dominican Republic": {
+"anarchy": "Anarchist Region"
+},
+"Đại Việt": {
+"anarchy": "Anarchist Region"
+},
+"East Germany": {
+"abs_mon": "Kingdom of East Germany",
+"const_mon": "Kingdom of East Germany",
+"republic": "Free Germania",
+"junta": "Rearmed Germany",
+"fascist": "Third German Reich",
+"anarchy": "Anarchist Region"
+},
+"Ecuador": {
+"anarchy": "Anarchist Region"
+},
+"Egypt": {
+"republic": "Republic of Egypt",
+"anarchy": "Anarchist Region"
+},
+"El Salvador": {
+"anarchy": "Anarchist Region"
+},
+"Empire of Japan": {
+"republic": "Japan",
+"fascist": "Greater East-Asia Empire",
+"socialist": "Socialist Japan",
+"syndicate": "Japanese Union",
+"theocracy": "Empire of Japan",
+"anarchy": "Unauthorized Japan"
+},
+"Ethiopia": {
+"republic": "Free Ethiopia",
+"fascist": "Ethiopian Empire",
+"socialist": "People's Republic of Ethiopia",
+"syndicate": "Ethiopean Union",
+"anarchy": "Anarchist Region"
+},
+"Finland": {
+"abs_mon": "Kingdom of Finland",
+"const_mon": "Kingdom of Finland",
+"junta": "Second Finnish Republic",
+"fascist": "Greater Finland",
+"socialist": "Soviet Finland",
+"syndicate": "Finland Union",
+"anarchy": "Anarchist Region"
+},
+"First Samori Empire": {
+"anarchy": "Anarchist Region"
+},
+"France": {
+"fascist": "Greater French Empire",
+"socialist": "People's Republic of France",
+"syndicate": "French Union",
+"theocracy": "Catholic France",
+"anarchy": "Anarchist Region"
+},
+"Funj": {
+"anarchy": "Anarchist Region"
+},
+"Futa Jalon": {
+"anarchy": "Anarchist Region"
+},
+"Futa Toro": {
+"anarchy": "Anarchist Region"
+},
+"Germany": {
+"abs_mon": "Kingdom of Germany",
+"socialist": "People's Republic of Germany",
+"syndicate": "German Union",
+"anarchy": "Anarchist Region"
+},
+"Gran Colombia": {
+"anarchy": "Anarchist Region"
+},
+"Greece": {
+"fascist": "Greater Greece",
+"socialist": "People's Republic of Greece",
+"syndicate": "Greek Union",
+"anarchy": "Anarchist Region"
+},
+"Guatemala": {
+"anarchy": "Anarchist Region"
+},
+"Haiti": {
+"anarchy": "Anarchist Region"
+},
+"Hamburg": {
+"anarchy": "Anarchist Region"
+},
+"Hanover": {
+"anarchy": "Anarchist Region"
+},
+"Hausa States": {
+"anarchy": "Anarchist Region"
+},
+"Helvetic Republic": {
+"anarchy": "Anarchist Region"
+},
+"Hesse": {
+"anarchy": "Anarchist Region"
+},
+"Honduras": {
+"anarchy": "Anarchist Region"
+},
+"Hungary": {
+"anarchy": "Anarchist Region"
+},
+"Hyderabad": {
+"anarchy": "Anarchist Region"
+},
+"Ibadan": {
+"anarchy": "Anarchist Region"
+},
+"India": {
+"abs_mon": "Kingdom of India",
+"junta": "State of India",
+"fascist": "Great India",
+"anarchy": "Anarchist Region"
+},
+"Indonesia": {
+"anarchy": "Anarchist Region"
+},
+"Ireland": {
+"anarchy": "Anarchist Region"
+},
+"Israel": {
+"anarchy": "Anarchist Region"
+},
+"Italy": {
+"abs_mon": "Kingdom of Italy",
+"junta": "Italy",
+"anarchy": "Anarchist Region"
+},
+"Japan": {
+"abs_mon": "Empire of Japan",
+"const_mon": "Empire of Japan",
+"republic": "Japan",
+"fascist": "Dai Nippon",
+"socialist": "People's Republic of Japan",
+"syndicate": "Japan Union",
+"theocracy": "Empire of Japan",
+"anarchy": "Unauthorized Japan"
+},
+"Japanese States of America": {
+"abs_mon": "Japanese States of America",
+"const_mon": "Japanese States of America",
+"republic": "Japanese States of America",
+"fascist": "Japanese States of America",
+"socialist": "Japanese States of America",
+"syndicate": "Japanese States of America",
+"theocracy": "Japanese States of America",
+"anarchy": "Japanese States of America"
+},
+"Kaarta": {
+"anarchy": "Anarchist Region"
+},
+"Kandy": {
+"anarchy": "Anarchist Region"
+},
+"Kanem-Bornu": {
+"anarchy": "Anarchist Region"
+},
+"Kingdom of Sardinia": {
+"anarchy": "Anarchist Region"
+},
+"Kong Empire": {
+"anarchy": "Anarchist Region"
+},
+"Korea": {
+"const_mon": "Joseon Kingdom",
+"republic": "Korean Republic",
+"fascist": "Greater Korea",
+"socialist": "DPRK",
+"syndicate": "Korean Union",
+"theocracy": "Joseon",
+"anarchy": "Unauthorized Korea"
+},
+"Kuba": {
+"const_mon": "Kuba",
+"republic": "Republic of Kuba",
+"anarchy": "Anarchist Region"
+},
+"Liberia": {
+"anarchy": "Anarchist Region"
+},
+"Lippe-Detmold": {
+"anarchy": "Anarchist Region"
+},
+"Lozi": {
+"anarchy": "Anarchist Region"
+},
+"Luba": {
+"anarchy": "Anarchist Region"
+},
+"Lunda": {
+"anarchy": "Anarchist Region"
+},
+"Luxembourg": {
+"anarchy": "Anarchist Region"
+},
+"Lübeck": {
+"anarchy": "Anarchist Region"
+},
+"Madagascar": {
+"anarchy": "Anarchist Region"
+},
+"Malaya": {
+"anarchy": "Anarchist Region"
+},
+"Manchukuo": {
+"abs_mon": "Manchu Kingdom",
+"const_mon": "Manchu Kingdom",
+"republic": "Free Manchukuo",
+"anarchy": "Anarchist Region"
+},
+"Maratha Confederacy": {
+"anarchy": "Anarchist Region"
+},
+"Mbailundu": {
+"anarchy": "Anarchist Region"
+},
+"Mecklenburg-Schwerin": {
+"anarchy": "Anarchist Region"
+},
+"Mecklenburg-Strelitz": {
+"anarchy": "Anarchist Region"
+},
+"Merina Kingdom": {
+"anarchy": "Anarchist Region"
+},
+"Mexico": {
+"anarchy": "Anarchist Region"
+},
+"Mirambo Unyanyembe Ukimbu": {
+"anarchy": "Anarchist Region"
+},
+"Modena": {
+"anarchy": "Anarchist Region"
+},
+"Mongolia": {
+"anarchy": "Anarchist Region"
+},
+"Montenegro": {
+"anarchy": "Anarchist Region"
+},
+"Morocco": {
+"anarchy": "Anarchist Region"
+},
+"Mossi States": {
+"anarchy": "Anarchist Region"
+},
+"Mysore": {
+"anarchy": "Anarchist Region"
+},
+"Nassau": {
+"anarchy": "Anarchist Region"
+},
+"Nationalist China": {
+"anarchy": "Anarchist Region"
+},
+"Nationalist Spain": {
+"anarchy": "Anarchist Region"
+},
+"Ndebele": {
+"anarchy": "Anarchist Region"
+},
+"Nejd": {
+"anarchy": "Anarchist Region"
+},
+"Nepal": {
+"anarchy": "Anarchist Region"
+},
+"Netherlands": {
+"anarchy": "Anarchist Region"
+},
+"New Zealand": {
+"anarchy": "Anarchist Region"
+},
+"Nguni": {
+"anarchy": "Anarchist Region"
+},
+"Ngwato": {
+"anarchy": "Anarchist Region"
+},
+"Nicaragua": {
+"anarchy": "Anarchist Region"
+},
+"North Korea": {
+"abs_mon": "Kim-ssi Joseon",
+"const_mon": "Kim-ssi Joseon",
+"republic": "Free North Korea",
+"junta": "Second DPRK",
+"fascist": "Empire of North Korea",
+"syndicate": "DPRK Union",
+"theocracy": "DPRK",
+"anarchy": "Anarchist Region"
+},
+"North Vietnam": {
+"anarchy": "Anarchist Region"
+},
+"Norway": {
+"abs_mon": "Kingdom of Norway",
+"anarchy": "Anarchist Region"
+},
+"Oldenburg": {
+"anarchy": "Anarchist Region"
+},
+"Oman": {
+"anarchy": "Anarchist Region"
+},
+"Orange Free State": {
+"anarchy": "Anarchist Region"
+},
+"Oromo": {
+"anarchy": "Anarchist Region"
+},
+"Ottoman Empire": {
+"anarchy": "Anarchist Region"
+},
+"Oudh": {
+"anarchy": "Anarchist Region"
+},
+"Ovimbundu": {
+"anarchy": "Anarchist Region"
+},
+"Oyo": {
+"anarchy": "Anarchist Region"
+},
+"Pakistan": {
+"anarchy": "Anarchist Region"
+},
+"Papal States": {
+"abs_mon": "Papal Kingdom",
+"const_mon": "Catholic Kingdom",
+"republic": "Papal Republic",
+"fascist": "Holy Catholic Empire",
+"syndicate": "Papal Union",
+"anarchy": "Anarchist Region"
+},
+"Paraguay": {
+"anarchy": "Anarchist Region"
+},
+"Parma": {
+"anarchy": "Anarchist Region"
+},
+"People's Republic of China": {
+"republic": "Republic of China",
+"anarchy": "Anarchist Region"
+},
+"Persia": {
+"anarchy": "Anarchist Region"
+},
+"Peru": {
+"anarchy": "Anarchist Region"
+},
+"Philippines": {
+"anarchy": "Anarchist Region"
+},
+"Poland": {
+"anarchy": "Anarchist Region"
+},
+"Portugal": {
+"anarchy": "Anarchist Region"
+},
+"Prussia": {
+"anarchy": "Anarchist Region"
+},
+"Qatar": {
+"anarchy": "Anarchist Region"
+},
+"Qing Empire": {
+"anarchy": "Anarchist Region"
+},
+"Rajputs": {
+"anarchy": "Anarchist Region"
+},
+"Reichskommissariat Kaukasus": {
+"anarchy": "Anarchist Region"
+},
+"Reichskommissariat Moskowien": {
+"anarchy": "Anarchist Region"
+},
+"Reichskommissariat Ostland": {
+"anarchy": "Anarchist Region"
+},
+"Reichskommissariat Ukraine": {
+"anarchy": "Anarchist Region"
+},
+"Republic of China": {
+"abs_mon": "Empire of China",
+"const_mon": "Empire of China",
+"anarchy": "Anarchist Region"
+},
+"Romania": {
+"anarchy": "Anarchist Region"
+},
+"Rozwi": {
+"anarchy": "Anarchist Region"
+},
+"Russian Empire": {
+"anarchy": "Anarchist Region"
+},
+"Rwanda": {
+"anarchy": "Anarchist Region"
+},
+"Saxony": {
+"anarchy": "Anarchist Region"
+},
+"Second Samori Empire": {
+"anarchy": "Anarchist Region"
+},
+"Segu": {
+"anarchy": "Anarchist Region"
+},
+"Serbia": {
+"anarchy": "Anarchist Region"
+},
+"Shona": {
+"anarchy": "Anarchist Region"
+},
+"Siam": {
+"anarchy": "Anarchist Region"
+},
+"Sikhs": {
+"anarchy": "Anarchist Region"
+},
+"Sindh": {
+"anarchy": "Anarchist Region"
+},
+"Slovakia": {
+"anarchy": "Anarchist Region"
+},
+"Sokoto Caliphate": {
+"anarchy": "Anarchist Region"
+},
+"Songhai": {
+"anarchy": "Anarchist Region"
+},
+"Sotho": {
+"anarchy": "Anarchist Region"
+},
+"South Africa": {
+"anarchy": "Anarchist Region"
+},
+"South African Republic": {
+"anarchy": "Anarchist Region"
+},
+"South Korea": {
+"abs_mon": "Yi-ssi Joseon",
+"const_mon": "Yi-ssi Joseon",
+"fascist": "Greater Korea",
+"socialist": "Southern DPRK",
+"syndicate": "Korean Union",
+"anarchy": "Anarchist Region"
+},
+"South Vietnam": {
+"anarchy": "Anarchist Region"
+},
+"Soviet Union": {
+"syndicate": "Soviet Union",
+"anarchy": "Anarchist Region"
+},
+"Spain": {
+"anarchy": "Anarchist Region"
+},
+"Sultanate of Utetera": {
+"anarchy": "Anarchist Region"
+},
+"Swabia": {
+"anarchy": "Anarchist Region"
+},
+"Sweden": {
+"anarchy": "Anarchist Region"
+},
+"Sweden–Norway": {
+"anarchy": "Anarchist Region"
+},
+"Switzerland": {
+"abs_mon": "Kingdom of Switzerland",
+"const_mon": "Kingdom of Switzerland",
+"fascist": "Greater Switzerland",
+"syndicate": "Swiss Union",
+"anarchy": "Anarchist Region"
+},
+"Teke": {
+"anarchy": "Anarchist Region"
+},
+"Texas": {
+"anarchy": "Anarchist Region"
+},
+"Thuringia": {
+"anarchy": "Anarchist Region"
+},
+"Travancore": {
+"anarchy": "Anarchist Region"
+},
+"Tukular Caliphate": {
+"anarchy": "Anarchist Region"
+},
+"Tunisia": {
+"anarchy": "Anarchist Region"
+},
+"Turkey": {
+"abs_mon": "Kingdom of Turkey",
+"const_mon": "Kingdom of Turkey",
+"fascist": "Second Ottoman Empire",
+"socialist": "People's Republic of Turkey",
+"syndicate": "Turkish Union",
+"theocracy": "Turkish Caliphate",
+"anarchy": "Anarchist Region"
+},
+"Tuscany": {
+"anarchy": "Anarchist Region"
+},
+"Tuʻi Tonga Empire": {
+"anarchy": "Anarchist Region"
+},
+"Two Sicilies": {
+"anarchy": "Anarchist Region"
+},
+"Ukraine": {
+"anarchy": "Anarchist Region"
+},
+"United Kingdom": {
+"abs_mon": "Kingdom of England",
+"republic": "English Republic",
+"junta": "State of England",
+"fascist": "Greater Britain Empire",
+"socialist": "People's Republic of England",
+"syndicate": "British Union",
+"theocracy": "Church of England",
+"anarchy": "Neo Britain"
+},
+"United States of America": {
+"abs_mon": "Kingdom of America",
+"const_mon": "Kingdom of America",
+"fascist": "Empire of America",
+"socialist": "People's United States of America",
+"syndicate": "American Union",
+"theocracy": "Enlightened America",
+"anarchy": "New World"
+},
+"Uruguay": {
+"anarchy": "Anarchist Region"
+},
+"Venezuela": {
+"anarchy": "Anarchist Region"
+},
+"Vichy France": {
+"anarchy": "Anarchist Region"
+},
+"Wadai": {
+"anarchy": "Anarchist Region"
+},
+"White Russia": {
+"anarchy": "Anarchist Region"
+},
+"Württemberg": {
+"anarchy": "Anarchist Region"
+},
+"Xhosa": {
+"anarchy": "Anarchist Region"
+},
+"Yaka": {
+"anarchy": "Anarchist Region"
+},
+"Yeke": {
+"anarchy": "Anarchist Region"
+},
+"Yemen": {
+"anarchy": "Anarchist Region"
+},
+"Yugoslavia": {
+"anarchy": "Anarchist Region"
+},
+"Zanzibar": {
+"anarchy": "Anarchist Region"
+},
+"Zulu": {
+"anarchy": "Anarchist Region"
+}
+};
+
 // ---------- v25: national laws (Politics) ----------
 // each law option carries effects that feed bonus() (gdp, tax, research, fert, atk, def, build, supply, upkeep)
 // plus unrest (per sector per turn), ncUnrest (extra in non-core sectors), infamy (per turn) and cap (army limit per million people)
@@ -7784,6 +8607,7 @@ const LAWS = [
   {id: 'syndicate', n: 'Trade Union Syndicate', e: {gdp: 4, build: 5, tax: -10, unrest: -0.5}, d: 'The unions run the factories and the state.'},
   {id: 'theocracy', n: 'Religious Dictatorship', e: {unrest: -0.7, fert: 0.1, research: -20, gdp: -4}, d: 'The clergy rule by divine law.'},
   {id: 'anarchy', n: 'Anarchist Commune', e: {def: 10, unrest: -0.3, tax: -40, gdp: -10, research: -5}, d: 'No state, only free communes and militias.'},
+  {id: 'puppet', n: 'Puppet State', e: {tax: -5, research: -5, unrest: -0.2}, d: 'Ruled as a subject of a foreign overlord: every law follows the overlord\'s. Only for subject states.', subject: 1},
  ]},
  {id: 'consc', n: 'Conscription', ic: '🪖', cd: 2, k: 0.6, sp: 3, opts: [
   {id: 'unarmed', n: 'Unarmed Nation', e: {gdp: 6, research: 3, def: -15, upkeep: -10, cap: 0.3}, d: 'Only a token force: money and minds go elsewhere.'},
@@ -7861,7 +8685,7 @@ function heuristicLaws(c) {
  return {gov, consc, border, edu, race, econ, press};
 }
 function lawsOf(c) {
- if (!c.laws) { if (!c.name) return defaultLaws(c); c.laws = defaultLaws(c); c._lawV = (c._lawV || 0) + 1; } // names are set once the world is built
+ if (!c.laws) { if (!c.name) return defaultLaws(c); c.laws = defaultLaws(c); c.govBase = c.laws.gov; c._lawV = (c._lawV || 0) + 1; } // names are set once the world is built
  return c.laws;
 }
 function lawVal(c, key) { if (!c || typeof G === 'undefined' || !G.sectors) return 0; const L = lawsOf(c); let v = 0; for (const k in L) { const o = LAW_OPT[L[k]]; if (o && o.e[key]) v += o.e[key]; } return v; }
@@ -7873,6 +8697,8 @@ function lawCooldown(c) { return c.lawAny === undefined ? 0 : Math.max(0, c.lawA
 function canEnact(c, id) {
  const o = LAW_OPT[id]; if (!o) return 'Unknown law';
  if (lawsOf(c)[o.cat] === id) return 'Already in force';
+ if (isPuppet(c.id)) return `As a puppet state our laws follow our overlord, ${(G.countries[overlordOf(c.id)] || {}).name || 'our overlord'}`;
+ if (o.subject) return 'Only for subject states — set automatically when a nation becomes a puppet';
  const cd = lawCooldown(c); if (cd) return `A law was changed recently — no reform for ${cd} more turn${cd > 1 ? 's' : ''}`;
  if (o.war && !enemiesOf(c.id).size) return 'Only in wartime';
  if (o.y && G.y < o.y) return 'Available from ' + o.y;
@@ -7882,16 +8708,34 @@ function canEnact(c, id) {
 function enactLaw(id) {
  const c = G.countries[G.player], o = LAW_OPT[id], err = canEnact(c, id); if (err) return err;
  const L = LAWS.find(l => l.id === o.cat);
+ const sdrop = supportDrop(c, id);
  c.money -= lawCost(c, o.cat); lawsOf(c)[o.cat] = id; c.lawAny = G.turn; if (o.cat === 'econ') { if (o.id === 'closedmkt') c.trade.clear(); } c._lawV = (c._lawV || 0) + 1; c._bonSig = null;
- for (const s of G.sectors) if (s && !s.w && s.o === c.id) s.unrest = Math.min(100, s.unrest + L.sp); // reform upsets the settled order
+ const ur = lawUnrest(c, o.cat); for (const s of G.sectors) if (s && !s.w && s.o === c.id) s.unrest = Math.min(100, s.unrest + ur); // reform upsets the settled order — the more the people back it, the harder
+ c.support = Math.max(0, supportOf(c) - sdrop);
  if (o.cat === 'consc' && armyLimit(c) < G.units.filter(u => u.o === c.id && isLand(u) && !UNITS[u.t].air).length) logMsg(`Our army now exceeds the new conscription limit — no new land units can be raised until it shrinks.`, 'bad');
  logMsg(`New law: ${o.n}.`, 'event');
+ if (o.cat === 'gov' && typeof refreshNames === 'function') refreshNames();
  return null;
 }
 // AI nations follow history: their laws are re-read every two turns
 function aiLawsTurn() {
  if (G.turn % 2) return;
- for (const c of G.countries) if (c.alive && c.id !== G.player && !c.unclaimed) { c.laws = defaultLaws(c); c._lawV = (c._lawV || 0) + 1; }
+ for (const c of G.countries) if (c.alive && c.id !== G.player && !c.unclaimed && !isPuppet(c.id)) { c.laws = defaultLaws(c); c._lawV = (c._lawV || 0) + 1; }
+}
+// v29: a puppet state's laws follow its overlord's, under the Puppet State government; independence restores its own laws
+function puppetLawsTurn() {
+ for (const c of G.countries) {
+  if (!c.alive || c.unclaimed) continue;
+  if (isPuppet(c.id)) {
+   const ov = G.countries[overlordOf(c.id)]; if (!ov) continue;
+   const want = Object.assign({}, lawsOf(ov), {gov: 'puppet'});
+   c.lastOverlord = ov.name;
+   if (JSON.stringify(want) !== JSON.stringify(c.laws)) { const was = c.laws && c.laws.gov; c.laws = want; c._lawV = (c._lawV || 0) + 1; c._bonSig = null; if (c.id === G.player && was !== 'puppet') logMsg(`We are now a puppet state of ${ov.name}: our laws follow theirs.`, 'bad'); }
+  } else if (c.laws && c.laws.gov === 'puppet') {
+   c.laws = defaultLaws(c); if (c.laws.gov === 'puppet') c.laws.gov = c.govBase && c.govBase !== 'puppet' ? c.govBase : 'republic';
+   c._lawV = (c._lawV || 0) + 1; c._bonSig = null; if (c.id === G.player) { logMsg(`Independence: we write our own laws again.`, 'good'); independenceChoice(c); }
+  }
+ }
 }
 // wartime-only laws lapse when peace returns
 function warLawsLapse(c) {
@@ -7901,7 +8745,7 @@ function warLawsLapse(c) {
 // v26: a closed market (law) or a seclusion spirit bans foreign trade
 function noTradeOf(c) { if (!c) return null; const sp = noTradeSpirit(c); if (sp) return sp; if (c.laws && c.laws.econ === 'closedmkt') return 'Closed Market'; return null; }
 const LAW_GLYPH = {gov: 'crown', consc: 'helmet', border: 'gate', edu: 'book', race: 'scales', econ: 'factory', press: 'scroll',
- abs_mon: 'crown', const_mon: 'crown+scroll', republic: 'ballot', junta: 'helmet+star', fascist: 'fasces', socialist: 'redstar+gear', syndicate: 'fist+gear', theocracy: 'temple+candle', anarchy: 'fist+blast',
+ abs_mon: 'crown', const_mon: 'crown+scroll', puppet: 'crown+chain', republic: 'ballot', junta: 'helmet+star', fascist: 'fasces', socialist: 'redstar+gear', syndicate: 'fist+gear', theocracy: 'temple+candle', anarchy: 'fist+blast',
  unarmed: 'dove', light: 'rifle', volunteer: 'helmet+hands', mandatory: 'people+rifle', last: 'people+blast',
  closed: 'gate+lock', restricted: 'gate+eye', open: 'gate+globe',
  none: 'book+lock', religious: 'book+candle', private: 'book+coins', public: 'book+people', higher: 'cap+star',
@@ -7913,6 +8757,65 @@ function lawIcon(id) { return typeof techIconSVG === 'function' ? techIconSVG(LA
 function govLine(o) {
  const L = lawsOf(o), g = LAW_OPT[L.gov];
  return `<div class="gov-line" title="${esc(g.d)}"><span class="gov-ic">${lawIcon(g.id)}</span><div><small class="muted">Government</small><b>${esc(g.n)}</b></div><div class="gov-laws">${LAWS.filter(l => l.id !== 'gov').map(l => { const x = LAW_OPT[L[l.id]]; return x ? `<span title="${esc(l.n)}: ${esc(x.n)}">${lawIcon(x.id)}</span>` : ''; }).join('')}</div></div>`;
+}
+
+// ---------- v28: people's support for the current order ----------
+// grows while the laws stay put and the land is calm; the fuller it is, the more a reform enrages people (up to +70 unrest)
+// v29: how far apart two laws are (0 = neighbours, 1 = opposite extremes); a leap between opposites costs up to 70% support
+const GOV_POS = {abs_mon: [0.6, 0.9], const_mon: [0.3, 0.4], republic: [0, 0.1], junta: [0.5, 0.95], fascist: [0.9, 1], socialist: [-0.9, 0.9], syndicate: [-0.6, 0.3], theocracy: [0.8, 0.9], anarchy: [-0.8, 0], puppet: [0, 0.6]};
+const LAW_POS = {unarmed: 0, light: 0.25, volunteer: 0.5, mandatory: 0.75, last: 1, open: 0, restricted: 0.5, closed: 1, higher: 0, public: 0.25, private: 0.5, religious: 0.75, none: 1,
+ equal: 0, caste: 0.5, segregation: 0.7, supremacy: 1, laissez: 0, mixed: 0.35, war: 0.75, planned: 1, closedmkt: 0.9, free: 0, censor: 0.5, propaganda: 1};
+function lawDistance(a, b) {
+ if (GOV_POS[a] && GOV_POS[b]) { const [x1, y1] = GOV_POS[a], [x2, y2] = GOV_POS[b]; return Math.min(1, (Math.abs(x1 - x2) + 0.5 * Math.abs(y1 - y2)) / 1.3); }
+ return Math.min(1, Math.abs((LAW_POS[a] || 0) - (LAW_POS[b] || 0)));
+}
+function supportDrop(c, id) {
+ const o = LAW_OPT[id], cur = lawsOf(c)[o.cat]; if (cur === id) return 0;
+ const w = o.cat === 'gov' ? 1 : Math.min(1, (LAW_UNREST_W[o.cat] || 0.5) + 0.3);
+ return Math.round(5 + 65 * lawDistance(cur, id) * w);
+}
+const LAW_UNREST_W = {gov: 1, econ: 0.7, consc: 0.7, race: 0.6, border: 0.4, edu: 0.4, press: 0.4};
+function supportOf(c) { return c.support === undefined ? 60 : c.support; }
+function lawUnrest(c, cat) { return Math.round(70 * supportOf(c) / 100 * (LAW_UNREST_W[cat] || 0.5)); }
+// what moves support each turn (shown in the Politics window)
+function supportFactors(c) {
+ const own = G.sectors.filter(s => s && !s.w && s.o === c.id); const avg = own.length ? own.reduce((a, s) => a + s.unrest, 0) / own.length : 0;
+ const e = economy(c), f = [];
+ f.push(['Unrest ' + Math.round(avg) + '%', Math.round((2.5 - avg / 12) * 10) / 10]); // calm land breeds support, unrest erodes it
+ if (e.net < 0) f.push(['Budget deficit', -1.5]);
+ if (c.money < 0) f.push(['Empty treasury', -2]);
+ else if (e.net > e.tax * 0.1) f.push(['Prosperity', 0.5]);
+ const now = G.y * 12 + G.m; let wl = 0; for (const w of G.wars) if (w.a.includes(c.id) || w.b.includes(c.id)) wl = Math.max(wl, (now - w.start) / 3);
+ if (wl > 8) f.push([`War in its ${Math.round(wl)}th turn`, -Math.min(3, Math.round((wl - 8) / 4 * 10) / 10 + 0.5)]);
+ if (lawCooldown(c)) f.push(['Recent reform', -2]);
+ return f;
+}
+function supportTurn(c) {
+ if (!c || !c.alive) return;
+ const d = supportFactors(c).reduce((a, x) => a + x[1], 0);
+ c.support = Math.max(0, Math.min(100, supportOf(c) + d));
+}
+// high support lifts the economy (up to +10% GDP), low support drags it down (to -10%)
+function supportGdp(c) { return c && c.id === G.player ? Math.round((supportOf(c) - 50) / 5) : 0; }
+// low support breeds unrest (up to +1/turn), high support calms the land (to -1/turn)
+function supportUnrest(c) { return c && c.id === G.player ? (50 - supportOf(c)) / 50 : 0; }
+// ---------- v28: a country's name under a government other than its historical one ----------
+function baseGov(c) { const h = typeof histLaws === 'function' && histLaws(c); return (h && h.gov) || c.govBase || null; }
+function govName(c, nm) {
+ if (!c || !c.laws || typeof GOV_NAMES === 'undefined') return nm;
+ const b = baseGov(c); if (!b || c.laws.gov === b) return nm;
+ const t = GOV_NAMES[c.key]; return (t && t[c.laws.gov]) || nm;
+}
+
+// v29: a player nation freed from its overlord chooses its new form of government
+function lawFxText(e) { return Object.entries(e).filter(([k]) => LAW_FX[k]).map(([k, v]) => `${v > 0 ? '+' : ''}${v}${LAW_FX[k][1]} ${LAW_FX[k][0]}`).join(', ') || 'no special effects'; }
+function independenceChoice(c) {
+ if (typeof choice !== 'function') return;
+ const hist = c.laws.gov, opts = LAWS.find(l => l.id === 'gov').opts.filter(o => !o.subject);
+ opts.sort((a, b) => (b.id === hist) - (a.id === hist));
+ choice('Independence!', `We have thrown off the rule of ${c.lastOverlord || 'our overlord'}. The nation is free to write its own laws again. What form of government shall it take?`,
+  opts.map(o => ({t: o.n + (o.id === hist ? ' (our tradition)' : ''), c: o.id === hist ? 'gold' : '', d: `${o.d} ${lawFxText(o.e)}.${typeof GOV_NAMES !== 'undefined' && GOV_NAMES[c.key] && GOV_NAMES[c.key][o.id] && o.id !== baseGov(c) ? ' The country will be known as the ' + GOV_NAMES[c.key][o.id] + '.' : ''}`,
+   f: () => { c.laws.gov = o.id; c._lawV = (c._lawV || 0) + 1; c._bonSig = null; c.support = Math.max(supportOf(c), 70); logMsg(`The free nation adopts a new government: ${o.n}.`, 'good'); if (typeof refreshNames === 'function') refreshNames(); }})), '🕊');
 }
 
 // ===================== EMPEROR'S TABLE — PROCEDURAL MUSIC & SOUND =====================
@@ -8652,7 +9555,7 @@ function rebuildCities() {
     poles.push([cx, cy + 0.06, cz, 0.008, 0.28, 0.008]);
     flags.push({x: cx, y: cy + 0.3, z: cz, c: G.countries[s.o]});
    }
-   R.cityLabels.push({name: ct.name, x: cx, y: cy + 0.15, z: cz, pop: ct.pop, cap: isCap});
+   R.cityLabels.push({ct, name: ct.name, x: cx, y: cy + 0.15, z: cz, pop: ct.pop, cap: isCap});
   }
  }
  const wallCols = [0xe8dcc4, 0xd9cdb2, 0xcfc6b8, 0xbfae94, 0xe6e0d4];
@@ -10028,7 +10931,7 @@ function animate() {
 }
 
 // ---------------- title / campaign ----------------
-const GAME_VERSION = 'v0.4 WEBSITE VER', CONTACT_EMAIL = 'blockmasterstudio@gmail.com';
+const GAME_VERSION = 'v0.5 WEBSITE VER', CONTACT_EMAIL = 'blockmasterstudio@gmail.com';
 function showTitle() {
  UI.screen = 'title'; SND.setMood('title');
  const ov = $('#screen'); ov.className = 'screen title fadein'; ov.innerHTML = `
@@ -10363,7 +11266,7 @@ function renderSectorPanel() {
    ${overlordOf(s.o) === P ? (() => { const e2 = canDemandAnnex(s.o); return `<button class="act gold" data-dannex="${s.o}" ${e2 ? `disabled title="${esc(e2)}"` : `title="Chance ≈${Math.round(annexChance(s.o) * 100)}%"`}>👑 Demand annexation</button>`; })() : ''}
    ${!war && unionOf(s.o) && unionOf(s.o) !== unionOf(P) ? (() => { const fu = unionOf(s.o), e = canRequestJoin(fu.id); return `<button class="act" data-reqjoin="${fu.id}" ${e ? `disabled title="${esc(e)}"` : `title="Chance ≈${Math.round(joinChance(fu.id) * 100)}%"`}>🤝 Ask to join the ${esc(fu.name)}</button>`; })() : ''}
    ${!war && unionOf(P) && unionOf(P).leader === P && !unionOf(P).members.includes(s.o) && !isPuppet(s.o) ? `<button class="act" data-invite="${s.o}" title="Chance ≈${Math.round(inviteChance(s.o) * 100)}%">🤝 Invite to ${esc(unionOf(P).name)}</button>` : ''}
-   ${war ? `<button class="act" data-peace="${s.o}">🕊 Negotiate peace</button>` : canDeclareWar(s.o) ? `<button class="act red" disabled title="${esc(canDeclareWar(s.o))}">⚔ Declare war</button>` : `<button class="act red" data-war="${s.o}">⚔ Declare war</button>`}
+   ${war ? `<button class="act" data-peace="${s.o}">🕊 Negotiate peace${peaceWait(s.o) ? ` (in ${peaceWait(s.o)} turn${peaceWait(s.o) > 1 ? 's' : ''})` : ''}</button>` : canDeclareWar(s.o) ? `<button class="act red" disabled title="${esc(canDeclareWar(s.o))}">⚔ Declare war</button>` : `<button class="act red" data-war="${s.o}">⚔ Declare war</button>`}
    ${!war && !tr ? `<button class="act" data-trade="${s.o}" ${tradeUsed() ? 'disabled title="One trade proposal per turn"' : ''}>🤝 Propose trade${tradeUsed() ? ' (next turn)' : ''}</button>` : ''}</div>`;
  }
  if (s.ctrl !== P && hostile(P, s.ctrl) && s.ctrl !== -1 && c.techs.has('m_atomic') && !G.spectate) {
@@ -10437,6 +11340,7 @@ function confirmWar(tid) {
  showModal('Declare war on ' + t.name + '?', ws, [{t: 'Declare war', c: 'red', f: () => { declareWar(tid); SND.play('war'); setTimeout(() => SND.say(voiceFor({country: G.countries[G.player].key})), 1400); refreshAll(true); setTimeout(flushPending, 300); }}, {t: 'Cancel'}]);
 }
 function peaceDialog(eid) {
+ const pw = peaceWait(eid); if (pw > 0) { showModal('Too early for peace talks', `<p>Peace can only be negotiated after <b>3 turns</b> of war — <b>${pw}</b> more turn${pw > 1 ? 's' : ''} to go.</p><p class="muted">Historical events can still end a war sooner.</p>`, [{t: 'OK'}]); return; }
  const ws = warScore(G.player, eid); const e = G.countries[eid];
  const confirmP = (title, txt, mode, fail) => confirmBox(title, txt, 'Send envoy', 'gold', () => { if (!proposePeace(eid, mode)) toast(fail); refreshAll(true); });
  showModal('Peace with ' + e.name, `<p>War score: <b class="${ws >= 0 ? 'pos' : 'neg'}">${ws > 0 ? '+' : ''}${ws}</b></p><p class="muted">White peace returns all occupied land. Demanding occupied land needs a strong war score (≈25+) or their capital in your hands.</p>`,
@@ -11099,7 +12003,7 @@ function updateOverlay() {
    if (z > 1 || x < -50 || x > W + 50 || y < -20 || y > H + 20) continue;
    let e = UI.pool[used]; if (!e) { e = el('div', 'clabel'); box.appendChild(e); UI.pool.push(e); }
    used++;
-   const nm = (cl.cap ? '★ ' : '') + cl.name;
+   const nm = (cl.cap ? '★ ' : '') + (cl.ct ? cl.ct.name : cl.name);
    if (e._n !== nm) { e.textContent = nm; e._n = nm; }
    setCss(e, `transform:translate(${x}px,${y}px) translate(-50%,-100%);font-size:11px;letter-spacing:0;opacity:.95;font-family:Inter,sans-serif;font-weight:600;text-transform:none;color:#fff8e6`);
   }
@@ -11632,14 +12536,16 @@ function showPolitics() {
   return `<div class="pol-head"><div class="pol-gov"><div class="pol-big">${lawIcon(gov.id)}</div><div><small class="muted">Form of government</small><h3>${esc(gov.n)}</h3><p class="muted">${esc(gov.d)}</p></div></div>
    <div class="pol-tot"><small class="muted">Combined effect of our laws</small><div class="lfxs">${lawFxChips(tot) || '<span class="muted">none</span>'}</div>
    <div class="pol-strip">${LAWS.map(l => `<span class="pol-mini" title="${esc(l.n)}: ${esc(LAW_OPT[L[l.id]].n)}">${lawIcon(L[l.id])}<small>${esc(l.n)}</small></span>`).join('')}</div>
+   ${isPuppet(c.id) ? `<div class="pol-pup">⛓ We are a <b>puppet state</b> of ${esc((G.countries[overlordOf(c.id)] || {}).name || '?')}. Our laws follow our overlord's and cannot be changed until we win independence.</div>` : ''}
+   <div class="sup" title="People's support for the current order. Calm land and prosperity raise it; unrest, deficits, an empty treasury, long wars and reforms lower it. High support lifts GDP (up to +10%) and calms the land; low support drags GDP down and breeds unrest. But the higher it is, the more unrest a reform causes (up to +70 for a new government)."><div class="sup-l"><span>People's support</span><b>${Math.round(supportOf(c))}%</b></div><div class="sup-bar"><i style="width:${supportOf(c)}%"></i></div><div class="sup-fx">${(() => { const g = supportGdp(c), u = supportUnrest(c); return `<span class="lfx ${g >= 0 ? 'pos' : 'neg'}">${g >= 0 ? '+' : ''}${g}% GDP</span><span class="lfx ${u <= 0 ? 'pos' : 'neg'}">${u > 0 ? '+' : ''}${u.toFixed(1)}/turn Unrest</span>`; })()}<span class="muted"> · next turn: </span>${supportFactors(c).map(([n, v]) => `<span class="lfx ${v >= 0 ? 'pos' : 'neg'}">${v > 0 ? '+' : ''}${v} ${esc(n)}</span>`).join('')}</div><small class="muted">A new government now would add <b class="neg">+${lawUnrest(c, 'gov')} unrest</b> in every sector.</small></div>
    <small class="${cd ? 'warn' : 'muted'}">${cd ? `⏳ A reform was just enacted — no law can change for ${cd} more turn${cd > 1 ? 's' : ''}.` : 'Changing a law costs money and stirs unrest; afterwards no law can change for 2 turns.'} Army limit: <b>${armyLimit(c)}</b> land units.</small></div></div>
-   <div class="pol-cats">` + LAWS.map(cat => `<div class="pol-cat"><div class="pol-ch"><span class="pol-cic">${lawIcon(cat.id)}</span><b>${cat.n}</b><small class="muted">${esc(LAW_OPT[L[cat.id]].n)} · change: ${lawCost(c, cat.id)}M, +${cat.sp} unrest</small></div><div class="pol-opts">${cat.opts.map(o => { const on = L[cat.id] === o.id, err = on ? null : canEnact(c, o.id);
-     return `<button class="pol-o${on ? ' on' : ''}" data-law="${o.id}" ${on ? '' : err ? `disabled title="${esc(err)}"` : ''}><span class="pol-oi">${lawIcon(o.id)}</span><span class="pol-ob"><b>${esc(o.n)}${on ? ' <small class="gold-t">✓ in force</small>' : ''}</b><small class="muted">${esc(o.d)}</small><span class="lfxs">${lawFxChips(o.e) || '<span class="lfx muted">no effect</span>'}</span></span></button>`; }).join('')}</div></div>`).join('') + '</div>';
+   <div class="pol-cats">` + LAWS.map(cat => `<div class="pol-cat"><div class="pol-ch"><span class="pol-cic">${lawIcon(cat.id)}</span><b>${cat.n}</b><small class="muted">${esc(LAW_OPT[L[cat.id]].n)} · change: ${lawCost(c, cat.id)}M, +${lawUnrest(c, cat.id)} unrest</small></div><div class="pol-opts">${cat.opts.map(o => { const on = L[cat.id] === o.id, err = on ? null : canEnact(c, o.id);
+     return `<button class="pol-o${on ? ' on' : ''}" data-law="${o.id}" ${on ? '' : err ? `disabled title="${esc(err)}"` : ''}><span class="pol-oi">${lawIcon(o.id)}</span><span class="pol-ob"><b>${esc(o.n)}${on ? ' <small class="gold-t">✓ in force</small>' : ''}</b><small class="muted">${esc(o.d)}</small><span class="lfxs">${lawFxChips(o.e) || '<span class="lfx muted">no effect</span>'}${on || o.subject ? '' : `<span class="lfx neg" title="How far this is from our current law: opposite extremes cost up to 70% support">−${supportDrop(c, o.id)}% support</span>`}</span></span></button>`; }).join('')}</div></div>`).join('') + '</div>';
  };
  const box = showModal('Politics', render(), [{t: 'Close'}], () => refreshAll(true), true);
  box.classList.add('pol-modal');
  const bind = () => box.querySelectorAll('[data-law]').forEach(b => b.onclick = () => { const o = LAW_OPT[b.dataset.law]; if (lawsOf(c)[o.cat] === o.id) return; const cat = LAWS.find(l => l.id === o.cat);
-  confirmBox('Enact ' + o.n + '?', `<div class="pol-cf">${lawIcon(o.id)}</div><p>${esc(o.d)}</p><div class="lfxs">${lawFxChips(o.e)}</div><p>Cost: <b>${lawCost(c, o.cat)}M</b> · unrest +${cat.sp} in every sector · afterwards no law can change for ${LAW_CD} turns.</p>`, 'Enact', 'gold', () => { const e = enactLaw(o.id); if (e) toast(e); else { SND.play('fanfare'); toast('Law enacted: ' + o.n); } refreshAll(true); const bg = box.closest('.modal-bg'); if (bg) bg.remove(); showPolitics(); }); });
+  confirmBox('Enact ' + o.n + '?', `<div class="pol-cf">${lawIcon(o.id)}</div><p>${esc(o.d)}</p><div class="lfxs">${lawFxChips(o.e)}</div><p>Cost: <b>${lawCost(c, o.cat)}M</b> · unrest <b class="neg">+${lawUnrest(c, o.cat)}</b> in every sector · people's support <b class="neg">−${supportDrop(c, o.id)}%</b> (now ${Math.round(supportOf(c))}%) · afterwards no law can change for ${LAW_CD} turns.</p>${o.cat === 'gov' && typeof GOV_NAMES !== 'undefined' && GOV_NAMES[c.key] && GOV_NAMES[c.key][o.id] && o.id !== baseGov(c) ? `<p>The country will be known as the <b>${esc(GOV_NAMES[c.key][o.id])}</b>.</p>` : ''}`, 'Enact', 'gold', () => { const e = enactLaw(o.id); if (e) toast(e); else { SND.play('fanfare'); toast('Law enacted: ' + o.n); } refreshAll(true); const bg = box.closest('.modal-bg'); if (bg) bg.remove(); showPolitics(); }); });
  bind();
 }
 
@@ -11738,37 +12644,36 @@ function tutSteps() {
  const K = TUT.k, P = G.player, c = G.countries[P];
  const closeOnly = () => ['.modal .m-f .btn', '.modal .x'];
  const S = [];
- S.push({title: 'Welcome to Emperor\'s Cabin', next: true, text: `You are about to rule the <b>German Empire</b> in January 1900. This lesson walks you through everything you need: the map, your economy, research, trade, armies, war, diplomacy and the navy.<br><br>Follow the <span class="tut-gold">gold instructions</span>. Until each step is done, every other button, key and map order is <b>locked</b>.`});
+ S.push({title: 'Welcome to Emperor\'s Cabin', next: true, text: `You are about to rule the <b>German Empire</b> in January 1900. This lesson covers every part of the game: the map and camera, the top bar, national spirits, building, the economy and trade, research, armies and revolts, politics and laws, diplomacy and factions, war and the war summary, peace, the navy, the chronicle and the Esc menu.<br><br>Follow the <span class="tut-gold">gold instructions</span>. Until each step is done, every other button, key and map order is <b>locked</b>.`});
  S.push({title: 'The camera', next: true, text: `Move around the world:<ul><li><b>Left-drag</b> to pan</li><li><b>Right-drag</b> to rotate and tilt</li><li><b>Scroll</b> to zoom — cities, forests, farms and factories appear in 3D</li><li><b>W A S D</b> or the arrow keys also pan</li></ul>Try it now, then press <b>Next</b>.`});
- S.push({title: 'Your realm at a glance', next: true, spot: () => '#tb', text: `The top bar shows the state of the nation: the <b>flag</b> and historical name, the <b>date</b> (each turn is three months), the <b>treasury</b> and its change per turn, <b>GDP</b>, <b>population</b>, military <b>supplies</b>, <b>research</b> points per turn, the <b>tax rate</b>, naval power and average <b>unrest</b>. Names and flags change with history — Prussia becomes the German Empire, Joseon the Korean Empire.`});
+ S.push({title: 'Your realm at a glance', next: true, spot: () => '#tb', text: `The top bar shows the state of the nation. On the left: the <b>flag</b>, the historical name, the <b>date</b> (each turn is three months) and badges for our <b>faction</b> — or a puppet's independence. Then six cards:<ul><li><b>Treasury</b> and its change per turn</li><li><b>GDP</b> and the tax rate</li><li><b>Population</b> and average unrest (⚑ = sectors in revolt)</li><li><b>Army</b> — men under arms, 1,000 per unit — and naval power</li><li><b>Supplies</b> and their change</li><li><b>Research</b> points per turn</li></ul>Hover any card for details. A ⚠ chip warns of shortages.`});
+ S.push({title: 'The command bar', next: true, spot: () => '#menu', text: `Every window opens from here (hotkeys in brackets):<ul><li>🔬 <b>Tech</b> (T) — the technology tree</li><li>💰 <b>Economy</b> (E) — taxes, goods and the <b>Trade</b> tab (R)</li><li>🏛 <b>Politics</b> (P) — the laws of the land</li><li>⚔ <b>Military</b> (M) — forces and the <b>War Summary</b> tab (X)</li><li>🕊 <b>Diplomacy</b> (G) — with <b>Factions</b> (U) and <b>World Rankings</b> (K) tabs</li><li>📜 <b>Chronicle</b> — events and dispatches</li></ul><b>Map</b> switches the map between political, terrain, unrest and economy views; ★ jumps to the capital.`});
  S.push({title: 'National spirits', spot: () => '#spirits', allow: () => ['#spirits'], done: () => modalOpen('National spirits'),
   text: `Below the top bar are our <b>national spirits</b> — temporary traits from our moment in history. Germany in 1900 is gripped by <b>Weltpolitik</b> (the Kaiser's quest for colonies and a great fleet) and the <b>Scramble for Africa</b>.<br><br>Hover an icon for details, then click the <span class="tut-gold">spirits bar</span>.`});
  S.push({title: 'How spirits work', spot: () => '.modal .sp-card', allow: () => ['.modal .m-f .btn', '.modal .x'], done: () => !anyModal(),
   text: `Each spirit has <span class="pos">good</span> and <span class="neg">bad</span> effects (green, red or gold borders show the balance) and <b>ends on its own</b>: when its era passes, its time runs out, or its conditions stop. Some belong to one nation — the Meiji <b>Beautiful Restoration</b>, Korea's <b>Hermit Kingdom</b>, Napoleon's <b>Grande Armée</b>. Others any nation can earn: <b>Industrial Revolution</b> (research railways), <b>Sphere of Influence</b> (lead a big union), <b>Victory Euphoria</b>, <b>War Weariness</b>… A few can be ended early by decree.<br><br>Close the window to continue.`});
  S.push({title: 'Select your capital', mark: () => K.cap, enter: () => { const s = G.sectors[K.cap]; focusOn(s.lon, s.lat, 32); }, map: {sector: sid => sid === K.cap}, done: () => G.sel === K.cap,
   text: `Click <b>${sname(K.cap)}</b>, your capital, on the map — look for the pulsing gold marker.`});
- S.push({title: 'The sector panel', next: true, spot: () => '#side', text: `Every land sector shows its terrain, population, unrest and buildings here. The terrain decides what can be built and how many units fit (2–4 slots). ${sname(K.cap)} has a <b>Military Base</b>, so troops can be recruited here.`});
+ S.push({title: 'The sector panel', next: true, spot: () => '#side', text: `Every land sector shows its terrain, population, unrest and buildings here. The terrain decides what can be built and how many units fit (2–4 slots). ${sname(K.cap)} has a <b>Military Base</b>, so troops can be recruited here. Click a foreign sector and this panel shows that nation's <b>government</b> and laws as well.`});
  if (K.farm !== K.cap) S.push({title: 'Choose a farming sector', mark: () => K.farm, enter: () => { const s = G.sectors[K.farm]; focusOn(s.lon, s.lat, 32); }, map: {sector: sid => sid === K.farm}, done: () => G.sel === K.farm, text: `Click <b>${sname(K.farm)}</b> — good farmland.`});
  S.push({title: 'Build a farm', spot: () => '#side [data-b="farm"]', allow: () => ['#side [data-b="farm"]'], modal: true, map: {sector: sid => sid === K.farm}, done: () => G.sectors[K.farm].q.some(q => q.b === 'farm'),
-  text: `Farms grow grain on plains, hills and jungle; wood workshops, mines and factories produce timber, ore and military supplies. Surplus goods are sold to your trade partners.<br><br>Click <span class="tut-gold">Farm</span> to begin construction. Buildings take a few turns and cost upkeep every turn.`});
+  text: `Farms grow grain on plains, hills and jungle; wood workshops, mines and factories produce timber, ore and military supplies. Special buildings — a <b>Military Base</b>, <b>Dockyard</b>, <b>Airport</b>, <b>Radar Station</b> and <b>University</b> (+6% research each, one per sector) — take no building slot. Surplus goods are sold to your trade partners.<br><br>Click <span class="tut-gold">Farm</span> to begin construction. Buildings take a few turns and cost upkeep every turn.`});
  S.push({title: 'Open the economy', spot: () => '#bEco', allow: () => ['#bEco'], done: () => modalOpen('Economy'), text: `Your money comes from <b>taxes</b>. Click the <span class="tut-gold">💰 Economy</span> button.`});
  S.push({title: 'Taxes and research', next: true, spot: () => '.modal #taxR', allow: () => ['.modal #taxR', '.modal #resR', '#bEco'], text: `<b>Tax rate:</b> more tax means more money — but above 12% unrest rises, most of all in conquered, colonial and remote provinces. Above 60% unrest a sector may rebel.<br><br><b>Research budget:</b> the share of taxes spent on technology.<br><br>Try the sliders, then press <b>Next</b>.`});
+ S.push({title: 'Trade', spot: () => '.modal .m-tab[data-tab="trade"]', allow: () => ['.modal .m-tab[data-tab="trade"]'], done: () => modalOpen('Trade'), text: `Trade turns surplus goods into money. The Economy window has a <span class="tut-gold">🚢 Trade</span> tab — open it.`});
+ S.push({title: 'Propose a trade agreement', spot: () => '.modal [data-prop]', allow: () => ['.modal [data-prop]'], done: () => tradeUsed(), text: `Tick which goods to export and import — military supplies are exported by default. Each partner opens its market to us, and trading partners stay visible through the fog of war. Click <span class="tut-gold">propose</span> next to any nation — you may propose <b>one agreement per turn</b>.`});
  S.push({title: 'Close the window', spot: () => '.modal .m-f .btn', allow: closeOnly, done: () => !anyModal(), text: `Close the Economy window.`});
  S.push({title: 'Open the technology tree', spot: () => '#bTech', allow: () => ['#bTech'], enter: () => { TUT.snap.res = Object.values(c.research).filter(Boolean).length; }, done: () => modalOpen('Technology'), text: `Technology raises GDP, population growth and construction speed, and unlocks better units. Click <span class="tut-gold">🔬 Tech</span>.`});
  S.push({title: 'Choose a research project', spot: () => '.modal .tn.can', modal: true, allow: () => ['#bTech'], done: () => Object.values(c.research).filter(Boolean).length > TUT.snap.res,
-  text: `There are five trees: <b>Civil</b>, <b>Military</b>, <b>Navy</b>, <b>Air Force</b> (unlocked by Powered Flight) and <b>Science</b>. Military and naval inventions depend on civil ones — tanks need the gasoline engine.<br><br>Click any glowing technology, then press <span class="tut-gold">Research</span>. You can run one project per tree at a time.`});
+  text: `There are five trees: <b>Civil</b>, <b>Military</b>, <b>Navy</b>, <b>Air Force</b> (unlocked by Powered Flight) and <b>Science</b>. Military and naval inventions depend on civil ones — tanks need the gasoline engine. Researching a technology <b>ahead of its time</b> (its year is still in the future) goes at <span class="neg">half speed</span>.<br><br>Click any glowing technology, then press <span class="tut-gold">Research</span>. You can run one project in every tree at once.`});
  S.push({title: 'Close the window', spot: () => '.modal .m-f .btn', allow: closeOnly, done: () => !anyModal(), text: `Close the technology tree. When a newer rifle or cannon is researched, your existing regiments are refitted for free — but warships are not.`});
- S.push({title: 'Economy', spot: () => '#bEco', allow: () => ['#bEco'], done: () => modalOpen('Economy') || modalOpen('Trade'), text: `Trade turns surplus goods into money. Click <span class="tut-gold">💰 Economy</span>.`});
- S.push({title: 'Trade', spot: () => '.modal .m-tab[data-tab="trade"]', allow: () => ['.modal .m-tab[data-tab="trade"]'], done: () => modalOpen('Trade'), text: `The Economy window has a <span class="tut-gold">🚢 Trade</span> tab. Open it.`});
- S.push({title: 'Propose a trade agreement', spot: () => '.modal [data-prop]', allow: () => ['.modal [data-prop]'], done: () => tradeUsed(), text: `Choose export and import goods here. Each partner opens its market to you. Click <span class="tut-gold">propose</span> next to any nation — you may propose <b>one agreement per turn</b>, and they may say no.`});
- S.push({title: 'Close the window', spot: () => '.modal .m-f .btn', allow: closeOnly, done: () => !anyModal(), text: `Close the Trade window. Trading partners also stay visible through the fog of war.`});
  S.push({title: 'Select an army', mark: () => K.cap, enter: () => { const s = G.sectors[K.cap]; focusOn(s.lon, s.lat, 26); selectUnits([]); }, allow: () => ['#side [data-u]', '#side #selAll'], map: {sector: sid => sid === K.cap, unit: uid => { const u = G.units.find(x => x.id === uid); return u && u.o === P; }}, done: () => (G.selUnits || []).length > 0,
   text: `Click one of your <b>regiments</b> standing in ${sname(K.cap)} (or click the sector and pick a unit in the panel). Shift-click adds more; double-click selects the whole stack.`});
  S.push({title: 'March!', enter: () => { TUT.snap.pos = G.units.filter(u => u.o === P).map(u => u.id + ':' + u.s).join(); }, allow: () => ['#side [data-u]', '#side #selAll'], map: {sector: sid => sid === K.cap, unit: uid => { const u = G.units.find(x => x.id === uid); return u && u.o === P; }, order: sid => R.highlights[sid] === 'move' && !G.sectors[sid].w}, done: () => G.units.filter(u => u.o === P).map(u => u.id + ':' + u.s).join() !== TUT.snap.pos,
   text: `<span class="pos">Green</span> sectors are where the selection can move this turn (most units move one sector; cavalry and armour two). Click a <b>green sector</b> to march there.`});
  S.push({title: 'Back to the capital', mark: () => K.cap, map: {sector: sid => sid === K.cap}, done: () => G.sel === K.cap && !(G.selUnits || []).length, enter: () => selectUnits([]), text: `Click <b>${sname(K.cap)}</b> again to open its panel.`});
  S.push({title: 'Recruit a regiment', spot: () => landRecSel(), allow: () => [landRecSel()], modal: true, map: {sector: sid => sid === K.cap}, enter: () => { TUT.snap.n = G.units.filter(u => u.o === P).length; }, done: () => G.units.filter(u => u.o === P).length > TUT.snap.n,
-  text: `Units are raised at military bases. Better units cost more money, upkeep and <b>supplies</b> — without supplies, wounded units do not heal. Click a <span class="tut-gold">recruit</span> button.`});
+  text: `Units are raised at military bases. Each regiment takes <b>1,000 men</b> from the population; better units cost more money, upkeep and <b>supplies</b> — without supplies, wounded units do not heal. Our <b>conscription law</b> caps the size of the army. Click a <span class="tut-gold">recruit</span> button.`});
  S.push({title: 'Revolt!', mark: () => K.revolt,
   enter: () => { const s = G.sectors[K.revolt]; if (!s) return; G.units = G.units.filter(u => u.s !== s.id); s.unrest = 75; const r = spawnRebels(s, 1); r.forEach(u => u.hp = 12); for (const u of G.units) if (u.o === P && u.s === K.cap) u.mv = UNITS[u.t].mv; logMsg(`Rebellion! Rebels have seized ${s.name}.`, 'bad'); SND.play('alarm'); focusOn(s.lon, s.lat, 30); updateVisibility(); refreshAll(true); },
   allow: () => ['#side [data-u]', '#side #selAll'], map: {sector: sid => sid === K.cap || sid === K.revolt, unit: uid => { const u = G.units.find(x => x.id === uid); return u && u.o === P; }, order: sid => sid === K.revolt},
@@ -11776,24 +12681,28 @@ function tutSteps() {
   done: () => G.sectors[K.revolt] && G.sectors[K.revolt].ctrl === P,
   text: `High unrest has turned to rebellion in <b>${sname(K.revolt)}</b>! Select your troops in ${sname(K.cap)} and click the <span class="neg">red</span> sector to attack and crush the revolt.`});
  S.push({title: 'End the turn', spot: () => '#endTurn', allow: () => ['#endTurn'], modal: true, keys: ['enter'], enter: () => { TUT.snap.turn = G.turn; }, done: () => G.turn > TUT.snap.turn && !anyModal() && !UI.busy,
-  text: `Press <span class="tut-gold">End Turn</span>. Three months pass: research advances, buildings rise, other nations act and wounded units heal. Read the dispatches, then continue.`});
+  text: `Press <span class="tut-gold">End Turn</span> (or Enter). Three months pass: research advances, buildings rise, other nations act and wounded units heal. Read the dispatches, then continue.`});
+ S.push({title: 'Politics', spot: () => '#bPol', allow: () => ['#bPol'], done: () => modalOpen('Politics'), text: `How the country is governed matters. Click <span class="tut-gold">🏛 Politics</span>.`});
+ S.push({title: 'Laws', spot: () => '.modal .pol-head', allow: closeOnly, done: () => !anyModal(), text: `Seven laws — <b>government</b>, <b>conscription</b>, <b>borders</b>, <b>education</b>, <b>racial law</b>, <b>economy</b> and <b>press</b> — shape research, GDP, taxes, unrest, population growth and combat. Each card lists its effects; the box at the top adds them up.<ul><li>Conscription sets the <b>army limit</b>.</li><li>A <b>Closed Market</b> bans all foreign trade.</li><li>War Economy and Last Man Standing only exist in wartime.</li><li>A reform costs money, and afterwards <b>no law can change for 2 turns</b>.</li><li>The <b>people's support</b> bar: high support lifts GDP and calms the land, low support does the opposite. It falls with unrest, deficits and long wars — and the higher it is, the more unrest a reform causes (up to +70).</li></ul>Every nation starts with its historical laws, and AI nations follow history as it unfolds. Close the window to continue.`});
  S.push({title: 'Diplomacy', spot: () => '#bDip', allow: () => ['#bDip'], done: () => modalOpen('Diplomacy'), text: `Click <span class="tut-gold">🕊 Diplomacy</span>.`});
  S.push({title: 'Friends, rivals and puppets', next: true, spot: () => '.modal table.tt', allow: () => ['#bDip'], text: `Every known nation has <b>relations</b> with you. Refusing demands, attacking others and <b>infamy</b> make enemies; trade and gifts make friends. Hostile, stronger nations may declare war.<br><br><b>⛓ Puppets:</b> you can demand that a weaker nation become your puppet — it pays tribute and fights in your wars. If you are ever a puppet yourself, this window lets you fight for independence.`});
  S.push({title: 'Factions', spot: () => '.modal .m-tab[data-tab="union"]', allow: () => ['.modal .m-tab[data-tab="union"]'], done: () => modalOpen('Factions'), text: `The Diplomacy window has tabs. Open <span class="tut-gold">🛡 Factions</span>.`});
- S.push({title: 'Alliances', spot: () => '.modal .m-b', allow: () => ['.modal .m-tab[data-tab="rank"]'], done: () => modalOpen('World rankings'), text: `A <b>faction</b> is an alliance. Germany already belongs to the <b>Triple Alliance</b>. When a member goes to war, the others are called to arms — they may join, refuse, or even leave. Puppet states automatically join their overlord's faction. You can found your own faction and invite nations, or ask to join another faction (one request per turn). Leagues such as the League of Nations are listed separately.<br><br>Close the window when you have read it. Then open the <span class="tut-gold">🏆 World Rankings</span> tab.`});
+ S.push({title: 'Alliances', spot: () => '.modal .m-b', allow: () => ['.modal .m-tab[data-tab="rank"]'], done: () => modalOpen('World rankings'), text: `A <b>faction</b> is an alliance. Germany already belongs to the <b>Triple Alliance</b>. When a member goes to war, the others are called to arms — they may join, refuse, or even leave. Our puppets always follow us into war, but helping a lot raises their wish for independence. You can found your own faction, invite nations or ask to join another (one request per turn).<br><br>Now open the <span class="tut-gold">🏆 World Rankings</span> tab.`});
  S.push({title: 'Rankings', spot: () => '.modal .rank-tabs', allow: () => [...closeOnly(), '.modal [data-rk]'], done: () => !anyModal(), text: `Sort by GDP, power, population, army or size. Nations hidden in the <b>fog of war</b> keep their place, but their names and numbers stay secret. Close the window to continue.`});
- S.push({title: 'Politics', spot: () => '#bPol', allow: () => ['#bPol'], done: () => modalOpen('Politics'), text: `Click <span class="tut-gold">🏛 Politics</span>.`});
- S.push({title: 'Laws', spot: () => '.modal .m-b', allow: closeOnly, done: () => !anyModal(), text: `Your <b>laws</b> — government, conscription, borders, education, racial law, economy and press — shape research, the economy, unrest and population growth. Conscription also caps the size of the army. Changing a law costs money and stirs unrest, and each law can only change every few turns. Close the window to continue.`});
  S.push({title: 'A tempting target', mark: () => K.luxCap, enter: () => { const s = G.sectors[K.luxCap]; if (s) focusOn(s.lon, s.lat, 28); selectUnits([]); }, map: {sector: sid => G.sectors[sid] && G.sectors[sid].o === K.lux}, done: () => G.sel && G.sectors[G.sel].o === K.lux,
-  text: `Tiny <b>Luxembourg</b> lies on our western border. Click it on the map.`});
+  text: `Tiny <b>Luxembourg</b> lies on our western border. Click it on the map — the panel will show its government and laws.`});
  S.push({title: 'Declare war', spot: () => '#side [data-war]', allow: () => ['#side [data-war]'], modal: true, map: {sector: sid => G.sectors[sid] && G.sectors[sid].o === K.lux}, done: () => atWar(P, K.lux),
   onDone: () => { G.units = G.units.filter(u => u.o !== K.lux); for (const u of G.units) if (u.o === P && u.s === K.border) u.mv = UNITS[u.t].mv; refreshAll(true); },
-  text: `You can declare war on any nation you can see. War raises <b>infamy</b> and angers its neighbours — and its allies may join in. Click <span class="tut-gold">⚔ Declare war</span> and confirm.`});
+  text: `You can declare war on any nation you can see. War raises <b>infamy</b> and angers its neighbours — and its allies may join in. Peace can be negotiated from the panel <b>3 turns</b> after a war begins (a nation with no land left may surrender sooner, and historical events can end wars at any time). Click <span class="tut-gold">⚔ Declare war</span> and confirm.`});
  S.push({title: 'Invade', mark: () => K.border, enter: () => { const s = G.sectors[K.border]; if (s) focusOn(s.lon, s.lat, 26); }, allow: () => ['#side [data-u]', '#side #selAll'],
   map: {sector: sid => sid === K.border || (G.sectors[sid] && G.sectors[sid].o === K.lux), unit: uid => { const u = G.units.find(x => x.id === uid); return u && u.o === P; }, order: sid => G.sectors[sid] && G.sectors[sid].o === K.lux},
   tick: () => { if (G.sectors[K.luxCap] && G.sectors[K.luxCap].ctrl !== P && !G.units.some(u => u.o === P && u.mv > 0 && G.sectors[u.s].n.includes(K.luxCap))) for (const u of G.units) if (u.o === P && G.sectors[u.s].n.includes(K.luxCap)) u.mv = UNITS[u.t].mv; },
   done: () => G.sectors[K.luxCap] && G.sectors[K.luxCap].ctrl === P,
   text: `Select your regiments in <b>${sname(K.border)}</b> and move them into <b>${sname(K.luxCap)}</b>, Luxembourg's capital. Entering an undefended enemy sector occupies it.`});
+ S.push({title: 'The Military window', spot: () => '#bMil', allow: () => ['#bMil'], done: () => modalOpen('Military'), text: `Let us review the war. Click <span class="tut-gold">⚔ Military</span>.`});
+ S.push({title: 'Our forces', next: true, spot: () => '.modal .m-b', allow: () => ['#bMil'], text: `The <b>Forces</b> tab lists every army, squadron and fleet (click one to fly there), our bases, supplies and the army limit set by conscription. Later, with the <b>Atomic Bomb</b>, an arsenal appears here: bombs are built one at a time and stored — better nuclear technology builds them faster and stores up to 12.`});
+ S.push({title: 'War summary', spot: () => '.modal .m-tab[data-tab="wars"]', allow: () => ['.modal .m-tab[data-tab="wars"]'], done: () => modalOpen('War summary'), text: `Open the <span class="tut-gold">📊 War Summary</span> tab.`});
+ S.push({title: 'Losses and costs', spot: () => '.modal .m-b', allow: closeOnly, done: () => !anyModal(), text: `Every war — ongoing and finished — with its sides, men lost on each side and what it has cost. Wars hidden by the fog of war show <b>???</b>. Close the window to continue.`});
  S.push({title: 'Await their answer', spot: () => '#endTurn', allow: () => ['#endTurn'], modal: true, keys: ['enter'], done: () => modalOpen('Surrender request') || !atWar(P, K.lux),
   text: `With their capital in our hands, the enemy will likely ask to surrender. Press <span class="tut-gold">End Turn</span>.`});
  S.push({title: 'Accept their surrender', allow: () => ['.modal [data-sv="1"]', '.modal [data-sv="2"]', '.modal .m-f .btn'], done: () => !atWar(P, K.lux) && !anyModal(),
@@ -11802,7 +12711,10 @@ function tutSteps() {
   text: `Warships are built at <b>Dockyards</b>. Click <b>${sname(K.dock)}</b>.`});
  S.push({title: 'Lay down a warship', spot: () => shipSel(), allow: () => [shipSel()], modal: true, map: {sector: sid => sid === K.dock}, enter: () => { TUT.snap.sq = (G.sectors[K.dock].sq || []).length; }, done: () => (G.sectors[K.dock].sq || []).length > TUT.snap.sq,
   text: `Ships take several turns to build and appear in the neighbouring sea zone. At sea they carry two regiments each, bombard coasts and blockade trade. Click a <span class="tut-gold">ship</span> button to lay one down.`});
- S.push({title: 'Saving and settings', next: true, spot: () => '#bSave, #bSnd, #bHelp', text: `<b>💾</b> opens Save &amp; load: three save slots plus a yearly autosave, compressed in this browser, and export/import to a file, <b>🔊</b> opens music, effects and ruler-voice settings, and <b>?</b> is the full guide. History unfolds around you: when it reaches your nation — a revolution, a purchase, an ultimatum — <b>you</b> decide, and wars may last longer than they did in reality.`});
+ S.push({title: 'The chronicle', next: true, spot: () => '#bLog', text: `<b>📜 Chronicle</b> keeps every event of the game, and the <b>dispatches</b> filed after each turn. History unfolds around you: when it reaches your nation — a revolution, a purchase, an ultimatum — <b>you</b> decide. Cities are renamed as rulers change (Edo becomes Tokyo, St. Petersburg becomes Petrograd), and some events play their historic music.`});
+ S.push({title: 'The Esc menu', enter: () => { selectUnits([]); selectSector(null); }, keys: ['escape'], done: () => modalOpen('Menu'), text: `Press <span class="tut-gold">Esc</span> with nothing selected to open the game menu.`});
+ S.push({title: 'Settings', spot: () => '.modal #pmSettings', allow: () => ['.modal #pmSettings'], done: () => modalOpen('Settings'), text: `From here you can resume, save, or go back to the main menu. Click <span class="tut-gold">⚙ Settings</span>.`});
+ S.push({title: 'Graphics and sound', spot: () => '.modal .gfx-opts', allow: () => [...closeOnly(), '.modal .gfx-o', '.modal #setSeq', '.modal #setDisp'], done: () => !anyModal(), text: `<b>Graphics quality:</b> High, Medium or Low — lower settings use simpler buildings, fewer trees and a lower resolution for older computers. Your choice is remembered. Sound, music and the turn replay are set here too.<br><br>The small buttons next to the map menu: <b>💾</b> save &amp; load (three slots, a yearly autosave, export to a file), <b>🔊</b> sound, <b>?</b> the full guide. Close the window to finish.`});
  S.push({title: 'You are ready to rule', finish: true, text: `That's everything you need. You can keep playing this German Empire — history switches back on — or return to the main menu and choose any nation in 1800 or 1900.`});
  return S;
 }
@@ -11836,7 +12748,7 @@ function tutAdvance() {
  tutGo(TUT.i + 1);
 }
 function endTutorial(keep) {
- TUT.on = false; if (TUT.box) TUT.box.remove(); if (TUT.mark) TUT.mark.remove(); TUT.box = TUT.mark = null;
+ TUT.on = false; document.body.classList.remove('tut-dock'); if (TUT.box) TUT.box.remove(); if (TUT.mark) TUT.mark.remove(); TUT.box = TUT.mark = null;
  for (const r of TUT.rings) r.remove(); TUT.rings = [];
  if (!keep) { location.reload(); return; }
  G.tutorial = false; closeModals();
@@ -11886,6 +12798,11 @@ window.addEventListener('keydown', e => {
  e.stopPropagation(); e.preventDefault();
 }, true);
 // highlight rings, map marker and step completion
+// only targets actually on screen (not scrolled out of a window's view)
+function tutVisible(list) {
+ return list.filter(e => { if (e.offsetParent === null) return false; const r = e.getBoundingClientRect(); const cx = (r.left + r.right) / 2, cy = (r.top + r.bottom) / 2; if (cx < 0 || cy < 0 || cx > innerWidth || cy > innerHeight) return false;
+  const sc = e.closest('.modal .m-b, .modal .scroll, .modal .tt-wrap'); if (sc) { const q = sc.getBoundingClientRect(); if (cx < q.left || cx > q.right || cy < q.top || cy > q.bottom) return false; } return true; });
+}
 function tutSectorScreen(sid) {
  const s = G.sectors[sid]; if (!s) return null;
  const v = new R.T.Vector3(wx(s.lon), landHeight(s.lon, s.lat) + 0.6, wz(s.lat)).project(R.camera);
@@ -11899,7 +12816,7 @@ function tutSectorScreen(sid) {
  const st = TUT.steps[TUT.i]; if (!st) return;
  // rings around the target elements
  let els = [];
- if (st.spot) { try { els = [...document.querySelectorAll(st.spot())].filter(e => e.offsetParent !== null).slice(0, 4); } catch (e) {} }
+ if (st.spot) { try { els = tutVisible([...document.querySelectorAll(st.spot())]).slice(0, 4); } catch (e) {} }
  while (TUT.rings.length < els.length) { const r = el('div', 'tut-ring'); document.body.appendChild(r); TUT.rings.push(r); }
  TUT.rings.forEach((r, i) => { const e = els[i]; if (!e) { r.style.display = 'none'; return; } const b = e.getBoundingClientRect(); r.style.display = 'block'; r.style.left = (b.left - 5) + 'px'; r.style.top = (b.top - 5) + 'px'; r.style.width = (b.width + 10) + 'px'; r.style.height = (b.height + 10) + 'px'; });
  // marker over a map sector
@@ -11910,16 +12827,32 @@ function tutSectorScreen(sid) {
 function tutPlace() {
  if (!TUT.on || !TUT.box) return;
  const st = TUT.steps[TUT.i]; if (!st) return;
+ const W = innerWidth, H = innerHeight, B = document.body;
+ // with a window open, the guide docks beside it and the window makes room, so nothing is ever covered
+ const modal = document.querySelector('.modal-bg:last-child .modal');
+ if (modal) {
+  B.classList.add('tut-dock');
+  if (W >= 1100) { TUT.box.style.width = '330px'; B.style.setProperty('--tutR', '360px'); B.style.setProperty('--tutB', '0px'); TUT.box.style.left = (W - 344) + 'px'; TUT.box.style.top = '78px'; TUT.box.style.maxHeight = (H - 92) + 'px'; }
+  else { const bw = Math.min(W - 20, 620); TUT.box.style.width = bw + 'px'; TUT.box.style.maxHeight = Math.round(H * 0.34) + 'px'; const bh = TUT.box.offsetHeight; B.style.setProperty('--tutR', '0px'); B.style.setProperty('--tutB', (bh + 16) + 'px'); TUT.box.style.left = Math.round((W - bw) / 2) + 'px'; TUT.box.style.top = (H - bh - 8) + 'px'; }
+  return;
+ }
+ B.classList.remove('tut-dock'); B.style.setProperty('--tutR', '0px'); B.style.setProperty('--tutB', '0px');
+ TUT.box.style.width = (W < 760 ? Math.min(W - 20, 330) : 330) + 'px'; TUT.box.style.maxHeight = (H - 92) + 'px';
  let els = [];
  if (st.spot) { try { els = [...document.querySelectorAll(st.spot())].filter(e => e.offsetParent !== null).slice(0, 4); } catch (e) {} }
- // keep the guide box clear of what it points at: try each corner, take the first that overlaps nothing
-  const bw = TUT.box.offsetWidth, bh = TUT.box.offsetHeight, W = innerWidth, H = innerHeight;
-  const rects = els.map(e => e.getBoundingClientRect());
-  const ui = ['#side', '#endTurn'].map(q => document.querySelector(q)).filter(e => e && e.offsetParent !== null && e.offsetHeight > 0).map(e => e.getBoundingClientRect());
-  const cands = [[14, 96], [14, H - bh - 14], [W - bw - 14, H - bh - 96], [W - bw - 14, 64]];
-  const hit = (x, y, list) => list.some(r => x < r.right + 8 && x + bw > r.left - 8 && y < r.bottom + 8 && y + bh > r.top - 8);
-  const pick = cands.find(([x, y]) => !hit(x, y, rects) && !hit(x, y, ui)) || cands.find(([x, y]) => !hit(x, y, rects)) || cands[0];
-  TUT.box.style.left = pick[0] + 'px'; TUT.box.style.top = pick[1] + 'px';
+ // otherwise: try spots around the screen and take the first that covers no target, panel or map marker
+ const bw = TUT.box.offsetWidth, bh = TUT.box.offsetHeight;
+ const rects = els.map(e => e.getBoundingClientRect());
+ const vis = e => e && e.offsetParent !== null && e.offsetHeight > 0 && getComputedStyle(e).display !== 'none';
+ const ui = ['#side', '#endTurn', '#feed', '#spirits', '#warbar', '#ubar', '.ev-popup', '#actorBanner'].map(q => document.querySelector(q)).filter(vis).map(e => e.getBoundingClientRect());
+ const sid = st.mark && st.mark(); const mp = sid ? tutSectorScreen(sid) : null;
+ if (mp) ui.push({left: mp.x - 70, right: mp.x + 70, top: mp.y - 90, bottom: mp.y + 40});
+ const top = 76, xs = [14, Math.round((W - bw) / 2), W - bw - 14], ys = [top + 44, Math.round((H - bh) / 2), H - bh - 14];
+ const cands = []; for (const y of ys) for (const x of xs) cands.push([x, Math.max(top, y)]);
+ const area = (x, y, list) => list.reduce((a, r) => a + Math.max(0, Math.min(x + bw, r.right + 8) - Math.max(x, r.left - 8)) * Math.max(0, Math.min(y + bh, r.bottom + 8) - Math.max(y, r.top - 8)), 0);
+ let best = null, bs = Infinity;
+ for (const [x, y] of cands) { const sc = area(x, y, rects) * 4 + area(x, y, ui); if (sc < bs) { bs = sc; best = [x, y]; } if (sc === 0) break; }
+ TUT.box.style.left = best[0] + 'px'; TUT.box.style.top = best[1] + 'px';
 }
 // step logic runs on a timer so it never depends on the frame rate
 setInterval(() => {
