@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Chem Saver</title>
@@ -899,7 +900,7 @@ function render(){
  if(view==='learn')body=viewLearn();else if(view==='practice')body=viewPractice();else if(view==='friends')body=viewFriends();else if(view==='shop')body=viewShop();else body=viewProfile();
  $('#app').innerHTML=topBar()+body+navBar();
 }
-const unlocked=l=>l.idx===0||(l.li===0&&l.unit.section&&!(UNITS[l.ui-1]||{}).section)||!!me.done[LESSONS[l.idx-1].id];
+const unlocked=l=>true; // all lessons open
 function viewLearn(){
  const cur=LESSONS.find(l=>!me.done[l.id]&&unlocked(l));
  let h=`<div class="subj"><span class="pill">📚 ${SUBJECT.name}</span><span class="pill">${SUBJECT.chapter}</span><span class="pill">⚛️ ${SUBJECT.topic}</span></div>`;
