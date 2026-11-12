@@ -304,8 +304,9 @@ table.rank td,table.rank th{padding:4px 8px}
 .recb.old{opacity:.72;border-style:dashed}.mini.oldtg{align-self:flex-start;margin-top:2px}
 .tabs{display:flex;gap:6px;align-items:center;margin-bottom:8px;flex-wrap:wrap}.disp-old{border-top:1px solid var(--line);padding:6px 0}.disp-old h4{margin:2px 0 4px;color:var(--gold,#d9b45a)}
 body.spectating #bTech,body.spectating #bEco,body.spectating #bMil,body.spectating #bDip,body.spectating #bUnion,body.spectating #bPol,body.spectating #bCap,body.spectating #spirits{display:none!important}
-#mpBar{position:fixed;top:64px;left:50%;transform:translateX(-50%);z-index:40;background:rgba(20,22,28,.94);border:1px solid var(--gold,#d9b45a);border-radius:8px;padding:5px 12px;font-size:13px;color:#eadfc4;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.4)}
-#mpBar .mini{margin-left:6px}.mp-dot{background:#c0392b;color:#fff;border-radius:8px;padding:0 5px;font-size:11px}
+#mpBar{position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:40;background:rgba(20,22,28,.94);border:1px solid var(--gold,#d9b45a);border-radius:8px;padding:5px 12px;font-size:13px;color:#eadfc4;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+#mpBar .mini{margin-left:6px}#mpBar{text-align:center;max-width:calc(100vw - 40px);white-space:normal}#mpBar.flash{animation:mpFlash 1.2s ease-out}@keyframes mpFlash{0%{box-shadow:0 0 0 3px rgba(214,178,94,.9)}100%{box-shadow:0 4px 14px rgba(0,0,0,.4)}}
+.mp-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;margin-top:4px}.mp-chip{font-size:11px;padding:2px 7px;border-radius:10px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);white-space:nowrap}.mp-chip small{margin-left:4px;opacity:.65}.mp-chip.play{border-color:var(--gold,#d6b25e);background:rgba(214,178,94,.2);color:#f4e4b8}.mp-chip.done{color:#9fd39f}.mp-chip.wait{color:#c9c2b0}.mp-chip.away,.mp-chip.fallen{opacity:.5}.mp-chip.me{font-weight:700}.mp-dot{background:#c0392b;color:#fff;border-radius:8px;padding:0 5px;font-size:11px}
 body.mp-wait #hud,body.mp-wait #hud *{pointer-events:none!important}body.mp-wait #endTurn{opacity:.55}
 #mpChat{position:fixed;left:14px;bottom:150px;width:340px;z-index:45;background:rgba(18,20,26,.95);border:1px solid rgba(214,178,94,.5);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:6px}
 #mpChat .mp-msgs{max-height:220px;overflow-y:auto;font-size:13px;line-height:1.35;color:#e4dccb}#mpChat input{width:100%;box-sizing:border-box;padding:6px;border-radius:5px;border:1px solid #555;background:#111;color:#eee}
@@ -11285,6 +11286,7 @@ async function orderToInner(sid) {
  const before = new Map(units.map(u => [u.id, u.s]));
  const r = moveUnits(units, sid);
  const fx = G.fx.slice(); G.fx = [];
+ if (MP.on && MP.started && !mpWaiting()) mpLiveSend(fx); // the other rulers watch the move live
  if (r && r.moved) SND.play('march', {kind: SND.unitKind(units[0])});
  if (fx.length) { await playBattles(fx, {shake: true}); }
  G.dirtyLabels = true; checkAlive();
@@ -11919,6 +11921,7 @@ function doEndTurnSP(skipCheck) {
   ov.className = 'show out';
   setTimeout(() => { ov.className = ''; }, 450);
   // animate the world catching up: battles first, then movement
+  if (UI.mpResolving) UI.mpFx = (G.fx || []).slice(); // multiplayer: every ruler replays what they can see
   const fx = (G.fx || []).filter(f => f && (f.k === 'nuke' || (G.vis && (G.vis[f.to] || (f.from || []).some(x => G.vis[x])))));
   G.fx = [];
   const nk = fx.filter(f => f.k === 'nuke' || f.k === 'nukefail');
@@ -12743,14 +12746,14 @@ function mpSend(msg) { try { if (MP.conn && MP.conn.open) MP.conn.send(msg); } c
 function mpSendTo(pid, msg) { const c = MP.conns[pid]; try { if (c && c.open) c.send(msg); } catch (e) { console.error(e); } }
 function mpBroadcast(msg) { for (const pid in MP.conns) mpSendTo(pid, msg); }
 function mpPlayerOf(h) { return MP.players.find(p => p.cid === h); }
-async function mpPack() { mpStash(); const txt = serialize(); const z = await gzipText(txt); return z ? {z: b64(z)} : {raw: txt}; }
+async function mpPack() { if (MP.host && G.mp) G.mp.away = MP.players.filter(p => p.gone).map(p => p.cid); mpStash(); const txt = serialize(); const z = await gzipText(txt); return z ? {z: b64(z)} : {raw: txt}; }
 async function mpUnpack(d) { return d.z ? await gunzipBytes(unb64(d.z)) : d.raw; }
 
 // ---------- the title-screen menu ----------
 function showMpMenu() {
  let nm = ''; try { nm = localStorage.getItem('ec_mp_name') || ''; } catch (e) {}
  const box = showModal('🌐 Multiplayer', `<div class="mp-menu">
-  <label class="mp-l">Your name <input id="mpName" maxlength="20" value="${esc(nm)}" placeholder="e.g. Minjun"></label>
+  <label class="mp-l">Your name <input id="mpName" maxlength="20" value="${esc(nm)}" placeholder="e.g. John Doe"></label>
   <div class="mp-cols"><div class="mp-col"><h4>Host a game</h4>
    <label class="mp-l">Campaign <select id="mpCamp"><option value="1800">1800 — The Age of Revolution</option><option value="1900" selected>1900 — The Imperial Twilight</option>${SCENARIOS.map(sc => `<option value="sc:${sc.id}">${esc(sc.ic + ' ' + sc.n)} (${sc.sy})</option>`).join('')}</select></label>
    <label class="mp-l">Turn timer <select id="mpTimer"><option value="0">Off</option><option value="60">1 minute</option><option value="120">2 minutes</option><option value="180" selected>3 minutes</option><option value="300">5 minutes</option><option value="600">10 minutes</option></select></label>
@@ -12783,8 +12786,8 @@ async function mpHost(name, year, scen, timer) {
  peer.on('error', e => toast(mpPeerError(e)));
  peer.on('connection', conn => {
   conn.on('data', d => mpHostMsg(conn, d).catch(e => console.error('mp', e)));
-  conn.on('close', () => mpHostDrop(conn.peer));
-  conn.on('error', () => mpHostDrop(conn.peer));
+  conn.on('close', () => mpHostDrop(conn.peer).catch(e => console.error('mp', e)));
+  conn.on('error', () => mpHostDrop(conn.peer).catch(e => console.error('mp', e)));
  });
  MP.players = [{pid: peer.id, name, cid: -1, host: true}];
  MP.label = scen ? `${scen.ic} ${scen.n} (${scen.sy})` : `${year} campaign`;
@@ -12847,6 +12850,7 @@ async function mpHostMsg(conn, d) {
  if (d.t === 'pick') return mpPick(pid, +d.cid);
  if (d.t === 'chat') return mpChatIn(p.name, String(d.txt || '').slice(0, 300), true);
  if (d.t === 'chose') return mpChose(p.cid, +d.i);
+ if (d.t === 'live') { if (!MP.started || G.mp.turnOf !== p.cid) return; for (const q in MP.conns) if (q !== pid) mpSendTo(q, d); return mpLiveQueue(d); }
  if (d.t === 'done') {
   if (!MP.started || G.mp.turnOf !== p.cid) return;
   delete MP.choiceWait[p.cid];
@@ -12855,13 +12859,13 @@ async function mpHostMsg(conn, d) {
   if (nx === undefined) mpResolve(); else mpPass(nx);
  }
 }
-function mpHostDrop(pid) {
+async function mpHostDrop(pid) {
  const p = MP.players.find(x => x.pid === pid); delete MP.conns[pid];
  if (!p || p.host || p.gone) return;
  if (!MP.started) { MP.players = MP.players.filter(x => x !== p); mpLobbyUi(); mpLobbySync(); mpSys(`${p.name} left the room.`); return; }
  p.gone = true; delete MP.choiceWait[p.cid]; mpMaybePass();
  mpSys(`${p.name} has disconnected — ${G.countries[p.cid].name} waits idle until they rejoin.`);
- if (G.mp.turnOf === p.cid) { const nx = mpNext(p.cid); if (nx === undefined) mpResolve(); else mpPass(nx); } // the world as it was before their turn
+ if (G.mp.turnOf === p.cid) { if (MP.lastPass) await mpApply(await mpUnpack(MP.lastPass)); const nx = mpNext(p.cid); if (nx === undefined) mpResolve(); else mpPass(nx); } // the world as it was before their turn
  mpBar();
 }
 // rulers who take a turn this round: connected and with land left, in join order (the host first)
@@ -12880,7 +12884,7 @@ function mpStart() {
  mpPass(humans[0]);
 }
 async function mpPass(next) {
- G.mp.turnOf = next; const pk = await mpPack();
+ G.mp.turnOf = next; const pk = await mpPack(); MP.lastPass = pk; // kept to undo a ruler's half-played turn if they drop out
  mpBroadcast(Object.assign({t: 'state'}, pk));
  if (next === MP.me) mpTurnBegins(); else mpBar();
 }
@@ -12895,7 +12899,7 @@ async function mpAfterResolve(r) {
  const first = ord.length ? ord[0] : MP.me; // with every ruler fallen or away the host passes the turns
  G.mp.turnOf = first === MP.me ? MP.me : -3; // the others wait until every event decision is in
  const pk = await mpPack();
- mpBroadcast(Object.assign({t: 'state', fresh: 1}, pk));
+ mpBroadcast(Object.assign({t: 'state', fresh: 1, fx: UI.mpFx || []}, pk)); UI.mpFx = null;
  mpChoicePhase();
  if (r && r.gameOver && !ord.includes(MP.me) && !MP.spect) mpFallen();
  if (first === MP.me) mpTurnBegins(); else { MP.pendingPass = first; mpBar(); mpMaybePass(); }
@@ -12941,12 +12945,19 @@ async function mpClientMsg(d) {
  if (d.t === 'lobby') { MP.players = d.players; MP.countries = d.countries; MP.label = d.label; MP.timer = d.timer; MP.code = d.code; if (!MP.started) mpLobbyUi(); return; }
  if (d.t === 'start') { MP.started = true; MP.me = d.me; closeModals(); $('#loading').classList.remove('hide'); $('#loading .lt').textContent = 'The host is setting the table…'; return; }
  if (d.t === 'chat') return mpChatIn(d.from, d.txt, false, d.sys);
- if (d.t === 'resolving') { if (G && G.mp) { G.mp.turnOf = -1; mpBar(); } return; }
+ if (d.t === 'resolving') { if (G && G.mp) { mpTurnCard(); G.mp.turnOf = -1; mpBar(); } return; }
+ if (d.t === 'live') return mpLiveQueue(d);
  if (d.t === 'choose') return mpRemoteChoice(d.p);
  if (d.t === 'state') {
   const first = UI.screen !== 'game';
-  await mpApply(await mpUnpack(d), first);
+  if (d.fresh) UI.busy = true;
+  await mpApply(await mpUnpack(d), first, !!d.fresh);
   if (first) mpEnterGame();
+  if (d.fresh) { // the world turn: replay the battles and marches we can see, as the host saw them
+   const ov = $('#turnov'); if (ov.className === 'show') { ov.className = 'show out'; setTimeout(() => { ov.className = ''; }, 450); }
+   try { await mpPlayFx(d.fx || []); } catch (e) { console.error('mp replay', e); refreshAll(true, false); }
+   unlockUi();
+  }
   if (d.fresh && G.turnRep) { const r = G.turnRep; if (r.gameOver && !MP.spect && !mpOrder().includes(MP.me)) mpFallen(); else turnReport(r); }
   if (G.mp.turnOf === MP.me) mpTurnBegins(); else mpBar();
  }
@@ -12955,17 +12966,17 @@ function mpHostGone() {
  if (!MP.on) return;
  const inGame = MP.started && G && G.mp; MP.on = false; MP.started = false;
  if (!inGame) { closeModals(); showModal('Multiplayer', '<p>The connection to the host was lost.</p>', [{t: 'OK', f: () => location.reload()}]); return; }
- mpToSingle(); document.body.classList.remove('mp-wait'); const b = $('#mpBar'); if (b) b.remove(); unlockUi(); refreshAll(true);
+ mpToSingle(); document.body.classList.remove('mp-wait'); const b = $('#mpBar'); if (b) b.remove(); $('#warbar').style.top = ''; unlockUi(); refreshAll(true);
  showModal('The host has left', '<div class="cf-ic">🔌</div><p>The connection to the host was lost, so the multiplayer game has ended.</p><p>You can carry on alone from this moment: the other rulers\' nations are now run by the computer. Save the game to keep it.</p>', [{t: 'Continue alone', c: 'gold'}]);
 }
 // ---------- applying a world state that arrived over the network ----------
-async function mpApply(text, first) {
+async function mpApply(text, first, noRefresh) {
  const data = parseSave(text);
  if (first || UI.mpYear !== data.year0) {
   const img = await loadImg(data.year0 === 1800 ? ASSET_IDS1800 : ASSET_IDS1900);
   const {out, rgba} = decodeIdMap(img); IDMAP = out; var tex = rgba; UI.mpYear = data.year0;
  }
- clearUnits();
+ if (first) clearUnits(); // otherwise the units on the map glide to their new places
  G = data; if (tex) setCampaignTextures(new Uint8Array(tex.buffer.slice(0))); G.selUnits = []; G.sel = null; G.fx = []; G.battles = []; for (const c of G.countries) if (!c.key) c.key = c.name;
  mpLoad(MP.me);
  if (MP.host) G.pendingChoice = (G.pendingChoice || []).filter(p => p.options.some(o => o.f)); else G.pendingChoice = []; // decisions only work where they were made
@@ -12973,7 +12984,7 @@ async function mpApply(text, first) {
  refreshNames(true); try { nameSectors(); } catch (e) {}
  updateKnown(); updateVisibility();
  G.dirtyLabels = true; G.dirtyColors = true;
- if (UI.screen === 'game') { applySpectateUi(); try { selectSector(null); } catch (e) {} refreshAll(true); }
+ if (UI.screen === 'game') { applySpectateUi(); try { selectSector(null); } catch (e) {} if (!noRefresh) refreshAll(true); }
 }
 function mpEnterGame() {
  $('#loading').classList.add('hide'); R.pickHL = null;
@@ -12993,7 +13004,7 @@ function mpFallen() {
 function mpTurnBegins() {
  document.body.classList.remove('mp-wait'); unlockUi();
  if (UI.mpDispatch) { G.dispatches = [UI.mpDispatch, ...(G.dispatches || [])].slice(0, 16); UI.mpDispatch = null; }
- MP.deadline = G.mp.timer ? Date.now() + G.mp.timer * 1000 : 0;
+ MP.deadline = G.mp.timer ? Date.now() + G.mp.timer * 1000 : 0; MP.liveSig = mpLiveSig(); MP.liveT = Date.now();
  if (G.mp.humans.length > 1 && !MP.spect) { SND.play('turn'); toast('Your turn!'); }
  mpBar(); refreshAll(true);
 }
@@ -13051,10 +13062,46 @@ setInterval(() => { // our turn: show what is waiting (events, decisions, offers
  if (!MP.on || !MP.started || !G || !G.mp || UI.screen !== 'game') return;
  mpBar();
  if (G.mp.turnOf !== MP.me) return;
+ if (!UI.busy && Date.now() - (MP.liveT || 0) > 2500 && mpLiveSig() !== MP.liveSig) mpLiveSend([]); // recruits, disbands, uprisings…
  if (MP.deadline && Date.now() > MP.deadline && !UI.busy) { MP.deadline = 0; closeModals(); G.pendingChoice = []; G.pendingPopup = []; G.pendingSurrender = []; G.pendingPuppetDemand = null; G.pendingDemand = null; G.pendingWhite = null; G.pendingSpirit = []; G.pendingShortage = []; toast('Time is up — the turn ends.'); mpEndTurn(true); return; }
  if (UI.busy || document.querySelector('.modal-bg')) return;
  if (mpHasPending()) flushPending(); else mpShowOffer();
 }, 800);
+// ---------- watching: the world turn and the other rulers' moves ----------
+function mpTurnCard() {
+ const ov = $('#turnov'); if (!ov || !G) return;
+ const from = MONTHS[G.m] + ' ' + G.y, nm = (G.m + 3) % 12, ny = G.m + 3 >= 12 ? G.y + 1 : G.y;
+ ov.innerHTML = `<div class="to-card"><div class="to-q">Turn ${G.turn + 2}</div><div class="to-dates"><span class="to-old">${from}</span><span class="to-arrow">➜</span><span class="to-new">${MONTHS[nm]} ${ny}</span></div><div class="to-season">${['❄️ Winter', '🌱 Spring', '☀️ Summer', '🍂 Autumn'][Math.floor(nm / 3)]}</div><div class="to-bar"><i></i></div></div>`;
+ ov.className = 'show'; SND.play('turn');
+}
+const mpSeen = f => f && (f.k === 'nuke' || (G.vis && (G.vis[f.to] || (f.from || []).some(x => G.vis[x]))));
+async function mpPlayFx(all) {
+ MP.fxN = (MP.fxN || 0) + all.length;
+ const fx = all.filter(mpSeen), nk = fx.filter(f => f.k === 'nuke' || f.k === 'nukefail');
+ if (nk.length) await playBattles(nk);
+ await playTurnSequence(fx.filter(f => !nk.includes(f)));
+ refreshAll(true, true);
+}
+function mpLiveSig() { let h = G.units.length; for (const u of G.units) h = (h * 31 + u.id * 7 + u.s * 13 + (u.hp | 0)) | 0; for (const s of G.sectors) if (s && !s.w) h = (h * 31 + s.ctrl + 3) | 0; return h; }
+function mpLiveSend(fx) { // what changed on our map, for the others to watch
+ const u = G.units.map(x => [x.id, x.o, x.t, x.s, Math.round(x.hp), x.path && x.path.length > 1 ? x.path : 0]);
+ const sc = []; for (const s of G.sectors) sc.push(s && !s.w ? s.o : 0, s && !s.w ? s.ctrl : 0);
+ const d = {t: 'live', by: G.player, u, sc, fx: (fx || []).filter(f => f && f.k)};
+ MP.liveSig = mpLiveSig(); MP.liveT = Date.now();
+ if (MP.host) mpBroadcast(d); else mpSend(d);
+}
+function mpLiveQueue(d) { MP.liveP = (MP.liveP || Promise.resolve()).then(() => mpLiveApply(d)).catch(e => console.error('mp live', e)); }
+async function mpLiveApply(d) {
+ if (!G || !G.mp || G.mp.turnOf !== d.by || d.by === MP.me || UI.screen !== 'game') return;
+ MP.liveN = (MP.liveN || 0) + 1;
+ const byId = new Map(G.units.map(u => [u.id, u]));
+ G.units = d.u.map(([id, o, t, s, hp, path]) => { const u = byId.get(id); if (!u) return {id, o, t, s, hp, mv: 0}; if (u.s !== s) u.path = path || [u.s, s]; u.o = o; u.t = t; u.s = s; u.hp = hp; return u; });
+ for (let i = 0; i < G.sectors.length; i++) { const s = G.sectors[i]; if (s && !s.w) { s.o = d.sc[2 * i]; s.ctrl = d.sc[2 * i + 1]; } }
+ G.dirtyColors = true; G.dirtyLabels = true; updateVisibility();
+ const fx = (d.fx || []).filter(mpSeen);
+ if (fx.length) await playBattles(fx, {shake: true});
+ refreshAll(false, true);
+}
 // ---------- the banner, chat and players ----------
 function mpBar() {
  if (!MP.on || !MP.started || !G || !G.mp) return;
@@ -13065,13 +13112,34 @@ function mpBar() {
  const waitCh = Object.keys(MP.choiceWait).map(h => mpName(+h));
  const st = t === -1 ? '⚙ The world turn is being resolved…' : t === -3 ? '⏳ The rulers are deciding on this turn\'s events…' : t === -2 ? '⏳ Sending our orders…' : mine ? `🎲 <b>Your turn</b>${left ? ` · <span class="${left < 30 ? 'neg' : ''}">${Math.floor(left / 60)}:${String(left % 60).padStart(2, '0')}</span>` : ''}${waitCh.length ? ` · <small>waiting for ${esc(waitCh.join(', '))} to decide on events</small>` : ''}`
   : `⏳ <b>${esc(mpName(t))}</b> (${esc((G.countries[t] || {}).name || '')}) is playing…`;
- const html = `${st} <button class="mini" id="mpPl" title="Players">👥 ${G.mp.humans.length}</button> <button class="mini" id="mpCh" title="Chat">💬${MP.unread ? ` <b class="mp-dot">${MP.unread}</b>` : ''}</button>`;
+ const html = `<div class="mp-st">${st} <button class="mini" id="mpPl" title="Players">👥 ${G.mp.humans.length}</button> <button class="mini" id="mpCh" title="Chat">💬${MP.unread ? ` <b class="mp-dot">${MP.unread}</b>` : ''}</button></div><div class="mp-chips">${mpChips()}</div>`;
  if (b._h !== html) { b.innerHTML = html; b._h = html; b.querySelector('#mpPl').onclick = mpShowPlayers; b.querySelector('#mpCh').onclick = mpToggleChat; }
  const eb = $('#endTurn'); if (eb) eb.textContent = mine ? 'End Turn' : 'Waiting…';
+ // the war banner sits just below the multiplayer bar, never under it
+ const wb = $('#warbar'); if (wb) wb.style.top = Math.round(b.getBoundingClientRect().bottom + 6) + 'px';
+ if (t !== MP.lastT) { // the turn has passed: say so, and let the bar flash
+  if (MP.lastT !== undefined && t >= 0 && t !== MP.me) toast(`🎲 ${mpName(t)} (${(G.countries[t] || {}).name || ''}) is now playing.`);
+  MP.lastT = t; b.classList.remove('flash'); void b.offsetWidth; b.classList.add('flash');
+ }
+}
+// one chip per ruler: done, playing, waiting, deciding, away or fallen
+function mpStatus(h) {
+ const c = G.countries[h], t = G.mp.turnOf, H = G.mp.humans;
+ if (!c || !c.alive || !G.sectors.some(s => s && !s.w && s.o === h)) return ['fallen', '🕯️', 'fallen'];
+ if ((G.mp.away || []).includes(h)) return ['away', '🔌', 'disconnected'];
+ if (t === -1) return ['done', '✔', 'turn done — resolving'];
+ if (t === -3) return ['wait', '📜', 'deciding on events'];
+ if (t === h) return ['play', '🎲', 'playing now'];
+ const cur = t === -2 ? H.indexOf(MP.me) + 0.5 : H.indexOf(t);
+ return H.indexOf(h) < cur ? ['done', '✔', 'turn done'] : ['wait', '⏳', 'waiting for their turn'];
+}
+function mpChips() {
+ return G.mp.humans.map(h => { const [k, ic, tip] = mpStatus(h), c = G.countries[h] || {};
+  return `<span class="mp-chip ${k}${h === MP.me ? ' me' : ''}" title="${esc(mpName(h))} — ${esc(c.name || '')}: ${tip}">${ic} ${esc(mpName(h))}<small>${esc(c.name || '')}</small></span>`; }).join('');
 }
 function mpShowPlayers() {
  const rows = G.mp.humans.map((h, i) => { const p = MP.host ? mpPlayerOf(h) : null; const c = G.countries[h];
-  return `<tr><td>${i + 1}.</td><td><b>${esc(mpName(h))}</b>${h === MP.me ? ' <small class="pos">you</small>' : ''}</td><td>${swatch(c)}${esc(c.name)}</td><td>${h === G.mp.turnOf ? '🎲 playing' : !c.alive ? '🕯️ fallen' : p && p.gone ? '🔌 away' : ''}</td></tr>`; }).join('');
+  return `<tr><td>${i + 1}.</td><td><b>${esc(mpName(h))}</b>${h === MP.me ? ' <small class="pos">you</small>' : ''}</td><td>${swatch(c)}${esc(c.name)}</td><td>${(([k, ic, tip]) => ic + ' ' + tip)(mpStatus(h))}</td></tr>`; }).join('');
  showModal('👥 Rulers at the table', `<table class="mp-tab">${rows}</table><p class="muted small">Room code <b>${esc(MP.code)}</b>${G.mp.timer ? ` · turn timer ${Math.round(G.mp.timer / 60)} min` : ''}. A ruler who disconnects can rejoin with the same code and name.</p>`);
 }
 function mpToggleChat() {
