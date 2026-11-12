@@ -86,6 +86,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 #feed{position:absolute;left:14px;bottom:14px;width:380px;display:flex;flex-direction:column-reverse;gap:3px;pointer-events:none}
 .fd{background:rgba(12,17,26,.82);border-left:3px solid var(--muted);padding:4px 9px;font-size:12px;border-radius:0 3px 3px 0}
 .fd.good{border-color:var(--green)}.fd.bad{border-color:var(--red)}.fd.war{border-color:#e07a4a}.fd.tech{border-color:#9a7ad8}.fd.event{border-color:var(--gold)}.fd.build{border-color:var(--blue)}
+#gtip{position:fixed;z-index:60;pointer-events:none;background:rgba(10,14,22,.97);border:1px solid rgba(214,178,94,.5);border-radius:6px;padding:8px 10px;font-size:12px;display:none;box-shadow:0 6px 18px rgba(0,0,0,.5)}#gtip .gt-h{margin:2px 0 4px;color:#eadfc4}#gtip .gt-h b{margin:0 4px}#gtip svg{display:block}#gtip .gt-ax{display:flex;justify-content:space-between;gap:8px;font-size:10.5px;color:#bdb39c;margin:2px 0 6px}#gtip .gt-note{font-size:11px;color:#9f9888;max-width:260px}
 #tip{position:fixed;z-index:30;pointer-events:none;background:rgba(10,14,22,.95);border:1px solid var(--line);border-radius:4px;padding:6px 9px;font-size:12px;display:none;max-width:260px}
 /* side panel */
 #side{position:absolute;right:14px;top:78px;bottom:96px;width:340px;background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:auto;padding:12px 14px}
@@ -4026,12 +4027,13 @@ function economy(c) {
  if (c.short && c.short.ore) r.tax *= 1 - 0.08 * c.short.ore.sev;                // industry stands still
  if (c.short && c.short.grain) r.tax *= 1 - 0.06 * c.short.grain.sev;            // hungry workers
  if (c.cap && G.sectors[c.cap].ctrl !== c.id) r.tax *= 0.5;
- r.research = r.tax * c.resShare * 1.8 * Math.max(0.1, 1 + bonus(c, 'research') / 100) * (1 + univBonus(r.univ || 0)); // each university adds research
  r.trade = c.lastTrade || 0;
+ r.revenue = r.tax + Math.max(0, r.trade); // v33: trade profit is revenue too: research and security budgets are shares of it
+ r.research = r.revenue * c.resShare * 1.8 * Math.max(0.1, 1 + bonus(c, 'research') / 100) * (1 + univBonus(r.univ || 0)); // each university adds research
  r.tribute = 0;
  if (isHuman(c.id)) { if (isPuppet(c.id)) r.tribute -= r.tax * 0.2; for (const pid of puppetsOf(c.id)) r.tribute += tributeOf(pid); }
- r.security = isHuman(c.id) ? r.tax * (c.secShare || 0) : 0; // v31: police and gendarmerie
- r.expenses = r.maint + r.armyUp + r.navyUp + r.tax * c.resShare + r.security;
+ r.security = isHuman(c.id) ? r.revenue * (c.secShare || 0) : 0; // v31: police and gendarmerie
+ r.expenses = r.maint + r.armyUp + r.navyUp + r.revenue * c.resShare + r.security;
  r.net = r.tax + r.trade + r.tribute - r.expenses;
  return r;
 }
@@ -5192,6 +5194,7 @@ function initPlayer(cid) {
  const e2 = economy(c);
  c.goods.supplies = Math.round(e2.cons.supplies * 8 + 20);
  // known countries: neighbours + great powers (if great power) + those at historical war
+ histRecord(c);
  updateKnown(true);
  G.relInit = true;
  for (const o of G.countries) c.rel[o.id] = 0;
@@ -5661,8 +5664,8 @@ function securityTurn(c, e) {
 }
 // keep research + security + fixed upkeep within the revenue: raising one trims the other
 function balanceBudget(c, changed) {
- const e = economy(c); if (!(e.tax > 0)) return;
- const fixed = (e.maint + e.armyUp + e.navyUp) / e.tax;
+ const e = economy(c); if (!(e.revenue > 0)) return;
+ const fixed = (e.maint + e.armyUp + e.navyUp) / e.revenue;
  if (c.resShare + (c.secShare || 0) + fixed <= 1) return;
  if (changed === 'sec') c.resShare = Math.max(0, 1 - c.secShare - fixed);
  else c.secShare = Math.max(0, 1 - c.resShare - fixed);
@@ -5750,8 +5753,8 @@ function finishTurn(P, report) {
 function playerPhase(P, report) {
  const c = G.countries[P]; let e = null;
  e = economy(c);
- c.money += e.tax - e.maint - e.armyUp - e.navyUp - e.tax * c.resShare - e.security + e.tribute;
- report.income = e.tax;
+ c.money += e.tax - e.maint - e.armyUp - e.navyUp - e.revenue * c.resShare - e.security + e.tribute; // trade money itself is booked as goods are sold below
+ report.income = e.revenue;
  // research
  const active = Object.values(c.research).filter(Boolean);
  if (active.length) {
@@ -5769,7 +5772,7 @@ function playerPhase(P, report) {
    const up = upgradeUnits(c);
    for (const k in up) { const m = `Refitted ${up[k]}× ${k}.`; report.upgrades.push(m); logMsg(m, 'tech'); }
   }
- } else c.money += e.tax * c.resShare;
+ } else c.money += e.revenue * c.resShare;
  nukeTurn(c);
  // goods & trade
  let tradeIncome = 0;
@@ -5879,6 +5882,7 @@ function playerPhase(P, report) {
  }
  c.warExh = Math.max(0, c.warExh + (enemiesOf(P).size ? 0.15 : -0.5));
  c._eGrain = e.cons.grain;
+ histRecord(c, economy(c));
  return e;
 }
 
@@ -7623,6 +7627,18 @@ function menSync(u, enemy, dead) {
  const want = dead ? 0 : Math.max(0, Math.min(100, u.hp)) / 100, d = u.men - want;
  if (d > 0.0005 || dead) warLoss(u.o, enemy, Math.max(0, d), dead ? 1 : 0);
  if (d > 0) u.men = want;
+}
+// v33: a ruler's statistics turn by turn, for the graphs shown when hovering the top bar and trade prices
+const HIST_MAX = 240;
+function histRecord(c, e) {
+ if (!c) return; e = e || economy(c);
+ const h = c.hist = c.hist || {d: [], pop: [], gdp: [], res: [], sup: [], army: [], navy: [], pr: {}};
+ const tr = tradePartners(c).length > 0;
+ const row = {d: `Q${Math.floor(G.m / 3) + 1} ${G.y}`, pop: e.pop, gdp: e.gdp, res: e.research, sup: (c.goods || {}).supplies || 0, army: armyMen(c), navy: navalPower(c)};
+ if (h.d.length && h.d[h.d.length - 1] === row.d) for (const k in row) h[k].pop(); // the same quarter again: replace it
+ for (const k in row) h[k].push(typeof row[k] === 'number' ? Math.round(row[k] * 100) / 100 : row[k]);
+ for (const g in GOODS) { const a = h.pr[g] = h.pr[g] || []; while (a.length < h.d.length - 1) a.unshift(null); if (a.length >= h.d.length) a.length = h.d.length - 1; a.push(tr ? Math.round(priceFor(c, g, true) * 1000) / 1000 : null); }
+ if (h.d.length > HIST_MAX) { const n = h.d.length - HIST_MAX; for (const k in row) h[k].splice(0, n); for (const g in h.pr) h.pr[g].splice(0, n); }
 }
 function armyMen(c) { let m = 0; for (const u of G.units) if (u.o === c.id && !u.ghost) m += u.men !== undefined ? u.men : u.hp / 100; return m; }
 // once a turn: reinforcements draw recruits, other damage (attrition, raids, events) is counted, vanished units are losses
@@ -11057,7 +11073,7 @@ function animate() {
 }
 
 // ---------------- title / campaign ----------------
-const GAME_VERSION = 'v0.7 WEBSITE VER', CONTACT_EMAIL = 'blockmasterstudio@gmail.com';
+const GAME_VERSION = 'v0.8 WEBSITE VER', CONTACT_EMAIL = 'blockmasterstudio@gmail.com';
 function showTitle() {
  UI.screen = 'title'; SND.setMood('title');
  const ov = $('#screen'); ov.className = 'screen title fadein'; ov.innerHTML = `
@@ -11216,7 +11232,7 @@ function refreshAll(full, animate = true) {
  updateTopBar(); renderSectorPanel(); renderUnitBar(); renderFeed();
  if (UI.screen === 'game') SND.setMood(enemiesOf(G.player).size || G.sectors.some(s => s && !s.w && s.o === G.player && s.ctrl === -1) ? 'war' : 'peace'); // revolts also call for the war theme
 }
-function tbCard(ic, label, val, sub, cls, title) { return `<div class="tb-i${cls === 'warn' ? ' warn' : ''}" title="${title}"><span>${ic}</span><div class="tb-v"><small class="tb-l">${label}</small><b>${val}${sub ? `<em class="${cls}">${sub}</em>` : ''}</b></div></div>`; }
+function tbCard(ic, label, val, sub, cls, title, graph) { return `<div class="tb-i${cls === 'warn' ? ' warn' : ''}" ${graph ? `data-graph="${graph}" data-gtitle="${title}"` : `title="${title}"`}><span>${ic}</span><div class="tb-v"><small class="tb-l">${label}</small><b>${val}${sub ? `<em class="${cls}">${sub}</em>` : ''}</b></div></div>`; }
 function updateTopBar() {
  const c = G.countries[G.player]; const e = economy(c); UI.econ = e;
  const sup = e.prod.supplies - e.cons.supplies;
@@ -11231,11 +11247,11 @@ function updateTopBar() {
  const tbHtml = `
   <div class="tb-c" title="${esc(c.name)}">${swatch(c)}<div class="tb-n"><b>${esc(c.name)}</b><small title="Date (each turn = 3 months)">${quarter()} ${G.y}${isPuppet(c.id) ? ` <span class="tb-badge warn" title="We are a puppet of ${esc(cname(overlordOf(c.id)))} — support for independence">⛓ Puppet ${Math.round(c.indep || 0)}%</span>` : ''}${unionOf(c.id) ? ` <span class="tb-badge" title="Member of the ${esc(unionOf(c.id).name)} (${unionOf(c.id).members.length} members)">🤝<span class="tb-un"> ${esc(unionOf(c.id).name)}</span></span>` : ''}</small></div></div>
   ${tbCard('💰', 'Treasury', fmt(c.money), `${e.net >= 0 ? '+' : ''}${e.net.toFixed(0)}`, e.net >= 0 ? 'pos' : 'neg', 'Treasury and net change per turn')}
-  ${tbCard('📈', 'GDP', '$' + fmt(e.gdp), `tax ${Math.round(c.tax * 100)}%`, 'muted', 'Gross domestic product per year, and the tax rate')}
-  ${tbCard('👥', 'Population', fmtPop(e.pop), `unrest ${Math.round(avgUnrest)}%${rebels ? ' ⚑' + rebels : ''}`, avgUnrest > 40 || rebels ? 'warn' : 'muted', `Population, and average unrest${rebels ? ' — ' + rebels + ' sectors in revolt' : ''}`)}
-  ${tbCard('⚔', 'Army', fmtPop(armyMen(c)), `navy ${Math.round(navalPower(c))}`, 'muted', 'Men under arms (every unit is 1,000 men drawn from the population), and naval power')}
-  ${tbCard('📦', 'Supplies', Math.round(c.goods.supplies), `${sup >= 0 ? '+' : ''}${sup.toFixed(0)}`, sup >= 0 ? 'pos' : 'neg', 'Military supplies: stockpile and change per turn')}
-  ${tbCard('🔬', 'Research', e.research.toFixed(0), 'per turn', 'muted', 'Research points per turn')}
+  ${tbCard('📈', 'GDP', '$' + fmt(e.gdp), `tax ${Math.round(c.tax * 100)}%`, 'muted', 'Gross domestic product per year, and the tax rate', 'gdp')}
+  ${tbCard('👥', 'Population', fmtPop(e.pop), `unrest ${Math.round(avgUnrest)}%${rebels ? ' ⚑' + rebels : ''}`, avgUnrest > 40 || rebels ? 'warn' : 'muted', `Population, and average unrest${rebels ? ' — ' + rebels + ' sectors in revolt' : ''}`, 'pop')}
+  ${tbCard('⚔', 'Army', fmtPop(armyMen(c)), `navy ${Math.round(navalPower(c))}`, 'muted', 'Men under arms (every unit is 1,000 men drawn from the population), and naval power', 'mil')}
+  ${tbCard('📦', 'Supplies', Math.round(c.goods.supplies), `${sup >= 0 ? '+' : ''}${sup.toFixed(0)}`, sup >= 0 ? 'pos' : 'neg', 'Military supplies: stockpile and change per turn', 'sup')}
+  ${tbCard('🔬', 'Research', e.research.toFixed(0), 'per turn', 'muted', 'Research points per turn', 'res')}
   ${shortChip(c)}`;
  if (tbHtml !== UI._tbHtml) { UI._tbHtml = tbHtml; $('#tb').innerHTML = tbHtml; } // unchanged stats: skip the DOM rebuild
  const wars = [...enemiesOf(c.id)];
@@ -11621,19 +11637,20 @@ function showEconomy() {
     ${shortSection(c)}
     <h4>Research budget</h4>
     <div class="slider"><input type="range" id="resR" min="0" max="70" value="${Math.round(c.resShare * 100)}"><b>${Math.round(c.resShare * 100)}%</b></div>
-    <p class="muted">Share of tax revenue spent on the technology tree.</p>
+    <p class="muted">Share of revenue (taxes + trade profit) spent on the technology tree.</p>
     <h4>Security budget</h4>
     <div class="slider"><input type="range" id="secR" min="0" max="40" value="${Math.round((c.secShare || 0) * 100)}"><b>${Math.round((c.secShare || 0) * 100)}%</b></div>
-    <p class="muted">Police and gendarmes: calms every province by <b>${securityCalm(c).toFixed(1)}</b> unrest per turn, makes uprisings rarer and crushes about <b>${((c.secShare || 0) * e.tax / rebelCost(c, e)).toFixed(1)}</b> rebel regiments a turn without the army${G.sectors.some(s => s && !s.w && s.o === c.id && s.ctrl === -1) ? ` — <span class="neg">${G.sectors.filter(s => s && !s.w && s.o === c.id && s.ctrl === -1).length} sectors are held by rebels</span>` : ''}.</p>
-    ${(() => { const tot = Math.round((c.resShare + (c.secShare || 0) + (e.maint + e.armyUp + e.navyUp) / Math.max(1, e.tax)) * 100); return `<div class="kv"><span>Spending vs revenue</span><b class="${tot > 100 ? 'neg' : ''}">${tot}%</b></div>`; })()}
+    <p class="muted">Police and gendarmes: calms every province by <b>${securityCalm(c).toFixed(1)}</b> unrest per turn, makes uprisings rarer and crushes about <b>${((c.secShare || 0) * e.revenue / rebelCost(c, e)).toFixed(1)}</b> rebel regiments a turn without the army${G.sectors.some(s => s && !s.w && s.o === c.id && s.ctrl === -1) ? ` — <span class="neg">${G.sectors.filter(s => s && !s.w && s.o === c.id && s.ctrl === -1).length} sectors are held by rebels</span>` : ''}.</p>
+    ${(() => { const tot = Math.round((c.resShare + (c.secShare || 0) + (e.maint + e.armyUp + e.navyUp) / Math.max(1, e.revenue)) * 100); return `<div class="kv"><span>Spending vs revenue</span><b class="${tot > 100 ? 'neg' : ''}">${tot}%</b></div>`; })()}
     <p class="muted small">If research, security and upkeep together pass 100% of revenue, raising one budget lowers the other.</p>
    </div>
    <div class="eco-col">
     <h4>Budget per turn</h4>
     <div class="kv"><span>Tax revenue</span><b class="pos">+${e.tax.toFixed(1)}</b></div>
     <div class="kv"><span>Trade (last turn)</span><b class="${c.lastTrade >= 0 ? 'pos' : 'neg'}">${c.lastTrade >= 0 ? '+' : ''}${(c.lastTrade || 0).toFixed(1)}</b></div>
+    <div class="kv" title="Taxes plus trade profit: research and security budgets are shares of this"><span>Total revenue</span><b class="pos">+${e.revenue.toFixed(1)}</b></div>
     ${e.tribute ? `<div class="kv"><span>${e.tribute > 0 ? 'Tribute from puppets' : 'Tribute to our overlord'}</span><b class="${e.tribute > 0 ? 'pos' : 'neg'}">${e.tribute > 0 ? '+' : ''}${e.tribute.toFixed(1)}</b></div>` : ''}
-    <div class="kv"><span>Research</span><b class="neg">−${(e.tax * c.resShare).toFixed(1)}</b></div>
+    <div class="kv"><span>Research</span><b class="neg">−${(e.revenue * c.resShare).toFixed(1)}</b></div>
     ${e.security ? `<div class="kv"><span>Security</span><b class="neg">−${e.security.toFixed(1)}</b></div>` : ''}
     <div class="kv"><span>Building maintenance</span><b class="neg">−${e.maint.toFixed(1)}</b></div>
     <div class="kv"><span>Army upkeep</span><b class="neg">−${e.armyUp.toFixed(1)}</b></div>
@@ -11706,7 +11723,7 @@ function showTrade() {
   return `<div class="eco"><div class="eco-col" style="flex:2">
    <h4>Goods</h4>
    <table class="tt"><tr><th>Good</th><th>Produced</th><th>Consumed</th><th>Stock</th><th>Sell price</th><th>Export surplus</th><th>Import shortfall</th></tr>
-   ${Object.keys(GOODS).map(g => `<tr><td>${GOODS[g].n}</td><td class="pos">${e.prod[g].toFixed(1)}</td><td class="neg">${e.cons[g].toFixed(1)}</td><td>${Math.round(c.goods[g])}</td><td>${P.length ? priceFor(c, g, true).toFixed(2) + 'M' : '—'}</td>
+   ${Object.keys(GOODS).map(g => `<tr data-graph="price:${g}" data-gtitle="${GOODS[g].n}: our selling price per unit over time"><td>${GOODS[g].n} <small class="muted">📈</small></td><td class="pos">${e.prod[g].toFixed(1)}</td><td class="neg">${e.cons[g].toFixed(1)}</td><td>${Math.round(c.goods[g])}</td><td>${P.length ? priceFor(c, g, true).toFixed(2) + 'M' : '—'}</td>
     <td><input type="checkbox" data-exp="${g}" ${c.exp[g] ? 'checked' : ''}></td><td><input type="checkbox" data-imp="${g}" ${c.imp[g] ? 'checked' : ''}></td></tr>`).join('')}</table>
    <p class="muted">Farms (plains, hills, jungle) grow grain, Wood Workshops (forest, jungle, tundra) make timber goods, Mines (hills, mountains, desert) dig iron and coal for factories, Factories make military supplies. Surplus above a small reserve is sold each turn to your trade partners; their wealth sets prices and their size sets how much they can absorb (${marketCap(c).toFixed(0)} units/turn). Last turn trade: <b class="${c.lastTrade >= 0 ? 'pos' : 'neg'}">${(c.lastTrade || 0).toFixed(1)}M</b>.</p>
   </div><div class="eco-col">
@@ -12731,6 +12748,44 @@ function showSettings() {
  };
  bind();
 }
+
+// ---------------- history graphs (hover a top-bar figure or a traded good) ----------------
+function graphSvg(name, vals, labels, fmtV, col) {
+ const pts = vals.map((v, i) => [i, v]).filter(p => p[1] !== null && p[1] !== undefined && isFinite(p[1]));
+ if (pts.length < 2) return `<div class="gt-h">${esc(name)}</div><p class="muted small">Not enough history yet — check back after a few turns.</p>`;
+ const W = 260, H = 92, L = 4, R = 4, T = 6, B = 6, n = vals.length;
+ const lo0 = Math.min(...pts.map(p => p[1])), hi0 = Math.max(...pts.map(p => p[1])); let lo = lo0, hi = hi0; if (hi - lo < 1e-9) { hi += 1; lo -= 1; }
+ const x = i => L + (W - L - R) * i / Math.max(1, n - 1), y = v => T + (H - T - B) * (1 - (v - lo) / (hi - lo));
+ const d = pts.map((p, k) => `${k ? 'L' : 'M'}${x(p[0]).toFixed(1)},${y(p[1]).toFixed(1)}`).join('');
+ const last = pts[pts.length - 1][1], first = pts[0][1], ch = first ? (last - first) / Math.abs(first) * 100 : 0;
+ return `<div class="gt-h">${esc(name)} <b>${fmtV(last)}</b> <span class="${ch >= 0 ? 'pos' : 'neg'}">${ch >= 0 ? '▲' : '▼'} ${Math.abs(ch).toFixed(0)}%</span></div>
+  <svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}"><path d="${d}L${x(pts[pts.length - 1][0]).toFixed(1)},${H - B}L${x(pts[0][0]).toFixed(1)},${H - B}Z" fill="${col}" opacity=".14"/><path d="${d}" fill="none" stroke="${col}" stroke-width="1.8" stroke-linejoin="round"/><circle cx="${x(pts[pts.length - 1][0])}" cy="${y(last)}" r="3" fill="${col}"/></svg>
+  <div class="gt-ax"><span>${esc(labels[pts[0][0]] || '')}</span><span class="muted">low ${fmtV(lo0)} · high ${fmtV(hi0)}</span><span>${esc(labels[pts[pts.length - 1][0]] || '')}</span></div>`;
+}
+function graphHtml(key) {
+ const c = G && G.countries[G.player]; const h = c && c.hist; if (!h) return '';
+ const num = v => fmt(v), k1 = v => (Math.round(v * 10) / 10).toString(), money = v => '$' + fmt(v);
+ if (key.startsWith('price:')) { const g = key.slice(6); return graphSvg(GOODS[g].n + ' price', h.pr[g] || [], h.d, v => v.toFixed(2) + 'M', '#d6b25e'); }
+ if (key === 'gdp') return graphSvg('GDP per year', h.gdp, h.d, money, '#6fbf73');
+ if (key === 'pop') return graphSvg('Population', h.pop, h.d, v => fmtPop(v), '#6aa9e0');
+ if (key === 'res') return graphSvg('Research per turn', h.res, h.d, k1, '#b48ce0');
+ if (key === 'sup') return graphSvg('Supplies in stock', h.sup, h.d, num, '#d9a35a');
+ if (key === 'mil') return graphSvg('Men under arms', h.army, h.d, v => fmtPop(v), '#e07a6a') + graphSvg('Naval power', h.navy, h.d, num, '#5fb0c9');
+ return '';
+}
+(() => {
+ let tip = null, cur = null;
+ const place = e => { if (!tip) return; const r = tip.getBoundingClientRect(); let x = e.clientX + 14, y = e.clientY + 16; if (x + r.width > innerWidth - 6) x = e.clientX - r.width - 14; if (y + r.height > innerHeight - 6) y = e.clientY - r.height - 12; tip.style.left = Math.max(6, x) + 'px'; tip.style.top = Math.max(6, y) + 'px'; };
+ document.addEventListener('mouseover', e => {
+  const el = e.target.closest && e.target.closest('[data-graph]');
+  if (!el) { if (tip && cur) { tip.style.display = 'none'; cur = null; } return; }
+  if (el === cur) return; cur = el;
+  if (!tip) { tip = document.createElement('div'); tip.id = 'gtip'; document.body.appendChild(tip); }
+  const g = graphHtml(el.dataset.graph); if (!g) { tip.style.display = 'none'; return; }
+  tip.innerHTML = g + (el.dataset.gtitle ? `<div class="gt-note">${esc(el.dataset.gtitle)}</div>` : ''); tip.style.display = 'block'; place(e);
+ });
+ document.addEventListener('mousemove', e => { if (cur) place(e); });
+})();
 
 // ---------------- multiplayer: lobby, peer-to-peer connections and the turn relay ----------------
 // One player hosts: their browser holds the authoritative world and resolves every turn. Players connect
