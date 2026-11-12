@@ -3738,6 +3738,7 @@ function newGame(year) {
  G.wars = []; G.unions = [];
  setupStartingRelations();
  refreshNames(true);
+ if (typeof puppetLawsTurn === 'function') puppetLawsTurn(); // subject states start under the Puppet State government
  spiritsTurn(true);
  return G;
 }
@@ -3965,7 +3966,7 @@ function economy(c) {
  // artisan supply production from population
  r.prod.supplies += r.pop / 1000 * 0.45 * (1 + bonus(c, 'supply') / 200);
  r.cons.grain = r.pop / 1000 * 2.0;
- r.cons.timber = r.pop / 1000 * 0.4;
+ r.cons.timber = r.pop / 1000 * 0.22; // v32: lighter timber demand (was 0.4)
  r.cons.ore = r.factories * 2;
  if (r.factories && r.prod.ore < r.cons.ore) r.prod.supplies *= 0.85;
  if (c.short && c.short.ore) r.prod.supplies *= 1 - 0.4 * c.short.ore.sev;   // idle furnaces
@@ -3980,7 +3981,8 @@ function economy(c) {
  r.trade = c.lastTrade || 0;
  r.tribute = 0;
  if (c.id === G.player) { if (isPuppet(c.id)) r.tribute -= r.tax * 0.2; for (const pid of puppetsOf(c.id)) r.tribute += tributeOf(pid); }
- r.expenses = r.maint + r.armyUp + r.navyUp + r.tax * c.resShare;
+ r.security = c.id === G.player ? r.tax * (c.secShare || 0) : 0; // v31: police and gendarmerie
+ r.expenses = r.maint + r.armyUp + r.navyUp + r.tax * c.resShare + r.security;
  r.net = r.tax + r.trade + r.tribute - r.expenses;
  return r;
 }
@@ -5584,6 +5586,33 @@ function spawnRebels(s, n) {
  return units;
 }
 // uprising: if a garrison is present it fights the rebels on the spot
+// ---------- v31: security spending ----------
+// a share of tax revenue (up to 40%) pays police and gendarmes: it calms every province and crushes rebel bands without sending the army
+const SEC_MAX = 0.4;
+function rebelCost(c, e) { return Math.max(4, (e || economy(c)).tax * 0.05); } // money to break one rebel regiment
+function securityCalm(c) { return (c.secShare || 0) * 8; } // unrest removed per sector per turn (up to -3.2 at 40%)
+function securityTurn(c, e) {
+ if (!(c.secShare > 0)) { c.secPool = 0; return; }
+ c.secPool = Math.min(12, (c.secPool || 0) + e.security / rebelCost(c, e));
+ const P = c.id, held = G.sectors.filter(s => s && !s.w && s.o === P && s.ctrl === -1).sort((a, b) => (b.pop || 0) - (a.pop || 0));
+ let crushed = 0;
+ for (const s of held) {
+  let reb = G.units.filter(u => u.o === -1 && u.s === s.id);
+  while (reb.length && c.secPool >= 1) { const u = reb.pop(); G.units = G.units.filter(x => x !== u); c.secPool -= 1; crushed++; }
+  if (!reb.length && c.secPool >= 0.5) { c.secPool -= 0.5; s.ctrl = P; s.rebelT = 0; s.unrest = Math.min(s.unrest, 45); logMsg(`Security forces restored order in ${s.name}.`, 'good'); }
+ }
+ if (crushed) logMsg(`Security forces broke up ${crushed} rebel band${crushed > 1 ? 's' : ''}.`, 'good');
+ // rebels marching inside our land are hunted down too
+ for (const u of G.units.filter(u => u.o === -1 && G.sectors[u.s] && G.sectors[u.s].o === P && G.sectors[u.s].ctrl !== -1)) { if (c.secPool < 1) break; G.units = G.units.filter(x => x !== u); c.secPool -= 1; }
+}
+// keep research + security + fixed upkeep within the revenue: raising one trims the other
+function balanceBudget(c, changed) {
+ const e = economy(c); if (!(e.tax > 0)) return;
+ const fixed = (e.maint + e.armyUp + e.navyUp) / e.tax;
+ if (c.resShare + (c.secShare || 0) + fixed <= 1) return;
+ if (changed === 'sec') c.resShare = Math.max(0, 1 - c.secShare - fixed);
+ else c.secShare = Math.max(0, 1 - c.resShare - fixed);
+}
 function uprising(s) {
  const P = G.player;
  const n = 1 + (s.unrest > 85 ? 1 : 0) + (s.pop > 5000 ? 1 : 0);
@@ -5608,7 +5637,7 @@ function endTurn() {
  let e = null;
  if (P >= 0) { // ---- the player's economy, research, construction, units and unrest (skipped while history is fast-forwarded) ----
  e = economy(c);
- c.money += e.tax - e.maint - e.armyUp - e.navyUp - e.tax * c.resShare + e.tribute;
+ c.money += e.tax - e.maint - e.armyUp - e.navyUp - e.tax * c.resShare - e.security + e.tribute;
  report.income = e.tax;
  // research
  const active = Object.values(c.research).filter(Boolean);
@@ -5668,7 +5697,7 @@ function endTurn() {
  // construction
  for (const s of G.sectors) {
   if (!s || s.w || !s.q.length || s.ctrl !== P) continue;
-  if (c.short.timber && rnd() < 0.65 * c.short.timber.sev * shortMult(c.short.timber)) { stalled++; continue; }
+  if (c.short.timber && rnd() < 0.45 * c.short.timber.sev * shortMult(c.short.timber)) { stalled++; continue; }
   const q = s.q[0]; q.t--;
   if (q.t <= 0) { s.q.shift(); if (BUILDINGS[q.b].special) s[q.b] = 1; else s.b[q.b] = (s.b[q.b] || 0) + 1; logMsg(`${BUILDINGS[q.b].n} completed in ${s.name}.`, 'build'); report.built.push(BUILDINGS[q.b].n); G.dirtyBuildings = true; }
  }
@@ -5707,6 +5736,7 @@ function endTurn() {
  }
  G.units = G.units.filter(u => u.hp > 0);
  // ---- unrest & rebellion ----
+ securityTurn(c, e);
  const capS = G.sectors[c.cap];
  const spUnrest = spiritVal(c, 'unrest') + lawVal(c, 'unrest') + supportUnrest(c), lawNc = lawVal(c, 'ncUnrest'); const spInf = spiritVal(c, 'infamy') + lawVal(c, 'infamy'); if (spInf) addInfamy(spInf);
  for (const s of G.sectors) {
@@ -5716,13 +5746,13 @@ function endTurn() {
   if (s.t === 'mountains' || s.t === 'jungle') d *= 1.3;
   const dist = capS ? Math.hypot(s.lon - capS.lon, s.lat - capS.lat) : 0; d += Math.min(2, dist / 30) * Math.max(0, c.tax - 0.1) * 10;
   if (c.short.grain) { const f = c.short.grain; d += (2 + 6 * f.sev) * shortMult(f) + (s.pop > 3000 ? 2 * f.sev : 0); }
-  if (c.short.timber) d += 1.5 * c.short.timber.sev * shortMult(c.short.timber);
+  if (c.short.timber) d += 1.0 * c.short.timber.sev * shortMult(c.short.timber);
   d += c.warExh * 0.3;
   d += spUnrest;
   d -= unitsIn(s.id, P).filter(isLand).length * 2.5;
-  d -= 1.2;
+  d -= 1.2 + securityCalm(c);
   s.unrest = clamp(s.unrest + d, 0, 100);
-  if (s.ctrl === P && s.unrest > 60 && !G.tutorial && rnd() < (s.unrest - 55) / 200) uprising(s);
+  if (s.ctrl === P && s.unrest > 60 && !G.tutorial && rnd() < (s.unrest - 55) / 200 * (1 - Math.min(0.6, (c.secShare || 0) * 1.5))) uprising(s);
   if (s.ctrl === -1) { s.rebelT++; if (s.rebelT > 12 && rnd() < 0.1) {
     const to = s.core > 0 && s.core !== P && G.countries[s.core].alive ? s.core : 0;
     G.units = G.units.filter(u => !(u.s === s.id && u.o === -1));
@@ -6337,7 +6367,7 @@ function doMerge(E, into, members) {
 // the player takes over another nation (e.g. joining a union)
 function switchPlayer(newId, old) {
  const n = G.countries[newId];
- for (const k of ['research', 'progress', 'goods', 'exp', 'imp', 'lastTrade', 'tax', 'resShare', 'warExh']) n[k] = old[k];
+ for (const k of ['research', 'progress', 'goods', 'exp', 'imp', 'lastTrade', 'tax', 'resShare', 'secShare', 'warExh']) n[k] = old[k];
  n.money = (n.aiMoney || 0) + old.money; n.ai = false;
  for (const t of old.techs) n.techs.add(t);
  n.known = new Set([...old.known, ...n.known]); n.trade = new Set(old.trade); n.rel = Object.assign({}, old.rel);
@@ -10931,7 +10961,7 @@ function animate() {
 }
 
 // ---------------- title / campaign ----------------
-const GAME_VERSION = 'v0.5 WEBSITE VER', CONTACT_EMAIL = 'blockmasterstudio@gmail.com';
+const GAME_VERSION = 'v0.6 WEBSITE VER', CONTACT_EMAIL = 'blockmasterstudio@gmail.com';
 function showTitle() {
  UI.screen = 'title'; SND.setMood('title');
  const ov = $('#screen'); ov.className = 'screen title fadein'; ov.innerHTML = `
@@ -11001,6 +11031,7 @@ async function fastForward(sc) {
  }
  G.player = -1; G.scenStart = G.turn; UI.ffwd = false;
  refreshNames(true);
+ if (typeof puppetLawsTurn === 'function') puppetLawsTurn();
  for (const o of G.countries) if (o.alive) o.gdpCache = countryGdp(o);
 }
 
@@ -11491,6 +11522,11 @@ function showEconomy() {
     <h4>Research budget</h4>
     <div class="slider"><input type="range" id="resR" min="0" max="70" value="${Math.round(c.resShare * 100)}"><b>${Math.round(c.resShare * 100)}%</b></div>
     <p class="muted">Share of tax revenue spent on the technology tree.</p>
+    <h4>Security budget</h4>
+    <div class="slider"><input type="range" id="secR" min="0" max="40" value="${Math.round((c.secShare || 0) * 100)}"><b>${Math.round((c.secShare || 0) * 100)}%</b></div>
+    <p class="muted">Police and gendarmes: calms every province by <b>${securityCalm(c).toFixed(1)}</b> unrest per turn, makes uprisings rarer and crushes about <b>${((c.secShare || 0) * e.tax / rebelCost(c, e)).toFixed(1)}</b> rebel regiments a turn without the army${G.sectors.some(s => s && !s.w && s.o === c.id && s.ctrl === -1) ? ` — <span class="neg">${G.sectors.filter(s => s && !s.w && s.o === c.id && s.ctrl === -1).length} sectors are held by rebels</span>` : ''}.</p>
+    ${(() => { const tot = Math.round((c.resShare + (c.secShare || 0) + (e.maint + e.armyUp + e.navyUp) / Math.max(1, e.tax)) * 100); return `<div class="kv"><span>Spending vs revenue</span><b class="${tot > 100 ? 'neg' : ''}">${tot}%</b></div>`; })()}
+    <p class="muted small">If research, security and upkeep together pass 100% of revenue, raising one budget lowers the other.</p>
    </div>
    <div class="eco-col">
     <h4>Budget per turn</h4>
@@ -11498,6 +11534,7 @@ function showEconomy() {
     <div class="kv"><span>Trade (last turn)</span><b class="${c.lastTrade >= 0 ? 'pos' : 'neg'}">${c.lastTrade >= 0 ? '+' : ''}${(c.lastTrade || 0).toFixed(1)}</b></div>
     ${e.tribute ? `<div class="kv"><span>${e.tribute > 0 ? 'Tribute from puppets' : 'Tribute to our overlord'}</span><b class="${e.tribute > 0 ? 'pos' : 'neg'}">${e.tribute > 0 ? '+' : ''}${e.tribute.toFixed(1)}</b></div>` : ''}
     <div class="kv"><span>Research</span><b class="neg">−${(e.tax * c.resShare).toFixed(1)}</b></div>
+    ${e.security ? `<div class="kv"><span>Security</span><b class="neg">−${e.security.toFixed(1)}</b></div>` : ''}
     <div class="kv"><span>Building maintenance</span><b class="neg">−${e.maint.toFixed(1)}</b></div>
     <div class="kv"><span>Army upkeep</span><b class="neg">−${e.armyUp.toFixed(1)}</b></div>
     <div class="kv"><span>Navy upkeep</span><b class="neg">−${e.navyUp.toFixed(1)}</b></div>
@@ -11516,7 +11553,8 @@ function showEconomy() {
  addTabs(box, 'eco', 'eco');
  const bind = () => {
   box.querySelector('#taxR').oninput = ev => { c.tax = ev.target.value / 100; box.querySelector('.m-b').innerHTML = render(); bind(); updateTopBar(); };
-  box.querySelector('#resR').oninput = ev => { c.resShare = ev.target.value / 100; box.querySelector('.m-b').innerHTML = render(); bind(); updateTopBar(); };
+  box.querySelector('#resR').oninput = ev => { c.resShare = ev.target.value / 100; balanceBudget(c, 'res'); box.querySelector('.m-b').innerHTML = render(); bind(); updateTopBar(); };
+  box.querySelector('#secR').oninput = ev => { c.secShare = Math.min(SEC_MAX, ev.target.value / 100); balanceBudget(c, 'sec'); box.querySelector('.m-b').innerHTML = render(); bind(); updateTopBar(); };
   box.querySelectorAll('[data-go]').forEach(d => d.onclick = () => { const s = G.sectors[+d.dataset.go]; closeModals(); focusOn(s.lon, s.lat); selectSector(s.id); });
  };
  bind();
@@ -12679,7 +12717,7 @@ function tutSteps() {
   allow: () => ['#side [data-u]', '#side #selAll'], map: {sector: sid => sid === K.cap || sid === K.revolt, unit: uid => { const u = G.units.find(x => x.id === uid); return u && u.o === P; }, order: sid => sid === K.revolt},
   tick: () => { const s = G.sectors[K.revolt]; if (s && s.ctrl === -1 && !G.units.some(u => u.o === P && u.mv > 0 && G.sectors[u.s].n.includes(K.revolt))) for (const u of G.units) if (u.o === P && G.sectors[u.s].n.includes(K.revolt)) u.mv = UNITS[u.t].mv; },
   done: () => G.sectors[K.revolt] && G.sectors[K.revolt].ctrl === P,
-  text: `High unrest has turned to rebellion in <b>${sname(K.revolt)}</b>! Select your troops in ${sname(K.cap)} and click the <span class="neg">red</span> sector to attack and crush the revolt.`});
+  text: `High unrest has turned to rebellion in <b>${sname(K.revolt)}</b>! Select your troops in ${sname(K.cap)} and click the <span class="neg">red</span> sector to attack and crush the revolt.<br><br><small class="muted">Later you can also fund a <b>security budget</b> (Economy window, up to 40% of revenue): police calm every province and break up rebel bands without the army.</small>`});
  S.push({title: 'End the turn', spot: () => '#endTurn', allow: () => ['#endTurn'], modal: true, keys: ['enter'], enter: () => { TUT.snap.turn = G.turn; }, done: () => G.turn > TUT.snap.turn && !anyModal() && !UI.busy,
   text: `Press <span class="tut-gold">End Turn</span> (or Enter). Three months pass: research advances, buildings rise, other nations act and wounded units heal. Read the dispatches, then continue.`});
  S.push({title: 'Politics', spot: () => '#bPol', allow: () => ['#bPol'], done: () => modalOpen('Politics'), text: `How the country is governed matters. Click <span class="tut-gold">🏛 Politics</span>.`});
