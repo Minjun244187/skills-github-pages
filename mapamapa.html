@@ -3473,7 +3473,8 @@ function performSlotLoad(i,kind){
  chosenSlot=i;R.pendingNew=false;closeStudio();startGame(false);toast(`Loaded Slot ${i+1} · ${kind==='auto'?'autosave':'manual checkpoint'}`,'good');
 }
 const UPDATE_LOG=[
- {version:'4.x · The Big Café Update',date:'November 10, 2026 · Includes 4.0–4.19',items:[
+ {version:'4.x · The Big Café Update',date:'November 10, 2026 · Includes 4.0–4.20',items:[
+ 'Fixed the game freezing in busy cafés: a street bench helper accidentally replaced the indoor seated-customer update, so the game stopped as soon as someone sat down.',
  'Nana gives a short street tour the first time your café reaches 2 stars: step outside, meet Mapa Lane, build the coffee stand and assign a barista.',
  'Reaching 2 stars now lists the outdoor coffee stand. Mapa Lane was re-spaced so street sprites no longer overlap, and the Street Coffee panel shows upgrades and sales as tidy cards.',
  'Street stand upgrades: Pro Espresso Machine (40% faster), Big Menu Board (5-person line, more stops), Pastry Case (sells desserts), Street Musician (crowds and tips), Neon Sign (night sales), Safety Bollards (no traffic injuries) and Bench Umbrellas (buyers sit and sip). Mapa Lane adds a bus stop where the bus stops and riders board, cyclists, an ice cream cart, balloons, a mailbox, a hydrant, a sleepy cat and passing bird flocks. Debug mode can now test a car crash.',
@@ -4158,7 +4159,7 @@ function updateOutdoors(dt){
  for(const p of st.people){p.phase+=dt;if(p.emote){p.emote.t-=dt;if(p.emote.t<=0)p.emote=null}
   if(p.carry)p.sipT=(p.sipT||rnd(1.5,3))-dt,p.sipT<-.6&&(p.sipT=rnd(1.5,3));
   if(p.kind==='buyer'){updateBuyer(p,dt,g,st,open);continue}
-  if(p.kind==='sitter'){updateSitter(p,dt,st);continue}
+  if(p.kind==='sitter'){updateStreetSitter(p,dt,st);continue}
   if(p.kind==='waiting'||p.stage==='board')continue;
   if(p.kind==='leave'&&p.stage==='down'){p.y+=dt*.1;if(p.y>=p.lane){p.y=p.lane;p.stage='walk'}continue}
   if(p.wait>0){p.wait-=dt;continue}
@@ -4224,7 +4225,7 @@ function updateStreetExtras(dt,st){
  for(const p of st.people)if(p.stage==='board'){const dx=p.boardX-p.x;p.x+=Math.sign(dx)*Math.min(Math.abs(dx),dt*.09);p.y=Math.min(.9,p.y);if(Math.abs(dx)<.004)p.x=-1}
 }
 function seatPos(i){return{x:[.13,.13,.85,.85][i]+(i%2?.028:-.028),y:.4}}
-function updateSitter(p,dt,st){
+function updateStreetSitter(p,dt,st){
  const t=seatPos(p.seat);
  if(p.stage==='toSeat'){const dx=t.x-p.x,dy=t.y-p.y;const d=Math.hypot(dx,dy);if(d<.004){p.stage='sit';p.x=t.x;p.y=t.y}else{p.x+=dx/d*Math.min(d,dt*.09);p.y+=dy/d*Math.min(d,dt*.09);p.dir=Math.sign(dx)||p.dir}return}
  p.sitT-=dt;if(p.sitT<=0){st.seats[p.seat]=null;p.kind='walk';p.decided=true;p.y=STREET.lanes[0];p.dir=pick([-1,1]);p.carry=false;p.emote={k:'heart',t:1.4}}
