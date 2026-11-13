@@ -283,6 +283,10 @@ table.rank td,table.rank th{padding:4px 8px}
 .tut-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:#b9a77a;text-transform:uppercase;letter-spacing:.06em}
 .tut-bar{height:3px;background:rgba(255,255,255,.08);border-radius:2px;margin-top:6px}.tut-bar i{display:block;height:100%;background:#d6b25e;border-radius:2px;transition:width .4s}
 .tut-f{display:flex;gap:8px;justify-content:flex-end;margin-top:10px}.tut-wait{font-size:12px;color:#b9a77a;animation:tutw 1.6s infinite}@keyframes tutw{50%{opacity:.45}}
+.tut-x{background:rgba(192,57,43,.18);border:1px solid rgba(220,90,70,.6);color:#f3c2b8;border-radius:6px;padding:3px 9px;font-size:12px;cursor:pointer}.tut-x:hover{background:rgba(192,57,43,.4);color:#fff}
+#tut .tut-do{margin:10px 0 4px;padding:8px 10px;border-radius:7px;background:rgba(240,214,138,.1);border:1px solid rgba(240,214,138,.45)}#tut .tut-do b{color:#f0d68a}#tut .tut-do ol{margin:5px 0 0;padding-left:20px}#tut .tut-do li{margin:3px 0}
+#tut .tut-tour{margin:8px 0;padding:8px 10px;border-left:3px solid #f0d68a;background:rgba(255,255,255,.04);border-radius:4px}#tut .tut-tn{float:right;font-size:11px;color:#bfae80}
+#tut .tut-f{display:flex;gap:8px;align-items:center;flex-wrap:wrap}#tut .tut-q{width:100%}#tut .tut-q>div{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
 .tut-ring{position:fixed;z-index:54;pointer-events:none;border:3px solid #f0d68a;border-radius:10px;box-shadow:0 0 0 3px rgba(0,0,0,.35),0 0 18px rgba(240,214,138,.8);animation:tutr 1.2s infinite}
 @keyframes tutr{50%{box-shadow:0 0 0 3px rgba(0,0,0,.35),0 0 30px rgba(240,214,138,1);transform:scale(1.03)}}
 .tut-mark{position:fixed;z-index:53;pointer-events:none;display:none;transform:translate(-50%,-100%)}
@@ -4140,8 +4144,8 @@ function shipsIn(sid, o) { let n = 0; for (const u of G.units) if (u.s === sid &
 function embarkRoom(sid, o) { return shipsIn(sid, o) * 2 - slotsUsed(sid, o); }
 function capOf(s) { return TERRAIN[s.t].cap; }
 function addUnit(t, o, s, hp = 100, free) { const u = {id: G.uid++, t, o, s, hp, mv: 0}; G.units.push(u);
- // every unit is 1,000 men drawn from the population (display-only ghosts and the observer draw nobody)
- if (!free && typeof drawMen === 'function') { u.men = hp / 100; drawMen(o, u.men, s); if (o >= 0 && G.countries[o] && enemiesOf(o).size) { const c = G.countries[o]; c._warSpend = (c._warSpend || 0) + ((UNITS[t] || {}).c || 0); } }
+ // every unit draws its men (menOf: thousands, by era) from the population (display-only ghosts and the observer draw nobody)
+ if (!free && typeof drawMen === 'function') { u.men = menOf(t) * hp / 100; u.menV = 1; drawMen(o, u.men, s); if (o >= 0 && G.countries[o] && enemiesOf(o).size) { const c = G.countries[o]; c._warSpend = (c._warSpend || 0) + ((UNITS[t] || {}).c || 0); } }
  if (G._tiLive) { let a = G._ti.uo.get(o); if (!a) G._ti.uo.set(o, a = []); a.push(u); const z = G.sectors[s]; if (z && z.w) { let b = G._ti.sea.get(s); if (!b) G._ti.sea.set(s, b = []); b.push(u); } }
  return u; }
 // ---- per-turn indexes (performance): built at the start of the AI phase and used only while it runs (G._tiLive) ----
@@ -7604,8 +7608,13 @@ function abolishSpirit(id) {
 }
 
 // ======================= v22: manpower and the books of every war =======================
-// Every unit is 1,000 men (u.men, in thousands = population units). Recruiting draws them from the population,
+// Units hold UNIT_MEN thousand men (u.men, in thousands = population units). Recruiting draws them from the population,
 // casualties are gone for good, reinforcing a battered unit draws fresh recruits, disbanding sends the survivors home.
+// v33: men per unit (thousands) grow with the era — a Napoleonic division, a 1914 infantry division, an armoured division…
+const UNIT_MEN = {line: 6, cav: 3, art: 2.5, rifle: 9, breech: 12, mtn: 10, rart: 4, mg: 6, regular: 16, qfart: 6, armcar: 4, biplane: 1.5, bomber: 2.5, tank: 6,
+ motor: 14, fighter: 2.5, divebomber: 3, navbomber: 3, heavybomber: 5, medtank: 12, heavytank: 10, jet: 3, mbt: 13, mech: 15, spart: 7, mbt2: 13, jet2: 3, jet3: 3,
+ jet4: 3, jet5: 3, jetbomber: 4, heli: 5, aheli: 5, rebel: 4};
+function menOf(t) { const U = UNITS[t]; if (!U) return 1; if (UNIT_MEN[t]) return UNIT_MEN[t]; if (U.naval) return /sub/.test(t) ? 0.5 : Math.max(0.5, (U.bt || 3) * 0.5); return 5; } // ships: a squadron's crews, 1,000–4,000 men
 function homeSectorFor(o, amt, sid) {
  const c = G.countries[o]; if (!c || c.observer) return null;
  let s = G.sectors[sid];
@@ -7619,12 +7628,12 @@ function drawMen(o, amt, sid) {
  const s = homeSectorFor(o, amt, sid); if (s) s.pop = Math.max(1, s.pop - amt);
 }
 function addMen(o, amt, sid) { if (!(amt > 0) || o < 0) return; const s = homeSectorFor(o, 0, sid); if (s) s.pop += amt; }
-function demobMen(u) { if (!u || !(u.men > 0)) return; addMen(u.o, Math.min(u.men, Math.max(0, u.hp) / 100), u.s); u.men = 0; }
+function demobMen(u) { if (!u || !(u.men > 0)) return; addMen(u.o, Math.min(u.men, menOf(u.t) * Math.max(0, u.hp) / 100), u.s); u.men = 0; }
 // damage taken = men lost; recorded against the war with `enemy` (or the owner's war)
 function menSync(u, enemy, dead) {
  if (!u || u.ghost) return;
- if (u.men === undefined) { u.men = Math.max(0, u.hp) / 100; if (!dead) return; }
- const want = dead ? 0 : Math.max(0, Math.min(100, u.hp)) / 100, d = u.men - want;
+ if (u.men === undefined) { u.men = menOf(u.t) * Math.max(0, u.hp) / 100; if (!dead) return; }
+ const want = dead ? 0 : menOf(u.t) * Math.max(0, Math.min(100, u.hp)) / 100, d = u.men - want;
  if (d > 0.0005 || dead) warLoss(u.o, enemy, Math.max(0, d), dead ? 1 : 0);
  if (d > 0) u.men = want;
 }
@@ -7634,20 +7643,21 @@ function histRecord(c, e) {
  if (!c) return; e = e || economy(c);
  const h = c.hist = c.hist || {d: [], pop: [], gdp: [], res: [], sup: [], army: [], navy: [], pr: {}};
  const tr = tradePartners(c).length > 0;
- const row = {d: `Q${Math.floor(G.m / 3) + 1} ${G.y}`, pop: e.pop, gdp: e.gdp, res: e.research, sup: (c.goods || {}).supplies || 0, army: armyMen(c), navy: navalPower(c)};
+ const row = {d: `Q${Math.floor(G.m / 3) + 1} ${G.y}`, pop: e.pop, gdp: e.gdp, res: e.research, sup: (c.goods || {}).supplies || 0, army: armyMen(c), navy: navalPower(c), money: c.money || 0};
+ for (const k in row) if (!h[k]) h[k] = h.d.map(() => null); // a series added later starts empty
  if (h.d.length && h.d[h.d.length - 1] === row.d) for (const k in row) h[k].pop(); // the same quarter again: replace it
  for (const k in row) h[k].push(typeof row[k] === 'number' ? Math.round(row[k] * 100) / 100 : row[k]);
  for (const g in GOODS) { const a = h.pr[g] = h.pr[g] || []; while (a.length < h.d.length - 1) a.unshift(null); if (a.length >= h.d.length) a.length = h.d.length - 1; a.push(tr ? Math.round(priceFor(c, g, true) * 1000) / 1000 : null); }
  if (h.d.length > HIST_MAX) { const n = h.d.length - HIST_MAX; for (const k in row) h[k].splice(0, n); for (const g in h.pr) h.pr[g].splice(0, n); }
 }
-function armyMen(c) { let m = 0; for (const u of G.units) if (u.o === c.id && !u.ghost) m += u.men !== undefined ? u.men : u.hp / 100; return m; }
+function armyMen(c) { let m = 0; for (const u of G.units) if (u.o === c.id && !u.ghost) m += u.men !== undefined ? u.men : menOf(u.t) * u.hp / 100; return m; }
 // once a turn: reinforcements draw recruits, other damage (attrition, raids, events) is counted, vanished units are losses
 function menTurn() {
  const snap = G._menSnap || new Map(), next = new Map();
  for (const u of G.units) {
   if (u.ghost) continue; next.set(u.id, u); snap.delete(u.id);
-  if (u.men === undefined) { u.men = Math.max(0, u.hp) / 100; continue; } // older saves
-  const want = Math.max(0, Math.min(100, u.hp)) / 100;
+  if (u.men === undefined || !u.menV) { u.men = menOf(u.t) * Math.max(0, u.hp) / 100; u.menV = 1; continue; } // older saves: re-count at the new sizes
+  const want = menOf(u.t) * Math.max(0, Math.min(100, u.hp)) / 100; // an upgraded unit draws the extra men it needs
   if (want > u.men + 0.0005) { drawMen(u.o, want - u.men, u.s); u.men = want; }
   else if (want < u.men - 0.0005) menSync(u, undefined, false);
  }
@@ -11246,10 +11256,10 @@ function updateTopBar() {
  setTimeout(() => tbEl && tbEl._fade && tbEl._fade(), 0);
  const tbHtml = `
   <div class="tb-c" title="${esc(c.name)}">${swatch(c)}<div class="tb-n"><b>${esc(c.name)}</b><small title="Date (each turn = 3 months)">${quarter()} ${G.y}${isPuppet(c.id) ? ` <span class="tb-badge warn" title="We are a puppet of ${esc(cname(overlordOf(c.id)))} — support for independence">⛓ Puppet ${Math.round(c.indep || 0)}%</span>` : ''}${unionOf(c.id) ? ` <span class="tb-badge" title="Member of the ${esc(unionOf(c.id).name)} (${unionOf(c.id).members.length} members)">🤝<span class="tb-un"> ${esc(unionOf(c.id).name)}</span></span>` : ''}</small></div></div>
-  ${tbCard('💰', 'Treasury', fmt(c.money), `${e.net >= 0 ? '+' : ''}${e.net.toFixed(0)}`, e.net >= 0 ? 'pos' : 'neg', 'Treasury and net change per turn')}
+  ${tbCard('💰', 'Treasury', fmt(c.money), `${e.net >= 0 ? '+' : ''}${e.net.toFixed(0)}`, e.net >= 0 ? 'pos' : 'neg', 'Treasury and net change per turn', 'money')}
   ${tbCard('📈', 'GDP', '$' + fmt(e.gdp), `tax ${Math.round(c.tax * 100)}%`, 'muted', 'Gross domestic product per year, and the tax rate', 'gdp')}
   ${tbCard('👥', 'Population', fmtPop(e.pop), `unrest ${Math.round(avgUnrest)}%${rebels ? ' ⚑' + rebels : ''}`, avgUnrest > 40 || rebels ? 'warn' : 'muted', `Population, and average unrest${rebels ? ' — ' + rebels + ' sectors in revolt' : ''}`, 'pop')}
-  ${tbCard('⚔', 'Army', fmtPop(armyMen(c)), `navy ${Math.round(navalPower(c))}`, 'muted', 'Men under arms (every unit is 1,000 men drawn from the population), and naval power', 'mil')}
+  ${tbCard('⚔', 'Army', fmtPop(armyMen(c)), `navy ${Math.round(navalPower(c))}`, 'muted', 'Men under arms (a unit is 3,000–16,000 men by type and era, drawn from the population), and naval power', 'mil')}
   ${tbCard('📦', 'Supplies', Math.round(c.goods.supplies), `${sup >= 0 ? '+' : ''}${sup.toFixed(0)}`, sup >= 0 ? 'pos' : 'neg', 'Military supplies: stockpile and change per turn', 'sup')}
   ${tbCard('🔬', 'Research', e.research.toFixed(0), 'per turn', 'muted', 'Research points per turn', 'res')}
   ${shortChip(c)}`;
@@ -11387,7 +11397,7 @@ function renderSectorPanel() {
  if (myU.length) h += `<div class="sp-sec">Your forces <small>click a unit (shift = add)</small></div><div class="ulist">${unitRows(myU, true)}</div><button class="act" id="selAll">Select all ${myU.length} units here</button>`;
  if (othU.length) h += `<div class="sp-sec">${othU.some(u => u.o === -1) ? 'Rebel forces' : 'Foreign forces'}${G.vis[s.id] === 3 ? ' <small>📡 radar contact</small>' : ''}</div><div class="ulist">${unitRows(othU, false)}</div>`;
  else if (!unitSeen(s.id) && s.ctrl !== P) h += `<p class="muted small">🌫 Troops here are hidden — scout them with troops next door, reconnaissance aircraft or a 📡 Radar Station.</p>`;
- const recBtn = (t, extra, old) => { const U = UNITS[t]; const err = canRecruit(c, s, t); return `<button class="recb${old ? ' old' : ''}" data-r="${t}" ${err ? 'disabled' : ''} title="${esc(err || '')}"><b>${UNIT_ICON[U.ic] || '•'} ${esc(U.n)}</b><small>⚔${U.a} 🛡${U.d} ${extra} · ${U.c}M · 📦${U.sup}/t</small></button>`; };
+ const recBtn = (t, extra, old) => { const U = UNITS[t]; const err = canRecruit(c, s, t); return `<button class="recb${old ? ' old' : ''}" data-r="${t}" ${err ? 'disabled' : ''} title="${esc(err || '')}"><b>${UNIT_ICON[U.ic] || '•'} ${esc(U.n)}</b><small>⚔${U.a} 🛡${U.d} ${extra} · ${U.c}M · 📦${U.sup}/t · 👥${fmtPop(menOf(t))}</small></button>`; };
  // newest units first; superseded models are folded away behind "show older"
  const recList = (list, kind, fmt) => { const cur = list.filter(t => !unitObsolete(t, list)), old = list.filter(t => unitObsolete(t, list)); const open = UI.showOld && UI.showOld[kind];
   return cur.map(t => recBtn(t, fmt(t))).reverse().join('') + (open ? old.map(t => recBtn(t, fmt(t), true)).reverse().join('') : '') + (old.length ? `<button class="mini oldtg" data-old="${kind}">${open ? '▴ Hide older models' : `▾ Show older models (${old.length})`}</button>` : ''); };
@@ -11434,7 +11444,7 @@ function bindPanel(p, s) {
   if (B.c > c.money * 0.3) confirmBox(`Build ${B.n}?`, `<p>Spend <b>${B.c}M</b> (${Math.round(B.c / c.money * 100)}% of the treasury) on a ${B.n} in ${esc(s.name)}? Upkeep ${B.m}M per turn.</p>`, 'Build', 'gold', go); else go(); });
  p.querySelectorAll('[data-dem]').forEach(b => b.onclick = ev => { ev.preventDefault(); const k = b.dataset.dem; const n = k === 'base' ? 'Military Base' : BUILDINGS[k].n; confirmBox('Demolish ' + n + '?', `<p>Tear down the ${n} in ${esc(s.name)}? Nothing is refunded.</p>`, 'Demolish', 'red', () => { demolish(s, k); refreshAll(true); }); });
  p.querySelectorAll('[data-r]').forEach(b => b.onclick = () => { const U = UNITS[b.dataset.r]; const go = () => { const e = doRecruit(s, b.dataset.r); if (e) { toast(e); SND.play('error'); } else { toast(`${U.n} ${U.naval ? 'launched' : 'raised'}.`); SND.play('coin'); SND.play('select', {kind: SND.typeKind(b.dataset.r), delay: 150}); } refreshAll(); };
-  if (U.c > c.money * 0.3) confirmBox(`Recruit ${U.n}?`, `<p>Spend <b>${U.c}M</b> (${Math.round(U.c / c.money * 100)}% of the treasury)? Upkeep ${U.up}M and ${U.sup} supplies per turn.</p>`, 'Recruit', 'gold', go); else go(); });
+  if (U.c > c.money * 0.3) confirmBox(`Recruit ${U.n}?`, `<p>Spend <b>${U.c}M</b> (${Math.round(U.c / c.money * 100)}% of the treasury)? Upkeep ${U.up}M and ${U.sup} supplies per turn; ${fmtPop(menOf(t))} men from the population.</p>`, 'Recruit', 'gold', go); else go(); });
  p.querySelectorAll('[data-u]').forEach(b => b.onclick = e => selectUnits([+b.dataset.u], e.shiftKey));
  p.querySelectorAll('[data-dannex]').forEach(b => b.onclick = () => askAnnex(+b.dataset.dannex, () => refreshAll(true)));
  p.querySelectorAll('[data-reqjoin]').forEach(b => b.onclick = () => { const u = unionById(+b.dataset.reqjoin); if (!u) return; const mine = unionOf(G.player);
@@ -12587,7 +12597,7 @@ function showWars() {
   return `<div class="rank-tabs"><button class="mini ${UI.warTab === 'live' ? 'on' : ''}" data-wt="live">Ongoing (${live.length})</button><button class="mini ${UI.warTab === 'done' ? 'on' : ''}" data-wt="done">Concluded (${done.length})</button></div>
    <div class="war-sum"><span>Our men under arms: <b>${fmtPop(armyMen(G.countries[P]))}</b></span><span>Our war dead: <b>${fmtPop(myLoss)}</b></span><span>Units lost: <b>${myUnits}</b></span><span>Spent on war: <b>$${fmt(myCost)}</b></span></div>
    <div class="scroll" style="max-height:60vh">${cards}${UI.warTab === 'done' && !UI.warAll && list.length > 40 ? `<button class="mini" data-wall="1">Show all ${list.length} wars</button>` : ''}</div>
-   <p class="muted">Every unit is 1,000 men drawn from the population; casualties are lost for good and reinforcing a battered unit takes fresh recruits. Nations hidden by the fog of war show only ???.</p>`;
+   <p class="muted">Every unit draws its men from the population — a few thousand for Napoleonic line infantry, about 16,000 for a 1914 infantry division; casualties are lost for good and reinforcing a battered unit takes fresh recruits. Nations hidden by the fog of war show only ???.</p>`;
  };
  const box = showModal('War summary', render(), [{t: 'Close'}], null, true);
  addTabs(box, 'mil', 'wars');
@@ -12766,6 +12776,7 @@ function graphHtml(key) {
  const c = G && G.countries[G.player]; const h = c && c.hist; if (!h) return '';
  const num = v => fmt(v), k1 = v => (Math.round(v * 10) / 10).toString(), money = v => '$' + fmt(v);
  if (key.startsWith('price:')) { const g = key.slice(6); return graphSvg(GOODS[g].n + ' price', h.pr[g] || [], h.d, v => v.toFixed(2) + 'M', '#d6b25e'); }
+ if (key === 'money') return graphSvg('Treasury', h.money || [], h.d, money, '#e8c66a');
  if (key === 'gdp') return graphSvg('GDP per year', h.gdp, h.d, money, '#6fbf73');
  if (key === 'pop') return graphSvg('Population', h.pop, h.d, v => fmtPop(v), '#6aa9e0');
  if (key === 'res') return graphSvg('Research per turn', h.res, h.d, k1, '#b48ce0');
@@ -13271,79 +13282,168 @@ function landRecSel() { const c = G.countries[G.player]; return curFirst(availLa
 function tutSteps() {
  const K = TUT.k, P = G.player, c = G.countries[P];
  const closeOnly = () => ['.modal .m-f .btn', '.modal .x'];
+ const isMine = uid => { const u = G.units.find(x => x.id === uid); return u && u.o === P; };
  const S = [];
- S.push({title: 'Welcome to Emperor\'s Cabin', next: true, text: `You are about to rule the <b>German Empire</b> in January 1900. This lesson covers every part of the game: the map and camera, the top bar, national spirits, building, the economy and trade, research, armies and revolts, politics and laws, diplomacy and factions, war and the war summary, peace, the navy, the chronicle and the Esc menu.<br><br>Follow the <span class="tut-gold">gold instructions</span>. Until each step is done, every other button, key and map order is <b>locked</b>.`});
- S.push({title: 'The camera', next: true, text: `Move around the world:<ul><li><b>Left-drag</b> to pan</li><li><b>Right-drag</b> to rotate and tilt</li><li><b>Scroll</b> to zoom — cities, forests, farms and factories appear in 3D</li><li><b>W A S D</b> or the arrow keys also pan</li></ul>Try it now, then press <b>Next</b>.`});
- S.push({title: 'Your realm at a glance', next: true, spot: () => '#tb', text: `The top bar shows the state of the nation. On the left: the <b>flag</b>, the historical name, the <b>date</b> (each turn is three months) and badges for our <b>faction</b> — or a puppet's independence. Then six cards:<ul><li><b>Treasury</b> and its change per turn</li><li><b>GDP</b> and the tax rate</li><li><b>Population</b> and average unrest (⚑ = sectors in revolt)</li><li><b>Army</b> — men under arms, 1,000 per unit — and naval power</li><li><b>Supplies</b> and their change</li><li><b>Research</b> points per turn</li></ul>Hover any card for details. A ⚠ chip warns of shortages.`});
- S.push({title: 'The command bar', next: true, spot: () => '#menu', text: `Every window opens from here (hotkeys in brackets):<ul><li>🔬 <b>Tech</b> (T) — the technology tree</li><li>💰 <b>Economy</b> (E) — taxes, goods and the <b>Trade</b> tab (R)</li><li>🏛 <b>Politics</b> (P) — the laws of the land</li><li>⚔ <b>Military</b> (M) — forces and the <b>War Summary</b> tab (X)</li><li>🕊 <b>Diplomacy</b> (G) — with <b>Factions</b> (U) and <b>World Rankings</b> (K) tabs</li><li>📜 <b>Chronicle</b> — events and dispatches</li></ul><b>Map</b> switches the map between political, terrain, unrest and economy views; ★ jumps to the capital.`});
- S.push({title: 'National spirits', spot: () => '#spirits', allow: () => ['#spirits'], done: () => modalOpen('National spirits'),
-  text: `Below the top bar are our <b>national spirits</b> — temporary traits from our moment in history. Germany in 1900 is gripped by <b>Weltpolitik</b> (the Kaiser's quest for colonies and a great fleet) and the <b>Scramble for Africa</b>.<br><br>Hover an icon for details, then click the <span class="tut-gold">spirits bar</span>.`});
- S.push({title: 'How spirits work', spot: () => '.modal .sp-card', allow: () => ['.modal .m-f .btn', '.modal .x'], done: () => !anyModal(),
-  text: `Each spirit has <span class="pos">good</span> and <span class="neg">bad</span> effects (green, red or gold borders show the balance) and <b>ends on its own</b>: when its era passes, its time runs out, or its conditions stop. Some belong to one nation — the Meiji <b>Beautiful Restoration</b>, Korea's <b>Hermit Kingdom</b>, Napoleon's <b>Grande Armée</b>. Others any nation can earn: <b>Industrial Revolution</b> (research railways), <b>Sphere of Influence</b> (lead a big union), <b>Victory Euphoria</b>, <b>War Weariness</b>… A few can be ended early by decree.<br><br>Close the window to continue.`});
- S.push({title: 'Select your capital', mark: () => K.cap, enter: () => { const s = G.sectors[K.cap]; focusOn(s.lon, s.lat, 32); }, map: {sector: sid => sid === K.cap}, done: () => G.sel === K.cap,
-  text: `Click <b>${sname(K.cap)}</b>, your capital, on the map — look for the pulsing gold marker.`});
- S.push({title: 'The sector panel', next: true, spot: () => '#side', text: `Every land sector shows its terrain, population, unrest and buildings here. The terrain decides what can be built and how many units fit (2–4 slots). ${sname(K.cap)} has a <b>Military Base</b>, so troops can be recruited here. Click a foreign sector and this panel shows that nation's <b>government</b> and laws as well.`});
- if (K.farm !== K.cap) S.push({title: 'Choose a farming sector', mark: () => K.farm, enter: () => { const s = G.sectors[K.farm]; focusOn(s.lon, s.lat, 32); }, map: {sector: sid => sid === K.farm}, done: () => G.sel === K.farm, text: `Click <b>${sname(K.farm)}</b> — good farmland.`});
- S.push({title: 'Build a farm', spot: () => '#side [data-b="farm"]', allow: () => ['#side [data-b="farm"]'], modal: true, map: {sector: sid => sid === K.farm}, done: () => G.sectors[K.farm].q.some(q => q.b === 'farm'),
-  text: `Farms grow grain on plains, hills and jungle; wood workshops, mines and factories produce timber, ore and military supplies. Special buildings — a <b>Military Base</b>, <b>Dockyard</b>, <b>Airport</b>, <b>Radar Station</b> and <b>University</b> (+6% research each, one per sector) — take no building slot. Surplus goods are sold to your trade partners.<br><br>Click <span class="tut-gold">Farm</span> to begin construction. Buildings take a few turns and cost upkeep every turn.`});
- S.push({title: 'Open the economy', spot: () => '#bEco', allow: () => ['#bEco'], done: () => modalOpen('Economy'), text: `Your money comes from <b>taxes</b>. Click the <span class="tut-gold">💰 Economy</span> button.`});
- S.push({title: 'Taxes and research', next: true, spot: () => '.modal #taxR', allow: () => ['.modal #taxR', '.modal #resR', '#bEco'], text: `<b>Tax rate:</b> more tax means more money — but above 12% unrest rises, most of all in conquered, colonial and remote provinces. Above 60% unrest a sector may rebel.<br><br><b>Research budget:</b> the share of taxes spent on technology.<br><br>Try the sliders, then press <b>Next</b>.`});
- S.push({title: 'Trade', spot: () => '.modal .m-tab[data-tab="trade"]', allow: () => ['.modal .m-tab[data-tab="trade"]'], done: () => modalOpen('Trade'), text: `Trade turns surplus goods into money. The Economy window has a <span class="tut-gold">🚢 Trade</span> tab — open it.`});
- S.push({title: 'Propose a trade agreement', spot: () => '.modal [data-prop]', allow: () => ['.modal [data-prop]'], done: () => tradeUsed(), text: `Tick which goods to export and import — military supplies are exported by default. Each partner opens its market to us, and trading partners stay visible through the fog of war. Click <span class="tut-gold">propose</span> next to any nation — you may propose <b>one agreement per turn</b>.`});
- S.push({title: 'Close the window', spot: () => '.modal .m-f .btn', allow: closeOnly, done: () => !anyModal(), text: `Close the Economy window.`});
- S.push({title: 'Open the technology tree', spot: () => '#bTech', allow: () => ['#bTech'], enter: () => { TUT.snap.res = Object.values(c.research).filter(Boolean).length; }, done: () => modalOpen('Technology'), text: `Technology raises GDP, population growth and construction speed, and unlocks better units. Click <span class="tut-gold">🔬 Tech</span>.`});
- S.push({title: 'Choose a research project', spot: () => '.modal .tn.can', modal: true, allow: () => ['#bTech'], done: () => Object.values(c.research).filter(Boolean).length > TUT.snap.res,
-  text: `There are five trees: <b>Civil</b>, <b>Military</b>, <b>Navy</b>, <b>Air Force</b> (unlocked by Powered Flight) and <b>Science</b>. Military and naval inventions depend on civil ones — tanks need the gasoline engine. Researching a technology <b>ahead of its time</b> (its year is still in the future) goes at <span class="neg">half speed</span>.<br><br>Click any glowing technology, then press <span class="tut-gold">Research</span>. You can run one project in every tree at once.`});
- S.push({title: 'Close the window', spot: () => '.modal .m-f .btn', allow: closeOnly, done: () => !anyModal(), text: `Close the technology tree. When a newer rifle or cannon is researched, your existing regiments are refitted for free — but warships are not.`});
- S.push({title: 'Select an army', mark: () => K.cap, enter: () => { const s = G.sectors[K.cap]; focusOn(s.lon, s.lat, 26); selectUnits([]); }, allow: () => ['#side [data-u]', '#side #selAll'], map: {sector: sid => sid === K.cap, unit: uid => { const u = G.units.find(x => x.id === uid); return u && u.o === P; }}, done: () => (G.selUnits || []).length > 0,
-  text: `Click one of your <b>regiments</b> standing in ${sname(K.cap)} (or click the sector and pick a unit in the panel). Shift-click adds more; double-click selects the whole stack.`});
- S.push({title: 'March!', enter: () => { TUT.snap.pos = G.units.filter(u => u.o === P).map(u => u.id + ':' + u.s).join(); }, allow: () => ['#side [data-u]', '#side #selAll'], map: {sector: sid => sid === K.cap, unit: uid => { const u = G.units.find(x => x.id === uid); return u && u.o === P; }, order: sid => R.highlights[sid] === 'move' && !G.sectors[sid].w}, done: () => G.units.filter(u => u.o === P).map(u => u.id + ':' + u.s).join() !== TUT.snap.pos,
-  text: `<span class="pos">Green</span> sectors are where the selection can move this turn (most units move one sector; cavalry and armour two). Click a <b>green sector</b> to march there.`});
- S.push({title: 'Back to the capital', mark: () => K.cap, map: {sector: sid => sid === K.cap}, done: () => G.sel === K.cap && !(G.selUnits || []).length, enter: () => selectUnits([]), text: `Click <b>${sname(K.cap)}</b> again to open its panel.`});
- S.push({title: 'Recruit a regiment', spot: () => landRecSel(), allow: () => [landRecSel()], modal: true, map: {sector: sid => sid === K.cap}, enter: () => { TUT.snap.n = G.units.filter(u => u.o === P).length; }, done: () => G.units.filter(u => u.o === P).length > TUT.snap.n,
-  text: `Units are raised at military bases. Each regiment takes <b>1,000 men</b> from the population; better units cost more money, upkeep and <b>supplies</b> — without supplies, wounded units do not heal. Our <b>conscription law</b> caps the size of the army. Click a <span class="tut-gold">recruit</span> button.`});
- S.push({title: 'Revolt!', mark: () => K.revolt,
-  enter: () => { const s = G.sectors[K.revolt]; if (!s) return; G.units = G.units.filter(u => u.s !== s.id); s.unrest = 75; const r = spawnRebels(s, 1); r.forEach(u => u.hp = 12); for (const u of G.units) if (u.o === P && u.s === K.cap) u.mv = UNITS[u.t].mv; logMsg(`Rebellion! Rebels have seized ${s.name}.`, 'bad'); SND.play('alarm'); focusOn(s.lon, s.lat, 30); updateVisibility(); refreshAll(true); },
-  allow: () => ['#side [data-u]', '#side #selAll'], map: {sector: sid => sid === K.cap || sid === K.revolt, unit: uid => { const u = G.units.find(x => x.id === uid); return u && u.o === P; }, order: sid => sid === K.revolt},
+ const ch = (n, name) => `${n} · ${name}`;
+ // ---------------- 1 · the screen ----------------
+ S.push({ch: ch(1, 'The screen'), title: 'Welcome to Emperor\'s Cabin', next: true,
+  text: `You rule the <b>German Empire</b> in January 1900. In about 15 minutes this guide shows you <b>every button</b> on the screen and walks you through each kind of action, one click at a time.<ul><li>A <span class="tut-gold">gold ring</span> shows what to look at or click.</li><li>A pulsing <span class="tut-gold">▼</span> marks a place on the map.</li><li>While a step waits for you, everything else is <b>locked</b>, so you cannot get lost.</li><li>Use <b>✕ Exit</b> (top right of this box) at any time to leave.</li></ul>`,
+  todo: ['Press <b>Next ▸</b> below.']});
+ S.push({ch: ch(1, 'The screen'), title: 'Moving the camera', next: true,
+  text: `The 3D map is the whole world. Zoom in and cities, forests, farms and factories appear.`,
+  todo: ['<b>Left-drag</b> the map to pan.', '<b>Right-drag</b> to rotate and tilt.', '<b>Scroll the wheel</b> to zoom in and out.', '<b>W A S D</b> or the <b>arrow keys</b> also pan.', 'When you are done, press <b>Next ▸</b>.']});
+ S.push({ch: ch(1, 'The screen'), title: 'The top bar', next: true, tour: [
+  {spot: '#tb .tb-c', h: 'Your nation', t: 'The flag, the name (it changes with the government) and the <b>date</b>. One turn is three months.'},
+  {spot: '#tb [data-graph="money"]', h: '💰 Treasury', t: 'Money in the bank and how much it changes each turn (green = profit, red = loss). <b>Hover it</b> to see a graph of your treasury over time.'},
+  {spot: '#tb [data-graph="gdp"]', h: '📈 GDP', t: 'The size of the economy per year, and the tax rate. Hover for its history graph.'},
+  {spot: '#tb [data-graph="pop"]', h: '👥 Population', t: 'People in your land and average <b>unrest</b>. A ⚑ means sectors are in revolt. Hover for the graph.'},
+  {spot: '#tb [data-graph="mil"]', h: '⚔ Army', t: 'Men under arms and naval power. Every unit takes thousands of men from the population — a few thousand in 1800, about 16,000 for a 1914 division. Hover for graphs of the army and navy.'},
+  {spot: '#tb [data-graph="sup"]', h: '📦 Supplies', t: 'Military supplies in stock and their change per turn. Armies need them to heal and fight.'},
+  {spot: '#tb [data-graph="res"]', h: '🔬 Research', t: 'Research points earned each turn. Hover for the graph.'}],
+  todo: ['Read each card as the gold ring moves.', 'Press <b>Next ▸</b> to go to the next card.']});
+ S.push({ch: ch(1, 'The screen'), title: 'The command bar', next: true, tour: [
+  {spot: '#bTech', h: '🔬 Technology  (key T)', t: 'The technology tree: choose what your scientists research.'},
+  {spot: '#bEco', h: '💰 Economy & Trade  (E / R)', t: 'Taxes, research and security budgets, goods, and the <b>Trade</b> tab.'},
+  {spot: '#bPol', h: '🏛 Politics  (P)', t: 'The laws of the land and the people\'s support.'},
+  {spot: '#bMil', h: '⚔ Military  (M / X)', t: 'All your forces, and the <b>War Summary</b> tab with the losses of every war.'},
+  {spot: '#bDip', h: '🕊 Diplomacy  (G / U / K)', t: 'Relations with every nation, plus the <b>Factions</b> and <b>World Rankings</b> tabs.'},
+  {spot: '#bLog', h: '📜 Chronicle', t: 'Every event of the game and the dispatches after each turn.'},
+  {spot: '#mapMode', h: 'Map view', t: 'Switch the map between political, terrain, unrest and economy views.'},
+  {spot: '#bCap', h: '★ Capital  (C)', t: 'Fly the camera back to your capital.'},
+  {spot: '#bSnd', h: '🔊 Sound', t: 'Music and sound volume.'},
+  {spot: '#bSave', h: '💾 Save & load', t: 'Three save slots, a yearly autosave, and export to a file.'},
+  {spot: '#bHelp', h: '? Help', t: 'The full game guide, any time you need it.'}],
+  todo: ['Read about each button as the gold ring moves.', 'Press <b>Next ▸</b> for the next button.']});
+ S.push({ch: ch(1, 'The screen'), title: 'The rest of the screen', next: true, tour: [
+  {spot: '#spirits', h: 'National spirits', t: 'Traits from your moment in history. You will open them in the next step.'},
+  {spot: '#feed', h: 'News feed', t: 'The latest events in the world. Older news is kept in the 📜 Chronicle.'},
+  {spot: '#endTurn', h: 'End Turn  (Enter)', t: 'When you have given your orders, press this: three months pass and every nation acts.'}],
+  todo: ['Press <b>Next ▸</b> after each one.']});
+ S.push({ch: ch(1, 'The screen'), title: 'National spirits', spot: () => '#spirits', allow: () => ['#spirits'], done: () => modalOpen('National spirits'),
+  text: `Germany in 1900 is gripped by <b>Weltpolitik</b> (the Kaiser's quest for colonies and a great fleet) and the <b>Scramble for Africa</b>. Hover an icon to see a quick summary.`,
+  todo: ['Click the <span class="tut-gold">spirits bar</span> (ringed in gold, top left).']});
+ S.push({ch: ch(1, 'The screen'), title: 'How spirits work', spot: () => '.modal .sp-card', allow: closeOnly, done: () => !anyModal(),
+  text: `Each spirit has <span class="pos">good</span> and <span class="neg">bad</span> effects and <b>ends on its own</b> — when its era passes, its time runs out or its conditions stop. Some belong to one nation only, like Japan's Meiji Restoration.`,
+  todo: ['Read the cards.', 'Click <b>Close</b> (bottom right of the window) or the <b>✕</b>.']});
+ // ---------------- 2 · building ----------------
+ S.push({ch: ch(2, 'Land and building'), title: 'Select your capital', mark: () => K.cap, enter: () => { const s = G.sectors[K.cap]; focusOn(s.lon, s.lat, 32); }, map: {sector: sid => sid === K.cap}, done: () => G.sel === K.cap,
+  text: `The map is divided into <b>sectors</b>. Clicking one opens its panel.`,
+  todo: [`Find the pulsing <span class="tut-gold">▼</span> over <b>${sname(K.cap)}</b>.`, 'Left-click that sector.']});
+ S.push({ch: ch(2, 'Land and building'), title: 'The sector panel', next: true, spot: () => '#side',
+  text: `This panel shows the sector's <b>terrain</b>, <b>population</b>, <b>unrest</b>, buildings and units. Terrain decides what can be built and how many units fit (2–4 slots). ${sname(K.cap)} has a <b>Military Base</b>, so troops can be recruited here. When you click a foreign sector, the panel shows that nation's government and laws.`,
+  todo: ['Look over the panel on the right.', 'Press <b>Next ▸</b>.']});
+ if (K.farm !== K.cap) S.push({ch: ch(2, 'Land and building'), title: 'Choose a farming sector', mark: () => K.farm, enter: () => { const s = G.sectors[K.farm]; focusOn(s.lon, s.lat, 32); }, map: {sector: sid => sid === K.farm}, done: () => G.sel === K.farm,
+  text: `Farms need plains, hills or jungle.`, todo: [`Click <b>${sname(K.farm)}</b>, marked with the <span class="tut-gold">▼</span>.`]});
+ S.push({ch: ch(2, 'Land and building'), title: 'Build a farm', spot: () => '#side [data-b="farm"]', allow: () => ['#side [data-b="farm"]'], modal: true, map: {sector: sid => sid === K.farm}, done: () => G.sectors[K.farm].q.some(q => q.b === 'farm'),
+  text: `Farms grow grain; wood workshops make timber; mines dig iron and coal; factories turn them into military supplies. Special buildings — <b>Military Base</b>, <b>Dockyard</b>, <b>Airport</b>, <b>Radar Station</b> and <b>University</b> (+6% research) — need no building slot. Buildings take a few turns and cost upkeep.`,
+  todo: ['In the panel on the right, find the <span class="tut-gold">Farm</span> button (ringed in gold).', 'Click it to start construction. If a confirmation appears, confirm it.']});
+ // ---------------- 3 · economy ----------------
+ S.push({ch: ch(3, 'Economy and trade'), title: 'Open the economy', spot: () => '#bEco', allow: () => ['#bEco'], done: () => modalOpen('Economy'),
+  text: `Your money comes from <b>taxes</b> and <b>trade</b>.`, todo: ['Click the <span class="tut-gold">💰 Economy</span> button in the command bar (top right).']});
+ S.push({ch: ch(3, 'Economy and trade'), title: 'Taxes and budgets', next: true, spot: () => '.modal #taxR, .modal #resR, .modal #secR', allow: () => ['.modal #taxR', '.modal #resR', '.modal #secR', '#bEco'],
+  text: `<b>Tax rate:</b> more tax brings more money, but above 12% unrest rises — most of all in conquered and colonial lands.<br><b>Research budget:</b> the share of revenue (taxes + trade profit) spent on technology.<br><b>Security budget:</b> police that calm every province and break up rebels without the army (up to 40%).<br>If budgets and upkeep pass 100% of revenue, raising one lowers another. On the right, <b>Budget per turn</b> lists every income and cost.`,
+  todo: ['Drag the three sliders to try them.', 'Press <b>Next ▸</b>.']});
+ S.push({ch: ch(3, 'Economy and trade'), title: 'Trade', spot: () => '.modal .m-tab[data-tab="trade"]', allow: () => ['.modal .m-tab[data-tab="trade"]'], done: () => modalOpen('Trade'),
+  text: `Trade turns surplus goods into money, and trade profit adds to your revenue.`, todo: ['Click the <span class="tut-gold">Trade</span> tab at the top of the window.']});
+ S.push({ch: ch(3, 'Economy and trade'), title: 'Goods and prices', next: true, spot: () => '.modal [data-graph^="price:"]', allow: () => ['.modal .m-tab[data-tab="trade"]'],
+  text: `Each row is a good: what you produce, consume and keep in stock, and its selling price. The tick boxes choose what to <b>export</b> and <b>import</b>.`,
+  todo: ['<b>Hover your mouse</b> over a good\'s row to see a graph of its price over time.', 'Press <b>Next ▸</b>.']});
+ S.push({ch: ch(3, 'Economy and trade'), title: 'Propose a trade agreement', spot: () => '.modal [data-prop]', allow: () => ['.modal [data-prop]'], done: () => tradeUsed(),
+  text: `Each partner opens its market to you, and trading partners stay visible through the fog of war. You may propose <b>one agreement per turn</b>.`,
+  todo: ['In the list on the right, click <span class="tut-gold">propose</span> next to any nation.']});
+ S.push({ch: ch(3, 'Economy and trade'), title: 'Close the window', spot: () => '.modal .m-f .btn', allow: closeOnly, done: () => !anyModal(), text: `Well traded!`, todo: ['Click <b>Close</b> at the bottom right of the window.']});
+ // ---------------- 4 · research ----------------
+ S.push({ch: ch(4, 'Research'), title: 'Open the technology tree', spot: () => '#bTech', allow: () => ['#bTech'], enter: () => { TUT.snap.res = Object.values(c.research).filter(Boolean).length; }, done: () => modalOpen('Technology'),
+  text: `Technology raises GDP, growth and building speed, and unlocks better units.`, todo: ['Click the <span class="tut-gold">🔬 Technology</span> button.']});
+ S.push({ch: ch(4, 'Research'), title: 'Choose a research project', spot: () => '.modal .tn.can', modal: true, allow: () => ['#bTech'], done: () => Object.values(c.research).filter(Boolean).length > TUT.snap.res,
+  text: `There are five trees: <b>Civil</b>, <b>Military</b>, <b>Navy</b>, <b>Air Force</b> and <b>Science</b>, each researching one project at a time. A technology <b>ahead of its time</b> costs double.`,
+  todo: ['Click any technology with a <span class="tut-gold">gold ring</span> (one you can research now).', 'In the details that open, click <b>Research</b>.']});
+ S.push({ch: ch(4, 'Research'), title: 'Close the window', spot: () => '.modal .m-f .btn', allow: closeOnly, done: () => !anyModal(), text: `When a newer rifle or cannon is researched, your regiments are refitted for free — and they need more men, drawn from the population.`, todo: ['Click <b>Close</b>.']});
+ // ---------------- 5 · armies ----------------
+ S.push({ch: ch(5, 'Armies'), title: 'Select an army', mark: () => K.cap, enter: () => { const s = G.sectors[K.cap]; focusOn(s.lon, s.lat, 26); selectUnits([]); }, allow: () => ['#side [data-u]', '#side #selAll'], map: {sector: sid => sid === K.cap, unit: isMine}, done: () => (G.selUnits || []).length > 0,
+  text: `Your regiments stand in ${sname(K.cap)}. Shift-click adds more units; double-click selects a whole stack.`,
+  todo: [`Click one of your <b>unit figures</b> standing in ${sname(K.cap)} (▼).`, 'Or: click the sector, then click a unit in the panel on the right.']});
+ S.push({ch: ch(5, 'Armies'), title: 'March!', enter: () => { TUT.snap.pos = G.units.filter(u => u.o === P).map(u => u.id + ':' + u.s).join(); }, allow: () => ['#side [data-u]', '#side #selAll'], map: {sector: sid => sid === K.cap, unit: isMine, order: sid => R.highlights[sid] === 'move'}, done: () => G.units.filter(u => u.o === P).map(u => u.id + ':' + u.s).join() !== TUT.snap.pos,
+  text: `<span class="pos">Green</span> sectors are where the selected units can move this turn. Most units move one sector; cavalry and armour move two.`,
+  todo: ['Click any <span class="pos">green</span> sector next to the capital.']});
+ S.push({ch: ch(5, 'Armies'), title: 'Back to the capital', mark: () => K.cap, map: {sector: sid => sid === K.cap}, done: () => G.sel === K.cap && !(G.selUnits || []).length, enter: () => selectUnits([]),
+  text: `Now let us raise a new regiment.`, todo: [`Click <b>${sname(K.cap)}</b> (▼) to open its panel.`]});
+ S.push({ch: ch(5, 'Armies'), title: 'Recruit a regiment', spot: () => landRecSel(), allow: () => [landRecSel()], modal: true, map: {sector: sid => sid === K.cap}, enter: () => { TUT.snap.n = G.units.filter(u => u.o === P).length; }, done: () => G.units.filter(u => u.o === P).length > TUT.snap.n,
+  text: `Units are raised at military bases. Each button shows attack ⚔, defence 🛡, cost, supplies 📦 per turn and <b>men 👥</b> taken from the population. Your <b>conscription law</b> caps the size of the army.`,
+  todo: ['In the panel, click a ringed <span class="tut-gold">recruit</span> button.', 'If asked to confirm the cost, click <b>Recruit</b>.']});
+ S.push({ch: ch(5, 'Armies'), title: 'Revolt!', mark: () => K.revolt,
+  enter: () => { const s = G.sectors[K.revolt]; if (!s) return; G.units = G.units.filter(u => u.s !== s.id); s.unrest = 75; const r = spawnRebels(s, 1); r.forEach(u => u.hp = 12); for (const u of G.units) if (u.o === P && u.s === K.cap) u.mv = UNITS[u.t].mv; logMsg(`Rebellion! Rebels have seized ${s.name}.`, 'bad'); SND.play('alarm'); const t = G.sectors[K.cap]; focusOn(t.lon, t.lat, 28); refreshAll(true); },
+  allow: () => ['#side [data-u]', '#side #selAll'], map: {sector: sid => sid === K.cap || sid === K.revolt, unit: isMine, order: sid => sid === K.revolt},
   tick: () => { const s = G.sectors[K.revolt]; if (s && s.ctrl === -1 && !G.units.some(u => u.o === P && u.mv > 0 && G.sectors[u.s].n.includes(K.revolt))) for (const u of G.units) if (u.o === P && G.sectors[u.s].n.includes(K.revolt)) u.mv = UNITS[u.t].mv; },
   done: () => G.sectors[K.revolt] && G.sectors[K.revolt].ctrl === P,
-  text: `High unrest has turned to rebellion in <b>${sname(K.revolt)}</b>! Select your troops in ${sname(K.cap)} and click the <span class="neg">red</span> sector to attack and crush the revolt.<br><br><small class="muted">Later you can also fund a <b>security budget</b> (Economy window, up to 40% of revenue): police calm every province and break up rebel bands without the army.</small>`});
- S.push({title: 'End the turn', spot: () => '#endTurn', allow: () => ['#endTurn'], modal: true, keys: ['enter'], enter: () => { TUT.snap.turn = G.turn; }, done: () => G.turn > TUT.snap.turn && !anyModal() && !UI.busy,
-  text: `Press <span class="tut-gold">End Turn</span> (or Enter). Three months pass: research advances, buildings rise, other nations act and wounded units heal. Read the dispatches, then continue.`});
- S.push({title: 'Politics', spot: () => '#bPol', allow: () => ['#bPol'], done: () => modalOpen('Politics'), text: `How the country is governed matters. Click <span class="tut-gold">🏛 Politics</span>.`});
- S.push({title: 'Laws', spot: () => '.modal .pol-head', allow: closeOnly, done: () => !anyModal(), text: `Seven laws — <b>government</b>, <b>conscription</b>, <b>borders</b>, <b>education</b>, <b>racial law</b>, <b>economy</b> and <b>press</b> — shape research, GDP, taxes, unrest, population growth and combat. Each card lists its effects; the box at the top adds them up.<ul><li>Conscription sets the <b>army limit</b>.</li><li>A <b>Closed Market</b> bans all foreign trade.</li><li>War Economy and Last Man Standing only exist in wartime.</li><li>A reform costs money, and afterwards <b>no law can change for 2 turns</b>.</li><li>The <b>people's support</b> bar: high support lifts GDP and calms the land, low support does the opposite. It falls with unrest, deficits and long wars — and the higher it is, the more unrest a reform causes (up to +70).</li></ul>Every nation starts with its historical laws, and AI nations follow history as it unfolds. Close the window to continue.`});
- S.push({title: 'Diplomacy', spot: () => '#bDip', allow: () => ['#bDip'], done: () => modalOpen('Diplomacy'), text: `Click <span class="tut-gold">🕊 Diplomacy</span>.`});
- S.push({title: 'Friends, rivals and puppets', next: true, spot: () => '.modal table.tt', allow: () => ['#bDip'], text: `Every known nation has <b>relations</b> with you. Refusing demands, attacking others and <b>infamy</b> make enemies; trade and gifts make friends. Hostile, stronger nations may declare war.<br><br><b>⛓ Puppets:</b> you can demand that a weaker nation become your puppet — it pays tribute and fights in your wars. If you are ever a puppet yourself, this window lets you fight for independence.`});
- S.push({title: 'Factions', spot: () => '.modal .m-tab[data-tab="union"]', allow: () => ['.modal .m-tab[data-tab="union"]'], done: () => modalOpen('Factions'), text: `The Diplomacy window has tabs. Open <span class="tut-gold">🛡 Factions</span>.`});
- S.push({title: 'Alliances', spot: () => '.modal .m-b', allow: () => ['.modal .m-tab[data-tab="rank"]'], done: () => modalOpen('World rankings'), text: `A <b>faction</b> is an alliance. Germany already belongs to the <b>Triple Alliance</b>. When a member goes to war, the others are called to arms — they may join, refuse, or even leave. Our puppets always follow us into war, but helping a lot raises their wish for independence. You can found your own faction, invite nations or ask to join another (one request per turn).<br><br>Now open the <span class="tut-gold">🏆 World Rankings</span> tab.`});
- S.push({title: 'Rankings', spot: () => '.modal .rank-tabs', allow: () => [...closeOnly(), '.modal [data-rk]'], done: () => !anyModal(), text: `Sort by GDP, power, population, army or size. Nations hidden in the <b>fog of war</b> keep their place, but their names and numbers stay secret. Close the window to continue.`});
- S.push({title: 'A tempting target', mark: () => K.luxCap, enter: () => { const s = G.sectors[K.luxCap]; if (s) focusOn(s.lon, s.lat, 28); selectUnits([]); }, map: {sector: sid => G.sectors[sid] && G.sectors[sid].o === K.lux}, done: () => G.sel && G.sectors[G.sel].o === K.lux,
-  text: `Tiny <b>Luxembourg</b> lies on our western border. Click it on the map — the panel will show its government and laws.`});
- S.push({title: 'Declare war', spot: () => '#side [data-war]', allow: () => ['#side [data-war]'], modal: true, map: {sector: sid => G.sectors[sid] && G.sectors[sid].o === K.lux}, done: () => atWar(P, K.lux),
+  text: `High unrest has turned to rebellion in <b>${sname(K.revolt)}</b>! Later you can also fund a <b>security budget</b> so police deal with rebels for you.`,
+  todo: [`Select your troops in <b>${sname(K.cap)}</b> (click a unit figure).`, `Click the <span class="neg">red</span> sector <b>${sname(K.revolt)}</b> (▼) to attack.`]});
+ S.push({ch: ch(5, 'Armies'), title: 'End the turn', spot: () => '#endTurn', allow: () => ['#endTurn'], modal: true, keys: ['enter'], enter: () => { TUT.snap.turn = G.turn; }, done: () => G.turn > TUT.snap.turn && !anyModal() && !UI.busy,
+  text: `Three months pass: research advances, buildings rise, other nations act and wounded units heal. Afterwards the <b>dispatches</b> report what happened.`,
+  todo: ['Click <span class="tut-gold">End Turn</span> (bottom right), or press <b>Enter</b>.', 'Watch the turn play out.', 'Read the dispatches and close them (and any events that pop up).']});
+ // ---------------- 6 · politics ----------------
+ S.push({ch: ch(6, 'Politics'), title: 'Politics', spot: () => '#bPol', allow: () => ['#bPol'], done: () => modalOpen('Politics'), text: `How the country is governed matters.`, todo: ['Click the <span class="tut-gold">🏛 Politics</span> button.']});
+ S.push({ch: ch(6, 'Politics'), title: 'Laws', spot: () => '.modal .pol-head', allow: closeOnly, done: () => !anyModal(),
+  text: `Seven laws — government, conscription, borders, education, racial law, economy and press — shape research, GDP, taxes, unrest, growth and combat.<ul><li>Conscription sets the <b>army limit</b>.</li><li>A reform costs money, and then <b>no law can change for 2 turns</b>.</li><li>The <b>people's support</b> bar: high support lifts GDP and calms the land.</li></ul>`,
+  todo: ['Look at the law cards and the support bar.', 'To change a law later: click a card, then confirm. (Not needed now.)', 'Click <b>Close</b>.']});
+ // ---------------- 7 · diplomacy ----------------
+ S.push({ch: ch(7, 'Diplomacy'), title: 'Diplomacy', spot: () => '#bDip', allow: () => ['#bDip'], done: () => modalOpen('Diplomacy'), text: `Friends and rivals.`, todo: ['Click the <span class="tut-gold">🕊 Diplomacy</span> button.']});
+ S.push({ch: ch(7, 'Diplomacy'), title: 'Friends, rivals and puppets', next: true, spot: () => '.modal table.tt', allow: () => ['#bDip'],
+  text: `Every known nation has <b>relations</b> with you. Attacking others and <b>infamy</b> make enemies; trade and gifts make friends. You can demand that a weaker nation become your <b>puppet</b>: it pays tribute and fights in your wars.`,
+  todo: ['Look over the list of nations.', 'Press <b>Next ▸</b>.']});
+ S.push({ch: ch(7, 'Diplomacy'), title: 'Factions', spot: () => '.modal .m-tab[data-tab="union"]', allow: () => ['.modal .m-tab[data-tab="union"]'], done: () => modalOpen('Factions'), text: `Alliances are called factions.`, todo: ['Click the <span class="tut-gold">Factions</span> tab at the top of the window.']});
+ S.push({ch: ch(7, 'Diplomacy'), title: 'Alliances', spot: () => '.modal .m-tab[data-tab="rank"]', allow: () => ['.modal .m-tab[data-tab="rank"]'], done: () => modalOpen('World rankings'),
+  text: `Germany belongs to the <b>Triple Alliance</b>. When a member goes to war, the others are called to arms. You can found your own faction, invite nations or ask to join another (one request per turn).`,
+  todo: ['Click the <span class="tut-gold">World Rankings</span> tab.']});
+ S.push({ch: ch(7, 'Diplomacy'), title: 'Rankings', spot: () => '.modal .rank-tabs', allow: () => [...closeOnly(), '.modal [data-rk]'], done: () => !anyModal(),
+  text: `Compare the powers. Nations hidden in the fog of war keep their place, but their numbers stay secret.`,
+  todo: ['Click the sort buttons (GDP, power, population…) to try them.', 'Click <b>Close</b>.']});
+ // ---------------- 8 · war ----------------
+ S.push({ch: ch(8, 'War and peace'), title: 'A tempting target', mark: () => K.luxCap, enter: () => { const s = G.sectors[K.luxCap]; if (s) focusOn(s.lon, s.lat, 28); selectUnits([]); }, map: {sector: sid => G.sectors[sid] && G.sectors[sid].o === K.lux}, done: () => G.sel && G.sectors[G.sel].o === K.lux,
+  text: `Tiny <b>Luxembourg</b> lies on our western border.`, todo: ['Click Luxembourg on the map (▼).']});
+ S.push({ch: ch(8, 'War and peace'), title: 'Declare war', spot: () => '#side [data-war]', allow: () => ['#side [data-war]'], modal: true, map: {sector: sid => G.sectors[sid] && G.sectors[sid].o === K.lux}, done: () => atWar(P, K.lux),
   onDone: () => { G.units = G.units.filter(u => u.o !== K.lux); for (const u of G.units) if (u.o === P && u.s === K.border) u.mv = UNITS[u.t].mv; refreshAll(true); },
-  text: `You can declare war on any nation you can see. War raises <b>infamy</b> and angers its neighbours — and its allies may join in. Peace can be negotiated from the panel <b>3 turns</b> after a war begins (a nation with no land left may surrender sooner, and historical events can end wars at any time). Click <span class="tut-gold">⚔ Declare war</span> and confirm.`});
- S.push({title: 'Invade', mark: () => K.border, enter: () => { const s = G.sectors[K.border]; if (s) focusOn(s.lon, s.lat, 26); }, allow: () => ['#side [data-u]', '#side #selAll'],
-  map: {sector: sid => sid === K.border || (G.sectors[sid] && G.sectors[sid].o === K.lux), unit: uid => { const u = G.units.find(x => x.id === uid); return u && u.o === P; }, order: sid => G.sectors[sid] && G.sectors[sid].o === K.lux},
+  text: `War raises <b>infamy</b> and angers neighbours, and the enemy's allies may join. Peace can be negotiated <b>3 turns</b> after a war begins.`,
+  todo: ['In the panel, click <span class="tut-gold">Declare war</span>.', 'In the window that opens, click <b>Declare war</b> again to confirm.']});
+ S.push({ch: ch(8, 'War and peace'), title: 'Invade', mark: () => K.border, enter: () => { const s = G.sectors[K.border]; if (s) focusOn(s.lon, s.lat, 26); }, allow: () => ['#side [data-u]', '#side #selAll'],
+  map: {sector: sid => sid === K.border || (G.sectors[sid] && G.sectors[sid].o === K.lux), unit: isMine, order: sid => G.sectors[sid] && G.sectors[sid].o === K.lux},
   tick: () => { if (G.sectors[K.luxCap] && G.sectors[K.luxCap].ctrl !== P && !G.units.some(u => u.o === P && u.mv > 0 && G.sectors[u.s].n.includes(K.luxCap))) for (const u of G.units) if (u.o === P && G.sectors[u.s].n.includes(K.luxCap)) u.mv = UNITS[u.t].mv; },
   done: () => G.sectors[K.luxCap] && G.sectors[K.luxCap].ctrl === P,
-  text: `Select your regiments in <b>${sname(K.border)}</b> and move them into <b>${sname(K.luxCap)}</b>, Luxembourg's capital. Entering an undefended enemy sector occupies it.`});
- S.push({title: 'The Military window', spot: () => '#bMil', allow: () => ['#bMil'], done: () => modalOpen('Military'), text: `Let us review the war. Click <span class="tut-gold">⚔ Military</span>.`});
- S.push({title: 'Our forces', next: true, spot: () => '.modal .m-b', allow: () => ['#bMil'], text: `The <b>Forces</b> tab lists every army, squadron and fleet (click one to fly there), our bases, supplies and the army limit set by conscription. Later, with the <b>Atomic Bomb</b>, an arsenal appears here: bombs are built one at a time and stored — better nuclear technology builds them faster and stores up to 12.`});
- S.push({title: 'War summary', spot: () => '.modal .m-tab[data-tab="wars"]', allow: () => ['.modal .m-tab[data-tab="wars"]'], done: () => modalOpen('War summary'), text: `Open the <span class="tut-gold">📊 War Summary</span> tab.`});
- S.push({title: 'Losses and costs', spot: () => '.modal .m-b', allow: closeOnly, done: () => !anyModal(), text: `Every war — ongoing and finished — with its sides, men lost on each side and what it has cost. Wars hidden by the fog of war show <b>???</b>. Close the window to continue.`});
- S.push({title: 'Await their answer', spot: () => '#endTurn', allow: () => ['#endTurn'], modal: true, keys: ['enter'], done: () => modalOpen('Surrender request') || !atWar(P, K.lux),
-  text: `With their capital in our hands, the enemy will likely ask to surrender. Press <span class="tut-gold">End Turn</span>.`});
- S.push({title: 'Accept their surrender', allow: () => ['.modal [data-sv="1"]', '.modal [data-sv="2"]', '.modal .m-f .btn'], done: () => !atWar(P, K.lux) && !anyModal(),
-  text: `A surrender request lists the terms. <b>Accept</b> to annex the sectors you occupy — or <b>make them your puppet</b>: they keep their land but pay you tribute and follow your wars. (Refusing is not allowed in this lesson.) Confirm your choice.`});
- S.push({title: 'The navy', mark: () => K.dock, enter: () => { const s = G.sectors[K.dock]; if (s) focusOn(s.lon, s.lat, 30); selectUnits([]); }, map: {sector: sid => sid === K.dock}, done: () => G.sel === K.dock,
-  text: `Warships are built at <b>Dockyards</b>. Click <b>${sname(K.dock)}</b>.`});
- S.push({title: 'Lay down a warship', spot: () => shipSel(), allow: () => [shipSel()], modal: true, map: {sector: sid => sid === K.dock}, enter: () => { TUT.snap.sq = (G.sectors[K.dock].sq || []).length; }, done: () => (G.sectors[K.dock].sq || []).length > TUT.snap.sq,
-  text: `Ships take several turns to build and appear in the neighbouring sea zone. At sea they carry two regiments each, bombard coasts and blockade trade. Click a <span class="tut-gold">ship</span> button to lay one down.`});
- S.push({title: 'The chronicle', next: true, spot: () => '#bLog', text: `<b>📜 Chronicle</b> keeps every event of the game, and the <b>dispatches</b> filed after each turn. History unfolds around you: when it reaches your nation — a revolution, a purchase, an ultimatum — <b>you</b> decide. Cities are renamed as rulers change (Edo becomes Tokyo, St. Petersburg becomes Petrograd), and some events play their historic music.`});
- S.push({title: 'The Esc menu', enter: () => { selectUnits([]); selectSector(null); }, keys: ['escape'], done: () => modalOpen('Menu'), text: `Press <span class="tut-gold">Esc</span> with nothing selected to open the game menu.`});
- S.push({title: 'Settings', spot: () => '.modal #pmSettings', allow: () => ['.modal #pmSettings'], done: () => modalOpen('Settings'), text: `From here you can resume, save, or go back to the main menu. Click <span class="tut-gold">⚙ Settings</span>.`});
- S.push({title: 'Graphics and sound', spot: () => '.modal .gfx-opts', allow: () => [...closeOnly(), '.modal .gfx-o', '.modal #setSeq', '.modal #setDisp'], done: () => !anyModal(), text: `<b>Graphics quality:</b> High, Medium or Low — lower settings use simpler buildings, fewer trees and a lower resolution for older computers. Your choice is remembered. Sound, music and the turn replay are set here too.<br><br>The small buttons next to the map menu: <b>💾</b> save &amp; load (three slots, a yearly autosave, export to a file), <b>🔊</b> sound, <b>?</b> the full guide. Close the window to finish.`});
- S.push({title: 'You are ready to rule', finish: true, text: `That's everything you need. You can keep playing this German Empire — history switches back on — or return to the main menu and choose any nation in 1800 or 1900.`});
+  text: `Entering an undefended enemy sector occupies it.`,
+  todo: [`Click your regiments in <b>${sname(K.border)}</b> (▼) to select them.`, `Click <b>${sname(K.luxCap)}</b>, Luxembourg's capital, to march in.`]});
+ S.push({ch: ch(8, 'War and peace'), title: 'The Military window', spot: () => '#bMil', allow: () => ['#bMil'], done: () => modalOpen('Military'), text: `Let us review the war.`, todo: ['Click the <span class="tut-gold">⚔ Military</span> button.']});
+ S.push({ch: ch(8, 'War and peace'), title: 'Our forces', next: true, spot: () => '.modal .m-b', allow: () => ['#bMil'],
+  text: `The <b>Forces</b> tab lists every army, squadron and fleet (click one to fly there), your bases, supplies and the army limit. With the <b>Atomic Bomb</b>, an arsenal appears here too.`,
+  todo: ['Look over the list.', 'Press <b>Next ▸</b>.']});
+ S.push({ch: ch(8, 'War and peace'), title: 'War summary', spot: () => '.modal .m-tab[data-tab="wars"]', allow: () => ['.modal .m-tab[data-tab="wars"]'], done: () => modalOpen('War summary'), text: `Every war has its books.`, todo: ['Click the <span class="tut-gold">War Summary</span> tab.']});
+ S.push({ch: ch(8, 'War and peace'), title: 'Losses and costs', spot: () => '.modal .m-b', allow: closeOnly, done: () => !anyModal(),
+  text: `Each war — ongoing and finished — with its sides, the men lost on each side and what it has cost.`, todo: ['Read the summary.', 'Click <b>Close</b>.']});
+ S.push({ch: ch(8, 'War and peace'), title: 'Await their answer', spot: () => '#endTurn', allow: () => ['#endTurn'], modal: true, keys: ['enter'], done: () => modalOpen('Surrender request') || !atWar(P, K.lux),
+  text: `With their capital in our hands, the enemy will likely ask to surrender.`,
+  todo: ['Click <span class="tut-gold">End Turn</span> (or press Enter).', 'Close the dispatches and any events until the surrender request appears.']});
+ S.push({ch: ch(8, 'War and peace'), title: 'Accept their surrender', allow: () => ['.modal [data-sv="1"]', '.modal [data-sv="2"]', '.modal .m-f .btn'], done: () => !atWar(P, K.lux) && !anyModal(),
+  text: `<b>Annex</b> takes the sectors you occupy; a <b>puppet</b> keeps its land but pays you tribute and follows your wars. (Refusing is not possible in this lesson.)`,
+  todo: ['In the surrender window, click <b>Accept</b> (annex) or <b>Make puppet</b>.', 'Click the button at the bottom of the window to confirm.']});
+ // ---------------- 9 · navy ----------------
+ S.push({ch: ch(9, 'The navy'), title: 'The navy', mark: () => K.dock, enter: () => { const s = G.sectors[K.dock]; if (s) focusOn(s.lon, s.lat, 30); selectUnits([]); }, map: {sector: sid => sid === K.dock}, done: () => G.sel === K.dock,
+  text: `Warships are built at <b>Dockyards</b>.`, todo: [`Click <b>${sname(K.dock)}</b> (▼).`]});
+ S.push({ch: ch(9, 'The navy'), title: 'Lay down a warship', spot: () => shipSel(), allow: () => [shipSel()], modal: true, map: {sector: sid => sid === K.dock}, enter: () => { TUT.snap.sq = (G.sectors[K.dock].sq || []).length; }, done: () => (G.sectors[K.dock].sq || []).length > TUT.snap.sq,
+  text: `Ships take several turns to build and appear in the sea next to the dockyard. At sea they carry two regiments each, bombard coasts and blockade trade.`,
+  todo: ['In the panel, click a ringed <span class="tut-gold">ship</span> button.', 'If asked to confirm the cost, confirm it.']});
+ // ---------------- 10 · the rest ----------------
+ S.push({ch: ch(10, 'Finishing touches'), title: 'The chronicle', next: true, spot: () => '#bLog',
+  text: `<b>📜 Chronicle</b> keeps every event and the dispatches after each turn. When history reaches your nation — a revolution, an ultimatum — <b>you</b> decide. Cities are renamed as rulers change (Edo becomes Tokyo).`,
+  todo: ['Remember this button for later.', 'Press <b>Next ▸</b>.']});
+ S.push({ch: ch(10, 'Finishing touches'), title: 'The Esc menu', enter: () => { selectUnits([]); selectSector(null); }, keys: ['escape'], done: () => modalOpen('Menu'),
+  text: `The game menu holds saving, settings and the way back to the title screen.`, todo: ['Press the <span class="tut-gold">Esc</span> key on your keyboard.']});
+ S.push({ch: ch(10, 'Finishing touches'), title: 'Settings', spot: () => '.modal #pmSettings', allow: () => ['.modal #pmSettings'], done: () => modalOpen('Settings'),
+  text: `From here you can resume, save, or go back to the main menu.`, todo: ['Click <span class="tut-gold">⚙ Settings</span>.']});
+ S.push({ch: ch(10, 'Finishing touches'), title: 'Graphics and sound', spot: () => '.modal .gfx-opts', allow: () => [...closeOnly(), '.modal .gfx-o', '.modal #setSeq', '.modal #setDisp'], done: () => !anyModal(),
+  text: `<b>Graphics quality</b>: High, Medium or Low — lower settings suit older computers and are remembered. Sound, music and the turn replay are here too.`,
+  todo: ['Try a graphics option if you like.', 'Click <b>Close</b>.']});
+ S.push({ch: ch(10, 'Finishing touches'), title: 'You are ready to rule', finish: true,
+  text: `That's everything. You can keep ruling this German Empire — history switches back on — or return to the main menu to pick any nation in 1800 or 1900, or press <b>🌐 Multiplayer</b> there to play with friends.`,
+  todo: ['Click <b>Keep playing</b> or <b>Main menu</b>.']});
  return S;
 }
 
@@ -13353,24 +13453,41 @@ function tutBuildUI() {
  const b = el('div', ''); b.id = 'tut'; document.body.appendChild(b); TUT.box = b;
  const m = el('div', 'tut-mark', '<div class="tut-arrow">▼</div>'); document.body.appendChild(m); TUT.mark = m;
 }
-function tutGo(i) {
- TUT.i = i; const st = TUT.steps[i]; if (!st) return;
+const tutSpot = st => st.tour ? st.tour[Math.min(TUT.sub || 0, st.tour.length - 1)].spot : st.spot ? st.spot() : null;
+function tutGo(i, sub) {
+ TUT.i = i; TUT.sub = sub || 0; TUT.quit = false; const st = TUT.steps[i]; if (!st) return;
  TUT.done = false;
- if (st.enter) st.enter();
- const n = TUT.steps.length;
+ if (st.enter && !sub) st.enter();
+ tutRender(); SND.play('open');
+}
+function tutRender() {
+ const i = TUT.i, st = TUT.steps[i], n = TUT.steps.length; if (!st || !TUT.box) return;
+ const tour = st.tour && st.tour[TUT.sub], prev = TUT.steps[i - 1];
+ const canBack = TUT.sub > 0 || (prev && (prev.next || prev.tour) && !prev.finish);
+ const todo = st.todo && st.todo.length ? `<div class="tut-do"><b>👉 What to do</b><ol>${st.todo.map(t => `<li>${t}</li>`).join('')}</ol></div>` : '';
+ const body = tour ? `<div class="tut-tour"><span class="tut-tn">${TUT.sub + 1} / ${st.tour.length}</span><b>${tour.h}</b><br>${tour.t}</div>` : '';
+ const foot = TUT.quit ? `<div class="tut-q"><b>Leave the tutorial?</b><div><button class="btn" id="tutStay">Stay</button><button class="btn" id="tutFree">Keep playing without the guide</button><button class="btn red" id="tutLeave">Main menu</button></div></div>`
+  : st.finish ? '<button class="btn gold" id="tutKeep">Keep playing</button><button class="btn" id="tutMenu">Main menu</button>'
+  : `${canBack ? '<button class="btn" id="tutBack">◂ Back</button>' : ''}${st.next ? '<button class="btn gold" id="tutNext">Next ▸</button>' : '<span class="tut-wait">⏳ Waiting for you to do this…</span>'}`;
  TUT.box.className = 'show';
- TUT.box.innerHTML = `<div class="tut-top"><span class="tut-n">Tutorial · step ${i + 1} of ${n}</span><button class="lnk" id="tutQuit">exit</button></div>
+ TUT.box.innerHTML = `<div class="tut-top"><span class="tut-n">${st.ch ? esc(st.ch) + ' · ' : ''}step ${i + 1} of ${n}</span><button class="tut-x" id="tutQuit" title="Exit the tutorial">✕ Exit</button></div>
   <div class="tut-bar"><i style="width:${(i + 1) / n * 100}%"></i></div>
-  <h3>${st.title}</h3><div class="tut-t">${st.text}</div>
-  <div class="tut-f">${st.next ? '<button class="btn gold" id="tutNext">Next ▸</button>' : st.finish ? '<button class="btn gold" id="tutKeep">Keep playing</button><button class="btn" id="tutMenu">Main menu</button>' : '<span class="tut-wait">⏳ waiting for you…</span>'}</div>`;
- const nx = $('#tutNext'); if (nx) nx.onclick = () => tutAdvance();
- const kp = $('#tutKeep'); if (kp) kp.onclick = () => endTutorial(true);
- const mn = $('#tutMenu'); if (mn) mn.onclick = () => endTutorial(false);
- $('#tutQuit').onclick = () => confirmBox('Leave the tutorial?', '<p>Return to the main menu? Your tutorial progress is lost.</p>', 'Leave', 'red', () => endTutorial(false));
- SND.play('open');
+  <h3>${st.title}</h3><div class="tut-t">${st.text || ''}</div>${body}${todo}
+  <div class="tut-f">${foot}</div>`;
+ const on = (id, f) => { const e = TUT.box.querySelector('#' + id); if (e) e.onclick = ev => { ev.stopPropagation(); f(); }; };
+ on('tutNext', () => tutAdvance());
+ on('tutBack', () => { SND.play('select', {kind: 'inf'}); if (TUT.sub > 0) { TUT.sub--; tutRender(); } else { const p = TUT.steps[TUT.i - 1]; tutGo(TUT.i - 1, p.tour ? p.tour.length - 1 : 0); } });
+ on('tutKeep', () => endTutorial(true));
+ on('tutMenu', () => endTutorial(false));
+ on('tutQuit', () => { TUT.quit = true; tutRender(); });
+ on('tutStay', () => { TUT.quit = false; tutRender(); });
+ on('tutFree', () => endTutorial(true));
+ on('tutLeave', () => endTutorial(false));
 }
 function tutAdvance() {
- const st = TUT.steps[TUT.i]; if (st && st.onDone) st.onDone();
+ const st = TUT.steps[TUT.i];
+ if (st && st.tour && TUT.sub < st.tour.length - 1) { TUT.sub++; SND.play('select', {kind: 'inf'}); tutRender(); return; }
+ if (st && st.onDone) st.onDone();
  SND.play('select', {kind: 'inf'});
  TUT.box.classList.add('pulse'); setTimeout(() => TUT.box && TUT.box.classList.remove('pulse'), 400);
  tutGo(TUT.i + 1);
@@ -13379,7 +13496,7 @@ function endTutorial(keep) {
  TUT.on = false; document.body.classList.remove('tut-dock'); if (TUT.box) TUT.box.remove(); if (TUT.mark) TUT.mark.remove(); TUT.box = TUT.mark = null;
  for (const r of TUT.rings) r.remove(); TUT.rings = [];
  if (!keep) { location.reload(); return; }
- G.tutorial = false; closeModals();
+ G.tutorial = false; closeModals(); document.body.style.removeProperty('--tutR'); document.body.style.removeProperty('--tutB');
  logMsg('The tutorial is over — history resumes its course.', 'good');
  toast('Tutorial complete. The world is yours!'); refreshAll(true);
 }
@@ -13444,7 +13561,7 @@ function tutSectorScreen(sid) {
  const st = TUT.steps[TUT.i]; if (!st) return;
  // rings around the target elements
  let els = [];
- if (st.spot) { try { els = tutVisible([...document.querySelectorAll(st.spot())]).slice(0, 4); } catch (e) {} }
+ const sp = tutSpot(st); if (sp) { try { els = tutVisible([...document.querySelectorAll(sp)]).slice(0, 4); } catch (e) {} }
  while (TUT.rings.length < els.length) { const r = el('div', 'tut-ring'); document.body.appendChild(r); TUT.rings.push(r); }
  TUT.rings.forEach((r, i) => { const e = els[i]; if (!e) { r.style.display = 'none'; return; } const b = e.getBoundingClientRect(); r.style.display = 'block'; r.style.left = (b.left - 5) + 'px'; r.style.top = (b.top - 5) + 'px'; r.style.width = (b.width + 10) + 'px'; r.style.height = (b.height + 10) + 'px'; });
  // marker over a map sector
@@ -13467,7 +13584,7 @@ function tutPlace() {
  B.classList.remove('tut-dock'); B.style.setProperty('--tutR', '0px'); B.style.setProperty('--tutB', '0px');
  TUT.box.style.width = (W < 760 ? Math.min(W - 20, 330) : 330) + 'px'; TUT.box.style.maxHeight = (H - 92) + 'px';
  let els = [];
- if (st.spot) { try { els = [...document.querySelectorAll(st.spot())].filter(e => e.offsetParent !== null).slice(0, 4); } catch (e) {} }
+ const sp = tutSpot(st); if (sp) { try { els = [...document.querySelectorAll(sp)].filter(e => e.offsetParent !== null).slice(0, 4); } catch (e) {} }
  // otherwise: try spots around the screen and take the first that covers no target, panel or map marker
  const bw = TUT.box.offsetWidth, bh = TUT.box.offsetHeight;
  const rects = els.map(e => e.getBoundingClientRect());
