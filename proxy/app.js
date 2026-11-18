@@ -1,6 +1,5 @@
-import { BareMuxConnection } from "./baremux/index.js";
-
-const cfg = self.__uv$config;
+window.__emberBooted = true;
+const cfg = self.__uv$config || {};
 const base = new URL("./", location.href).pathname; // e.g. /repo/proxy/
 const DEFAULT_WISP = "wss://wisp.mercurywork.shop/";
 
@@ -30,6 +29,9 @@ const status = (msg, err = false) => {
 
 let ready;
 async function setupProxy() {
+  if (!cfg.prefix) {
+    throw new Error("Couldn't load the proxy engine (uv/uv.bundle.js), your network may be blocking it.");
+  }
   if (!("serviceWorker" in navigator)) {
     throw new Error("This browser doesn't support service workers (try Chrome, Edge or Firefox, and not in private mode).");
   }
@@ -49,7 +51,12 @@ async function setupProxy() {
   await applyTransport();
 }
 
+let BareMuxConnection;
 async function applyTransport() {
+  if (!BareMuxConnection) {
+    try { ({ BareMuxConnection } = await import("./baremux/index.js")); }
+    catch { throw new Error("Couldn't load baremux/index.js, your network may be blocking it."); }
+  }
   const conn = new BareMuxConnection(base + "baremux/worker.js");
   const wisp = store.get("wisp", DEFAULT_WISP);
   await conn.setTransport(new URL(base + "epoxy/index.js", location.href).href, [{ wisp }]);
