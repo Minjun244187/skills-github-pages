@@ -30,7 +30,7 @@ const status = (msg, err = false) => {
 let ready;
 async function setupProxy() {
   if (!cfg.prefix) {
-    throw new Error("Couldn't load the proxy engine (uv/uv.bundle.js), your network may be blocking it.");
+    throw new Error("Couldn't load the proxy engine (lib/bundle.js), your network may be blocking it.");
   }
   if (!("serviceWorker" in navigator)) {
     throw new Error("This browser doesn't support service workers (try Chrome, Edge or Firefox, and not in private mode).");
@@ -38,7 +38,7 @@ async function setupProxy() {
   if (location.protocol !== "https:" && !["localhost", "127.0.0.1"].includes(location.hostname)) {
     throw new Error("The proxy must be served over HTTPS.");
   }
-  const reg = await navigator.serviceWorker.register(base + "uv/sw.js", { scope: cfg.prefix });
+  const reg = await navigator.serviceWorker.register(base + "lib/sw.js", { scope: cfg.prefix });
   // serviceWorker.ready only resolves for pages inside the scope, so wait on the worker itself
   const sw = reg.installing || reg.waiting || reg.active;
   if (sw && sw.state !== "activated") {
@@ -54,12 +54,12 @@ async function setupProxy() {
 let BareMuxConnection;
 async function applyTransport() {
   if (!BareMuxConnection) {
-    try { ({ BareMuxConnection } = await import("./baremux/index.js")); }
-    catch { throw new Error("Couldn't load baremux/index.js, your network may be blocking it."); }
+    try { ({ BareMuxConnection } = await import("./lib/mux.js")); }
+    catch { throw new Error("Couldn't load lib/mux.js, your network may be blocking it."); }
   }
-  const conn = new BareMuxConnection(base + "baremux/worker.js");
+  const conn = new BareMuxConnection(base + "lib/mux-worker.js");
   const wisp = store.get("wisp", DEFAULT_WISP);
-  await conn.setTransport(new URL(base + "epoxy/index.js", location.href).href, [{ wisp }]);
+  await conn.setTransport(new URL(base + "lib/transport.js", location.href).href, [{ wisp }]);
 }
 
 /* ---------------- url helpers ---------------- */

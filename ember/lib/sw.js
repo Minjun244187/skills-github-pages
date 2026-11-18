@@ -1,7 +1,7 @@
 /*global UVServiceWorker,__uv$config*/
-importScripts('uv.bundle.js');
-importScripts('uv.config.js');
-importScripts(__uv$config.sw || 'uv.sw.js');
+importScripts('bundle.js');
+importScripts('config.js');
+importScripts(__uv$config.sw || 'core.js');
 
 const uv = new UVServiceWorker();
 
